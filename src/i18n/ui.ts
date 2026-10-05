@@ -7,6 +7,8 @@
  *   3. add a translation block to `strings`
  *   4. create the page wrappers under src/pages/<code>/ (copy src/pages/de/)
  */
+import { withBase } from '~/lib/paths';
+
 export const locales = ['en', 'de'] as const;
 export type Lang = (typeof locales)[number];
 export const defaultLang: Lang = 'en';
@@ -16,7 +18,7 @@ export const localeMeta: Record<Lang, { label: string; short: string; htmlLang: 
   de: { label: 'Deutsch', short: 'DE', htmlLang: 'de', ogLocale: 'de_DE' },
 };
 
-export const routes = {
+const rawRoutes = {
   home: { en: '/', de: '/de/' },
   services: { en: '/services/', de: '/de/leistungen/' },
   work: { en: '/work/', de: '/de/referenzen/' },
@@ -28,7 +30,15 @@ export const routes = {
   thanks: { en: '/thank-you/', de: '/de/danke/' },
 } satisfies Record<string, Record<Lang, string>>;
 
-export type RouteKey = keyof typeof routes;
+export type RouteKey = keyof typeof rawRoutes;
+
+/** Localized URLs, including the base path when the site is built under a sub-path. */
+export const routes = Object.fromEntries(
+  Object.entries(rawRoutes).map(([key, byLang]) => [
+    key,
+    Object.fromEntries(Object.entries(byLang).map(([l, path]) => [l, withBase(path)])),
+  ]),
+) as Record<RouteKey, Record<Lang, string>>;
 export type Alternates = Partial<Record<Lang, string>>;
 
 export const url = (key: RouteKey, lang: Lang) => routes[key][lang];

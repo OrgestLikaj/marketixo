@@ -1,0 +1,51 @@
+name: GitHub Pages preview
+
+# Publishes a preview of the site to https://orgestlikaj.github.io/marketixo/
+# It is built under the /marketixo/ sub-path and marked noindex so it never competes
+# with the real domain in Google. The contact form does not send here (no PHP on Pages).
+#
+# One-time setup if the page does not appear after the first run:
+#   Settings → Pages → Build and deployment → Source: "Deploy from a branch",
+#   Branch: gh-pages / (root) → Save.
+
+on:
+  push:
+    branches: [main, claude/loving-allen-q53gen]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+      - name: Build preview
+        run: npm run build
+        env:
+          SITE_URL: https://${{ github.repository_owner }}.github.io
+          BASE_PATH: /${{ github.event.repository.name }}
+          PREVIEW: 'true'
+
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
+          commit_message: 'Preview build'

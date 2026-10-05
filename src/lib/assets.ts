@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { withBase } from './paths';
 
 const publicDir = path.join(process.cwd(), 'public');
 
@@ -12,10 +13,12 @@ export function findPublic(dir: string, name: string, exts: string[]): string | 
   return undefined;
 }
 
+const based = (p?: string) => (p ? withBase(p) : undefined);
+
 export const screenshotFor = (key: string, explicit?: string) =>
-  explicit ?? findPublic('work', key, ['webp', 'avif', 'jpg', 'png']);
+  based(explicit ?? findPublic('work', key, ['webp', 'avif', 'jpg', 'png']));
 
 export const logoFor = (key: string, explicit?: string) =>
-  explicit ?? findPublic('clients', key, ['svg', 'png', 'webp']);
+  based(explicit ?? findPublic('clients', key, ['svg', 'png', 'webp']));
 
 export const hostOf = (url?: string) => (url ? new URL(url).hostname.replace(/^www\./, '') : '');

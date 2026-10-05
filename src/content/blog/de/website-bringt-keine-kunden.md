@@ -53,4 +53,4 @@ Wenn Sie nicht wissen, wie viele Menschen Ihre Seite besuchen, woher sie kommen 
 
 ---
 
-**Hätten Sie gern eine zweite Meinung?** Wir prüfen Ihre Website kostenlos und schicken Ihnen die drei Änderungen, die wir zuerst umsetzen würden. [Jetzt Check anfragen](/de/kontakt/).
+**Hätten Sie gern eine zweite Meinung?** Wir prüfen Ihre Website kostenlos und schicken Ihnen die drei Änderungen, die wir zuerst umsetzen würden. [Jetzt Check anfragen](../../kontakt/).

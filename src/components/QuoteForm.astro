@@ -7,6 +7,7 @@
 import Icon from './Icon.astro';
 import { services } from '~/data/services';
 import { t, url, type Lang } from '~/i18n/ui';
+import { withBase } from '~/lib/paths';
 
 interface Props {
   lang: Lang;
@@ -19,7 +20,7 @@ const thanks = url('thanks', lang);
 const errorUrl = url('contact', lang) + '?error=1#quote';
 ---
 
-<form class="quote" action="/api/contact.php" method="post" data-quote-form novalidate>
+<form class="quote" action={withBase('/api/contact.php')} method="post" data-quote-form novalidate>
   <input type="hidden" name="lang" value={lang} />
   <input type="hidden" name="redirect" value={thanks} />
   <input type="hidden" name="error_redirect" value={errorUrl} />

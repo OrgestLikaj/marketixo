@@ -53,4 +53,4 @@ If you don’t know how many people visit, where they come from and how many con
 
 ---
 
-**Want a second pair of eyes?** We review your website for free and send you the three changes we would make first. [Request your review](/contact/).
+**Want a second pair of eyes?** We review your website for free and send you the three changes we would make first. [Request your review](../../contact/).
