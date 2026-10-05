@@ -3,8 +3,9 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import ProjectCard from '~/components/ProjectCard.astro';
 import CtaBand from '~/components/CtaBand.astro';
+import ClientLogos from '~/components/ClientLogos.astro';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
-import { projects } from '~/data/work';
+import { showcase } from '~/data/work';
 import { breadcrumbSchema } from '~/lib/schema';
 
 interface Props {
@@ -17,13 +18,13 @@ const copy = {
     title: 'Our Work: Websites, Branding & Marketing Projects',
     description: 'Selected websites, logos, brand identities and marketing campaigns created by Marketixo for businesses across Europe.',
     h1: 'Work we’re proud of.',
-    lead: 'A selection of websites, brands and campaigns. Want to see something specific for your industry? Just ask.',
+    lead: 'Websites we designed and built — and then grew with SEO, ads and social media. Want to see something specific for your industry? Just ask.',
   },
   de: {
     title: 'Referenzen: Websites, Branding & Marketingprojekte',
     description: 'Ausgewählte Websites, Logos, Markenauftritte und Marketingkampagnen, die Marketixo für Unternehmen in ganz Europa umgesetzt hat.',
     h1: 'Projekte, auf die wir stolz sind.',
-    lead: 'Eine Auswahl an Websites, Marken und Kampagnen. Sie möchten Beispiele aus Ihrer Branche sehen? Fragen Sie uns einfach.',
+    lead: 'Websites, die wir gestaltet und entwickelt — und dann mit SEO, Werbung und Social Media zum Wachsen gebracht haben. Sie möchten Beispiele aus Ihrer Branche sehen? Fragen Sie uns einfach.',
   },
 }[lang];
 const crumbs = [
@@ -44,12 +45,13 @@ const crumbs = [
       <Breadcrumbs items={crumbs} />
       <h1>{copy.h1}</h1>
       <p class="lead">{copy.lead}</p>
+      <div style="margin-top:clamp(40px,5vw,64px)"><ClientLogos lang={lang} variant="band" /></div>
     </div>
   </section>
   <section class="section section--white" style="padding-top:clamp(48px,6vw,80px)">
     <div class="container">
       <div class="grid grid--2 work-grid">
-        {projects.map((p) => <ProjectCard project={p} lang={lang} />)}
+        {showcase.map((p) => <ProjectCard project={p} lang={lang} />)}
       </div>
     </div>
   </section>

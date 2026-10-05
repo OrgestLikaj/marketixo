@@ -22,7 +22,9 @@ npm run preview    # serve the built site
 | Domain | `astro.config.mjs` → `site`, and `src/config/site.ts` → `url` |
 | Email, phone, WhatsApp, booking link, address, legal details, social links | `src/config/site.ts` (search for `TODO`) |
 | Where form requests are sent | `public/api/contact.php` → `MAIL_TO`, `MAIL_FROM` |
-| Portfolio (currently **samples**) | `src/data/work.ts` + images in `public/work/` |
+| Portfolio descriptions, years, results | `src/data/work.ts` |
+| Portfolio screenshots | run `npm run screenshots` (first time: `npx playwright install chromium`) → `public/work/` |
+| Client logos | `public/clients/<key>.svg` or `.png` (keys are in `src/data/work.ts`, e.g. `ir`, `finman`, `implant-swiss`) |
 | Testimonials (hidden until added) | `src/data/work.ts` → `testimonials` |
 | Your story / founder | `src/views/AboutPage.astro` |
 | Legal texts | `src/views/LegalPage.astro`. **Have these checked**, especially the Impressum and privacy policy for the German market |

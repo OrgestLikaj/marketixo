@@ -1,79 +1,108 @@
 import type { Lang } from '~/i18n/ui';
 
 /**
- * Portfolio. These entries are PLACEHOLDERS — replace them with your real projects.
+ * Portfolio and client list.
  *
- * - Put screenshots in /public/work/ (e.g. /public/work/client-name.webp, ~1600×1000)
- *   and set `image: '/work/client-name.webp'`. Without an image a branded cover is drawn.
- * - `services` uses the keys from src/data/services.ts.
- * - Set `placeholder: false` (or remove it) once an entry is real.
- * - Results with real numbers ("+120% organic traffic") sell far better than adjectives.
+ * Screenshots: run `npm run screenshots` on your own computer. It saves a screenshot of every
+ * project `url` to /public/work/<key>.webp, and the cards pick them up automatically.
+ * Until a screenshot exists, a branded cover with the client name is drawn instead.
+ *
+ * Logos: put them in /public/clients/<key>.svg (or .png) and set `logo` on the client.
+ * Until then the logo strip shows the client name as a wordmark.
  */
+
 export interface Project {
   key: string;
   client: string;
-  services: string[];
-  year: number;
+  /** Live website. Projects with a URL are shown as cards on the Work page. */
   url?: string;
+  /** Other link (e.g. Instagram) for clients without a website. */
+  profile?: string;
+  services: string[];
+  year?: number;
+  /** Screenshot path, e.g. '/work/ir.webp'. Filled automatically when the file exists. */
   image?: string;
-  /** Cover colour used when there is no image. */
+  /** Logo path, e.g. '/clients/ir.svg'. */
+  logo?: string;
+  /** Cover colour used when there is no screenshot — ideally the client's brand colour. */
   color: string;
-  placeholder?: boolean;
+  /** TODO: refine with one line about what the client does (industry, audience). */
   summary: Record<Lang, string>;
+  /** A measurable result, e.g. "+120% organic traffic in 6 months". */
   result?: Record<Lang, string>;
 }
 
+const fullService = ['web-design', 'seo', 'paid-ads', 'social-media'];
+
+const fullServiceSummary = (who: Record<Lang, string>): Record<Lang, string> => ({
+  en: `${who.en} Website design and development, SEO, Google & Meta ads and social media management.`,
+  de: `${who.de} Webdesign und -entwicklung, SEO, Google- & Meta-Anzeigen sowie Social-Media-Betreuung.`,
+});
+
 export const projects: Project[] = [
   {
-    key: 'project-1',
-    client: 'Project name',
-    services: ['web-design', 'seo'],
-    year: 2026,
+    key: 'scidev',
+    client: 'SCiDEV',
+    url: 'https://scidevcenter.org/',
+    services: fullService,
+    color: '#1F4FD6',
+    summary: fullServiceSummary({
+      en: 'Center for Science and Innovation for Development, a Tirana-based think tank working on research, policy and science communication in the Western Balkans.',
+      de: 'Center for Science and Innovation for Development, ein Thinktank aus Tirana für Forschung, Politikberatung und Wissenschaftskommunikation im Westbalkan.',
+    }),
+  },
+  {
+    key: 'medicus',
+    client: 'Medicus Center',
+    url: 'https://medicuscenter.al/',
+    services: fullService,
+    color: '#0E9F8E',
+    summary: fullServiceSummary({ en: 'Full digital presence for Medicus Center.', de: 'Kompletter Online-Auftritt für Medicus Center.' }),
+  },
+  {
+    key: 'ir',
+    client: 'IR',
+    url: 'https://ir.al/',
+    services: fullService,
     color: '#FF5A1F',
-    placeholder: true,
-    summary: {
-      en: 'New multilingual website with technical SEO and a lead form connected to WhatsApp.',
-      de: 'Neue mehrsprachige Website mit technischem SEO und einem mit WhatsApp verbundenen Anfrageformular.',
-    },
-    result: { en: 'Add a measurable result here', de: 'Hier ein messbares Ergebnis eintragen' },
+    summary: fullServiceSummary({ en: 'Full digital presence for IR.', de: 'Kompletter Online-Auftritt für IR.' }),
   },
   {
-    key: 'project-2',
-    client: 'Project name',
-    services: ['branding'],
-    year: 2025,
-    color: '#1F3BFF',
-    placeholder: true,
-    summary: {
-      en: 'Logo, colour palette and brand guidelines for a growing local business.',
-      de: 'Logo, Farbpalette und Markenrichtlinien für ein wachsendes lokales Unternehmen.',
-    },
+    key: 'finman',
+    client: 'Finman',
+    url: 'https://finman.al/',
+    services: fullService,
+    color: '#0D3B66',
+    summary: fullServiceSummary({ en: 'Full digital presence for Finman.', de: 'Kompletter Online-Auftritt für Finman.' }),
   },
   {
-    key: 'project-3',
-    client: 'Project name',
-    services: ['web-design', 'branding'],
-    year: 2025,
-    color: '#0E9F6E',
-    placeholder: true,
-    summary: {
-      en: 'Rebrand and website redesign with a faster, mobile-first experience.',
-      de: 'Rebranding und Website-Relaunch mit schnellerer, mobiloptimierter Nutzererfahrung.',
-    },
-  },
-  {
-    key: 'project-4',
-    client: 'Project name',
-    services: ['social-media', 'paid-ads'],
-    year: 2025,
+    key: 'fintrade',
+    client: 'Fintrade',
+    url: 'https://fintrade.al/',
+    services: fullService,
     color: '#7C3AED',
-    placeholder: true,
-    summary: {
-      en: 'Social media content and Meta ad campaigns to promote a product launch.',
-      de: 'Social-Media-Inhalte und Meta-Kampagnen zur Einführung eines neuen Produkts.',
-    },
+    summary: fullServiceSummary({ en: 'Full digital presence for Fintrade.', de: 'Kompletter Online-Auftritt für Fintrade.' }),
+  },
+  {
+    key: 'albstar',
+    client: 'Albstar',
+    url: 'https://albstar.al/',
+    services: fullService,
+    color: '#C81E3A',
+    summary: fullServiceSummary({ en: 'Full digital presence for Albstar.', de: 'Kompletter Online-Auftritt für Albstar.' }),
+  },
+  {
+    key: 'implant-swiss',
+    client: 'Implant Swiss Albania',
+    profile: 'https://www.instagram.com/implantswissalbania/',
+    services: fullService,
+    color: '#0A7CBF',
+    summary: fullServiceSummary({ en: 'Full digital presence for Implant Swiss Albania.', de: 'Kompletter Online-Auftritt für Implant Swiss Albania.' }),
   },
 ];
+
+/** Projects with a live website — shown as cards. */
+export const showcase = projects.filter((p) => p.url);
 
 /**
  * Client testimonials. The testimonials section stays hidden until this list has entries.

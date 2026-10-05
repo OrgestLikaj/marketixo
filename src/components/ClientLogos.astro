@@ -1,0 +1,88 @@
+---
+import { projects } from '~/data/work';
+import { logoFor } from '~/lib/assets';
+import type { Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Visual variant: inline row inside a hero, or a standalone band. */
+  variant?: 'inline' | 'band';
+}
+const { lang, variant = 'inline' } = Astro.props;
+const title = lang === 'de' ? 'Marken, mit denen wir arbeiten' : 'Brands we’ve worked with';
+const clients = projects.map((p) => ({ ...p, logoSrc: logoFor(p.key, p.logo), href: p.url ?? p.profile }));
+---
+
+<div class:list={['clients', `clients--${variant}`]}>
+  <p class="clients__title">{title}</p>
+  <ul class="clients__list">
+    {
+      clients.map((c) => (
+        <li>
+          <a href={c.href} target="_blank" rel="noopener" title={c.client}>
+            {c.logoSrc ? <img src={c.logoSrc} alt={c.client} loading="lazy" decoding="async" /> : <span class="clients__word">{c.client}</span>}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .clients {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .clients--band {
+    padding-block: 2.5rem;
+    border-block: 1px solid var(--line);
+  }
+  .clients__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .clients__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .clients__list a {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .clients__list a:hover {
+    opacity: 1;
+  }
+  .clients__list img {
+    max-height: 36px;
+    max-width: 140px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    transition: filter 0.2s;
+  }
+  .clients__list a:hover img {
+    filter: none;
+  }
+  .clients__word {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+</style>

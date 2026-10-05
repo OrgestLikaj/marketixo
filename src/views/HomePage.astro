@@ -5,10 +5,11 @@ import ServiceCard from '~/components/ServiceCard.astro';
 import ProjectCard from '~/components/ProjectCard.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
+import ClientLogos from '~/components/ClientLogos.astro';
 import { whatsappLink } from '~/config/site';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
 import { groupOrder, services, servicesByGroup } from '~/data/services';
-import { projects, testimonials } from '~/data/work';
+import { showcase, testimonials } from '~/data/work';
 import { faqSchema } from '~/lib/schema';
 
 interface Props {
@@ -185,6 +186,9 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         </div>
       </div>
     </div>
+    <div class="container hero__clients">
+      <ClientLogos lang={lang} />
+    </div>
   </section>
 
   <!-- Marquee -->
@@ -287,7 +291,7 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
       </div>
       <div class="grid grid--3">
-        {projects.slice(0, 3).map((p) => <ProjectCard project={p} lang={lang} />)}
+        {showcase.slice(0, 3).map((p) => <ProjectCard project={p} lang={lang} />)}
       </div>
     </div>
   </section>
@@ -576,6 +580,14 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
     .hcard--protect {
       width: 88%;
     }
+  }
+
+  .hero__clients {
+    margin-top: clamp(48px, 6vw, 80px);
+  }
+  .hero__clients > :global(.clients) {
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
   }
 
   /* Marquee */
