@@ -1,0 +1,93 @@
+---
+import Icon from './Icon.astro';
+import { serviceUrl, type Service } from '~/data/services';
+import type { Lang } from '~/i18n/ui';
+
+interface Props {
+  service: Service;
+  lang: Lang;
+}
+const { service, lang } = Astro.props;
+const c = service.copy[lang];
+---
+
+<a href={serviceUrl(service, lang)} class={`svc-card svc-card--${service.group} reveal`}>
+  <span class="svc-card__icon"><Icon name={service.icon} /></span>
+  <h3>{c.title}</h3>
+  <p>{c.tagline}</p>
+  <span class="svc-card__go" aria-hidden="true"><Icon name="arrow-up-right" size={20} /></span>
+</a>
+
+<style>
+  .svc-card {
+    --accent: var(--signal);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 240px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    text-decoration: none;
+    transition:
+      transform 0.25s var(--ease),
+      box-shadow 0.25s var(--ease),
+      border-color 0.25s var(--ease);
+  }
+  .svc-card--grow {
+    --accent: var(--grow);
+  }
+  .svc-card--protect {
+    --accent: var(--protect);
+  }
+  .svc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+  .svc-card__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: auto;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 12%, white);
+    color: var(--accent);
+  }
+  .svc-card h3 {
+    margin: 2rem 0 0.4rem;
+    font-size: 1.3rem;
+  }
+  .svc-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.975rem;
+    line-height: 1.55;
+    padding-right: 2rem;
+  }
+  .svc-card__go {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.25s var(--ease);
+  }
+  .svc-card:hover .svc-card__go {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+    transform: rotate(45deg);
+  }
+</style>

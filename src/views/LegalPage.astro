@@ -1,0 +1,262 @@
+---
+/**
+ * Privacy policy and Imprint (Impressum).
+ *
+ * IMPORTANT: These texts are a solid starting template, not legal advice. Have them
+ * checked by a lawyer or generate them with a trusted generator (e.g. eRecht24 for the
+ * German market) — especially before running ads in Germany, where incomplete Impressum
+ * or privacy pages can lead to warning letters (Abmahnungen).
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import { site } from '~/config/site';
+import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  kind: 'privacy' | 'imprint';
+}
+const { lang, kind } = Astro.props;
+const s = t(lang);
+const a = site.address;
+const l = site.legal;
+const addressLines = [site.legalName, a.street, `${a.postalCode} ${a.city}`, a.country];
+const updated = lang === 'de' ? 'Stand: Oktober 2026' : 'Last updated: October 2026';
+
+const title = kind === 'privacy' ? s.footer.privacy : s.footer.imprint;
+const crumbs = [
+  { label: s.breadcrumbHome, href: url('home', lang) },
+  { label: title, href: url(kind, lang) },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={`${title} — ${site.name}`}
+  alternates={alternatesFor(kind)}
+>
+  <section class="page-hero">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <h1>{title}</h1>
+      <p class="muted">{updated}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="prose">
+        {
+          kind === 'imprint' && lang === 'en' && (
+            <>
+              <h2>Information pursuant to § 5 DDG</h2>
+              <p>{addressLines.map((line) => (<>{line}<br /></>))}</p>
+              <p>
+                <strong>Represented by:</strong> {l.representative}
+              </p>
+              <h2>Contact</h2>
+              <p>
+                Phone: {site.phone}
+                <br />
+                Email: <a href={`mailto:${site.email}`}>{site.email}</a>
+              </p>
+              {l.registry && (<><h2>Register entry</h2><p>{l.registry}</p></>)}
+              {l.vatId && (<><h2>VAT ID</h2><p>{l.vatId}</p></>)}
+              <h2>Responsible for content</h2>
+              <p>{l.representative}, address as above.</p>
+              <h2>Dispute resolution</h2>
+              <p>
+                We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer
+                arbitration board.
+              </p>
+              <h2>Liability for content and links</h2>
+              <p>
+                We create the content of this website with great care, but cannot guarantee that it is correct,
+                complete or up to date. Our website contains links to external websites over whose content we have no
+                control. The respective provider or operator of the linked pages is always responsible for their content.
+              </p>
+              <h2>Copyright</h2>
+              <p>
+                The content and works on this website are subject to copyright. Any use beyond the limits of copyright
+                law requires our written consent. Portfolio work is shown with the consent of the respective clients.
+              </p>
+            </>
+          )
+        }
+
+        {
+          kind === 'imprint' && lang === 'de' && (
+            <>
+              <h2>Angaben gemäß § 5 DDG</h2>
+              <p>{addressLines.map((line) => (<>{line}<br /></>))}</p>
+              <p>
+                <strong>Vertreten durch:</strong> {l.representative}
+              </p>
+              <h2>Kontakt</h2>
+              <p>
+                Telefon: {site.phone}
+                <br />
+                E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+              </p>
+              {l.registry && (<><h2>Registereintrag</h2><p>{l.registry}</p></>)}
+              {l.vatId && (<><h2>Umsatzsteuer-ID</h2><p>{l.vatId}</p></>)}
+              <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+              <p>{l.representative}, Anschrift wie oben.</p>
+              <h2>Verbraucherstreitbeilegung</h2>
+              <p>
+                Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+                Verbraucherschlichtungsstelle teilzunehmen.
+              </p>
+              <h2>Haftung für Inhalte und Links</h2>
+              <p>
+                Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und
+                Aktualität können wir jedoch keine Gewähr übernehmen. Unsere Website enthält Links zu externen Websites
+                Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der
+                jeweilige Anbieter oder Betreiber verantwortlich.
+              </p>
+              <h2>Urheberrecht</h2>
+              <p>
+                Die Inhalte und Werke auf dieser Website unterliegen dem Urheberrecht. Jede Verwertung außerhalb der
+                Grenzen des Urheberrechts bedarf unserer schriftlichen Zustimmung. Referenzprojekte werden mit
+                Zustimmung der jeweiligen Kunden gezeigt.
+              </p>
+            </>
+          )
+        }
+
+        {
+          kind === 'privacy' && lang === 'en' && (
+            <>
+              <h2>1. Who is responsible</h2>
+              <p>
+                The controller responsible for processing personal data on this website is:
+                <br />
+                {addressLines.map((line) => (<>{line}<br /></>))}
+                Email: <a href={`mailto:${site.email}`}>{site.email}</a>
+              </p>
+              <h2>2. Overview</h2>
+              <p>
+                We collect as little data as possible. This website does <strong>not</strong> use tracking cookies,
+                advertising pixels or analytics tools, and loads no fonts or scripts from third-party servers.
+              </p>
+              <h2>3. Hosting and server log files</h2>
+              <p>
+                This website is hosted by Namecheap, Inc. (USA). When you visit the site, the server automatically
+                stores technical information in log files: IP address, date and time, page requested, referrer, browser
+                and operating system. This is necessary to deliver the website securely and to defend against attacks
+                (Art. 6(1)(f) GDPR). Log files are deleted after a short period, typically 30 days at the latest. Data
+                transfers to the USA are based on the EU Standard Contractual Clauses.
+              </p>
+              <h2>4. Contact form, email and phone</h2>
+              <p>
+                When you contact us via the form, email or phone, we process the information you provide (such as
+                name, email address, phone number, company and message) to handle your request and to prepare a
+                quote. The legal basis is Art. 6(1)(b) GDPR (pre-contractual measures) and Art. 6(1)(f) GDPR (our
+                legitimate interest in answering enquiries). We delete the data once your request has been handled,
+                unless statutory retention obligations apply.
+              </p>
+              <h2>5. WhatsApp</h2>
+              <p>
+                You can contact us via WhatsApp. If you click the WhatsApp button, you leave our website and WhatsApp
+                (Meta Platforms Ireland Ltd.) processes your data according to its own privacy policy. Please only use
+                WhatsApp if you agree to this; alternatively, use our contact form or email.
+              </p>
+              <h2>6. Appointment booking</h2>
+              <p>
+                For booking calls we link to an external scheduling service. Data you enter there is processed by
+                that provider under its own privacy policy and used by us only to arrange the appointment.
+              </p>
+              <h2>7. Your rights</h2>
+              <p>
+                You have the right to access, rectification, erasure, restriction of processing, data portability and
+                to object to processing of your personal data, and to withdraw consent at any time. You also have the
+                right to lodge a complaint with a data protection supervisory authority. To exercise your rights,
+                email us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+              </p>
+              <h2>8. SSL/TLS encryption</h2>
+              <p>
+                This website uses SSL/TLS encryption to protect the transmission of data such as enquiries you send
+                to us. You can recognise an encrypted connection by the padlock in your browser’s address bar.
+              </p>
+            </>
+          )
+        }
+
+        {
+          kind === 'privacy' && lang === 'de' && (
+            <>
+              <h2>1. Verantwortliche Stelle</h2>
+              <p>
+                Verantwortlich für die Datenverarbeitung auf dieser Website ist:
+                <br />
+                {addressLines.map((line) => (<>{line}<br /></>))}
+                E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+              </p>
+              <h2>2. Überblick</h2>
+              <p>
+                Wir erheben so wenige Daten wie möglich. Diese Website verwendet <strong>keine</strong> Tracking-Cookies,
+                Werbe-Pixel oder Analyse-Tools und lädt keine Schriften oder Skripte von Servern Dritter.
+              </p>
+              <h2>3. Hosting und Server-Logfiles</h2>
+              <p>
+                Diese Website wird bei Namecheap, Inc. (USA) gehostet. Beim Aufruf der Website speichert der Server
+                automatisch technische Informationen in Logfiles: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite,
+                Referrer, Browser und Betriebssystem. Dies ist erforderlich, um die Website sicher auszuliefern und
+                Angriffe abzuwehren (Art. 6 Abs. 1 lit. f DSGVO). Die Logfiles werden nach kurzer Zeit gelöscht, in der
+                Regel spätestens nach 30 Tagen. Die Datenübermittlung in die USA erfolgt auf Grundlage der
+                EU-Standardvertragsklauseln.
+              </p>
+              <h2>4. Kontaktformular, E-Mail und Telefon</h2>
+              <p>
+                Wenn Sie uns über das Formular, per E-Mail oder telefonisch kontaktieren, verarbeiten wir Ihre Angaben
+                (z. B. Name, E-Mail-Adresse, Telefonnummer, Unternehmen und Nachricht), um Ihre Anfrage zu bearbeiten
+                und ein Angebot zu erstellen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche
+                Maßnahmen) sowie Art. 6 Abs. 1 lit. f DSGVO (unser berechtigtes Interesse an der Beantwortung von
+                Anfragen). Wir löschen die Daten, sobald Ihre Anfrage abschließend bearbeitet ist, sofern keine
+                gesetzlichen Aufbewahrungspflichten bestehen.
+              </p>
+              <h2>5. WhatsApp</h2>
+              <p>
+                Sie können uns über WhatsApp kontaktieren. Wenn Sie auf den WhatsApp-Button klicken, verlassen Sie
+                unsere Website und WhatsApp (Meta Platforms Ireland Ltd.) verarbeitet Ihre Daten gemäß eigener
+                Datenschutzbestimmungen. Bitte nutzen Sie WhatsApp nur, wenn Sie damit einverstanden sind; alternativ
+                stehen Ihnen das Kontaktformular und E-Mail zur Verfügung.
+              </p>
+              <h2>6. Terminbuchung</h2>
+              <p>
+                Für die Buchung von Gesprächen verlinken wir auf einen externen Terminbuchungsdienst. Die dort
+                eingegebenen Daten verarbeitet der Anbieter nach seinen eigenen Datenschutzbestimmungen; wir nutzen sie
+                ausschließlich zur Vereinbarung des Termins.
+              </p>
+              <h2>7. Ihre Rechte</h2>
+              <p>
+                Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+                Datenübertragbarkeit und Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten sowie das
+                Recht, erteilte Einwilligungen jederzeit zu widerrufen. Außerdem steht Ihnen ein Beschwerderecht bei
+                einer Datenschutz-Aufsichtsbehörde zu. Zur Ausübung Ihrer Rechte schreiben Sie uns an
+                <a href={`mailto:${site.email}`}>{site.email}</a>.
+              </p>
+              <h2>8. SSL-/TLS-Verschlüsselung</h2>
+              <p>
+                Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung, etwa für Anfragen, die Sie an
+                uns senden. Eine verschlüsselte Verbindung erkennen Sie am Schloss-Symbol in der Adresszeile Ihres
+                Browsers.
+              </p>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .muted {
+    color: var(--muted);
+    margin: 0;
+  }
+  .page-hero h1 {
+    max-width: none;
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ServiceCard from '~/components/ServiceCard.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
+import { groupOrder, servicesByGroup } from '~/data/services';
+import { breadcrumbSchema } from '~/lib/schema';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const copy = {
+  en: {
+    title: 'Services: Web Design, SEO, Ads, Branding & Security',
+    description:
+      'Web design, branding, SEO, paid ads, social media, content marketing, cybersecurity and software testing — everything your business needs online, from one team.',
+    h1: 'Everything you need to win online.',
+    lead: 'Pick one service or combine them. Either way you get one team, one plan and one point of contact.',
+  },
+  de: {
+    title: 'Leistungen: Webdesign, SEO, Werbung, Branding & Sicherheit',
+    description:
+      'Webdesign, Branding, SEO, Online-Werbung, Social Media, Content-Marketing, Cybersecurity und Softwaretests — alles, was Ihr Unternehmen online braucht, aus einer Hand.',
+    h1: 'Alles, was Sie online erfolgreich macht.',
+    lead: 'Wählen Sie eine Leistung oder kombinieren Sie mehrere. In jedem Fall erhalten Sie ein Team, einen Plan und einen Ansprechpartner.',
+  },
+}[lang];
+const crumbs = [
+  { label: s.breadcrumbHome, href: url('home', lang) },
+  { label: s.nav.services, href: url('services', lang) },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={copy.title}
+  description={copy.description}
+  alternates={alternatesFor('services')}
+  schema={[breadcrumbSchema(crumbs.map((c) => ({ name: c.label, path: c.href })))]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+      <h1>{copy.h1}</h1>
+      <p class="lead">{copy.lead}</p>
+    </div>
+  </section>
+
+  {
+    groupOrder.map((g, i) => (
+      <section class:list={['section section--tight', { 'section--white': i % 2 === 1 }]} id={g}>
+        <div class="container">
+          <div class={`svc-group svc-group--${g}`}>
+            <span class="eyebrow">0{i + 1}</span>
+            <h2>{s.groups[g].name}</h2>
+            <p class="lead">{s.groups[g].text}</p>
+          </div>
+          <div class="grid grid--2">
+            {servicesByGroup(g).map((svc) => (
+              <ServiceCard service={svc} lang={lang} />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .svc-group {
+    margin-bottom: 2.5rem;
+    max-width: 640px;
+  }
+  .svc-group h2 {
+    margin: 0.75rem 0 0.5rem;
+  }
+  .svc-group .lead {
+    margin: 0;
+  }
+  .svc-group--grow .eyebrow::before {
+    background: var(--grow);
+  }
+  .svc-group--protect .eyebrow::before {
+    background: var(--protect);
+  }
+</style>

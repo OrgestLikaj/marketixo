@@ -1,0 +1,54 @@
+---
+import { locales, localeMeta, routes, type Alternates, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternates: Alternates;
+}
+const { lang, alternates } = Astro.props;
+// Fall back to the other language's home page when a page has no translation.
+const target = (l: Lang) => alternates[l] ?? routes.home[l];
+---
+
+<div class="lang" role="group" aria-label="Language">
+  {
+    locales.map((l) =>
+      l === lang ? (
+        <span class="lang__item is-current" aria-current="true" title={localeMeta[l].label}>
+          {localeMeta[l].short}
+        </span>
+      ) : (
+        <a class="lang__item" href={target(l)} hreflang={l} lang={l} title={localeMeta[l].label}>
+          {localeMeta[l].short}
+        </a>
+      ),
+    )
+  }
+</div>
+
+<style>
+  .lang {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+  }
+  .lang__item {
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .lang__item:hover {
+    color: var(--ink);
+  }
+  .lang__item.is-current {
+    background: var(--ink);
+    color: var(--white);
+  }
+</style>

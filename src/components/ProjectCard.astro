@@ -1,0 +1,177 @@
+---
+import { services } from '~/data/services';
+import type { Project } from '~/data/work';
+import type { Lang } from '~/i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+const { project, lang } = Astro.props;
+const tags = project.services
+  .map((k) => services.find((s) => s.key === k)?.copy[lang].title.split(' (')[0])
+  .filter(Boolean);
+const sample = lang === 'de' ? 'Beispiel' : 'Sample';
+const Tag = project.url ? 'a' : 'article';
+const linkProps = project.url ? { href: project.url, target: '_blank', rel: 'noopener' } : {};
+---
+
+<Tag class="project reveal" {...linkProps}>
+  <div class="project__cover" style={`--c:${project.color}`}>
+    {
+      project.image ? (
+        <img src={project.image} alt={project.client} loading="lazy" decoding="async" width="1600" height="1000" />
+      ) : (
+        <div class="project__mock" aria-hidden="true">
+          <div class="project__bar">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div class="project__body">
+            <span class="project__h" />
+            <span class="project__l" />
+            <span class="project__l project__l--short" />
+            <span class="project__btn" />
+          </div>
+        </div>
+      )
+    }
+    {project.placeholder && <span class="project__badge">{sample}</span>}
+  </div>
+  <div class="project__meta">
+    <h3>{project.client}</h3>
+    <span class="project__year">{project.year}</span>
+  </div>
+  <p>{project.summary[lang]}</p>
+  {project.result && <p class="project__result">{project.result[lang]}</p>}
+  <ul class="project__tags">
+    {tags.map((tag) => <li class="tag">{tag}</li>)}
+  </ul>
+</Tag>
+
+<style>
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  .project__cover {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 0.75rem;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--c) 70%, white) 0%, transparent 60%),
+      var(--c);
+  }
+  .project__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .project:hover .project__cover img,
+  .project:hover .project__mock {
+    transform: scale(1.03) translateY(-4px);
+  }
+  .project__mock {
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 16%;
+    bottom: -6%;
+    border-radius: 12px 12px 0 0;
+    background: var(--white);
+    box-shadow: 0 30px 60px rgb(0 0 0 / 0.25);
+    transition: transform 0.6s var(--ease);
+  }
+  .project__bar {
+    display: flex;
+    gap: 6px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+  }
+  .project__bar i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e3e3e3;
+  }
+  .project__body {
+    display: grid;
+    gap: 10px;
+    padding: 9% 10%;
+  }
+  .project__body span {
+    display: block;
+    height: 10px;
+    border-radius: 6px;
+    background: #ececec;
+  }
+  .project__body .project__h {
+    height: 20px;
+    width: 75%;
+    background: var(--ink);
+    opacity: 0.85;
+  }
+  .project__body .project__l--short {
+    width: 55%;
+  }
+  .project__body .project__btn {
+    width: 32%;
+    height: 22px;
+    margin-top: 6px;
+    border-radius: 999px;
+    background: var(--c);
+  }
+  .project__badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.92);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .project__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .project h3 {
+    margin: 0;
+    font-size: 1.375rem;
+  }
+  .project__year {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .project p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.975rem;
+  }
+  .project .project__result {
+    color: var(--signal-dark);
+    font-weight: 600;
+  }
+  .project__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+  .section--white .project__tags .tag {
+    background: var(--paper);
+  }
+</style>

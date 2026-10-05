@@ -1,0 +1,44 @@
+name: Build & deploy
+
+# Builds the site on every push / pull request (catches errors early).
+# Deploys to Namecheap via FTP on pushes to `main` — once these repository secrets exist
+# (Settings → Secrets and variables → Actions):
+#   FTP_SERVER    e.g. ftp.marketixo.com  (cPanel → FTP Accounts → "Configure FTP Client")
+#   FTP_USERNAME  e.g. deploy@marketixo.com
+#   FTP_PASSWORD
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy to Namecheap (FTP)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./public_html/

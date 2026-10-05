@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink } from '~/config/site';
+import { t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const s = t(Astro.props.lang);
+---
+
+<a class="wa-float" href={whatsappLink(s.whatsappText)} target="_blank" rel="noopener" aria-label={s.cta.whatsapp}>
+  <Icon name="whatsapp" size={28} />
+  <span class="wa-float__label">{s.cta.whatsapp}</span>
+</a>
+
+<style>
+  .wa-float {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 58px;
+    padding: 0 15px;
+    border-radius: 999px;
+    background: #25d366;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgb(37 211 102 / 0.35), 0 2px 6px rgb(0 0 0 / 0.12);
+    transition: transform 0.2s var(--ease);
+  }
+  .wa-float:hover {
+    transform: translateY(-3px);
+  }
+  .wa-float__label {
+    display: none;
+    padding-right: 6px;
+  }
+  @media (min-width: 900px) {
+    .wa-float__label {
+      display: inline;
+    }
+  }
+  :global(html.menu-open) .wa-float {
+    display: none;
+  }
+</style>

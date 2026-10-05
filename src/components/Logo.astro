@@ -1,0 +1,65 @@
+---
+/**
+ * Marketixo logo: a square mark with an "x" whose rising stroke becomes an arrow
+ * (build → grow), followed by the wordmark.
+ */
+interface Props {
+  inverted?: boolean;
+  markOnly?: boolean;
+  class?: string;
+}
+const { inverted = false, markOnly = false, class: className } = Astro.props;
+---
+
+<span class:list={['logo', { 'logo--inverted': inverted }, className]}>
+  <svg class="logo__mark" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+    <rect width="40" height="40" rx="11" class="logo__bg"></rect>
+    <path d="M12.5 12.5 27.5 27.5" class="logo__stroke" stroke-width="4.2" stroke-linecap="round"></path>
+    <path d="M12.5 27.5 27 13" stroke="#FF5A1F" stroke-width="4.2" stroke-linecap="round"></path>
+    <path d="M19.5 12.2h8.3v8.3" fill="none" stroke="#FF5A1F" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+  {
+    !markOnly && (
+      <span class="logo__word">
+        marketi<span class="logo__x">x</span>o
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ink);
+  }
+  .logo__bg {
+    fill: var(--ink);
+  }
+  .logo__stroke {
+    stroke: var(--paper);
+  }
+  .logo--inverted {
+    color: var(--white);
+  }
+  .logo--inverted .logo__bg {
+    fill: var(--white);
+  }
+  .logo--inverted .logo__stroke {
+    stroke: var(--ink);
+  }
+  .logo__mark {
+    flex: none;
+  }
+  .logo__word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .logo__x {
+    color: var(--signal);
+  }
+</style>

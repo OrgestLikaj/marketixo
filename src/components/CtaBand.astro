@@ -1,0 +1,87 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink } from '~/config/site';
+import { t, url, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  text?: string;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const copy = {
+  en: {
+    title: 'Ready to grow? Let’s talk.',
+    text: 'Tell us where you are and where you want to be. You’ll get an honest recommendation and a clear, fixed quote — free and without obligation.',
+  },
+  de: {
+    title: 'Bereit zu wachsen? Lassen Sie uns sprechen.',
+    text: 'Erzählen Sie uns, wo Sie stehen und wo Sie hinwollen. Sie erhalten eine ehrliche Empfehlung und ein klares Festpreisangebot — kostenlos und unverbindlich.',
+  },
+}[lang];
+const title = Astro.props.title ?? copy.title;
+const text = Astro.props.text ?? copy.text;
+---
+
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-band__box reveal">
+      <div class="cta-band__glow" aria-hidden="true"></div>
+      <h2>{title}</h2>
+      <p class="lead">{text}</p>
+      <div class="btn-row">
+        <a href={url('contact', lang) + '#quote'} class="btn btn--signal">
+          {s.cta.quote}
+          <Icon name="arrow" class="arrow" />
+        </a>
+        <a href={whatsappLink(s.whatsappText)} class="btn btn--ghost" target="_blank" rel="noopener">
+          <Icon name="whatsapp" />
+          {s.cta.whatsapp}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: var(--section);
+  }
+  .cta-band__box {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: clamp(40px, 7vw, 96px);
+    border-radius: calc(var(--radius-lg) + 8px);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .cta-band__glow {
+    position: absolute;
+    z-index: -1;
+    right: -15%;
+    bottom: -60%;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 90 31 / 0.55), rgb(255 90 31 / 0) 65%);
+    filter: blur(10px);
+  }
+  .cta-band h2 {
+    max-width: 16ch;
+  }
+  .cta-band .lead {
+    max-width: 560px;
+    color: var(--on-ink-muted);
+    margin-bottom: 2rem;
+  }
+  .cta-band .btn--ghost {
+    --btn-fg: var(--on-ink);
+  }
+  .cta-band .btn--ghost:hover {
+    --btn-bg: var(--white);
+    --btn-fg: var(--ink);
+    border-color: var(--white);
+  }
+</style>

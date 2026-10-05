@@ -1,0 +1,277 @@
+---
+/**
+ * Quote request form. Posts to /api/contact.php (PHP runs on Namecheap shared hosting).
+ * Works without JavaScript (normal POST + redirect); with JavaScript it submits in the
+ * background and shows inline errors.
+ */
+import Icon from './Icon.astro';
+import { services } from '~/data/services';
+import { t, url, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Service key to pre-select (e.g. on a service page). */
+  preselect?: string;
+}
+const { lang, preselect } = Astro.props;
+const f = t(lang).form;
+const thanks = url('thanks', lang);
+const errorUrl = url('contact', lang) + '?error=1#quote';
+---
+
+<form class="quote" action="/api/contact.php" method="post" data-quote-form novalidate>
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="redirect" value={thanks} />
+  <input type="hidden" name="error_redirect" value={errorUrl} />
+  <input type="hidden" name="ts" value="" data-ts />
+  <!-- Honeypot: humans never see this field. -->
+  <div class="quote__hp" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="quote__row">
+    <label class="field">
+      <span>{f.name}</span>
+      <input type="text" name="name" required maxlength="120" autocomplete="name" />
+    </label>
+    <label class="field">
+      <span>{f.email}</span>
+      <input type="email" name="email" required maxlength="200" autocomplete="email" />
+    </label>
+  </div>
+
+  <div class="quote__row">
+    <label class="field">
+      <span>{f.phone} <em>({f.optional})</em></span>
+      <input type="tel" name="phone" maxlength="40" autocomplete="tel" />
+    </label>
+    <label class="field">
+      <span>{f.company} <em>({f.optional})</em></span>
+      <input type="text" name="company" maxlength="200" autocomplete="organization" />
+    </label>
+  </div>
+
+  <fieldset class="field">
+    <legend>{f.services}</legend>
+    <div class="chips">
+      {
+        services.map((svc) => (
+          <label class="chip">
+            <input type="checkbox" name="services[]" value={svc.copy.en.title} checked={svc.key === preselect} />
+            <span>{svc.copy[lang].title.split(' (')[0]}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="field">
+    <legend>{f.budget}</legend>
+    <div class="chips">
+      {
+        f.budgetOptions.map((option, i) => (
+          <label class="chip">
+            <input type="radio" name="budget" value={t('en').form.budgetOptions[i]} checked={i === 0} />
+            <span>{option}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <label class="field">
+    <span>{f.message}</span>
+    <textarea name="message" rows="5" required maxlength="5000" placeholder={f.messagePlaceholder}></textarea>
+  </label>
+
+  <label class="consent">
+    <input type="checkbox" name="consent" value="yes" required />
+    <span>{f.consent} <a href={url('privacy', lang)} target="_blank">{f.consentLink}</a>.</span>
+  </label>
+
+  <p class="quote__error" role="alert" data-error hidden></p>
+
+  <button type="submit" class="btn btn--signal quote__submit" data-submit>
+    <span data-label>{f.submit}</span>
+    <Icon name="arrow" class="arrow" />
+  </button>
+</form>
+
+<script is:inline define:vars={{ invalidMsg: f.invalid, errorMsg: f.error, sendingMsg: f.sending }}>
+  (() => {
+    const form = document.querySelector('[data-quote-form]');
+    if (!form) return;
+    const ts = form.querySelector('[data-ts]');
+    ts.value = String(Math.floor(Date.now() / 1000));
+    const errorBox = form.querySelector('[data-error]');
+    const button = form.querySelector('[data-submit]');
+    const label = form.querySelector('[data-label]');
+    const idle = label.textContent;
+
+    if (new URLSearchParams(location.search).has('error')) {
+      errorBox.textContent = errorMsg;
+      errorBox.hidden = false;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      if (!form.checkValidity()) {
+        errorBox.textContent = invalidMsg;
+        errorBox.hidden = false;
+        form.reportValidity();
+        return;
+      }
+      button.disabled = true;
+      label.textContent = sendingMsg;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'failed');
+        window.location.href = form.querySelector('[name="redirect"]').value;
+      } catch (err) {
+        errorBox.textContent = err && err.message === 'invalid' ? invalidMsg : errorMsg;
+        errorBox.hidden = false;
+        button.disabled = false;
+        label.textContent = idle;
+      }
+    });
+  })();
+</script>
+
+<style>
+  .quote {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .quote__row {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .quote__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .quote__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .field {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .field > span,
+  .field legend {
+    padding: 0;
+    margin-bottom: 0.45rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .field em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--text);
+    font: inherit;
+    font-size: 1rem;
+    transition:
+      border-color 0.15s,
+      background-color 0.15s;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: var(--white);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .chip {
+    position: relative;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 0.55rem 0.95rem;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    font-size: 0.9375rem;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s,
+      color 0.15s;
+  }
+  .chip:hover span {
+    border-color: var(--muted);
+  }
+  .chip input:checked + span {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+  }
+  .chip input:focus-visible + span {
+    outline: 3px solid var(--signal);
+    outline-offset: 2px;
+  }
+  .consent {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .consent input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--signal);
+  }
+  .quote__error {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    background: #fdecec;
+    color: #9b1c1c;
+    font-size: 0.9375rem;
+  }
+  .quote__submit {
+    justify-self: start;
+  }
+  .quote__submit:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+</style>

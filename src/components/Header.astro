@@ -1,0 +1,376 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { t, url, type Alternates, type Lang } from '~/i18n/ui';
+import { groupOrder, servicesByGroup, serviceUrl } from '~/data/services';
+
+interface Props {
+  lang: Lang;
+  alternates: Alternates;
+}
+const { lang, alternates } = Astro.props;
+const s = t(lang);
+const path = Astro.url.pathname;
+
+const nav = [
+  { href: url('work', lang), label: s.nav.work },
+  { href: url('about', lang), label: s.nav.about },
+  { href: url('blog', lang), label: s.nav.blog },
+  { href: url('contact', lang), label: s.nav.contact },
+];
+const servicesHref = url('services', lang);
+const isActive = (href: string) => path.startsWith(href) && href !== url('home', lang);
+---
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a href={url('home', lang)} class="site-header__logo" aria-label="Marketixo — home">
+      <Logo />
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      <ul class="site-nav__list">
+        <li class="site-nav__item site-nav__item--has-menu">
+          <a href={servicesHref} class="site-nav__link" aria-current={isActive(servicesHref) ? 'page' : undefined}>
+            {s.nav.services}
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </a>
+          <div class="mega">
+            <div class="mega__inner">
+              {
+                groupOrder.map((g) => (
+                  <div class="mega__col">
+                    <p class={`mega__group mega__group--${g}`}>{s.groups[g].name}</p>
+                    <ul>
+                      {servicesByGroup(g).map((svc) => (
+                        <li>
+                          <a href={serviceUrl(svc, lang)} class="mega__link">
+                            <span class={`mega__icon mega__icon--${g}`}>
+                              <Icon name={svc.icon} size={18} />
+                            </span>
+                            <span>
+                              <strong>{svc.copy[lang].title}</strong>
+                              <small>{svc.copy[lang].tagline}</small>
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </li>
+        {
+          nav.map((item) => (
+            <li class="site-nav__item">
+              <a href={item.href} class="site-nav__link" aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <LanguageSwitcher lang={lang} alternates={alternates} />
+      <a href={url('contact', lang) + '#quote'} class="btn btn--signal btn--sm site-header__cta">{s.cta.quoteShort}</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="visually-hidden">{s.nav.menu}</span>
+        <Icon name="menu" class="menu-toggle__open" />
+        <Icon name="close" class="menu-toggle__close" />
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <div class="container">
+      <ul class="mobile-menu__list">
+        <li><a href={servicesHref}>{s.nav.services}</a></li>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+      <div class="mobile-menu__services">
+        {
+          groupOrder.map((g) => (
+            <div>
+              <p class={`mega__group mega__group--${g}`}>{s.groups[g].name}</p>
+              <ul>
+                {servicesByGroup(g).map((svc) => (
+                  <li>
+                    <a href={serviceUrl(svc, lang)}>{svc.copy[lang].title}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <a href={url('contact', lang) + '#quote'} class="btn btn--signal mobile-menu__cta">{s.cta.quote}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    document.documentElement.classList.toggle('menu-open', open);
+  };
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+  matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(247 245 240 / 0.86);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s var(--ease);
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: var(--line);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 76px;
+  }
+  .site-header__logo {
+    text-decoration: none;
+    flex: none;
+  }
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+  }
+
+  .site-nav {
+    display: none;
+    margin-left: 1.5rem;
+  }
+  .site-nav__list {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.975rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+    transition: background-color 0.15s;
+  }
+  .site-nav__link:hover,
+  .site-nav__link[aria-current='page'] {
+    background: rgb(13 15 20 / 0.06);
+  }
+
+  /* Services mega menu */
+  .site-nav__item--has-menu {
+    position: relative;
+  }
+  .mega {
+    position: absolute;
+    top: 100%;
+    left: -1rem;
+    padding-top: 14px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.18s var(--ease),
+      transform 0.18s var(--ease),
+      visibility 0.18s;
+  }
+  .site-nav__item--has-menu:hover .mega,
+  .site-nav__item--has-menu:focus-within .mega {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+  .mega__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 260px);
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .mega ul,
+  .mobile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mega__group {
+    margin: 0 0 0.6rem 0.6rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mega__group::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 0.5rem;
+    border-radius: 2px;
+    vertical-align: 1px;
+    background: var(--group, var(--signal));
+  }
+  .mega__group--build {
+    --group: var(--build);
+  }
+  .mega__group--grow {
+    --group: var(--grow);
+  }
+  .mega__group--protect {
+    --group: var(--protect);
+  }
+  .mega__link {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 12px;
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .mega__link:hover {
+    background: var(--paper);
+  }
+  .mega__link strong {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .mega__link small {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .mega__icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  /* Mobile */
+  .menu-toggle {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .menu-toggle :global(.menu-toggle__close),
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__open) {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__close) {
+    display: block;
+  }
+  .mobile-menu {
+    position: fixed;
+    inset: 76px 0 0;
+    overflow-y: auto;
+    padding-block: 1.5rem 3rem;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+  .mobile-menu__list {
+    display: grid;
+    gap: 0.25rem;
+    margin-bottom: 2rem !important;
+  }
+  .mobile-menu__list a {
+    display: block;
+    padding: 0.4rem 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  .mobile-menu__services {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-menu__services .mega__group {
+    margin-left: 0;
+  }
+  .mobile-menu__services a {
+    display: block;
+    padding: 0.35rem 0;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .mobile-menu__cta {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  :global(html.menu-open) {
+    overflow: hidden;
+  }
+
+  .site-header__cta {
+    display: none;
+  }
+  @media (min-width: 560px) {
+    .site-header__cta {
+      display: inline-flex;
+    }
+  }
+  @media (min-width: 1024px) {
+    .site-nav {
+      display: block;
+    }
+    .menu-toggle {
+      display: none;
+    }
+  }
+</style>

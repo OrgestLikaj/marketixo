@@ -1,0 +1,40 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { alternatesFor, t, url } from '~/i18n/ui';
+
+// One 404 page for the whole site (Apache serves /404.html). Shown in English with a German line.
+const s = t('en');
+---
+
+<BaseLayout lang="en" title="Page not found" description="This page doesn’t exist." alternates={alternatesFor('home')} noindex>
+  <section class="section nf">
+    <div class="container">
+      <p class="nf__code">404</p>
+      <h1>This page took a wrong turn.</h1>
+      <p class="lead">The page you’re looking for doesn’t exist or has moved.<br /><span lang="de">Diese Seite existiert leider nicht.</span></p>
+      <div class="btn-row" style="justify-content:center;margin-top:2rem">
+        <a href={url('home', 'en')} class="btn btn--signal">Go to homepage</a>
+        <a href={url('home', 'de')} class="btn btn--ghost" lang="de">Zur Startseite</a>
+        <a href={url('services', 'en')} class="btn btn--ghost">{s.nav.services}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    text-align: center;
+  }
+  .nf__code {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 20vw, 12rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: var(--signal);
+  }
+  .nf h1 {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+  }
+</style>
