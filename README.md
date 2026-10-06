@@ -25,7 +25,7 @@ npm run preview    # serve the built site
 | Portfolio descriptions, years, results | `src/data/work.ts` |
 | Portfolio layout (tiles, showcase, index or cards) | `src/data/work.ts` → `workLayout`; compare them at `/work-layouts/` |
 | Portfolio screenshots | run `npm run screenshots` (first time: `npx playwright install chromium`) → `public/work/` |
-| Client logos | `public/clients/<key>.svg` or `.png` (keys are in `src/data/work.ts`, e.g. `ir`, `finman`, `implant-swiss`) |
+| Client logos | `public/clients/<key>.svg` or `.png`, named after each client's `key` in `src/data/work.ts`: `scidev`, `medicus`, `ir`, `finman`, `fintrade`, `albstar`, `implant-swiss`. They appear automatically on the Work page, the homepage and in the logo strip. For a white logo, set `logoBg` on that client. |
 | Testimonials (hidden until added) | `src/data/work.ts` → `testimonials` |
 | Your story / founder | `src/views/AboutPage.astro` |
 | Legal texts | `src/views/LegalPage.astro`. **Have these checked**, especially the Impressum and privacy policy for the German market |

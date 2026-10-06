@@ -9,6 +9,7 @@ import { workLayout, type WorkLayout } from '~/data/work';
 import { withBase } from '~/lib/paths';
 
 const layouts: { key: WorkLayout; name: string; text: string }[] = [
+  { key: 'logos', name: 'Logos', text: 'Each client’s logo, large, on a clean panel with a hint of their brand colour. Shows a monogram until the logo file is added.' },
   { key: 'tiles', name: 'Tiles', text: 'A colourful bento grid. Every client gets a tile in their brand colour. Bold, and looks finished even without screenshots.' },
   { key: 'showcase', name: 'Showcase', text: 'One large row per project, alternating left and right, with the services listed. Reads like a set of case studies.' },
   { key: 'index', name: 'Index', text: 'An editorial list with big client names. Each row fills with the brand colour on hover. Minimal and confident.' },
@@ -28,7 +29,7 @@ const layouts: { key: WorkLayout; name: string; text: string }[] = [
       <span class="eyebrow">Internal preview</span>
       <h1>Portfolio layouts</h1>
       <p class="lead">
-        Four ways to show your work. To switch, set <code>workLayout</code> in <code>src/data/work.ts</code>. The Home page
+        Five ways to show your work. To switch, set <code>workLayout</code> in <code>src/data/work.ts</code>. The Home page
         (first three projects) and the Work page both follow it.
       </p>
       <nav class="picker" aria-label="Layouts">

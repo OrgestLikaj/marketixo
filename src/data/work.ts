@@ -14,15 +14,16 @@ import type { Lang } from '~/i18n/ui';
  * Compare all layouts side by side at /work-layouts/ (not linked anywhere, not indexed).
  */
 
-export type WorkLayout = 'tiles' | 'showcase' | 'index' | 'cards';
+export type WorkLayout = 'logos' | 'tiles' | 'showcase' | 'index' | 'cards';
 
 /**
+ * - 'logos'    logo-led cards: each client's logo large on a clean panel (add logos to /public/clients/)
  * - 'tiles'    colourful bento grid of brand tiles
  * - 'showcase' one large row per project, alternating left/right
  * - 'index'    editorial list with big client names; rows fill with the brand colour on hover
  * - 'cards'    browser-framed screenshot cards (best once real screenshots exist in /public/work/)
  */
-export const workLayout: WorkLayout = 'tiles';
+export const workLayout: WorkLayout = 'logos';
 
 export interface Project {
   key: string;
@@ -35,8 +36,10 @@ export interface Project {
   year?: number;
   /** Screenshot path, e.g. '/work/ir.webp'. Filled automatically when the file exists. */
   image?: string;
-  /** Logo path, e.g. '/clients/ir.svg'. */
+  /** Logo path, e.g. '/clients/ir.svg'. Found automatically when the file is named after `key`. */
   logo?: string;
+  /** Background behind the logo, for logos made for dark backgrounds (e.g. a white logo → '#0D3B66'). */
+  logoBg?: string;
   /** Cover colour used when there is no screenshot — ideally the client's brand colour. */
   color: string;
   /** One line about the client. TODO: refine with what the client does (industry, audience). */
