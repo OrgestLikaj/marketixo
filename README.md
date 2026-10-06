@@ -23,6 +23,7 @@ npm run preview    # serve the built site
 | Email, phone, WhatsApp, booking link, address, legal details, social links | `src/config/site.ts` (search for `TODO`) |
 | Where form requests are sent | `public/api/contact.php` → `MAIL_TO`, `MAIL_FROM` |
 | Portfolio descriptions, years, results | `src/data/work.ts` |
+| Portfolio layout (tiles, showcase, index or cards) | `src/data/work.ts` → `workLayout`; compare them at `/work-layouts/` |
 | Portfolio screenshots | run `npm run screenshots` (first time: `npx playwright install chromium`) → `public/work/` |
 | Client logos | `public/clients/<key>.svg` or `.png` (keys are in `src/data/work.ts`, e.g. `ir`, `finman`, `implant-swiss`) |
 | Testimonials (hidden until added) | `src/data/work.ts` → `testimonials` |

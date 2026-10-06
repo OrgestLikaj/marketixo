@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
-import ProjectCard from '~/components/ProjectCard.astro';
+import WorkGallery from '~/components/WorkGallery.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import ClientLogos from '~/components/ClientLogos.astro';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
-import { showcase } from '~/data/work';
 import { breadcrumbSchema } from '~/lib/schema';
 
 interface Props {
@@ -50,16 +49,8 @@ const crumbs = [
   </section>
   <section class="section section--white" style="padding-top:clamp(48px,6vw,80px)">
     <div class="container">
-      <div class="grid grid--2 work-grid">
-        {showcase.map((p) => <ProjectCard project={p} lang={lang} />)}
-      </div>
+      <WorkGallery lang={lang} />
     </div>
   </section>
   <CtaBand lang={lang} />
 </BaseLayout>
-
-<style>
-  .work-grid {
-    row-gap: clamp(40px, 5vw, 64px);
-  }
-</style>

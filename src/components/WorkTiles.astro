@@ -1,0 +1,236 @@
+---
+import Icon from './Icon.astro';
+import type { Project } from '~/data/work';
+import type { Lang } from '~/i18n/ui';
+import { logoFor, screenshotFor } from '~/lib/assets';
+import { projectLink, projectServices } from '~/lib/work';
+
+/** Bento grid of brand-coloured tiles. Works without screenshots; shows one on hover when it exists. */
+interface Props {
+  projects: Project[];
+  lang: Lang;
+}
+const { projects, lang } = Astro.props;
+
+/**
+ * Splits the projects into rows of 2 and 3 (never a lonely 1 unless there is only one) and gives
+ * each tile a width on a 12-column grid: 7 + 5 or 5 + 7 for pairs, 4 + 4 + 4 for threes.
+ */
+function spans(n: number): number[] {
+  const rows: number[] = [];
+  let left = n;
+  let next = n === 3 ? 3 : 2;
+  while (left > 0) {
+    let size = Math.min(next, left);
+    if (left - size === 1) size = size === 2 ? 3 : 2;
+    rows.push(size);
+    left -= size;
+    next = size === 2 ? 3 : 2;
+  }
+  let pairs = 0;
+  return rows.flatMap((size) => {
+    if (size === 1) return [12];
+    if (size === 3) return [4, 4, 4];
+    return pairs++ % 2 === 0 ? [7, 5] : [5, 7];
+  });
+}
+
+const widths = spans(projects.length);
+const items = projects.map((p, i) => ({
+  p,
+  span: widths[i],
+  link: projectLink(p),
+  logo: logoFor(p.key, p.logo),
+  image: screenshotFor(p.key, p.image),
+  services: projectServices(p, lang),
+}));
+---
+
+<ul class="tiles">
+  {
+    items.map(({ p, span, link, logo, image, services }, i) => (
+      <li class="tile reveal" style={`--c:${p.color};--span:${span};transition-delay:${(i % 3) * 70}ms`}>
+        <a href={link?.href} target="_blank" rel="noopener" class:list={['tile__link', { 'tile__link--wide': span >= 7 }]}>
+          {image && <img class="tile__shot" src={image} alt="" loading="lazy" decoding="async" width="1440" height="900" />}
+          <div class="tile__top">
+            <span class="tile__num">{String(i + 1).padStart(2, '0')}</span>
+            <ul class="tile__icons" aria-label={services.map((s) => s.title).join(', ')}>
+              {services.map((s) => (
+                <li title={s.title}>
+                  <Icon name={s.icon} size={16} />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="tile__main">
+            {logo ? <img class="tile__logo" src={logo} alt={p.client} loading="lazy" /> : <h3 class="tile__name">{p.client}</h3>}
+            <p class="tile__summary">{p.summary[lang]}</p>
+          </div>
+          <div class="tile__foot">
+            <span>{link?.label}</span>
+            <span class="tile__go" aria-hidden="true">
+              <Icon name="arrow-up-right" size={18} />
+            </span>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .tiles {
+    display: grid;
+    gap: clamp(12px, 1.6vw, 20px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 720px) {
+    .tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1000px) {
+    .tiles {
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .tile {
+      grid-column: span var(--span);
+    }
+  }
+  .tile__link {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    height: 100%;
+    min-height: clamp(280px, 30vw, 380px);
+    padding: clamp(22px, 2.6vw, 34px);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(90% 80% at 100% 0%, color-mix(in srgb, var(--c) 45%, white) 0%, transparent 65%),
+      radial-gradient(70% 70% at 0% 100%, color-mix(in srgb, var(--c) 70%, black) 0%, transparent 70%),
+      var(--c);
+    color: var(--white);
+    text-decoration: none;
+    transition: transform 0.5s var(--ease);
+  }
+  /* A faint grid in the corner gives each tile some texture without a screenshot. */
+  .tile__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 70% 80% at 85% 20%, #000 10%, transparent 70%);
+  }
+  .tile__link:hover {
+    transform: translateY(-4px);
+  }
+  .tile__shot {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0;
+    transform: scale(1.04);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.8s var(--ease);
+  }
+  .tile__link:hover .tile__shot {
+    opacity: 0.18;
+    transform: none;
+  }
+  .tile__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .tile__num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  .tile__icons {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tile__icons li {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+    backdrop-filter: blur(4px);
+  }
+  .tile__main {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .tile__name {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+  .tile__link--wide .tile__name {
+    font-size: clamp(2.5rem, 5.6vw, 4.75rem);
+  }
+  .tile__logo {
+    max-height: 64px;
+    max-width: 70%;
+    object-fit: contain;
+    object-position: left;
+    filter: brightness(0) invert(1);
+  }
+  .tile__summary {
+    max-width: 44ch;
+    margin: 0;
+    font-size: 0.975rem;
+    line-height: 1.5;
+    color: rgb(255 255 255 / 0.86);
+  }
+  .tile__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.25);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .tile__go {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--c);
+    transition: transform 0.3s var(--ease);
+  }
+  .tile__link:hover .tile__go {
+    transform: rotate(45deg);
+  }
+</style>

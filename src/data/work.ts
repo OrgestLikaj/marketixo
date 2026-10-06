@@ -9,7 +9,20 @@ import type { Lang } from '~/i18n/ui';
  *
  * Logos: put them in /public/clients/<key>.svg (or .png) and set `logo` on the client.
  * Until then the logo strip shows the client name as a wordmark.
+ *
+ * Layout: change `workLayout` below to switch how projects are shown on the Home and Work pages.
+ * Compare all layouts side by side at /work-layouts/ (not linked anywhere, not indexed).
  */
+
+export type WorkLayout = 'tiles' | 'showcase' | 'index' | 'cards';
+
+/**
+ * - 'tiles'    colourful bento grid of brand tiles
+ * - 'showcase' one large row per project, alternating left/right
+ * - 'index'    editorial list with big client names; rows fill with the brand colour on hover
+ * - 'cards'    browser-framed screenshot cards (best once real screenshots exist in /public/work/)
+ */
+export const workLayout: WorkLayout = 'tiles';
 
 export interface Project {
   key: string;
@@ -26,18 +39,13 @@ export interface Project {
   logo?: string;
   /** Cover colour used when there is no screenshot — ideally the client's brand colour. */
   color: string;
-  /** TODO: refine with one line about what the client does (industry, audience). */
+  /** One line about the client. TODO: refine with what the client does (industry, audience). */
   summary: Record<Lang, string>;
   /** A measurable result, e.g. "+120% organic traffic in 6 months". */
   result?: Record<Lang, string>;
 }
 
 const fullService = ['web-design', 'seo', 'paid-ads', 'social-media'];
-
-const fullServiceSummary = (who: Record<Lang, string>): Record<Lang, string> => ({
-  en: `${who.en} Website design and development, SEO, Google & Meta ads and social media management.`,
-  de: `${who.de} Webdesign und -entwicklung, SEO, Google- & Meta-Anzeigen sowie Social-Media-Betreuung.`,
-});
 
 export const projects: Project[] = [
   {
@@ -46,10 +54,10 @@ export const projects: Project[] = [
     url: 'https://scidevcenter.org/',
     services: fullService,
     color: '#1F4FD6',
-    summary: fullServiceSummary({
+    summary: {
       en: 'Center for Science and Innovation for Development, a Tirana-based think tank working on research, policy and science communication in the Western Balkans.',
       de: 'Center for Science and Innovation for Development, ein Thinktank aus Tirana für Forschung, Politikberatung und Wissenschaftskommunikation im Westbalkan.',
-    }),
+    },
   },
   {
     key: 'medicus',
@@ -57,7 +65,7 @@ export const projects: Project[] = [
     url: 'https://medicuscenter.al/',
     services: fullService,
     color: '#0E9F8E',
-    summary: fullServiceSummary({ en: 'Full digital presence for Medicus Center.', de: 'Kompletter Online-Auftritt für Medicus Center.' }),
+    summary: { en: 'Full digital presence for Medicus Center.', de: 'Kompletter Online-Auftritt für Medicus Center.' },
   },
   {
     key: 'ir',
@@ -65,7 +73,7 @@ export const projects: Project[] = [
     url: 'https://ir.al/',
     services: fullService,
     color: '#FF5A1F',
-    summary: fullServiceSummary({ en: 'Full digital presence for IR.', de: 'Kompletter Online-Auftritt für IR.' }),
+    summary: { en: 'Full digital presence for IR.', de: 'Kompletter Online-Auftritt für IR.' },
   },
   {
     key: 'finman',
@@ -73,7 +81,7 @@ export const projects: Project[] = [
     url: 'https://finman.al/',
     services: fullService,
     color: '#0D3B66',
-    summary: fullServiceSummary({ en: 'Full digital presence for Finman.', de: 'Kompletter Online-Auftritt für Finman.' }),
+    summary: { en: 'Full digital presence for Finman.', de: 'Kompletter Online-Auftritt für Finman.' },
   },
   {
     key: 'fintrade',
@@ -81,7 +89,7 @@ export const projects: Project[] = [
     url: 'https://fintrade.al/',
     services: fullService,
     color: '#7C3AED',
-    summary: fullServiceSummary({ en: 'Full digital presence for Fintrade.', de: 'Kompletter Online-Auftritt für Fintrade.' }),
+    summary: { en: 'Full digital presence for Fintrade.', de: 'Kompletter Online-Auftritt für Fintrade.' },
   },
   {
     key: 'albstar',
@@ -89,7 +97,7 @@ export const projects: Project[] = [
     url: 'https://albstar.al/',
     services: fullService,
     color: '#C81E3A',
-    summary: fullServiceSummary({ en: 'Full digital presence for Albstar.', de: 'Kompletter Online-Auftritt für Albstar.' }),
+    summary: { en: 'Full digital presence for Albstar.', de: 'Kompletter Online-Auftritt für Albstar.' },
   },
   {
     key: 'implant-swiss',
@@ -97,11 +105,11 @@ export const projects: Project[] = [
     profile: 'https://www.instagram.com/implantswissalbania/',
     services: fullService,
     color: '#0A7CBF',
-    summary: fullServiceSummary({ en: 'Full digital presence for Implant Swiss Albania.', de: 'Kompletter Online-Auftritt für Implant Swiss Albania.' }),
+    summary: { en: 'Full digital presence for Implant Swiss Albania.', de: 'Kompletter Online-Auftritt für Implant Swiss Albania.' },
   },
 ];
 
-/** Projects with a live website — shown as cards. */
+/** Projects with a live website — used by the 'cards' layout, which needs a site to frame. */
 export const showcase = projects.filter((p) => p.url);
 
 /**

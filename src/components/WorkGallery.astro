@@ -1,0 +1,39 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import WorkIndex from './WorkIndex.astro';
+import WorkShowcase from './WorkShowcase.astro';
+import WorkTiles from './WorkTiles.astro';
+import { projects as allProjects, showcase, workLayout, type WorkLayout } from '~/data/work';
+import type { Lang } from '~/i18n/ui';
+
+/** Shows the portfolio in the layout chosen by `workLayout` in src/data/work.ts. */
+interface Props {
+  lang: Lang;
+  /** Show only the first N projects (e.g. on the home page). */
+  limit?: number;
+  /** Override the configured layout (used by the layout comparison page). */
+  layout?: WorkLayout;
+}
+const { lang, limit, layout = workLayout } = Astro.props;
+// Cards frame a website, so they skip clients that only have a social profile.
+const projects = (layout === 'cards' ? showcase : allProjects).slice(0, limit);
+---
+
+{layout === 'tiles' && <WorkTiles projects={projects} lang={lang} />}
+{layout === 'showcase' && <WorkShowcase projects={projects} lang={lang} />}
+{layout === 'index' && <WorkIndex projects={projects} lang={lang} />}
+{
+  layout === 'cards' && (
+    <div class:list={['grid', limit && limit <= 3 ? 'grid--3' : 'grid--2', 'work-cards']}>
+      {projects.map((p) => (
+        <ProjectCard project={p} lang={lang} />
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .work-cards {
+    row-gap: clamp(40px, 5vw, 64px);
+  }
+</style>

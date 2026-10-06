@@ -2,14 +2,14 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Icon from '~/components/Icon.astro';
 import ServiceCard from '~/components/ServiceCard.astro';
-import ProjectCard from '~/components/ProjectCard.astro';
+import WorkGallery from '~/components/WorkGallery.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import ClientLogos from '~/components/ClientLogos.astro';
 import { whatsappLink } from '~/config/site';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
 import { groupOrder, services, servicesByGroup } from '~/data/services';
-import { showcase, testimonials } from '~/data/work';
+import { testimonials } from '~/data/work';
 import { faqSchema } from '~/lib/schema';
 
 interface Props {
@@ -290,9 +290,7 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         </div>
         <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
       </div>
-      <div class="grid grid--3">
-        {showcase.slice(0, 3).map((p) => <ProjectCard project={p} lang={lang} />)}
-      </div>
+      <WorkGallery lang={lang} limit={3} />
     </div>
   </section>
 
