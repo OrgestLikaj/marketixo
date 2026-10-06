@@ -31,6 +31,8 @@ const items = projects.map((p) => ({
   services: projectServices(p, lang),
 }));
 const cols = items.length + (withCta ? 1 : 0) <= 3 ? 3 : 4;
+/** The closing card stretches over whatever is left of the last row (a full row if nothing is). */
+const fill = (perRow: number) => perRow - (items.length % perRow);
 const cta = {
   en: { title: 'Your brand next?', text: 'Tell us about your business and get a free, fixed-price quote.' },
   de: { title: 'Ihre Marke als Nächstes?', text: 'Erzählen Sie uns von Ihrem Unternehmen und erhalten Sie ein kostenloses Festpreisangebot.' },
@@ -75,22 +77,26 @@ const cta = {
   }
   {
     withCta && (
-      <li class="reveal">
+      <li class="reveal logos__cta" style={`--span-md:${fill(2)};--span-lg:${fill(cols)}`}>
         <a class="logo-card logo-card--cta" href={url('contact', lang) + '#quote'}>
-          <div class="logo-card__stage">
-            <span class="logo-card__plus" aria-hidden="true">
-              <Icon name="arrow-up-right" size={28} />
-            </span>
-          </div>
-          <div class="logo-card__body">
-            <h3>{cta.title}</h3>
-            <p>{cta.text}</p>
-          </div>
-          <div class="logo-card__foot">
-            <span class="logo-card__link">
-              {s.cta.quote}
-              <Icon name="arrow" size={16} />
-            </span>
+          <div class="logo-card__cta-inner">
+            <div class="logo-card__stage">
+              <span class="logo-card__plus" aria-hidden="true">
+                <Icon name="arrow-up-right" size={28} />
+              </span>
+            </div>
+            <div class="logo-card__content">
+              <div class="logo-card__body">
+                <h3>{cta.title}</h3>
+                <p>{cta.text}</p>
+              </div>
+              <div class="logo-card__foot">
+                <span class="logo-card__link">
+                  {s.cta.quote}
+                  <Icon name="arrow" size={16} />
+                </span>
+              </div>
+            </div>
           </div>
         </a>
       </li>
@@ -111,9 +117,17 @@ const cta = {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  @media (min-width: 640px) {
+    .logos__cta {
+      grid-column: span var(--span-md);
+    }
+  }
   @media (min-width: 1000px) {
     .logos {
       grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    }
+    .logos__cta {
+      grid-column: span var(--span-lg);
     }
   }
   .logos > li {
@@ -282,8 +296,9 @@ const cta = {
     color: var(--signal-dark);
   }
 
-  /* Closing call-to-action card */
+  /* Closing call-to-action card. When it spans several columns it turns sideways. */
   .logo-card--cta {
+    container-type: inline-size;
     border-style: dashed;
     border-color: color-mix(in srgb, var(--ink) 25%, transparent);
     background: transparent;
@@ -311,5 +326,40 @@ const cta = {
   }
   .logo-card--cta .logo-card__link {
     color: var(--signal-dark);
+  }
+  .logo-card__cta-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .logo-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  @container (min-width: 520px) {
+    .logo-card__cta-inner {
+      flex-direction: row;
+    }
+    .logo-card--cta .logo-card__stage {
+      flex: 0 0 40%;
+      aspect-ratio: auto;
+      min-height: 220px;
+      border-bottom: 0;
+      border-right: 1px dashed color-mix(in srgb, var(--ink) 18%, transparent);
+    }
+    .logo-card--cta .logo-card__content {
+      justify-content: center;
+    }
+    .logo-card--cta .logo-card__body {
+      padding: 28px 32px 0;
+    }
+    .logo-card--cta .logo-card__body h3 {
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+    }
+    .logo-card--cta .logo-card__foot {
+      margin-top: 0;
+      padding: 20px 32px 28px;
+    }
   }
 </style>

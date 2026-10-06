@@ -103,6 +103,39 @@ export const projects: Project[] = [
     summary: { en: 'Full digital presence for Albstar.', de: 'Kompletter Online-Auftritt für Albstar.' },
   },
   {
+    key: 'eydr',
+    client: 'EYDR',
+    url: 'https://eydr.scidevcenter.org/',
+    services: fullService,
+    color: '#0F766E',
+    summary: {
+      en: 'SCiDEV project on youth participation in digital democracy, from digital skills to digital rights, across the Western Balkans.',
+      de: 'SCiDEV-Projekt zur Beteiligung junger Menschen an digitaler Demokratie, von digitalen Kompetenzen bis zu digitalen Rechten, im Westbalkan.',
+    },
+  },
+  {
+    key: 'albanian-athletes',
+    client: 'Albanian Athletes Group',
+    url: 'https://albanianathletesgroup.com/',
+    services: fullService,
+    color: '#D9480F',
+    summary: {
+      en: 'Full digital presence for Albanian Athletes Group.',
+      de: 'Kompletter Online-Auftritt für Albanian Athletes Group.',
+    },
+  },
+  {
+    key: 'elbasanion',
+    client: 'Elbasanion',
+    url: 'https://elbasanion.al/new',
+    services: fullService,
+    color: '#9A3412',
+    summary: {
+      en: 'Full digital presence for Elbasanion.',
+      de: 'Kompletter Online-Auftritt für Elbasanion.',
+    },
+  },
+  {
     key: 'implant-swiss',
     client: 'Implant Swiss Albania',
     profile: 'https://www.instagram.com/implantswissalbania/',
