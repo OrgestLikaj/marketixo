@@ -1,14 +1,16 @@
 ---
+/**
+ * Home page. The previous design is kept at /home-classic/ (src/views/HomePageClassic.astro).
+ */
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Icon from '~/components/Icon.astro';
-import ServiceExplorer from '~/components/ServiceExplorer.astro';
 import Faq from '~/components/Faq.astro';
-import CtaBand from '~/components/CtaBand.astro';
-import LogoGrid from '~/components/LogoGrid.astro';
-import { whatsappLink } from '~/config/site';
+import WorkIndex from '~/components/WorkIndex.astro';
+import { site, whatsappLink } from '~/config/site';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
-import { services } from '~/data/services';
-import { testimonials } from '~/data/work';
+import { groupOrder, services, servicesByGroup, serviceUrl } from '~/data/services';
+import { allClients, projects, testimonials } from '~/data/work';
+import { logoFor } from '~/lib/assets';
 import { faqSchema } from '~/lib/schema';
 
 interface Props {
@@ -23,38 +25,56 @@ const copy = {
     description:
       'Marketixo builds websites, brands and marketing that bring you clients — plus cybersecurity and software testing to keep it all running. Free quote in 24h.',
     eyebrow: 'Digital agency · English & Deutsch',
-    h1: ['We build, ', 'grow', ' and protect your business online.'],
-    lead: 'Websites, SEO, ads, branding and social media — plus security and testing that keep everything running. One team, one plan, one point of contact.',
-    trust: ['Free consultation', 'Fixed-price quotes', 'Reply within 1 business day'],
-    heroCards: {
-      build: { label: 'Build', title: 'New website live', meta: 'Mobile score 98' },
-      grow: { label: 'Grow', title: 'Organic traffic', meta: 'Last 6 months' },
-      protect: { label: 'Protect', title: 'Security check passed', meta: 'SSL · Backups · Updates' },
+    h1: ['Build it.', 'Grow it.', 'Protect it.'],
+    sub: 'Your website, marketing and security — handled by one team.',
+    lead: 'Most businesses juggle a web designer, a marketing freelancer and an IT person. We do all three, with one plan and one point of contact.',
+    stats: [
+      { value: String(allClients.length), label: 'brands we’ve worked with' },
+      { value: String(services.length), label: 'services under one roof' },
+      { value: '2', label: 'languages: English & German' },
+      { value: '1', label: 'point of contact for everything' },
+    ],
+    trustedBy: 'Trusted by',
+    pillarsEyebrow: 'What we do',
+    pillarsTitle: 'Three things every business needs online.',
+    pillarsText: 'Pick one, or let us take care of all three. Every service is fixed-price and works with the others.',
+    compareEyebrow: 'Why one team',
+    compareTitle: 'Stop managing three agencies.',
+    usual: {
+      title: 'The usual way',
+      items: [
+        'A web designer, a marketer and an IT person, each with their own invoice',
+        'A beautiful website nobody finds on Google',
+        'Ads sending traffic to pages that don’t convert',
+        'Security is “someone else’s job” until something breaks',
+        'When results are poor, everyone points at someone else',
+      ],
     },
-    servicesEyebrow: 'Services',
-    servicesTitle: 'Everything your business needs online, under one roof.',
-    servicesText:
-      'Most businesses juggle a web designer, a marketing freelancer and an IT person. We bring it together, so your website, marketing and security work as one.',
-    whyEyebrow: 'Why Marketixo',
-    whyTitle: 'An agency that thinks in results, not deliverables.',
-    why: [
-      { icon: 'users', title: 'One team for everything', text: 'Design, marketing and tech under one roof. No finger-pointing between agencies, one person who knows your project.' },
-      { icon: 'tag', title: 'Clear, fixed quotes', text: 'You know what you pay before we start. No hourly surprises, no hidden extras.' },
-      { icon: 'bolt', title: 'Fast & built to rank', text: 'Every website is fast, mobile-first and SEO-ready from day one, because a site nobody finds is wasted money.' },
-      { icon: 'shield', title: 'Security built in', text: 'With in-house cybersecurity and QA, what we build is tested and protected, not just pretty.' },
-    ],
+    ours: {
+      title: 'With Marketixo',
+      items: [
+        'One team, one plan, one fixed quote',
+        'Every site is fast, mobile-first and SEO-ready from day one',
+        'Ads, SEO and landing pages built to work together',
+        'Tested, backed up and protected as standard',
+        'One person who knows your project and owns the results',
+      ],
+    },
     processEyebrow: 'How we work',
-    processTitle: 'From first call to measurable results in four steps.',
+    processTitle: 'From first call to results.',
     process: [
-      { title: 'Free intro call', text: '20 minutes to understand your business, goals and budget.' },
-      { title: 'Plan & fixed quote', text: 'A clear proposal with scope, timeline and price, usually within 48 hours.' },
-      { title: 'Build & launch', text: 'We design, build and test, with check-ins at every milestone.' },
-      { title: 'Measure & improve', text: 'We track what matters and keep improving after launch.' },
+      { when: 'Day 1', title: 'Free intro call', text: '20 minutes to understand your business, goals and budget.' },
+      { when: 'Within 48 h', title: 'Plan & fixed quote', text: 'A clear proposal with scope, timeline and price.' },
+      { when: 'Milestones', title: 'Build & launch', text: 'We design, build and test, with check-ins along the way.' },
+      { when: 'Ongoing', title: 'Measure & improve', text: 'We track what matters and keep improving after launch.' },
     ],
-    workEyebrow: 'Recent work',
-    workTitle: 'Brands we’ve worked with',
-    clientsHint: 'Hover over a logo to see what we did.',
+    workEyebrow: 'Selected work',
+    workTitle: 'Projects we’re proud of.',
     testimonialsTitle: 'What clients say',
+    contactTitle: 'Rather talk to a person?',
+    contactText: 'Send a message on WhatsApp, write an email or book a short call. We reply within one business day.',
+    finalTitle: 'Let’s build something that works.',
+    finalText: 'Free consultation · Fixed-price quotes · Reply within 1 business day',
     faq: [
       { q: 'How much does a website or marketing project cost?', a: 'Every business is different, so we give you a fixed price after a short call. Small business websites typically start in the low four figures; ongoing marketing is a monthly package. You always know the price before we start.' },
       { q: 'Do you work with clients in Germany, Austria and Switzerland?', a: 'Yes. We work remotely with clients across Europe, in English and German, and we optimise for each market separately.' },
@@ -67,38 +87,56 @@ const copy = {
     description:
       'Marketixo entwickelt Websites, Marken und Marketing, die Kunden bringen — plus Cybersecurity und Softwaretests, damit alles läuft. Angebot innerhalb von 24 h.',
     eyebrow: 'Digitalagentur · Deutsch & English',
-    h1: ['Wir bauen Ihr Business online auf, lassen es ', 'wachsen', ' und schützen es.'],
-    lead: 'Websites, SEO, Werbung, Branding und Social Media — plus Sicherheit und Tests, damit alles zuverlässig läuft. Ein Team, ein Plan, ein Ansprechpartner.',
-    trust: ['Kostenlose Erstberatung', 'Festpreisangebote', 'Antwort innerhalb eines Werktags'],
-    heroCards: {
-      build: { label: 'Aufbauen', title: 'Website ist live', meta: 'Mobile-Score 98' },
-      grow: { label: 'Wachsen', title: 'Organischer Traffic', meta: 'Letzte 6 Monate' },
-      protect: { label: 'Schützen', title: 'Sicherheitscheck bestanden', meta: 'SSL · Backups · Updates' },
+    h1: ['Aufbauen.', 'Wachsen.', 'Schützen.'],
+    sub: 'Website, Marketing und Sicherheit — aus einer Hand.',
+    lead: 'Die meisten Unternehmen jonglieren mit Webdesigner, Marketing-Freelancer und IT-Dienstleister. Wir übernehmen alles drei, mit einem Plan und einem Ansprechpartner.',
+    stats: [
+      { value: String(allClients.length), label: 'Marken, mit denen wir arbeiten' },
+      { value: String(services.length), label: 'Leistungen aus einer Hand' },
+      { value: '2', label: 'Sprachen: Deutsch & Englisch' },
+      { value: '1', label: 'Ansprechpartner für alles' },
+    ],
+    trustedBy: 'Vertrauen uns',
+    pillarsEyebrow: 'Was wir tun',
+    pillarsTitle: 'Drei Dinge, die jedes Unternehmen online braucht.',
+    pillarsText: 'Wählen Sie eins aus oder überlassen Sie uns alle drei. Jede Leistung zum Festpreis, und alles greift ineinander.',
+    compareEyebrow: 'Warum ein Team',
+    compareTitle: 'Schluss mit drei Agenturen.',
+    usual: {
+      title: 'Der übliche Weg',
+      items: [
+        'Webdesigner, Marketing und IT — jeder mit eigener Rechnung',
+        'Eine schöne Website, die bei Google niemand findet',
+        'Anzeigen, die auf Seiten führen, die nicht konvertieren',
+        'Sicherheit ist „nicht unser Thema“ — bis etwas kaputtgeht',
+        'Bleiben Ergebnisse aus, zeigt jeder auf den anderen',
+      ],
     },
-    servicesEyebrow: 'Leistungen',
-    servicesTitle: 'Alles, was Ihr Unternehmen online braucht — aus einer Hand.',
-    servicesText:
-      'Die meisten Unternehmen jonglieren mit Webdesigner, Marketing-Freelancer und IT-Dienstleister. Wir bringen alles zusammen, damit Website, Marketing und Sicherheit als Einheit funktionieren.',
-    whyEyebrow: 'Warum Marketixo',
-    whyTitle: 'Eine Agentur, die in Ergebnissen denkt — nicht in Leistungspaketen.',
-    why: [
-      { icon: 'users', title: 'Ein Team für alles', text: 'Design, Marketing und Technik aus einer Hand. Kein Hin und Her zwischen Agenturen, ein Ansprechpartner, der Ihr Projekt kennt.' },
-      { icon: 'tag', title: 'Klare Festpreise', text: 'Sie wissen vorher, was Sie zahlen. Keine Stundenüberraschungen, keine versteckten Kosten.' },
-      { icon: 'bolt', title: 'Schnell & rankingstark', text: 'Jede Website ist schnell, mobiloptimiert und ab Tag eins SEO-fertig. Denn eine Website, die niemand findet, ist verschenktes Geld.' },
-      { icon: 'shield', title: 'Sicherheit inklusive', text: 'Mit eigener Cybersecurity und Qualitätssicherung ist alles, was wir bauen, getestet und geschützt — nicht nur schön.' },
-    ],
+    ours: {
+      title: 'Mit Marketixo',
+      items: [
+        'Ein Team, ein Plan, ein Festpreis',
+        'Jede Website schnell, mobiloptimiert und ab Tag eins SEO-fertig',
+        'Werbung, SEO und Landingpages, die zusammenarbeiten',
+        'Getestet, gesichert und geschützt als Standard',
+        'Ein Ansprechpartner, der Ihr Projekt kennt und für Ergebnisse geradesteht',
+      ],
+    },
     processEyebrow: 'So arbeiten wir',
-    processTitle: 'Vom ersten Gespräch zu messbaren Ergebnissen in vier Schritten.',
+    processTitle: 'Vom ersten Gespräch zu Ergebnissen.',
     process: [
-      { title: 'Kostenloses Erstgespräch', text: '20 Minuten, um Ihr Unternehmen, Ihre Ziele und Ihr Budget zu verstehen.' },
-      { title: 'Plan & Festpreis', text: 'Ein klares Angebot mit Umfang, Zeitplan und Preis — meist innerhalb von 48 Stunden.' },
-      { title: 'Umsetzung & Launch', text: 'Wir gestalten, entwickeln und testen — mit Abstimmung bei jedem Meilenstein.' },
-      { title: 'Messen & verbessern', text: 'Wir messen, was zählt, und optimieren auch nach dem Launch weiter.' },
+      { when: 'Tag 1', title: 'Kostenloses Erstgespräch', text: '20 Minuten, um Ihr Unternehmen, Ihre Ziele und Ihr Budget zu verstehen.' },
+      { when: 'Innerhalb 48 h', title: 'Plan & Festpreis', text: 'Ein klares Angebot mit Umfang, Zeitplan und Preis.' },
+      { when: 'Meilensteine', title: 'Umsetzung & Launch', text: 'Wir gestalten, entwickeln und testen — mit Abstimmung unterwegs.' },
+      { when: 'Laufend', title: 'Messen & verbessern', text: 'Wir messen, was zählt, und optimieren nach dem Launch weiter.' },
     ],
-    workEyebrow: 'Aktuelle Projekte',
-    workTitle: 'Marken, mit denen wir arbeiten',
-    clientsHint: 'Fahren Sie über ein Logo, um zu sehen, was wir gemacht haben.',
+    workEyebrow: 'Ausgewählte Projekte',
+    workTitle: 'Projekte, auf die wir stolz sind.',
     testimonialsTitle: 'Das sagen unsere Kunden',
+    contactTitle: 'Lieber persönlich sprechen?',
+    contactText: 'Schreiben Sie uns per WhatsApp oder E-Mail, oder buchen Sie ein kurzes Gespräch. Wir antworten innerhalb eines Werktags.',
+    finalTitle: 'Lassen Sie uns etwas bauen, das funktioniert.',
+    finalText: 'Kostenlose Erstberatung · Festpreisangebote · Antwort innerhalb eines Werktags',
     faq: [
       { q: 'Was kostet eine Website oder ein Marketingprojekt?', a: 'Jedes Unternehmen ist anders, deshalb erhalten Sie nach einem kurzen Gespräch einen Festpreis. Websites für kleine Unternehmen beginnen meist im niedrigen vierstelligen Bereich; laufendes Marketing ist ein Monatspaket. Den Preis kennen Sie immer, bevor wir starten.' },
       { q: 'Arbeiten Sie mit Kunden in Deutschland, Österreich und der Schweiz?', a: 'Ja. Wir arbeiten remote mit Kunden in ganz Europa, auf Deutsch und Englisch, und optimieren für jeden Markt separat.' },
@@ -108,7 +146,11 @@ const copy = {
   },
 }[lang];
 
-const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
+const logos = allClients.flatMap((c) => {
+  const src = logoFor(c.key, c.logo);
+  return src ? [{ name: c.client, src }] : [];
+});
+const groupIcons = { build: 'layout', grow: 'chart', protect: 'shield' } as const;
 ---
 
 <BaseLayout
@@ -119,140 +161,149 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
   appendSiteName={false}
   schema={[faqSchema(copy.faq)]}
 >
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero__grid">
-      <div class="hero__copy">
+  <!-- Hero: dark panel with a stacked headline -->
+  <section class="hx">
+    <div class="container">
+      <div class="hx__panel">
+        <div class="hx__glow" aria-hidden="true"></div>
         <span class="eyebrow">{copy.eyebrow}</span>
-        <h1>
-          {copy.h1[0]}<span class="hero__hl">{copy.h1[1]}</span>{copy.h1[2]}
+        <h1 class="hx__title">
+          {
+            copy.h1.map((line, i) => (
+              <span class={`hx__line hx__line--${groupOrder[i]}`} style={`animation-delay:${i * 120}ms`}>
+                {line}
+              </span>
+            ))
+          }
         </h1>
-        <p class="lead">{copy.lead}</p>
-        <div class="btn-row">
-          <a href={url('contact', lang) + '#quote'} class="btn btn--signal">
-            {s.cta.quote}
-            <Icon name="arrow" class="arrow" />
-          </a>
-          <a href={whatsappLink(s.whatsappText)} class="btn btn--ghost" target="_blank" rel="noopener">
-            <Icon name="whatsapp" />
-            {s.cta.whatsapp}
-          </a>
-        </div>
-        <ul class="hero__trust">
-          {copy.trust.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
-
-      <div class="hero__visual" aria-hidden="true">
-        <div class="hcard hcard--build">
-          <span class="hcard__label">{copy.heroCards.build.label}</span>
-          <div class="hcard__browser">
-            <div class="hcard__dots"><i></i><i></i><i></i></div>
-            <div class="hcard__page">
-              <span class="w75 dark"></span>
-              <span class="w90"></span>
-              <span class="w60"></span>
-              <span class="pill"></span>
+        <div class="hx__bottom">
+          <div>
+            <p class="hx__sub">{copy.sub}</p>
+            <p class="hx__lead">{copy.lead}</p>
+            <div class="btn-row">
+              <a href={url('contact', lang) + '#quote'} class="btn btn--signal">
+                {s.cta.quote}
+                <Icon name="arrow" class="arrow" />
+              </a>
+              <a href={whatsappLink(s.whatsappText)} class="btn btn--ghost" target="_blank" rel="noopener">
+                <Icon name="whatsapp" />
+                {s.cta.whatsapp}
+              </a>
             </div>
           </div>
-          <div class="hcard__foot">
-            <strong>{copy.heroCards.build.title}</strong>
-            <span class="hcard__score">98</span>
-          </div>
-        </div>
-
-        <div class="hcard hcard--grow">
-          <span class="hcard__label">{copy.heroCards.grow.label}</span>
-          <strong>{copy.heroCards.grow.title}</strong>
-          <small>{copy.heroCards.grow.meta}</small>
-          <svg viewBox="0 0 240 90" class="hcard__chart" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#0E9F6E" stop-opacity="0.28"></stop>
-                <stop offset="1" stop-color="#0E9F6E" stop-opacity="0"></stop>
-              </linearGradient>
-            </defs>
-            <path d="M0 80 C30 76 45 70 70 66 S110 60 130 48 S170 36 190 24 S225 10 240 6 V90 H0Z" fill="url(#g)"></path>
-            <path d="M0 80 C30 76 45 70 70 66 S110 60 130 48 S170 36 190 24 S225 10 240 6" fill="none" stroke="#0E9F6E" stroke-width="3" stroke-linecap="round"></path>
-          </svg>
-        </div>
-
-        <div class="hcard hcard--protect">
-          <span class="hcard__shield"><Icon name="shield" size={22} /></span>
-          <div>
-            <span class="hcard__label">{copy.heroCards.protect.label}</span>
-            <strong>{copy.heroCards.protect.title}</strong>
-            <small>{copy.heroCards.protect.meta}</small>
-          </div>
+          <dl class="hx__stats">
+            {
+              copy.stats.map((stat) => (
+                <div>
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Marquee -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      {
-        [0, 1].map(() => (
-          <ul>
-            {marquee.map((item) => (
-              <li>{item}</li>
+  <!-- Client logos -->
+  {
+    logos.length > 0 && (
+      <section class="logos" aria-label={copy.trustedBy}>
+        <p class="logos__label">{copy.trustedBy}</p>
+        <div class="logos__viewport">
+          <div class="logos__track">
+            {[0, 1].map((copyIndex) => (
+              <ul aria-hidden={copyIndex === 1 ? 'true' : undefined}>
+                {logos.map((logo) => (
+                  <li>
+                    <img src={logo.src} alt={copyIndex === 0 ? logo.name : ''} loading="lazy" decoding="async" />
+                  </li>
+                ))}
+              </ul>
             ))}
-          </ul>
-        ))
-      }
-    </div>
-  </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
-  <!-- Services -->
+  <!-- Build / Grow / Protect -->
   <section class="section" id="services">
     <div class="container">
       <div class="section-head section-head--split">
         <div>
-          <span class="eyebrow">{copy.servicesEyebrow}</span>
-          <h2 style="margin-top:1rem">{copy.servicesTitle}</h2>
+          <span class="eyebrow">{copy.pillarsEyebrow}</span>
+          <h2 style="margin-top:1rem">{copy.pillarsTitle}</h2>
         </div>
-        <p class="lead">{copy.servicesText}</p>
+        <p class="lead">{copy.pillarsText}</p>
       </div>
 
-      <ServiceExplorer lang={lang} />
-    </div>
-  </section>
-
-  <!-- Why -->
-  <section class="section section--ink">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">{copy.whyEyebrow}</span>
-        <h2>{copy.whyTitle}</h2>
-      </div>
-      <div class="grid grid--4 why">
+      <div class="pillars">
         {
-          copy.why.map((item, i) => (
-            <div class="why__item reveal" style={`transition-delay:${i * 80}ms`}>
-              <span class="why__num">0{i + 1}</span>
-              <Icon name={item.icon} size={28} class="why__icon" />
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </div>
+          groupOrder.map((g, i) => (
+            <article class={`pillar pillar--${g} reveal`} style={`transition-delay:${i * 80}ms`}>
+              <header class="pillar__head">
+                <span class="pillar__icon">
+                  <Icon name={groupIcons[g]} size={22} />
+                </span>
+                <span class="pillar__num">0{i + 1}</span>
+              </header>
+              <h3>{s.groups[g].name}</h3>
+              <p>{s.groups[g].text}</p>
+              <ul class="pillar__list">
+                {servicesByGroup(g).map((svc) => (
+                  <li>
+                    <a href={serviceUrl(svc, lang)}>
+                      <span>{svc.copy[lang].title}</span>
+                      <Icon name="arrow" size={18} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))
         }
       </div>
+      <p class="pillars__more">
+        <a href={url('services', lang)} class="link-arrow">{s.cta.allServices} <Icon name="arrow" /></a>
+      </p>
     </div>
   </section>
 
-  <!-- Process -->
+  <!-- The usual way vs. one team -->
+  <section class="section section--ink">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">{copy.compareEyebrow}</span>
+        <h2>{copy.compareTitle}</h2>
+      </div>
+      <div class="compare">
+        <div class="compare__col compare__col--usual reveal">
+          <h3>{copy.usual.title}</h3>
+          <ul>{copy.usual.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <div class="compare__col compare__col--ours reveal" style="transition-delay:100ms">
+          <h3>{copy.ours.title}</h3>
+          <ul>{copy.ours.items.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process timeline -->
   <section class="section">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">{copy.processEyebrow}</span>
         <h2>{copy.processTitle}</h2>
       </div>
-      <ol class="process">
+      <ol class="timeline">
         {
           copy.process.map((step, i) => (
-            <li class="process__step reveal" style={`transition-delay:${i * 80}ms`}>
-              <span class="process__num">{i + 1}</span>
+            <li class="timeline__step reveal" style={`transition-delay:${i * 80}ms`}>
+              <span class="timeline__dot" aria-hidden="true">{i + 1}</span>
+              <span class="timeline__when">{step.when}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
             </li>
@@ -262,7 +313,7 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
     </div>
   </section>
 
-  <!-- Work -->
+  <!-- Selected work -->
   <section class="section section--white">
     <div class="container">
       <div class="section-head section-head--row">
@@ -270,12 +321,9 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
           <span class="eyebrow">{copy.workEyebrow}</span>
           <h2 style="margin-top:1rem">{copy.workTitle}</h2>
         </div>
-        <div class="work-aside">
-          <p class="work-hint">{copy.clientsHint}</p>
-          <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
-        </div>
+        <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
       </div>
-      <LogoGrid lang={lang} withCta />
+      <WorkIndex projects={projects.slice(0, 5)} lang={lang} />
     </div>
   </section>
 
@@ -302,406 +350,501 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
     )
   }
 
-  <!-- FAQ -->
+  <!-- FAQ + direct contact -->
   <section class="section">
     <div class="container">
       <Faq title={s.faqTitle} items={copy.faq} />
+
+      <div class="talk reveal">
+        <div>
+          <h2>{copy.contactTitle}</h2>
+          <p>{copy.contactText}</p>
+        </div>
+        <ul class="talk__links">
+          <li>
+            <a href={whatsappLink(s.whatsappText)} target="_blank" rel="noopener">
+              <Icon name="whatsapp" size={20} />
+              <span>WhatsApp</span>
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${site.email}`}>
+              <Icon name="mail" size={20} />
+              <span>{site.email}</span>
+            </a>
+          </li>
+          {
+            site.bookingUrl && (
+              <li>
+                <a href={site.bookingUrl} target="_blank" rel="noopener">
+                  <Icon name="calendar" size={20} />
+                  <span>{s.cta.book}</span>
+                </a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
-  <CtaBand lang={lang} />
+  <!-- Final call to action -->
+  <section class="final">
+    <div class="container">
+      <h2>{copy.finalTitle}</h2>
+      <div class="final__row">
+        <a href={url('contact', lang) + '#quote'} class="btn final__btn">
+          {s.cta.quote}
+          <Icon name="arrow" class="arrow" />
+        </a>
+        <p>{copy.finalText}</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
   /* Hero */
-  .hero {
+  .hx {
+    padding-block: clamp(12px, 2vw, 24px) clamp(40px, 6vw, 72px);
+  }
+  .hx__panel {
     position: relative;
     overflow: hidden;
-    padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 112px);
+    isolation: isolate;
+    padding: clamp(32px, 6vw, 80px) clamp(24px, 5vw, 72px) clamp(32px, 5vw, 64px);
+    border-radius: calc(var(--radius-lg) + 8px);
+    background: var(--ink);
+    color: var(--on-ink);
   }
-  .hero::before {
+  .hx__panel::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
     background-image:
-      linear-gradient(to right, rgb(13 15 20 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(13 15 20 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 30%, transparent 75%);
+      linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 80% at 85% 20%, #000 20%, transparent 70%);
   }
-  .hero__grid {
-    display: grid;
-    gap: clamp(48px, 6vw, 72px);
-    align-items: center;
-  }
-  @media (min-width: 1000px) {
-    .hero__grid {
-      grid-template-columns: 1.15fr 0.85fr;
-    }
-  }
-  .hero h1 {
-    margin: 1.25rem 0 1.5rem;
-    max-width: 14ch;
-  }
-  :global(html[lang='de']) .hero h1 {
-    max-width: 17ch;
-    font-size: clamp(2.3rem, 5.6vw, 4.4rem);
-  }
-  .hero__hl {
-    position: relative;
-    white-space: nowrap;
-    color: var(--signal);
-  }
-  .hero__hl::after {
-    content: '';
+  .hx__glow {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.02em;
-    height: 0.14em;
-    border-radius: 99px;
-    background: currentColor;
-    opacity: 0.22;
-  }
-  .hero .lead {
-    max-width: 560px;
-    margin-bottom: 2rem;
-  }
-  .hero__trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    list-style: none;
-    margin: 2rem 0 0;
-    padding: 0;
-    font-size: 0.9375rem;
-    color: var(--muted);
-  }
-  .hero__trust li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .hero__trust li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--grow);
-  }
-
-  /* Hero visual: three stacked cards for Build / Grow / Protect */
-  .hero__visual {
-    position: relative;
-    height: 520px;
-    max-width: 500px;
-    width: 100%;
-    margin-inline: auto;
-  }
-  .hcard {
-    position: absolute;
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    background: var(--white);
-    box-shadow: var(--shadow-lg);
-    animation: float 7s ease-in-out infinite;
-  }
-  .hcard strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    letter-spacing: -0.01em;
-  }
-  .hcard small {
-    color: var(--muted);
-    font-size: 0.8125rem;
-  }
-  .hcard__label {
-    display: inline-block;
-    margin-bottom: 0.6rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: color-mix(in srgb, var(--accent) 12%, white);
-    color: var(--accent);
-  }
-  .hcard--build {
-    --accent: var(--build);
-    top: 0;
-    left: 0;
-    width: 74%;
-  }
-  .hcard__browser {
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--paper);
-  }
-  .hcard__dots {
-    display: flex;
-    gap: 5px;
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--line);
-    background: var(--white);
-  }
-  .hcard__dots i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--line);
-  }
-  .hcard__page {
-    display: grid;
-    gap: 8px;
-    padding: 18px 16px 22px;
-  }
-  .hcard__page span {
-    height: 8px;
-    border-radius: 6px;
-    background: #e4e0d6;
-  }
-  .hcard__page .dark {
-    height: 14px;
-    background: var(--ink);
-  }
-  .hcard__page .w75 {
-    width: 75%;
-  }
-  .hcard__page .w90 {
-    width: 90%;
-  }
-  .hcard__page .w60 {
+    z-index: -1;
+    top: -30%;
+    right: -12%;
     width: 60%;
-  }
-  .hcard__page .pill {
-    width: 34%;
-    height: 18px;
-    margin-top: 4px;
-    border-radius: 99px;
-    background: var(--signal);
-  }
-  .hcard__foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 14px;
-  }
-  .hcard__score {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
+    aspect-ratio: 1;
     border-radius: 50%;
-    border: 3px solid var(--grow);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.875rem;
-    color: var(--grow);
+    background: radial-gradient(circle, rgb(255 90 31 / 0.4), rgb(255 90 31 / 0) 65%);
+    filter: blur(8px);
   }
-  .hcard--grow {
-    --accent: var(--grow);
-    top: 150px;
-    right: 0;
-    width: 60%;
-    z-index: 1;
-    animation-delay: -2.4s;
+  .hx .eyebrow {
+    color: var(--on-ink-muted);
   }
-  .hcard__chart {
-    width: 100%;
-    height: 80px;
-    margin-top: 12px;
-  }
-  .hcard--protect {
-    --accent: var(--protect);
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    width: 64%;
-    animation-delay: -4.6s;
-  }
-  .hcard--protect .hcard__label {
-    margin-bottom: 0.35rem;
-  }
-  .hcard__shield {
+  .hx__title {
     display: grid;
-    place-items: center;
-    flex: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: var(--protect);
+    margin: 1.5rem 0 clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2.6rem, 13vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
     color: var(--white);
   }
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  @media (max-width: 480px) {
-    .hero__visual {
-      height: 470px;
-    }
-    .hcard--build {
-      width: 86%;
-    }
-    .hcard--grow {
-      width: 70%;
-      top: 165px;
-    }
-    .hcard--protect {
-      width: 88%;
-    }
-  }
-
-  /* Recent work: hint + link beside the heading */
-  .work-aside {
-    display: grid;
-    justify-items: end;
-    gap: 0.5rem;
-  }
-  .work-hint {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.9375rem;
-  }
-  @media (max-width: 700px) {
-    .work-aside {
-      justify-items: start;
-    }
-  }
-  @media (hover: none) {
-    .work-hint {
-      display: none;
-    }
-  }
-
-  /* Marquee */
-  .marquee {
-    overflow: hidden;
-    padding-block: 22px;
-    background: var(--ink);
-    color: var(--on-ink);
-  }
-  .marquee__track {
-    display: flex;
-    width: max-content;
-    animation: marquee 40s linear infinite;
-  }
-  .marquee ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .marquee li {
+  .hx__line {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    padding-right: 2rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
+    gap: 0.25em;
+    animation: rise 0.8s var(--ease) both;
   }
-  .marquee li::after {
+  .hx__line::after {
     content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
-    background: var(--signal);
+    flex: none;
+    width: 0.2em;
+    height: 0.2em;
+    border-radius: 0.05em;
+    background: var(--accent);
     rotate: 45deg;
   }
-  @keyframes marquee {
+  .hx__line--build {
+    --accent: var(--build);
+  }
+  .hx__line--grow {
+    --accent: var(--grow);
+  }
+  .hx__line--protect {
+    --accent: var(--protect);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.3em);
+    }
+  }
+  .hx__bottom {
+    display: grid;
+    gap: clamp(32px, 5vw, 56px);
+    padding-top: clamp(24px, 4vw, 40px);
+    border-top: 1px solid var(--line-ink);
+  }
+  @media (min-width: 1000px) {
+    .hx__bottom {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: end;
+    }
+  }
+  .hx__sub {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--white);
+  }
+  .hx__lead {
+    max-width: 52ch;
+    margin: 0 0 2rem;
+    color: var(--on-ink-muted);
+  }
+  .hx .btn--ghost {
+    --btn-fg: var(--on-ink);
+  }
+  .hx .btn--ghost:hover {
+    --btn-bg: var(--white);
+    --btn-fg: var(--ink);
+    border-color: var(--white);
+  }
+  .hx__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line-ink);
+    border-radius: var(--radius-lg);
+    background: var(--line-ink);
+  }
+  .hx__stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    padding: clamp(16px, 2.4vw, 24px);
+    background: var(--ink-2);
+  }
+  .hx__stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+  .hx__stats dt {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--on-ink-muted);
+  }
+
+  /* Logo strip */
+  .logos {
+    padding-bottom: clamp(24px, 4vw, 48px);
+  }
+  .logos__label {
+    margin: 0 0 1.25rem;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .logos__viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .logos__track {
+    display: flex;
+    width: max-content;
+    animation: logos 60s linear infinite;
+  }
+  .logos__viewport:hover .logos__track {
+    animation-play-state: paused;
+  }
+  .logos ul {
+    display: flex;
+    gap: 16px;
+    margin: 0;
+    padding: 0 16px 0 0;
+    list-style: none;
+  }
+  .logos li {
+    display: grid;
+    place-items: center;
+    width: 168px;
+    height: 88px;
+    padding: 18px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .logos img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition:
+      filter 0.25s var(--ease),
+      opacity 0.25s var(--ease);
+  }
+  .logos li:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  @keyframes logos {
     to {
       transform: translateX(-50%);
     }
   }
 
-  /* Why */
-  .why__item {
-    position: relative;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line-ink);
-  }
-  .why__num {
-    position: absolute;
-    top: 1.5rem;
-    right: 0;
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    color: var(--on-ink-muted);
-  }
-  .why__item :global(.why__icon) {
-    color: var(--signal);
-    margin-bottom: 1.5rem;
-  }
-  .why__item h3 {
-    font-size: 1.3rem;
-    color: var(--white);
-  }
-  .why__item p {
-    margin: 0;
-    color: var(--on-ink-muted);
-    font-size: 0.975rem;
-  }
-
-  /* Process */
-  .process {
+  /* Pillars */
+  .pillars {
     display: grid;
-    gap: 16px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    counter-reset: step;
+    gap: clamp(16px, 2vw, 24px);
   }
-  @media (min-width: 720px) {
-    .process {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 900px) {
+    .pillars {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
-  @media (min-width: 1000px) {
-    .process {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  .process__step {
-    padding: 28px;
+  .pillar {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(28px, 3vw, 36px) clamp(24px, 3vw, 32px) clamp(24px, 3vw, 32px);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--white);
-    border: 1px solid var(--line);
   }
-  .process__num {
+  .pillar::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: var(--accent);
+  }
+  .pillar--build {
+    --accent: var(--build);
+  }
+  .pillar--grow {
+    --accent: var(--grow);
+  }
+  .pillar--protect {
+    --accent: var(--protect);
+  }
+  .pillar__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .pillar__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 12%, white);
+    color: var(--accent);
+  }
+  .pillar__num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .pillar h3 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+  }
+  .pillar > p {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .pillar__list {
+    margin: auto 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .pillar__list li {
+    border-bottom: 1px solid var(--line);
+  }
+  .pillar__list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s var(--ease);
+  }
+  .pillar__list a :global(svg) {
+    flex: none;
+    color: var(--muted);
+    transition:
+      transform 0.2s var(--ease),
+      color 0.2s var(--ease);
+  }
+  .pillar__list a:hover {
+    color: var(--accent);
+  }
+  .pillar__list a:hover :global(svg) {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+  .pillars__more {
+    margin: 2rem 0 0;
+  }
+
+  /* Compare */
+  .compare {
+    display: grid;
+    gap: clamp(16px, 2vw, 24px);
+  }
+  @media (min-width: 900px) {
+    .compare {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .compare__col {
+    padding: clamp(24px, 4vw, 48px);
+    border-radius: var(--radius-lg);
+  }
+  .compare__col h3 {
+    margin-bottom: 1.5rem;
+  }
+  .compare__col ul {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .compare__col li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 0.85rem;
+    align-items: start;
+  }
+  .compare__col li::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: center / 12px no-repeat;
+  }
+  .compare__col--usual {
+    border: 1px solid var(--line-ink);
+    color: var(--on-ink-muted);
+  }
+  .compare__col--usual h3 {
+    color: var(--on-ink-muted);
+  }
+  .compare__col--usual li::before {
+    background-color: var(--line-ink);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a6ae' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E");
+  }
+  .compare__col--ours {
+    background: var(--white);
+    color: var(--text);
+  }
+  .compare__col--ours li::before {
+    background-color: var(--signal-tint);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9430c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+  }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 900px) {
+    .timeline {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+  .timeline__step {
+    position: relative;
+    padding-left: 64px;
+  }
+  .timeline__step::before {
+    content: '';
+    position: absolute;
+    top: 44px;
+    bottom: -2rem;
+    left: 21px;
+    width: 2px;
+    background: var(--line);
+  }
+  .timeline__step:last-child::before {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .timeline__step {
+      padding-left: 0;
+      padding-top: 72px;
+    }
+    .timeline__step::before {
+      top: 21px;
+      bottom: auto;
+      left: 44px;
+      right: -2rem;
+      width: auto;
+      height: 2px;
+    }
+  }
+  .timeline__dot {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: grid;
     place-items: center;
     width: 44px;
     height: 44px;
-    margin-bottom: 2.5rem;
     border-radius: 50%;
     background: var(--ink);
     color: var(--white);
     font-family: var(--font-display);
     font-weight: 700;
   }
-  .process__step:last-child .process__num {
+  .timeline__step:last-child .timeline__dot {
     background: var(--signal);
   }
-  .process__step h3 {
+  .timeline__when {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--signal-dark);
+  }
+  .timeline__step h3 {
     font-size: 1.25rem;
   }
-  .process__step p {
+  .timeline__step p {
     margin: 0;
     color: var(--muted);
     font-size: 0.975rem;
@@ -727,5 +870,92 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
   .quote-card figcaption span {
     color: var(--muted);
     font-size: 0.9375rem;
+  }
+
+  /* Talk to a person */
+  .talk {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(48px, 7vw, 88px);
+    padding: clamp(24px, 4vw, 40px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+  @media (min-width: 900px) {
+    .talk {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+  .talk h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  }
+  .talk p {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--muted);
+  }
+  .talk__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .talk__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      border-color 0.2s var(--ease),
+      background-color 0.2s var(--ease);
+  }
+  .talk__links a:hover {
+    border-color: var(--ink);
+    background: var(--white);
+  }
+
+  /* Final CTA */
+  .final {
+    padding-block: clamp(64px, 10vw, 128px);
+    background: var(--signal);
+    color: var(--white);
+  }
+  .final h2 {
+    max-width: 14ch;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    letter-spacing: -0.04em;
+  }
+  .final__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+  }
+  .final__row p {
+    margin: 0;
+    font-size: 0.975rem;
+    opacity: 0.9;
+  }
+  .final__btn {
+    --btn-bg: var(--ink);
+  }
+  .final__btn:hover {
+    --btn-bg: var(--ink-2);
+  }
+  .final :global(:focus-visible) {
+    outline-color: var(--ink);
   }
 </style>
