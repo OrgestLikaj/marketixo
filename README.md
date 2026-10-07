@@ -24,7 +24,7 @@ npm run preview    # serve the built site
 | Where form requests are sent | `public/api/contact.php` → `MAIL_TO`, `MAIL_FROM` |
 | Portfolio descriptions, years, results | `src/data/work.ts` |
 | Portfolio layout (tiles, showcase, index or cards) | `src/data/work.ts` → `workLayout`; compare them at `/work-layouts/` |
-| Home page | `src/views/HomePage.astro`. An alternative design is previewed at `/home-v2/` (`src/views/HomePageV2.astro`, not linked, noindex). To use it, import it in `src/pages/index.astro` and `src/pages/de/index.astro` |
+| Home page | `src/views/HomePage.astro` |
 | Portfolio screenshots | run `npm run screenshots` (first time: `npx playwright install chromium`) → `public/work/` |
 | Client logos | Already in `public/clients/` (19 logos, optimised WebP). To add or replace one, drop `<key>.svg/.png/.webp` there; keys are in `src/data/work.ts`. Clients with a website are in `projects` (project cards); logo-only clients are in `otherClients` (shown in the logo strip and the "More brands" wall). |
 | Testimonials (hidden until added) | `src/data/work.ts` → `testimonials` |
