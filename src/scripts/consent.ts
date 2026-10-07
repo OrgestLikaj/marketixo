@@ -37,7 +37,8 @@ function read(): Consent | null {
 
 function write(c: Consent) {
   const value = `${CONSENT_VERSION}.${c.analytics ? 'a1' : 'a0'}.${c.marketing ? 'm1' : 'm0'}`;
-  document.cookie = `${COOKIE}=${value}; path=/; max-age=${MAX_AGE}; SameSite=Lax; Secure`;
+  const secure = location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${COOKIE}=${value}; path=/; max-age=${MAX_AGE}; SameSite=Lax${secure}`;
 }
 
 function loadScript(src: string) {

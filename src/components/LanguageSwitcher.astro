@@ -41,7 +41,9 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
 <script>
   document.addEventListener('click', (event) => {
     const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-lang]');
-    if (link) document.cookie = `mx_lang=${link.dataset.lang}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+    // Secure only over HTTPS (always the case in production; local previews run on http).
+    const secure = location.protocol === 'https:' ? '; Secure' : '';
+    if (link) document.cookie = `mx_lang=${link.dataset.lang}; path=/; max-age=31536000; SameSite=Lax${secure}`;
   });
 </script>
 
