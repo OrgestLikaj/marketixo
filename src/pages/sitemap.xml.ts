@@ -1,33 +1,30 @@
+/**
+ * sitemap.xml with hreflang alternates for every page (xhtml:link), generated
+ * from the same page registry as the router — so it can never list a URL that
+ * doesn't exist or miss one that does.
+ */
 import type { APIRoute } from 'astro';
-import { routes, defaultLang, type Alternates, type RouteKey } from '~/i18n/ui';
-import { services, serviceAlternates } from '~/data/services';
-import { getPosts, postAlternates } from '~/lib/blog';
+import { getAllPages } from '~/lib/pages';
+import { languageMeta, locales } from '~/i18n/config';
+import { site } from '~/config/site';
 
-/** XML sitemap with hreflang alternates for every page, generated at build time. */
-export const GET: APIRoute = async ({ site }) => {
-  const abs = (path: string) => new URL(path, site).href;
-  const groups: { alternates: Alternates; lastmod?: Date }[] = [];
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-  const indexable: RouteKey[] = ['home', 'services', 'work', 'about', 'contact', 'blog', 'privacy', 'imprint'];
-  indexable.forEach((key) => groups.push({ alternates: routes[key] }));
-  services.forEach((s) => groups.push({ alternates: serviceAlternates(s) }));
+export const GET: APIRoute = async () => {
+  const pages = (await getAllPages()).filter((p) => !p.noindex);
+  const abs = (p: string) => esc(new URL(p, site.url).href);
+  const today = new Date().toISOString().slice(0, 10);
 
-  const seen = new Set<string>();
-  for (const post of await getPosts()) {
-    if (seen.has(post.data.translationKey)) continue;
-    seen.add(post.data.translationKey);
-    groups.push({ alternates: await postAlternates(post), lastmod: post.data.updatedDate ?? post.data.pubDate });
-  }
-
-  const urls = groups.flatMap(({ alternates, lastmod }) => {
-    const links = Object.entries(alternates)
-      .map(([l, href]) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${abs(href!)}"/>`)
-      .concat(alternates[defaultLang] ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(alternates[defaultLang]!)}"/>`] : [])
-      .join('\n');
-    return Object.values(alternates).map(
-      (href) =>
-        `  <url>\n    <loc>${abs(href!)}</loc>\n${lastmod ? `    <lastmod>${lastmod.toISOString().slice(0, 10)}</lastmod>\n` : ''}${links}\n  </url>`,
-    );
+  const urls = pages.map((p) => {
+    const alts = locales.filter((l) => p.alternates[l]);
+    const links =
+      alts.length > 1
+        ? [
+            ...alts.map((l) => `    <xhtml:link rel="alternate" hreflang="${languageMeta[l].hreflang}" href="${abs(p.alternates[l]!)}"/>`),
+            ...(p.alternates.en ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(p.kind === 'home' ? '/' : p.alternates.en)}"/>`] : []),
+          ].join('\n')
+        : '';
+    return `  <url>\n    <loc>${abs(p.path)}</loc>\n    <lastmod>${today}</lastmod>\n${links}\n  </url>`;
   });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

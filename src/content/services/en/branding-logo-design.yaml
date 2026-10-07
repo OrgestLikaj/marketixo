@@ -1,0 +1,78 @@
+key: branding-logo-design
+lang: en
+title: Branding & Logo Design
+shortTitle: Branding
+tagline: Identities that look established and stay consistent everywhere.
+metaTitle: Branding & Logo Design Agency | Marketixo
+metaDescription: Logo design, visual identity and brand guidelines that make your business look established — on screen, in print and in every campaign.
+hero:
+  eyebrow: Service 02 — Build
+  headline: A brand people recognise before they read the name.
+  lead: We design logos and complete visual identities — and turn them into a practical system your team, printers and partners can actually use.
+problem:
+  heading: Inconsistency quietly costs trust.
+  intro: Customers judge a business in seconds. A brand that changes from one channel to the next looks smaller and less reliable than it is.
+  points:
+    - title: A logo that doesn’t scale
+      text: Fine on a sign, illegible as a favicon or a social avatar.
+    - title: Every touchpoint looks different
+      text: Website, invoices, social posts and ads each use their own colours and fonts.
+    - title: No rules to follow
+      text: Without guidelines, every new designer or agency reinvents the brand.
+solution:
+  heading: A system, not just a symbol.
+  text: We start with positioning — who you serve and why they choose you — then design an identity that expresses it, and document it so it survives contact with real-world use.
+  pillars:
+    - title: Strategy first
+      text: Audience, competitors and personality defined before any sketching.
+    - title: Built for screens
+      text: Tested at favicon size, on dark and light backgrounds, in motion and in print.
+    - title: Ready to use
+      text: Files, templates and guidelines delivered in the formats your team needs.
+included:
+  heading: What’s included
+  items:
+    - title: Brand identity
+      text: Positioning, personality and tone of voice that guide every decision.
+    - title: Logo design
+      text: Primary logo, variations and a symbol that works at every size.
+    - title: Visual identity
+      text: Colour palette, typography, imagery style, iconography and graphic elements.
+    - title: Brand guidelines
+      text: A clear, concise guide with do’s and don’ts your team will actually read.
+    - title: Marketing materials
+      text: Business cards, presentations, letterheads, signage and print collateral.
+    - title: Digital brand system
+      text: Social templates, email signatures, ad formats and UI tokens for your website.
+process:
+  heading: How it works
+  steps:
+    - title: Discovery workshop
+      text: Your story, audience, competitors and ambitions.
+    - title: Concepts
+      text: Two or three distinct directions, presented in real applications.
+    - title: Refinement
+      text: One direction developed in detail with your feedback.
+    - title: System & delivery
+      text: Final files, templates and guidelines, handed over with a walkthrough.
+benefits:
+  heading: What you get
+  items:
+    - title: Instant credibility
+      text: A professional identity that lets you stand next to bigger competitors.
+    - title: Consistency without effort
+      text: Templates and rules that make the right choice the easy choice.
+    - title: A brand that’s yours
+      text: Full rights to all final artwork and source files.
+faq:
+  - q: How many logo concepts will we see?
+    a: Usually two to three distinct directions, each shown on real applications such as a website header, social profile and business card — not just on a white background.
+  - q: Can you refresh our existing logo instead of replacing it?
+    a: Yes. Often the best result is an evolution that keeps the recognition you’ve built while fixing what doesn’t work.
+  - q: Which files do we receive?
+    a: Vector and raster formats (SVG, PDF, PNG), colour versions for screen and print, a favicon set and editable templates.
+  - q: Do we own the rights?
+    a: Yes. On final payment, all rights to the final artwork are transferred to you.
+cta:
+  heading: Ready to look as good as you are?
+  text: Tell us about your business and where you want it to go.

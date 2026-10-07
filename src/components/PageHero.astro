@@ -1,0 +1,84 @@
+---
+/** Hero for inner pages: breadcrumbs, eyebrow, large H1, lead, optional aside slot. */
+import Breadcrumbs from './Breadcrumbs.astro';
+import type { Lang } from '~/i18n';
+
+interface Props {
+  lang: Lang;
+  crumbs?: { name: string; path: string }[];
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  size?: 'xl' | 'lg';
+}
+const { lang, crumbs, eyebrow, title, lead, size = 'xl' } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+
+<header class:list={['ph', `ph--${size}`, { 'ph--aside': hasAside }]}>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="ph__glow" aria-hidden="true"></div>
+  <div class="container ph__inner">
+    <div class="ph__main">
+      {crumbs && <Breadcrumbs lang={lang} items={crumbs} class="ph__crumbs" />}
+      {eyebrow && <p class="eyebrow" data-reveal>{eyebrow}</p>}
+      <h1 class="ph__title" data-reveal style="--reveal-delay:1">{title}</h1>
+      {lead && <p class="lead ph__lead" data-reveal style="--reveal-delay:2">{lead}</p>}
+      <slot />
+    </div>
+    {hasAside && <div class="ph__aside" data-reveal style="--reveal-delay:3"><slot name="aside" /></div>}
+  </div>
+</header>
+
+<style>
+  .ph {
+    position: relative;
+    padding-top: calc(var(--header-h) + clamp(48px, 8vw, 120px));
+    padding-bottom: clamp(56px, 8vw, 120px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .ph__glow {
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 70%;
+    aspect-ratio: 1;
+    background: radial-gradient(closest-side, rgb(0 95 115 / 0.55), rgb(10 147 150 / 0.12) 55%, transparent);
+    z-index: -1;
+  }
+  .ph__inner {
+    display: grid;
+    gap: 3rem;
+  }
+  .ph--aside .ph__inner {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+  }
+  .ph__main {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .ph__crumbs {
+    margin-bottom: 1rem;
+  }
+  .ph__title {
+    font-size: var(--fs-h1);
+    letter-spacing: var(--tracking-display);
+    line-height: 0.95;
+    max-width: 18ch;
+  }
+  .ph--lg .ph__title {
+    font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.75rem);
+    max-width: 22ch;
+  }
+  .ph__lead {
+    max-width: 60ch;
+  }
+  @media (max-width: 1023px) {
+    .ph--aside .ph__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

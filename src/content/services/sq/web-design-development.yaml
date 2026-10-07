@@ -1,0 +1,86 @@
+key: web-design-development
+lang: sq
+title: Dizajn dhe zhvillim uebi
+shortTitle: Zhvillim uebi
+tagline: Faqe dhe aplikacione uebi të shpejta e të aksesueshme, të ndërtuara me kod për të cilin garantojmë.
+metaTitle: Agjenci për dizajn dhe zhvillim uebi | Marketixo
+metaDescription: Faqe interneti me porosi, landing page, e-commerce dhe aplikacione uebi — të shpejta, të aksesueshme, gati për SEO dhe të testuara para publikimit. Ofertë me çmim fiks.
+hero:
+  eyebrow: Shërbimi 01 — Ndërtim
+  headline: Faqe interneti që hapen shpejt, lexohen qartë dhe i kthejnë vizitorët në kërkesa.
+  lead: Nga një landing page e fokusuar deri te një platformë shumëgjuhëshe, projektojmë dhe ndërtojmë faqe interneti që funksionojnë në çdo ekran, renditen mirë dhe vazhdojnë të funksionojnë gjatë pas publikimit.
+problem:
+  heading: Shumica e faqeve duken mirë, por prapë nuk japin rezultat.
+  intro: Një faqe mund të fitojë çmime dizajni dhe prapë të humbasë klientë. Problemet zakonisht nuk duken në një screenshot.
+  points:
+    - title: E ngadaltë në telefona realë
+      text: Temat e rënda, imazhet e paoptimizuara dhe dhjetëra plugin-e i bëjnë faqet të zvarriten me internet celular — dhe vizitorët largohen para se të shfaqet ekrani i parë.
+    - title: Asnjë hap i qartë në vijim
+      text: Faqet e përshkruajnë kompaninë, por nuk i tregojnë kurrë vizitorit çfarë të bëjë, ndaj interesi nuk shndërrohet kurrë në kërkesë.
+    - title: E brishtë dhe e vështirë për t’u ndryshuar
+      text: Çdo përditësim rrezikon të prishë diçka, ndaj përmbajtja vjetrohet dhe rregullimet e vogla kthehen në projekte të kushtueshme.
+solution:
+  heading: E projektuar për njerëzit, e ndërtuar për afat të gjatë.
+  text: Nisemi nga ajo që u duhet vizitorëve tuaj për të vendosur, i projektojmë faqet rreth atij vendimi dhe i ndërtojmë mbi një teknologji të thjeshtë e të dokumentuar mirë. Performanca, aksesueshmëria dhe SEO-ja janë pjesë e ndërtimit — jo një listë kontrolli në fund.
+  pillars:
+    - title: Dizajn që nis nga përmbajtja
+      text: Skica dhe faqosje të ndërtuara me përmbajtjen tuaj reale, të rishikuara në pajisje reale para se të shkruhet qoftë edhe një rresht kodi për prodhim.
+    - title: Inxhinieri e thjeshtë
+      text: Faqe statike ose të gjeneruara në server, minimumi i JavaScript-it, imazhe të optimizuara dhe markup i pastër. Të shpejta që nga ndërtimi.
+    - title: E ndërtuar për t’u përditësuar
+      text: Një CMS aty ku ndihmon, zgjidhje të thjeshta aty ku nuk duhet, dhe dokumentacion që ekipi juaj të mos varet nga ne.
+included:
+  heading: Çfarë ndërtojmë
+  items:
+    - title: Faqe korporative
+      text: Faqe me disa nënfaqe që shpjegojnë çfarë bëni, e dëshmojnë dhe e bëjnë të lehtë kontaktin me ju.
+    - title: Landing page
+      text: Faqe të fokusuara me një qëllim të vetëm, për fushata, lançime dhe gjenerim kërkesash.
+    - title: E-commerce
+      text: Dyqane online me WooCommerce ose procese pagese me porosi me Stripe dhe PayPal.
+    - title: Aplikacione uebi
+      text: Portale, panele kontrolli, sisteme rezervimi dhe ofertash me llogari dhe baza të dhënash të sigurta.
+    - title: Ridizajnim dhe migrim
+      text: Dizajn dhe platformë e re pa humbur renditjen në Google — çdo URL e vjetër ridrejtohet.
+    - title: Optimizim performance
+      text: Auditime dhe rregullime për Core Web Vitals, shpërndarjen e imazheve, caching-un dhe kodin që bllokon shfaqjen.
+    - title: Faqe shumëgjuhëshe
+      text: URL të lokalizuara, hreflang, meta të dhëna të përkthyera dhe një ndërrues gjuhe që çon te faqja e duhur.
+    - title: Plan mirëmbajtjeje
+      text: Përditësime, backup, monitorim i disponueshmërisë dhe ndryshime të vogla me një plan mujor të parashikueshëm.
+process:
+  heading: Nga kërkesa te publikimi
+  steps:
+    - title: Kërkesa dhe struktura e faqes
+      text: Objektivat, publiku, faqet dhe integrimet — të rëna dakord dhe të dokumentuara.
+    - title: Skicat (wireframes)
+      text: Struktura e faqeve dhe hierarkia e përmbajtjes, të testuara fillimisht në celular.
+    - title: Dizajni vizual
+      text: E gjithë ndërfaqja me identitetin tuaj, me çdo gjendje dhe çdo madhësi ekrani të mbuluar.
+    - title: Zhvillimi
+      text: Ndërtim në një mjedis testimi (staging) që mund ta ndiqni javë pas jave.
+    - title: Testimi dhe publikimi
+      text: Testim në shfletues të ndryshëm, i performancës, i aksesueshmërisë dhe i formularëve, pastaj publikim i planifikuar me ridrejtime.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Shpejtësi e matshme
+      text: Synojmë Core Web Vitals në të gjelbër në pajisje reale dhe ju tregojmë raportin.
+    - title: E aksesueshme për të gjithë
+      text: HTML semantik, mbështetje për tastierën, kontrast dhe etiketa — sipas praktikave të WCAG 2.2 AA.
+    - title: Gati për motorët e kërkimit që në ditën e parë
+      text: URL të pastra, meta të dhëna, të dhëna të strukturuara dhe sitemap janë pjesë e çdo ndërtimi.
+    - title: Pronësi
+      text: Kodi, hostingu dhe domeni janë tuajat, me dokumentacion dhe një seancë dorëzimi.
+faq:
+  - q: Sa kohë merr një faqe interneti?
+    a: Një faqe biznesi e fokusuar zakonisht merr katër deri në tetë javë nga nisja deri te publikimi. Aplikacionet e uebit dhe faqet e mëdha shumëgjuhëshe kërkojnë më shumë kohë — afatin e merrni bashkë me propozimin.
+  - q: Cilën platformë do të përdorni?
+    a: Atë që i përshtatet punës. Faqet me përmbajtje shpesh ndërtohen si faqe statike të shpejta me një CMS të thjeshtë; për dyqanet dhe ekipet me përmbajtje komplekse mund të jetë më e përshtatshme WordPress ose një aplikacion me porosi. Ju shpjegojmë avantazhet dhe kufizimet para se të vendosni.
+  - q: A mund ta ridizajnoni faqen tonë pa humbur renditjen në Google?
+    a: Po. Hartëzojmë çdo URL ekzistuese, ruajmë atë që renditet dhe vendosim ridrejtime të përhershme, që motorët e kërkimit dhe faqet e ruajtura të çojnë te faqja e re e duhur.
+  - q: A do të mund ta përditësojmë vetë përmbajtjen?
+    a: Po. Merrni një redaktor që i përshtatet ekipit tuaj dhe një trajnim të shkurtër. Nëse preferoni, përditësimet mund t’i kryejmë ne me një plan mirëmbajtjeje.
+cta:
+  heading: Le të ndërtojmë një faqe që e meriton vendin e saj.
+  text: Na dërgoni faqen tuaj aktuale ose idenë tuaj. Do t’ju përgjigjemi me një vlerësim të sinqertë dhe një ofertë me çmim fiks.

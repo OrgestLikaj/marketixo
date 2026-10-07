@@ -1,0 +1,36 @@
+---
+interface Props {
+  tone?: 'default' | 'accent' | 'warm';
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
+}
+const { tone = 'default', class: className , ...rest } = Astro.props;
+---
+
+<span {...rest} class:list={['badge', `badge--${tone}`, className]}><slot /></span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.35em 0.7em;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-code);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .badge--accent {
+    border-color: rgb(148 210 189 / 0.4);
+    color: var(--accent);
+  }
+  .badge--warm {
+    border-color: rgb(238 155 0 / 0.45);
+    color: var(--golden-orange);
+  }
+</style>

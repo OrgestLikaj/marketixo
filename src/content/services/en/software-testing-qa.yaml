@@ -1,0 +1,84 @@
+key: software-testing-qa
+lang: en
+title: Software Testing & QA
+shortTitle: QA & Testing
+tagline: Manual and automated testing that catches problems before your users do.
+metaTitle: Software Testing & QA Services — Manual & Automated | Marketixo
+metaDescription: Manual testing, test automation with Playwright, API and regression testing, QA strategy and CI/CD integration for web and mobile applications.
+hero:
+  eyebrow: Service 08 — Protect
+  headline: Ship with confidence. Every release.
+  lead: We test web and mobile applications manually and automatically — and build the test suites and pipelines that keep catching regressions long after we’ve gone.
+problem:
+  heading: Bugs found by users are the most expensive kind.
+  intro: When testing is an afterthought, quality depends on luck and late nights.
+  points:
+    - title: Releases break old features
+      text: A fix in one place causes a failure somewhere nobody thought to check.
+    - title: Testing is the first thing cut
+      text: Deadlines squeeze QA into the last afternoon before launch.
+    - title: Automation that nobody trusts
+      text: Flaky tests get ignored, so the suite stops protecting anything.
+solution:
+  heading: Quality as part of the process.
+  text: We combine exploratory manual testing with reliable automation, run in your CI/CD pipeline, so every change is checked before it reaches users.
+  pillars:
+    - title: Risk-based strategy
+      text: Effort focused on the flows that matter most to users and revenue.
+    - title: Reliable automation
+      text: Maintainable Playwright and API suites with stable selectors and clear reports.
+    - title: Continuous feedback
+      text: Tests run on every pull request and on a schedule against staging and production.
+included:
+  heading: What’s included
+  items:
+    - title: Manual testing
+      text: Exploratory and scripted testing by experienced testers.
+    - title: Test automation
+      text: End-to-end suites with Playwright, page objects and fixtures.
+    - title: API testing
+      text: Contract, functional and negative tests for REST APIs.
+    - title: Web application testing
+      text: Cross-browser testing in Chromium, Firefox and WebKit.
+    - title: Mobile testing
+      text: Responsive and device testing on real phones and emulators.
+    - title: Regression testing
+      text: Automated suites that protect existing features on every change.
+    - title: End-to-end testing
+      text: Complete user journeys from sign-up to checkout.
+    - title: QA strategy & test planning
+      text: Test strategy, test cases, environments and release criteria.
+    - title: CI/CD testing
+      text: Tests integrated into GitHub Actions or GitLab CI with reporting dashboards.
+process:
+  heading: How it works
+  steps:
+    - title: Assess
+      text: Current quality, risks, tools and release process.
+    - title: Plan
+      text: Strategy, priorities and test cases agreed with your team.
+    - title: Test & automate
+      text: Manual testing plus an automation suite for the critical paths.
+    - title: Integrate & hand over
+      text: Pipelines, reports and documentation your team can run and extend.
+benefits:
+  heading: What you get
+  items:
+    - title: Fewer production incidents
+      text: Regressions caught in the pipeline, not by customers.
+    - title: Faster releases
+      text: Automated checks replace slow, repetitive manual rounds.
+    - title: Visibility
+      text: Clear reports on what was tested, what passed and what didn’t.
+faq:
+  - q: Which tools do you use?
+    a: Mostly Playwright with TypeScript for end-to-end tests, Bruno and code-based suites for APIs, and GitHub Actions or GitLab CI for pipelines. We adapt to your stack.
+  - q: Can you test software built by another company?
+    a: Yes. Independent testing is often the most valuable kind — we have no stake in the code passing.
+  - q: Manual or automated testing?
+    a: Both. Automation guards the critical, repetitive paths; people explore, judge usability and find the unexpected.
+  - q: Do you work inside our team?
+    a: We can embed a tester in your sprints, or deliver testing as a defined project with a report.
+cta:
+  heading: Release without holding your breath.
+  text: Tell us about your application and your release process — we’ll suggest where testing will help most.

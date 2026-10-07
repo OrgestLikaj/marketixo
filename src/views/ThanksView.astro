@@ -1,0 +1,60 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/Button.astro';
+import Icon from '~/components/Icon.astro';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+---
+
+<BaseLayout page={page} title={t.thanks.metaTitle} description={t.thanks.text}>
+  <section class="thanks">
+    <div class="blueprint" aria-hidden="true"></div>
+    <div class="container container--text thanks__inner">
+      <span class="thanks__icon" aria-hidden="true"><Icon name="check" size={32} /></span>
+      <h1 class="h1">{t.thanks.heading}</h1>
+      <p class="lead">{t.thanks.text}</p>
+      <div class="thanks__actions">
+        <Button href={url.section(lang, 'home')} variant="secondary">{t.thanks.back}</Button>
+        <Button href={url.section(lang, 'work')} variant="ghost">{t.common.viewWork}</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    position: relative;
+    min-height: 80svh;
+    display: grid;
+    align-items: center;
+    padding-top: var(--header-h);
+  }
+  .thanks__inner {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .thanks__icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--pearl-aqua);
+    color: var(--ink-black);
+  }
+  .thanks__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+</style>

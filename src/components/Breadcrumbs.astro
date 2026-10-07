@@ -1,16 +1,24 @@
 ---
+/** Visible breadcrumb trail. The matching BreadcrumbList JSON-LD is built by the page. */
+import { useT, type Lang } from '~/i18n';
+
 interface Props {
-  items: { label: string; href?: string }[];
+  lang: Lang;
+  items: { name: string; path: string }[];
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
 }
-const { items } = Astro.props;
+const { lang, items, class: className , ...rest } = Astro.props;
+const t = useT(lang);
 ---
 
-<nav class="crumbs" aria-label="Breadcrumb">
-  <ol>
+<nav {...rest} class:list={['crumbs', className]} aria-label={t.nav.breadcrumb}>
+  <ol role="list">
     {
       items.map((item, i) => (
         <li>
-          {item.href && i < items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+          {i < items.length - 1 ? <a href={item.path}>{item.name}</a> : <span aria-current="page">{item.name}</span>}
         </li>
       ))
     }
@@ -21,23 +29,26 @@ const { items } = Astro.props;
   .crumbs ol {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.875rem;
-    color: var(--muted);
+    gap: 0.25rem 0;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.03em;
+    color: var(--text-subtle);
   }
   .crumbs li + li::before {
     content: '/';
-    margin-right: 0.4rem;
+    padding-inline: 0.6em;
     opacity: 0.5;
   }
   .crumbs a {
     text-decoration: none;
+    color: var(--text-muted);
   }
   .crumbs a:hover {
-    color: var(--ink);
+    color: var(--text);
     text-decoration: underline;
+  }
+  .crumbs [aria-current] {
+    color: var(--text);
   }
 </style>

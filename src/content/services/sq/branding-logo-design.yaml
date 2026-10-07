@@ -1,0 +1,78 @@
+key: branding-logo-design
+lang: sq
+title: Branding dhe dizajn logoje
+shortTitle: Branding
+tagline: Identitete që duken të konsoliduara dhe mbeten të njëtrajtshme kudo.
+metaTitle: Agjenci për branding dhe dizajn logoje | Marketixo
+metaDescription: Dizajn logoje, identitet vizual dhe udhëzues marke që e bëjnë biznesin tuaj të duket i konsoliduar — në ekran, në print dhe në çdo fushatë.
+hero:
+  eyebrow: Shërbimi 02 — Ndërtim
+  headline: Një markë që njerëzit e njohin para se të lexojnë emrin.
+  lead: Projektojmë logo dhe identitete vizuale të plota — dhe i kthejmë në një sistem praktik që ekipi, shtypshkronjat dhe partnerët tuaj mund ta përdorin realisht.
+problem:
+  heading: Mungesa e njëtrajtshmërisë e gërryen besimin pa u ndier.
+  intro: Klientët e gjykojnë një biznes brenda pak sekondash. Një markë që ndryshon nga një kanal te tjetri duket më e vogël dhe më pak e besueshme nga ç’është.
+  points:
+    - title: Një logo që nuk përshtatet në çdo madhësi
+      text: Duket mirë në tabelë, por është e palexueshme si favicon ose si foto profili në rrjete sociale.
+    - title: Çdo pikë kontakti duket ndryshe
+      text: Faqja e internetit, faturat, postimet dhe reklamat përdorin secila ngjyrat dhe shkronjat e veta.
+    - title: Asnjë rregull për t’u ndjekur
+      text: Pa udhëzues, çdo dizajner apo agjenci e re e shpik markën nga e para.
+solution:
+  heading: Një sistem, jo thjesht një simbol.
+  text: Nisim nga pozicionimi — kujt i shërbeni dhe pse ju zgjedhin — pastaj projektojmë një identitet që e shpreh atë dhe e dokumentojmë, që t’i rezistojë përdorimit në jetën reale.
+  pillars:
+    - title: Strategjia në radhë të parë
+      text: Publiku, konkurrentët dhe personaliteti përcaktohen para çdo skice.
+    - title: E ndërtuar për ekranet
+      text: E testuar në madhësinë e një favicon-i, mbi sfonde të errëta dhe të çelëta, në lëvizje dhe në print.
+    - title: Gati për përdorim
+      text: Skedarë, shabllone dhe udhëzues të dorëzuar në formatet që i duhen ekipit tuaj.
+included:
+  heading: Çfarë përfshihet
+  items:
+    - title: Identiteti i markës
+      text: Pozicionimi, personaliteti dhe toni i komunikimit që udhëheqin çdo vendim.
+    - title: Dizajni i logos
+      text: Logoja kryesore, variantet dhe një simbol që funksionon në çdo madhësi.
+    - title: Identiteti vizual
+      text: Paleta e ngjyrave, tipografia, stili i imazheve, ikonat dhe elementet grafike.
+    - title: Udhëzuesi i markës
+      text: Një udhëzues i qartë dhe i përmbledhur, me ç’duhet dhe ç’nuk duhet bërë, që ekipi juaj do ta lexojë vërtet.
+    - title: Materiale marketingu
+      text: Kartëvizita, prezantime, letra me kokë, tabela dhe materiale për print.
+    - title: Sistemi dixhital i markës
+      text: Shabllone për rrjete sociale, nënshkrime emaili, formate reklamash dhe token-a UI për faqen tuaj të internetit.
+process:
+  heading: Si funksionon
+  steps:
+    - title: Seminar njohjeje
+      text: Historia juaj, publiku, konkurrentët dhe ambiciet.
+    - title: Konceptet
+      text: Dy ose tre drejtime të dallueshme, të prezantuara në përdorime reale.
+    - title: Përpunimi
+      text: Një drejtim i zhvilluar në detaje me komentet tuaja.
+    - title: Sistemi dhe dorëzimi
+      text: Skedarët përfundimtarë, shabllonet dhe udhëzuesi, të dorëzuar me një prezantim shpjegues.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Besueshmëri e menjëhershme
+      text: Një identitet profesional që ju lejon të qëndroni krah konkurrentëve më të mëdhenj.
+    - title: Njëtrajtshmëri pa mundim
+      text: Shabllone dhe rregulla që e bëjnë zgjedhjen e duhur zgjedhjen më të lehtë.
+    - title: Një markë që ju përket
+      text: Të drejta të plota mbi të gjitha punimet përfundimtare dhe skedarët burimorë.
+faq:
+  - q: Sa koncepte logoje do të shohim?
+    a: Zakonisht dy deri në tre drejtime të dallueshme, secili i paraqitur në përdorime reale si kreu i faqes së internetit, profili në rrjete sociale dhe kartëvizita — jo vetëm mbi një sfond të bardhë.
+  - q: A mund ta rifreskoni logon tonë ekzistuese në vend që ta zëvendësoni?
+    a: Po. Shpesh rezultati më i mirë është një evolucion që ruan njohshmërinë që keni ndërtuar, duke rregulluar atë që nuk funksionon.
+  - q: Cilët skedarë marrim?
+    a: Formate vektoriale dhe raster (SVG, PDF, PNG), versione ngjyrash për ekran dhe për print, një set favicon-ësh dhe shabllone të redaktueshme.
+  - q: A i kemi ne të drejtat?
+    a: Po. Me pagesën përfundimtare, të gjitha të drejtat mbi punimet përfundimtare ju kalojnë juve.
+cta:
+  heading: Gati të dukeni aq mirë sa jeni?
+  text: Na tregoni për biznesin tuaj dhe ku doni ta çoni.

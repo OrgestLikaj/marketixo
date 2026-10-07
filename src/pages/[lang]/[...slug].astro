@@ -1,0 +1,45 @@
+---
+/**
+ * The one router for every localized page. Paths come from the page registry
+ * (src/lib/pages.ts); each page kind renders its view from src/views/.
+ */
+import { getAllPages, type PageEntry } from '~/lib/pages';
+import HomeView from '~/views/HomeView.astro';
+import ServicesView from '~/views/ServicesView.astro';
+import ServiceView from '~/views/ServiceView.astro';
+import WorkView from '~/views/WorkView.astro';
+import ProjectView from '~/views/ProjectView.astro';
+import AboutView from '~/views/AboutView.astro';
+import ContactView from '~/views/ContactView.astro';
+import FaqView from '~/views/FaqView.astro';
+import InsightsView from '~/views/InsightsView.astro';
+import InsightView from '~/views/InsightView.astro';
+import LegalView from '~/views/LegalView.astro';
+import ThanksView from '~/views/ThanksView.astro';
+
+export async function getStaticPaths() {
+  const pages = await getAllPages();
+  return pages.map((page) => {
+    const rest = page.path.split('/').filter(Boolean).slice(1).join('/');
+    return { params: { lang: page.lang, slug: rest || undefined }, props: { page } };
+  });
+}
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+---
+
+{page.kind === 'home' && <HomeView page={page} />}
+{page.kind === 'services' && <ServicesView page={page} />}
+{page.kind === 'service' && <ServiceView page={page} />}
+{page.kind === 'work' && <WorkView page={page} />}
+{page.kind === 'project' && <ProjectView page={page} />}
+{page.kind === 'about' && <AboutView page={page} />}
+{page.kind === 'contact' && <ContactView page={page} />}
+{page.kind === 'faq' && <FaqView page={page} />}
+{(page.kind === 'insights' || page.kind === 'topic') && <InsightsView page={page} />}
+{page.kind === 'insight' && <InsightView page={page} />}
+{(page.kind === 'privacy' || page.kind === 'cookies' || page.kind === 'legal') && <LegalView page={page} />}
+{page.kind === 'thanks' && <ThanksView page={page} />}

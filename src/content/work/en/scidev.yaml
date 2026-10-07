@@ -1,0 +1,38 @@
+key: scidev
+lang: en
+industry: Research & policy — think tank
+location: Tirana, Albania
+summary: >-
+  A publishing platform for a Tirana-based think tank working on media freedom, civic space and science in
+  the Western Balkans.
+metaDescription: >-
+  Case study — website for SCiDEV, a Tirana think tank publishing research, policy papers and news on media
+  freedom and civic space. Web, SEO, ads and social.
+overview: >-
+  SCiDEV — the Center for Science and Innovation for Development — is a think tank based in Tirana. It
+  publishes research, indices and position papers on media freedom, journalists' safety, civic space and
+  democratic governance, and runs programmes such as NAWSTEM for women in science.
+challenge: >-
+  A think tank's website is its library, newsroom and calling card at once. Publications, news and events
+  appear constantly, many produced with international partners and funders whose branding must be respected.
+  The team needed to publish quickly without a developer, and readers needed to find a specific report among
+  years of material.
+approach: >-
+  We structured the site around the organisation's work — thematic pillars, publications, news and programmes —
+  so every new item has an obvious home. The home page leads with current workshops and the latest
+  publications, putting recent work in front of journalists, partners and policymakers.
+design: >-
+  An editorial layout in SCiDEV's deep indigo with the bright, multi-coloured accent of its logo. Publication
+  covers are shown as large cards so reports are recognisable at a glance, with clear dates and categories.
+development: >-
+  Built on WordPress so the communications team can publish publications, news and events independently.
+  Site-wide search, clear categories and social sharing help reports travel, and the site is optimised for
+  search alongside the organisation's social channels and campaigns.
+result: >-
+  SCiDEV publishes its research and news on a site its own team manages day to day, with a structure that
+  keeps a growing archive of publications findable.
+highlights:
+  - Publications, news and events organised around thematic pillars
+  - Self-managed publishing for the communications team
+  - Partner and funder branding handled per publication
+  - Search and categories across a growing archive

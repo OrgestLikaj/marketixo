@@ -1,5 +1,81 @@
 ---
-import View from '~/views/NotFound.astro';
+/**
+ * One static 404 for all languages (Apache: ErrorDocument 404 /404.html).
+ * The language is detected from the first path segment; English is the default.
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/Button.astro';
+import { locales, useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+
+const page = { lang: 'en' as const, path: '/404.html', alternates: {}, kind: 'thanks' as const, noindex: true };
+const t = useT('en');
 ---
 
-<View  />
+<BaseLayout page={page} title={t.notFound.metaTitle} description={t.notFound.text}>
+  <section class="nf">
+    <div class="blueprint" aria-hidden="true"></div>
+    <div class="container nf__inner">
+      <p class="nf__code" aria-hidden="true">404</p>
+      {
+        locales.map((l) => {
+          const tl = useT(l);
+          return (
+            <div class="nf__lang" data-nf-lang={l} lang={l} hidden={l !== 'en'}>
+              <h1 class="h2">{tl.notFound.heading}</h1>
+              <p class="lead">{tl.notFound.text}</p>
+              <div class="nf__actions">
+                <Button href={url.section(l, 'home')}>{tl.nav.home}</Button>
+                <Button href={url.section(l, 'services')} variant="secondary">{tl.nav.services}</Button>
+                <Button href={url.section(l, 'work')} variant="secondary">{tl.nav.work}</Button>
+                <Button href={url.section(l, 'contact')} variant="ghost">{tl.nav.contact}</Button>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+  <script>
+    const seg = location.pathname.split('/')[1];
+    const block = document.querySelector<HTMLElement>(`[data-nf-lang="${seg}"]`);
+    if (block && seg !== 'en') {
+      document.querySelectorAll<HTMLElement>('[data-nf-lang]').forEach((el) => (el.hidden = el !== block));
+      document.documentElement.lang = seg;
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .nf {
+    position: relative;
+    min-height: 90svh;
+    display: grid;
+    align-items: center;
+    padding-top: var(--header-h);
+  }
+  .nf__inner {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .nf__code {
+    font-size: clamp(6rem, 3rem + 18vw, 18rem);
+    font-weight: 650;
+    letter-spacing: -0.07em;
+    line-height: 0.8;
+    background: var(--grad-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .nf__lang {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+</style>

@@ -1,133 +1,85 @@
 ---
 import '~/styles/global.css';
+import { Font } from 'astro:assets';
+import Seo from '~/components/Seo.astro';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
-import WhatsAppButton from '~/components/WhatsAppButton.astro';
+import CookieConsent from '~/components/CookieConsent.astro';
 import { site } from '~/config/site';
-import { defaultLang, localeMeta, t, type Alternates, type Lang } from '~/i18n/ui';
-import { organizationSchema } from '~/lib/schema';
-import { isPreview, withBase } from '~/lib/paths';
+import { useT, type Lang } from '~/i18n';
+import type { PageEntry } from '~/lib/pages';
+import { graph, organization, website } from '~/lib/schema';
 
 interface Props {
-  lang: Lang;
+  page: Pick<PageEntry, 'lang' | 'path' | 'alternates' | 'kind' | 'noindex'>;
   title: string;
   description: string;
-  /** URLs of this page in every available language (used for hreflang + switcher). */
-  alternates: Alternates;
-  /** Extra JSON-LD objects for this page. */
-  schema?: Record<string, unknown>[];
-  ogImage?: string;
-  ogType?: 'website' | 'article';
-  noindex?: boolean;
-  /** Set to false to use the title exactly as given (e.g. on the home page). */
-  appendSiteName?: boolean;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  article?: { published: Date; modified?: Date; author: string; section?: string; tags?: string[] };
+  canonical?: string;
+  /** Page-specific JSON-LD nodes; Organization + WebSite are always added. */
+  schema?: object[];
+  /** Pages that open on a light section can ask for a dark-on-light header. */
+  bodyClass?: string;
 }
 
-const {
-  lang,
-  title,
-  description,
-  alternates,
-  schema = [],
-  ogImage = withBase('/og.png'),
-  ogType = 'website',
-  noindex = false,
-  appendSiteName = true,
-} = Astro.props;
-
-const s = t(lang);
-const fullTitle = appendSiteName ? `${title} | ${site.name}` : title;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
-/** Absolute URL for a path that already includes the base path. */
-const abs = (path: string) => new URL(path, Astro.site).href;
-const hreflangs = Object.entries(alternates) as [Lang, string][];
-const jsonLd = [organizationSchema(lang), ...schema];
+const { page, title, description, image, imageAlt, type, article, canonical, schema = [], bodyClass } = Astro.props;
+const lang: Lang = page.lang;
+const t = useT(lang);
+const jsonLd = graph(organization(lang), website(lang, t.meta.defaultDescription), ...schema);
+const xDefault = page.kind === 'home' ? '/' : undefined;
 ---
 
 <!doctype html>
-<html lang={localeMeta[lang].htmlLang}>
+<html lang={lang} dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
-
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {(noindex || isPreview) && <meta name="robots" content={isPreview ? 'noindex, nofollow' : 'noindex, follow'} />}
-
-    {hreflangs.map(([l, href]) => <link rel="alternate" hreflang={l} href={abs(href)} />)}
-    {alternates[defaultLang] && <link rel="alternate" hreflang="x-default" href={abs(alternates[defaultLang]!)} />}
-
-    <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={abs(ogImage)} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content={localeMeta[lang].ogLocale} />
-    {
-      hreflangs
-        .filter(([l]) => l !== lang)
-        .map(([l]) => <meta property="og:locale:alternate" content={localeMeta[l].ogLocale} />)
-    }
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
-    <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
-    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
-    <link rel="manifest" href={withBase('/site.webmanifest')} />
-    <meta name="theme-color" content="#0d0f14" />
-    <link rel="sitemap" href={withBase('/sitemap.xml')} />
-
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd.length === 1 ? jsonLd[0] : { '@context': 'https://schema.org', '@graph': jsonLd.map(({ '@context': _, ...rest }) => rest) })} />
+    <!-- Enables reveal animations; falls back to fully visible content if scripts don't run. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      setTimeout(function () { if (!window.__mxReveal) document.documentElement.classList.remove('js'); }, 2500);
+    </script>
+    <Font cssVariable="--font-sans" preload={[{ subset: 'latin', weight: '300 800' }]} />
+    <Font cssVariable="--font-mono" />
+    <Seo
+      lang={lang}
+      title={title}
+      description={description}
+      path={page.path}
+      alternates={page.alternates}
+      xDefault={xDefault}
+      noindex={page.noindex}
+      image={image}
+      imageAlt={imageAlt}
+      type={type}
+      article={article}
+      canonical={canonical}
+      jsonLd={jsonLd}
+    />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {page.kind === 'insights' && <link rel="alternate" type="application/rss+xml" title={`${site.name} — ${t.nav.insights}`} href={`/${lang}/rss.xml`} />}
   </head>
-  <body>
-    <a class="skip-link" href="#main">{s.skip}</a>
-    <Header lang={lang} alternates={alternates} />
-    <main id="main">
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
+    <Header page={page} />
+    <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer lang={lang} />
-    <WhatsAppButton lang={lang} />
-
+    <Footer page={page} />
+    <CookieConsent lang={lang} />
     <script>
-      const els = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                io.unobserve(entry.target);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -8% 0px' },
-        );
-        els.forEach((el) => io.observe(el));
-      } else {
-        els.forEach((el) => el.classList.add('is-visible'));
-      }
+      import { initReveal } from '~/scripts/reveal';
+      initReveal();
     </script>
   </body>
 </html>
-
-<style>
-  .skip-link {
-    position: absolute;
-    top: -100px;
-    left: 16px;
-    z-index: 100;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    background: var(--ink);
-    color: var(--white);
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    top: 16px;
-  }
-</style>

@@ -1,108 +1,218 @@
-# Marketixo website
+# Marketixo — agency website
 
-Agency website for Marketixo. It's bilingual (English + German), built for SEO and set up to deploy to Namecheap shared hosting.
+Multilingual (EN · DE · IT · SQ) website for Marketixo, a digital agency for web design and
+development, branding, SEO, paid ads, social media, content, cybersecurity and software QA.
 
-**Stack:** [Astro](https://astro.build) static site · plain CSS · self-hosted fonts · one PHP file for the contact form. There's no database and no CMS server, which keeps it fast, secure and cheap to host.
+- **Static site** built with [Astro 7](https://astro.build) + TypeScript — plain HTML/CSS, ~1 KB (gzipped) of page JavaScript
+- **Runs on any Namecheap shared hosting plan** (Apache/LiteSpeed + PHP for the contact form)
+- **Real portfolio** — screenshots captured from the clients' live websites
+- **SEO, accessibility, GDPR consent and security headers built in**, verified on every build
 
-## Quick start
+Deployment is documented separately in **[DEPLOYMENT.md](DEPLOYMENT.md)**.
+
+---
+
+## 1. Project structure
+
+```
+marketixo-site/
+├─ astro.config.mjs          Site URL, self-hosted fonts, hash-based CSP, images
+├─ public/
+│  ├─ .htaccess              HTTPS, language redirect at "/", security headers, caching, legacy 301s
+│  ├─ api/contact.php        Contact form handler (validation, spam + rate limiting)
+│  ├─ og/default.png         Default social-sharing image
+│  └─ favicon.*, icons, site.webmanifest
+├─ deploy/mx-config.example.php   Server-side form config (copied outside public_html)
+├─ docs/GLOSSARY.md          Terminology per language + voice rules
+├─ scripts/
+│  ├─ screenshot-work.mjs    Captures portfolio screenshots from live client sites
+│  ├─ make-brand-assets.mjs  Generates favicons + OG image from the logo
+│  ├─ check-site.mjs         Static QA of dist/ (runs automatically after build)
+│  └─ qa-screens.mjs         Full-page screenshots at several widths for visual review
+├─ src/
+│  ├─ config/site.ts         ★ Company, contact, address, social, analytics (single source)
+│  ├─ i18n/
+│  │  ├─ config.ts           Languages
+│  │  └─ routes.ts           ★ Localized URL segments and slugs
+│  ├─ locales/<lang>/ui.ts   ★ Interface + fixed-page copy per language
+│  ├─ content/               ★ Translatable long-form content (content collections)
+│  │  ├─ services/<lang>/<service>.yaml
+│  │  ├─ work/<lang>/<project>.yaml
+│  │  ├─ insights/<lang>/<slug>.md
+│  │  └─ legal/<lang>/{privacy,cookies,legal}.md
+│  ├─ data/
+│  │  ├─ projects.ts         ★ Portfolio facts (client, URL, services, stack, brand colour)
+│  │  ├─ services.ts         Service keys, groups, icons
+│  │  └─ testimonials.ts     Empty until real, approved quotes exist
+│  ├─ assets/work/<project>/ Screenshots (desktop.jpg, mobile.jpg, page.jpg)
+│  ├─ components/            Design-system components (see below)
+│  ├─ layouts/BaseLayout.astro
+│  ├─ lib/pages.ts           Page registry → router, hreflang, switcher, sitemap
+│  ├─ lib/schema.ts          Schema.org JSON-LD builders
+│  ├─ pages/
+│  │  ├─ [lang]/[...slug].astro   One router for every localized page
+│  │  ├─ [lang]/rss.xml.ts        RSS per language
+│  │  ├─ index.astro              "/" (x-default language gateway)
+│  │  ├─ 404.astro, sitemap.xml.ts, robots.txt.ts
+│  ├─ scripts/               Client JS: reveal, consent/analytics, contact form
+│  ├─ styles/global.css      Design tokens + base styles
+│  └─ views/                 One template per page type
+└─ tests/                    Playwright smoke tests (Chromium, Firefox, WebKit, mobile)
+```
+
+**Components:** Button, Container, Section, Heading, Badge, Logo, Icon, Breadcrumbs, Header,
+Footer, LanguageSwitcher, PageHero, ServiceCard, ServiceVisual, ProjectCard, ProjectGrid,
+BrowserFrame, PhoneFrame, Pipeline, ProcessSteps, TechGrid, Faq, Testimonial, ContactForm,
+CookieConsent, CtaBand, Seo. Case studies are rendered by `views/ProjectView.astro`.
+
+## 2. Technologies
+
+| Area | Choice | Why |
+| --- | --- | --- |
+| Framework | Astro 7, TypeScript (strict) | Static HTML, zero JS by default, content collections with schema validation |
+| Styling | Hand-written CSS with design tokens, scoped component styles | No framework weight, full control |
+| Fonts | Inter Tight + JetBrains Mono via Astro Fonts API | Self-hosted at build time (no Google requests), metric-matched fallbacks |
+| Images | `astro:assets` + sharp | Responsive AVIF/WebP `srcset`, lazy loading, explicit dimensions |
+| Forms | PHP 8 handler | Works on every Namecheap plan, no third-party form service |
+| Testing | Playwright, custom static checker | Cross-browser smoke tests + SEO/link/a11y checks on every build |
+| CI/CD | GitHub Actions → FTPS | Build, test and deploy on push to `main` |
+
+> **Why not Next.js?** The brief preferred Next.js, but Namecheap shared hosting has no
+> reliable Node runtime. Astro outputs the same quality of React-free static HTML with less
+> JavaScript, simpler hosting and better Core Web Vitals — the same reason the Marketixo and
+> MK AluPlast sites already use it.
+
+## 3. Installation
+
+Requirements: **Node.js ≥ 22.12** (see `.nvmrc`).
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321
-npm run build      # type-check + build into dist/
-npm run preview    # serve the built site
+cp .env.example .env        # optional — adjust domain / analytics IDs
+npm run dev                 # http://localhost:4321
+npm run build               # astro check + build + static QA → dist/
+npm run preview             # serve dist/
+npm test                    # Playwright smoke tests against the build
 ```
 
-> The contact form posts to `/api/contact.php`, so it only works once deployed to hosting with PHP (or with `php -S localhost:8000 -t dist` after a build).
+First run of the tests: `npx playwright install chromium firefox webkit`.
 
-## Before going live: replace placeholders
+## 4. Environment variables
 
-| What | Where |
-| --- | --- |
-| Domain | `astro.config.mjs` → `site`, and `src/config/site.ts` → `url` |
-| Email, phone, WhatsApp, booking link, address, legal details, social links | `src/config/site.ts` (search for `TODO`) |
-| Where form requests are sent | `public/api/contact.php` → `MAIL_TO`, `MAIL_FROM` |
-| Portfolio descriptions, years, results | `src/data/work.ts` |
-| Portfolio layout (tiles, showcase, index or cards) | `src/data/work.ts` → `workLayout`; compare them at `/work-layouts/` |
-| Home page | `src/views/HomePage.astro` |
-| Portfolio screenshots | run `npm run screenshots` (first time: `npx playwright install chromium`) → `public/work/` |
-| Client logos | Already in `public/clients/` (19 logos, optimised WebP). To add or replace one, drop `<key>.svg/.png/.webp` there; keys are in `src/data/work.ts`. Clients with a website are in `projects` (project cards); logo-only clients are in `otherClients` (shown in the logo strip and the "More brands" wall). |
-| Testimonials (hidden until added) | `src/data/work.ts` → `testimonials` |
-| Your story / founder | `src/views/AboutPage.astro` |
-| Legal texts | `src/views/LegalPage.astro`. **Have these checked**, especially the Impressum and privacy policy for the German market |
+All variables are **public** build-time values (they end up in HTML). Secrets never go here —
+the mail configuration lives in `mx-config.php` on the server.
 
-## Where things live
+| Variable | Example | Purpose |
+| --- | --- | --- |
+| `PUBLIC_SITE_URL` | `https://marketixo.com` | Canonicals, hreflang, sitemap, OG URLs |
+| `NOINDEX` | `true` | Staging: `noindex` on every page + `Disallow: /` in robots.txt |
+| `PUBLIC_GA4_ID` | `G-XXXXXXX` | Google Analytics 4 (loads only after consent) |
+| `PUBLIC_GTM_ID` | `GTM-XXXXXX` | Google Tag Manager (if set, load GA4 through GTM) |
+| `PUBLIC_META_PIXEL_ID` | `1234567890` | Meta Pixel (marketing consent only) |
+| `PUBLIC_GSC_VERIFICATION` | token | Google Search Console HTML-tag verification |
 
-```
-src/
-  config/site.ts        Business details (contact, address, socials)
-  i18n/ui.ts            Languages, localized URLs, UI translations
-  data/services.ts      All 8 services: page copy, deliverables, FAQs (EN + DE)
-  data/work.ts          Portfolio projects and testimonials
-  content/blog/en|de/   Blog posts (Markdown)
-  views/                Page templates shared by every language
-  pages/                Routes (/ = English, /de/ = German)
-  components/           Header, footer, forms, cards …
-  styles/global.css     Design tokens (colours, fonts, spacing)
-public/
-  .htaccess             HTTPS, www→non-www, caching, security headers
-  api/contact.php       Quote form handler (honeypot, time-trap, rate limit)
-```
+In GitHub Actions, set them as **repository variables** (see `.github/workflows/deploy.yml`).
 
-### Edit a service
+## 5. Company details & placeholders
 
-Change the copy in `src/data/services.ts`. Each service has its own English and German slug, title, meta description, deliverables and FAQ. Pages, menus, the footer, the sitemap and structured data all update automatically.
+Edit **`src/config/site.ts`**. Empty values are hidden in the UI and shown as bracketed
+placeholders on legal pages — `[COMPANY NAME]`, `[REGISTERED ADDRESS]`, `[EMAIL]`, `[PHONE]`,
+`[VAT NUMBER]`, `[COMPANY REGISTRATION]` — together with a visible "template" notice, so nothing
+goes live half-filled by accident. Once a street address is set, the Organization schema becomes
+a `ProfessionalService` (LocalBusiness) automatically.
 
-### Write a blog post
+## 6. Add or edit a portfolio project
 
-Create `src/content/blog/en/my-post.md` (and optionally `src/content/blog/de/mein-artikel.md`):
+1. Add the facts to **`src/data/projects.ts`** (`key`, `client`, `url`, `services`, `categories`,
+   `technologies`, `brand`, `order`, optional `featured` position on the home page and `group`).
+2. Capture screenshots from the live site: `npm run screenshots -- <key>`
+   (writes `src/assets/work/<key>/desktop.jpg|mobile.jpg|page.jpg`). Any extra image you drop in
+   that folder is picked up as a gallery image.
+3. Write the case study in **`src/content/work/<lang>/<key>.yaml`** for each language
+   (industry, summary, overview, challenge, approach, design, development, result, highlights).
+4. Measured results go in `results:` — **only real numbers the client agreed to publish.**
+5. `npm run build` — the router, work page, filters, sitemap and hreflang update automatically.
+
+**Client logos** live in `src/assets/clients/<key>.webp` (transparent, made for light backgrounds) and are
+listed in `clientLogos` in `src/data/projects.ts`. Logos with a `project` link to that case study; the
+others are shown as logo-only clients.
+
+## 7. Add or edit translations
+
+- **Interface and fixed pages:** `src/locales/<lang>/ui.ts`. Each language is typed against
+  the English file, so a missing or misspelled key fails `npm run build`.
+- **Services / case studies / articles / legal:** the matching file in `src/content/*/<lang>/`.
+  Schemas in `src/content.config.ts` enforce structure and SEO length limits per language.
+- **URLs:** localized segments and service slugs are in `src/i18n/routes.ts`. If you change a
+  live URL, add a 301 in `public/.htaccess`.
+- Keep terminology consistent with **`docs/GLOSSARY.md`**.
+- **New language:** add it to `src/i18n/config.ts`, add its segments/slugs in `routes.ts`,
+  create `src/locales/<lang>/ui.ts` and the content files, extend the root redirect in
+  `.htaccess` and `LANGS` in `api/contact.php`.
+
+## 8. Publish an article
+
+Create `src/content/insights/<lang>/<slug>.md` — the file name is the URL slug:
 
 ```md
 ---
-title: 'Post title'
-description: 'Up to ~160 characters for Google.'
+title: 'Headline'
+seoTitle: 'Shorter title for search results (≤ 70)'   # optional
+description: 'Meta description, ≤ 170 characters.'
 lang: en
-translationKey: my-post        # same key in both languages links the translations
-pubDate: 2026-10-05
-tags: ['SEO']
+translationKey: my-article        # same key in every language → hreflang + switcher
+author: Marketixo
+pubDate: 2026-11-01
+updatedDate: 2026-11-15           # optional
+categories: [seo, web-development] # web-development | seo | digital-marketing | branding | cybersecurity | qa-testing
+tags: [hreflang, international SEO]
+ogImage: /og/my-article.png       # optional, 1200×630 in public/og/
+canonical: https://…              # optional, only if first published elsewhere
+draft: false
 ---
 
-Your content…
+Markdown content…
 ```
 
-### Add a language (e.g. French)
+Article pages get BlogPosting schema, Open Graph article tags, reading time, breadcrumbs,
+category archives (`/en/insights/topic/seo/`), RSS (`/en/rss.xml`) and sitemap entries.
+Translations are optional: untranslated articles simply have no hreflang alternate, and the
+language switcher falls back to that language's Insights page.
 
-Follow the steps at the top of `src/i18n/ui.ts`: add the locale, its URLs and its translations, add `fr` copy to each service, then copy `src/pages/de/` to `src/pages/fr/`.
+## 9. SEO configuration
 
-## SEO built in
+Built in and verified by `scripts/check-site.mjs` on every build:
 
-- A separate, indexable page for every service in every language, with localized URLs (`/services/seo/` ↔ `/de/leistungen/suchmaschinenoptimierung/`)
-- `hreflang` + `x-default` on every page and in `sitemap.xml`
-- Unique titles and meta descriptions, canonical URLs, Open Graph image
-- JSON-LD structured data: Organization, Service, FAQ, Breadcrumbs, BlogPosting
-- `robots.txt`, fast static HTML, self-hosted fonts, no render-blocking third parties
+- Unique `<title>` and meta description per page and language (schema-enforced lengths)
+- Self-referencing canonical; `hreflang` for every translation **plus `x-default`**, with
+  return links checked; `/` is the x-default language gateway
+- Localized URLs (`/de/leistungen/webdesign-entwicklung/`), trailing slashes, 301s for old URLs
+- `sitemap.xml` with `xhtml:link` alternates; `robots.txt`; RSS per language
+- JSON-LD: Organization / ProfessionalService, WebSite, BreadcrumbList, Service + OfferCatalog,
+  FAQPage, BlogPosting, CreativeWork (case studies), ItemList, AboutPage, ContactPage
+- Open Graph + X cards; case studies get an OG image cropped from their screenshot
+- Semantic HTML, one `<h1>` per page, alt text, internal linking between services ↔ work
+- After launch: verify the domain in Google Search Console and submit `/sitemap.xml`
 
-After launch, add the site to [Google Search Console](https://search.google.com/search-console) and submit `https://YOURDOMAIN/sitemap.xml`.
+## 10. Final QA checklist
 
-## Deploy to Namecheap
+Automated (every build / CI run):
 
-**One-time setup in cPanel**
+- [x] Type check (`astro check`), content schema validation in 4 languages
+- [x] Static QA of every page: lang, single h1, title/description, canonical, hreflang
+      reciprocity, broken internal links/assets, alt text, leftover placeholders, sitemap URLs
+- [x] Playwright in Chromium, Firefox and WebKit: home pages per language, language switcher
+      mapping + cookie, SEO tags + JSON-LD, work filter, form validation, service pre-selection,
+      FAQ, cookie dialog, **no third-party requests before consent**, skip link, 404
+- [x] Mobile (Pixel 7): menu dialog focus/Escape, no horizontal overflow
+- [x] `npm audit` for production dependencies
 
-1. Point the domain to your hosting and enable **SSL** (cPanel → SSL/TLS Status → Run AutoSSL).
-2. Create the sender mailbox used by the form (e.g. `no-reply@marketixo.com`) under **Email Accounts**.
-3. Optionally create an **FTP account** for automatic deploys.
+Before go-live (manual):
 
-**Option A: manual upload**
-
-1. `npm run build`
-2. Upload the **contents** of `dist/` (including the hidden `.htaccess`) into `public_html/` using cPanel File Manager or an FTP client such as FileZilla.
-
-**Option B: automatic deploy from GitHub**
-
-`.github/workflows/deploy.yml` builds every push and deploys `main` over FTPS. Add these repository secrets: `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD`. If your FTP account's root is already `public_html`, change `server-dir` to `./`.
-
-## Later ideas
-
-- Privacy-friendly analytics (Plausible, Umami, or GA4 with a cookie banner)
-- Real case studies with numbers; industry landing pages (e.g. "Web design for restaurants")
-- Google Business Profile + reviews
+- [ ] Fill in `src/config/site.ts` (legal entity, address, email, phone, VAT, socials)
+- [ ] Have privacy policy, cookie policy and Impressum reviewed by a lawyer
+- [ ] Review the case-study texts with each client (no metrics are claimed)
+- [ ] Create `mx-config.php` on the server and send a test enquiry in each language
+- [ ] Check https://securityheaders.com and Lighthouse on the live domain
+- [ ] Test on real iOS Safari and Android Chrome; spot-check Edge
+- [ ] Submit the sitemap in Google Search Console; set up GA4 / Ads only if needed

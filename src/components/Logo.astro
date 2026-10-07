@@ -1,30 +1,39 @@
 ---
 /**
- * Marketixo logo: a square mark with an "x" whose rising stroke becomes an arrow
- * (build → grow), followed by the wordmark.
+ * Marketixo logo. The mark keeps the original idea — an "x" whose rising stroke
+ * turns into an arrow (build → grow) — redrawn on the ink/teal gradient.
  */
+import { site } from '~/config/site';
+
 interface Props {
-  inverted?: boolean;
   markOnly?: boolean;
+  size?: number;
   class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
 }
-const { inverted = false, markOnly = false, class: className } = Astro.props;
+const { markOnly = false, size = 34, class: className , ...rest } = Astro.props;
+// Unique per instance: the logo appears several times per page (header, menu, footer).
+const gid = `mx-logo-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<span class:list={['logo', { 'logo--inverted': inverted }, className]}>
-  <svg class="logo__mark" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
-    <rect width="40" height="40" rx="11" class="logo__bg"></rect>
-    <path d="M12.5 12.5 27.5 27.5" class="logo__stroke" stroke-width="4.2" stroke-linecap="round"></path>
-    <path d="M12.5 27.5 27 13" stroke="#FF5A1F" stroke-width="4.2" stroke-linecap="round"></path>
-    <path d="M19.5 12.2h8.3v8.3" fill="none" stroke="#FF5A1F" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"></path>
+<span {...rest} class:list={['logo', className]}>
+  <svg class="logo__mark" viewBox="0 0 40 40" width={size} height={size} aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id={gid} x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#005f73"></stop>
+        <stop offset="1" stop-color="#0a9396"></stop>
+      </linearGradient>
+    </defs>
+    <rect width="40" height="40" rx="9" fill={`url(#${gid})`}></rect>
+    <path d="M12.5 12.5 27.5 27.5" stroke="#eaf3f0" stroke-width="4" stroke-linecap="round"></path>
+    <path d="M12.5 27.5 26.6 13.4" stroke="#ee9b00" stroke-width="4" stroke-linecap="round"></path>
+    <path d="M19.6 12.4h8v8" fill="none" stroke="#ee9b00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
   </svg>
-  {
-    !markOnly && (
-      <span class="logo__word">
-        marketi<span class="logo__x">x</span>o
-      </span>
-    )
-  }
+  {!markOnly && (
+    <span class="logo__word" aria-hidden="true">marketi<span class="logo__x">x</span>o</span>
+  )}
+  <span class="sr-only">{site.name}</span>
 </span>
 
 <style>
@@ -32,34 +41,19 @@ const { inverted = false, markOnly = false, class: className } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--ink);
-  }
-  .logo__bg {
-    fill: var(--ink);
-  }
-  .logo__stroke {
-    stroke: var(--paper);
-  }
-  .logo--inverted {
-    color: var(--white);
-  }
-  .logo--inverted .logo__bg {
-    fill: var(--white);
-  }
-  .logo--inverted .logo__stroke {
-    stroke: var(--ink);
+    color: var(--text);
   }
   .logo__mark {
     flex: none;
   }
   .logo__word {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.45rem;
-    letter-spacing: -0.04em;
+    font-weight: 650;
+    font-size: 1.5rem;
+    letter-spacing: -0.045em;
     line-height: 1;
+    translate: 0 -0.04em;
   }
   .logo__x {
-    color: var(--signal);
+    color: var(--golden-orange);
   }
 </style>

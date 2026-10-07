@@ -1,0 +1,39 @@
+key: scidev
+lang: sq
+industry: Kërkim dhe politika — think tank
+location: Tiranë, Shqipëri
+summary: >-
+  Një platformë publikimi për një think tank me qendër në Tiranë që punon për lirinë e medias, hapësirën
+  qytetare dhe shkencën në Ballkanin Perëndimor.
+metaDescription: >-
+  Rast studimi — faqe për SCiDEV, think tank në Tiranë që publikon kërkime dhe lajme për lirinë e medias dhe hapësirën qytetare. Ueb, SEO, reklama, rrjete sociale.
+overview: >-
+  SCiDEV — Qendra për Shkencë dhe Inovacion për Zhvillim — është një think tank me qendër në Tiranë. Publikon
+  kërkime, indekse dhe dokumente qëndrimi për lirinë e medias, sigurinë e gazetarëve, hapësirën qytetare dhe
+  qeverisjen demokratike, dhe zhvillon programe si NAWSTEM për gratë në shkencë.
+challenge: >-
+  Faqja e një think tank-u është njëkohësisht bibliotekë, redaksi lajmesh dhe kartëvizitë. Publikimet,
+  lajmet dhe eventet shtohen vazhdimisht, shumë prej tyre të realizuara me partnerë dhe donatorë
+  ndërkombëtarë, identiteti vizual i të cilëve duhet respektuar. Ekipi duhej të publikonte shpejt pa një
+  zhvillues, ndërsa lexuesit duhej të gjenin një raport të caktuar mes materialeve të shumë viteve.
+approach: >-
+  E strukturuam faqen rreth punës së organizatës — shtyllat tematike, publikimet, lajmet dhe programet — që
+  çdo material i ri të ketë një vend të qartë. Kryefaqja nis me seminaret aktuale dhe publikimet e fundit,
+  duke ua vënë punën më të re para syve gazetarëve, partnerëve dhe politikëbërësve.
+design: >-
+  Një faqosje editoriale në ngjyrën indigo të thellë të SCiDEV, me theksin e ndritshëm shumëngjyrësh të
+  logos. Kopertinat e publikimeve shfaqen si karta të mëdha, që raportet të njihen me një shikim, me data
+  dhe kategori të qarta.
+development: >-
+  E ndërtuar në WordPress, që ekipi i komunikimit të publikojë në mënyrë të pavarur publikime, lajme dhe
+  evente. Kërkimi në të gjithë faqen, kategoritë e qarta dhe shpërndarja në rrjete sociale i ndihmojnë
+  raportet të qarkullojnë, ndërsa faqja është optimizuar për motorët e kërkimit krahas kanaleve sociale dhe
+  fushatave të organizatës.
+result: >-
+  SCiDEV i publikon kërkimet dhe lajmet e veta në një faqe që ekipi e menaxhon vetë çdo ditë, me një strukturë
+  që e mban të gjetshëm një arkiv publikimesh gjithnjë në rritje.
+highlights:
+  - Publikime, lajme dhe evente të organizuara sipas shtyllave tematike
+  - Publikim i pavarur nga ekipi i komunikimit
+  - Identiteti vizual i partnerëve dhe donatorëve, i trajtuar për çdo publikim
+  - Kërkim dhe kategori në një arkiv gjithnjë në rritje

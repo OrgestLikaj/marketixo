@@ -1,0 +1,41 @@
+key: scidev
+lang: it
+industry: Ricerca e policy — think tank
+location: Tirana, Albania
+summary: >-
+  Una piattaforma editoriale per un think tank di Tirana che si occupa di libertà dei media, spazio civico e
+  scienza nei Balcani occidentali.
+metaDescription: >-
+  Caso studio — sito web per SCiDEV, think tank di Tirana che pubblica ricerche, policy paper e notizie su
+  libertà dei media e spazio civico. Web, SEO, ads e social.
+overview: >-
+  SCiDEV — Center for Science and Innovation for Development — è un think tank con sede a Tirana. Pubblica
+  ricerche, indici e position paper su libertà dei media, sicurezza dei giornalisti, spazio civico e governance
+  democratica, e porta avanti programmi come NAWSTEM per le donne nella scienza.
+challenge: >-
+  Il sito di un think tank è al tempo stesso biblioteca, sala stampa e biglietto da visita. Pubblicazioni,
+  notizie ed eventi si susseguono di continuo, molti realizzati con partner e finanziatori internazionali la
+  cui identità visiva va rispettata. Il team doveva poter pubblicare rapidamente senza uno sviluppatore, e i
+  lettori dovevano riuscire a trovare un report specifico tra anni di materiale.
+approach: >-
+  Abbiamo strutturato il sito attorno al lavoro dell’organizzazione — aree tematiche, pubblicazioni, notizie e
+  programmi — così ogni nuovo contenuto ha una collocazione evidente. La home page apre con i workshop in corso
+  e le pubblicazioni più recenti, mettendo il lavoro attuale sotto gli occhi di giornalisti, partner e decisori
+  politici.
+design: >-
+  Un layout editoriale nell’indaco profondo di SCiDEV, con l’accento vivace e multicolore del logo. Le
+  copertine delle pubblicazioni sono mostrate come grandi card, così i report si riconoscono a colpo d’occhio,
+  con date e categorie ben visibili.
+development: >-
+  Realizzato su WordPress, perché il team comunicazione possa pubblicare in autonomia pubblicazioni, notizie ed
+  eventi. La ricerca interna al sito, categorie chiare e la condivisione social aiutano i report a circolare, e
+  il sito è ottimizzato per i motori di ricerca in sinergia con i canali social e le campagne
+  dell’organizzazione.
+result: >-
+  SCiDEV pubblica ricerche e notizie su un sito che il proprio team gestisce quotidianamente, con una struttura
+  che mantiene facilmente consultabile un archivio di pubblicazioni in continua crescita.
+highlights:
+  - Pubblicazioni, notizie ed eventi organizzati per aree tematiche
+  - Pubblicazione in autonomia per il team comunicazione
+  - Identità visiva di partner e finanziatori gestita per singola pubblicazione
+  - Ricerca e categorie su un archivio in crescita

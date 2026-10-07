@@ -1,0 +1,418 @@
+---
+/**
+ * Project request form.
+ * - Works without JavaScript (plain POST → PHP → redirect to thank-you page).
+ * - With JavaScript: inline validation, accessible errors, async submit.
+ * - Only name, email, description and consent are required.
+ * - Spam: honeypot + time trap here, rate limit + validation in api/contact.php.
+ */
+import Icon from './Icon.astro';
+import { site } from '~/config/site';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
+
+interface Props {
+  lang: Lang;
+  /** Pre-select a service, e.g. from a service page link (?service=seo). */
+  id?: string;
+}
+const { lang, id = 'project-form' } = Astro.props;
+const t = useT(lang);
+const f = t.form;
+const serviceOptions = Object.entries(f.services) as [keyof typeof f.services, string][];
+const budgetOptions = Object.entries(f.budgets) as [keyof typeof f.budgets, string][];
+const methods = (Object.entries(f.methods) as [keyof typeof f.methods, string][]).filter(([k]) => k !== 'whatsapp' || site.contact.whatsapp);
+const privacyHref = url.section(lang, 'privacy');
+const [consentBefore, consentAfter] = f.consent.split('{privacy}');
+---
+
+<form
+  id={id}
+  class="cf"
+  method="post"
+  action={site.formEndpoint}
+  novalidate
+  data-contact-form
+  data-msg-required={f.errors.required}
+  data-msg-email={f.errors.email}
+  data-msg-consent={f.errors.consent}
+  data-msg-generic={f.errors.generic}
+  data-msg-rate={f.errors.rate}
+  data-msg-sending={f.sending}
+>
+  <div class="cf__summary" role="alert" tabindex="-1" hidden data-summary>
+    <Icon name="close" size={18} />
+    <p>{f.errors.summary}</p>
+  </div>
+
+  <fieldset class="cf__set">
+    <legend class="sr-only">{f.legend}</legend>
+
+    <div class="cf__row cf__row--2">
+      <div class="cf__field">
+        <label for={`${id}-name`}>{f.name} <span class="cf__req" aria-hidden="true">*</span></label>
+        <input id={`${id}-name`} name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby={`${id}-name-err`} />
+        <p class="cf__err" id={`${id}-name-err`} data-err></p>
+      </div>
+      <div class="cf__field">
+        <label for={`${id}-company`}>{f.company} <span class="cf__opt">({f.optional})</span></label>
+        <input id={`${id}-company`} name="company" type="text" autocomplete="organization" maxlength="200" />
+      </div>
+    </div>
+
+    <div class="cf__row cf__row--2">
+      <div class="cf__field">
+        <label for={`${id}-email`}>{f.email} <span class="cf__req" aria-hidden="true">*</span></label>
+        <input id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200" aria-describedby={`${id}-email-err`} />
+        <p class="cf__err" id={`${id}-email-err`} data-err></p>
+      </div>
+      <div class="cf__field">
+        <label for={`${id}-phone`}>{f.phone} <span class="cf__opt">({f.optional})</span></label>
+        <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="cf__set cf__choices">
+    <legend class="cf__legend">
+      {f.service} <span class="cf__opt">({f.optional})</span>
+    </legend>
+    <p class="cf__hint">{f.serviceHint}</p>
+    <div class="cf__pills">
+      {
+        serviceOptions.map(([key, label]) => (
+          <label class="cf__pill">
+            <input type="checkbox" name="services[]" value={key} />
+            <span>
+              <Icon name="check" size={14} class="cf__tick" />
+              {label}
+            </span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="cf__set cf__choices">
+    <legend class="cf__legend">
+      {f.budget} <span class="cf__opt">({f.optional})</span>
+    </legend>
+    <div class="cf__pills">
+      {
+        budgetOptions.map(([key, label]) => (
+          <label class="cf__pill">
+            <input type="radio" name="budget" value={key} />
+            <span>{label}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="cf__field">
+    <label for={`${id}-message`}>{f.message} <span class="cf__req" aria-hidden="true">*</span></label>
+    <p class="cf__hint" id={`${id}-message-hint`}>{f.messageHint}</p>
+    <textarea id={`${id}-message`} name="message" rows="6" required maxlength="5000" aria-describedby={`${id}-message-hint ${id}-message-err`}></textarea>
+    <p class="cf__err" id={`${id}-message-err`} data-err></p>
+  </div>
+
+  <fieldset class="cf__set cf__choices">
+    <legend class="cf__legend">
+      {f.contactMethod} <span class="cf__opt">({f.optional})</span>
+    </legend>
+    <div class="cf__pills">
+      {
+        methods.map(([key, label]) => (
+          <label class="cf__pill">
+            <input type="radio" name="contact_method" value={key} />
+            <span>{label}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="cf__field cf__consent">
+    <label class="cf__check">
+      <input type="checkbox" name="consent" value="yes" required aria-describedby={`${id}-consent-err`} />
+      <span>
+        {consentBefore}<a href={privacyHref} target="_blank" rel="noopener">{f.privacyLink}</a>{consentAfter}
+        <span class="cf__req" aria-hidden="true">*</span>
+      </span>
+    </label>
+    <p class="cf__err" id={`${id}-consent-err`} data-err></p>
+  </div>
+
+  <!-- Spam protection -->
+  <div class="cf__hp" aria-hidden="true">
+    <label for={`${id}-website`}>{f.honeypot}</label>
+    <input id={`${id}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="ts" value="" data-ts />
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="redirect" value={url.section(lang, 'thanks')} />
+  <input type="hidden" name="error_redirect" value={`${url.section(lang, 'contact')}?error=1#${id}`} />
+
+  <div class="cf__submit">
+    <button type="submit" class="cf__btn">
+      <span data-label>{f.submit}</span>
+      <Icon name="arrow-right" size={18} />
+    </button>
+    <p class="cf__note">
+      <span class="cf__req">*</span> {f.required}
+    </p>
+  </div>
+
+  <div class="cf__success" role="status" tabindex="-1" hidden data-success>
+    <span class="cf__success-icon"><Icon name="check" size={28} /></span>
+    <h3>{f.successTitle}</h3>
+    <p>{f.successText}</p>
+  </div>
+</form>
+
+<script>
+  import { initContactForm } from '~/scripts/contact-form';
+  initContactForm();
+</script>
+
+<style>
+  .cf {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .cf__set {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .cf__row--2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .cf__field {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+  }
+  .cf label,
+  .cf__legend {
+    font-size: 0.9375rem;
+    font-weight: 550;
+  }
+  .cf__legend {
+    padding: 0;
+    margin-bottom: 0.25rem;
+  }
+  .cf__req {
+    color: var(--golden-orange);
+  }
+  .cf__opt,
+  .cf__hint,
+  .cf__note {
+    font-weight: 400;
+    font-size: var(--fs-sm);
+    color: var(--text-subtle);
+  }
+  .cf__hint {
+    margin-top: -0.25rem;
+  }
+  .cf input[type='text'],
+  .cf input[type='email'],
+  .cf input[type='tel'],
+  .cf textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.8rem 1rem;
+    background: rgb(0 18 25 / 0.6);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 1rem;
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+  .cf textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.55;
+  }
+  .cf input:hover,
+  .cf textarea:hover {
+    border-color: rgb(148 210 189 / 0.45);
+  }
+  .cf input:focus-visible,
+  .cf textarea:focus-visible {
+    outline: none;
+    border-color: var(--pearl-aqua);
+    box-shadow: 0 0 0 3px rgb(148 210 189 / 0.18);
+  }
+  .cf [aria-invalid='true'] {
+    border-color: var(--danger) !important;
+  }
+  .cf__err {
+    min-height: 0;
+    font-size: var(--fs-sm);
+    color: var(--danger);
+  }
+  .cf__err:empty {
+    display: none;
+  }
+  .cf__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .cf__pill {
+    position: relative;
+    font-weight: 400 !important;
+  }
+  .cf__pill input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .cf__pill span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    transition: all var(--dur) var(--ease);
+  }
+  .cf__pill :global(.cf__tick) {
+    display: none;
+  }
+  .cf__pill:hover span {
+    border-color: var(--pearl-aqua);
+    color: var(--text);
+  }
+  .cf__pill input:checked + span {
+    background: rgb(148 210 189 / 0.12);
+    border-color: var(--pearl-aqua);
+    color: var(--text);
+  }
+  .cf__pill input:checked + span :global(.cf__tick) {
+    display: block;
+    color: var(--pearl-aqua);
+  }
+  .cf__pill input:focus-visible + span {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .cf__check {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-weight: 400 !important;
+    font-size: 0.9375rem !important;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  .cf__check input {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin: 0.1rem 0 0;
+    accent-color: var(--dark-cyan);
+  }
+  .cf__check a {
+    color: var(--pearl-aqua);
+  }
+  .cf__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .cf__submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+  .cf__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 60px;
+    padding: 0 1.75rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--action);
+    color: var(--on-action);
+    font-weight: 650;
+    font-size: 1.0625rem;
+    cursor: pointer;
+    transition:
+      background-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .cf__btn:hover {
+    background: var(--action-hover);
+  }
+  .cf__btn:active {
+    transform: translateY(1px);
+  }
+  .cf__btn[disabled] {
+    opacity: 0.7;
+    cursor: progress;
+  }
+  .cf__summary {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--danger);
+    border-radius: var(--radius);
+    background: rgb(255 138 122 / 0.08);
+    color: var(--danger);
+  }
+  .cf__summary[hidden] {
+    display: none;
+  }
+  .cf__success {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--pearl-aqua);
+    border-radius: var(--radius-lg);
+    background: rgb(148 210 189 / 0.06);
+  }
+  .cf__success[hidden] {
+    display: none;
+  }
+  .cf__success h3 {
+    font-size: var(--fs-xl);
+  }
+  .cf__success p {
+    color: var(--text-muted);
+  }
+  .cf__success-icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--pearl-aqua);
+    color: var(--ink-black);
+  }
+  .cf.is-sent > :not([data-success]) {
+    display: none;
+  }
+  @media (max-width: 639px) {
+    .cf__row--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

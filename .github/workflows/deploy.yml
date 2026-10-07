@@ -1,11 +1,14 @@
-name: Build & deploy
+name: Build, test & deploy
 
-# Builds the site on every push / pull request (catches errors early).
-# Deploys to Namecheap via FTP on pushes to `main` — once these repository secrets exist
-# (Settings → Secrets and variables → Actions):
-#   FTP_SERVER    e.g. ftp.marketixo.com  (cPanel → FTP Accounts → "Configure FTP Client")
-#   FTP_USERNAME  e.g. deploy@marketixo.com
+# Every push / PR: type-check, build, static QA (scripts/check-site.mjs) and the
+# Playwright smoke suite. Pushes to `main` then deploy dist/ to Namecheap over FTPS —
+# once these repository secrets exist (Settings → Secrets and variables → Actions):
+#   FTP_SERVER     e.g. ftp.marketixo.com   (cPanel → FTP Accounts → Configure FTP Client)
+#   FTP_USERNAME   e.g. deploy@marketixo.com
 #   FTP_PASSWORD
+# Optional repository variables (Settings → Variables): PUBLIC_SITE_URL, PUBLIC_GA4_ID,
+# PUBLIC_GTM_ID, PUBLIC_META_PIXEL_ID, PUBLIC_GSC_VERIFICATION, NOINDEX ("true" for staging),
+# FTP_SERVER_DIR (default ./public_html/).
 
 on:
   push:
@@ -16,10 +19,19 @@ concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL || 'https://marketixo.com' }}
+      PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
+      PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+      PUBLIC_META_PIXEL_ID: ${{ vars.PUBLIC_META_PIXEL_ID }}
+      PUBLIC_GSC_VERIFICATION: ${{ vars.PUBLIC_GSC_VERIFICATION }}
+      NOINDEX: ${{ vars.NOINDEX }}
       FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - uses: actions/checkout@v4
@@ -30,11 +42,15 @@ jobs:
           cache: npm
 
       - run: npm ci
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run build
 
-      - name: Deploy to Namecheap (FTP)
+      - name: Smoke tests (Playwright)
+        run: |
+          npx playwright install --with-deps chromium firefox webkit
+          npm test
+
+      - name: Deploy to Namecheap (FTPS)
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && env.FTP_SERVER != ''
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -43,4 +59,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./dist/
-          server-dir: ./public_html/
+          server-dir: ${{ vars.FTP_SERVER_DIR || './public_html/' }}

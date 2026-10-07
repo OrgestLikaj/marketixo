@@ -1,0 +1,49 @@
+---
+/**
+ * Section heading block: eyebrow + heading + optional lead.
+ * `level` sets the semantic tag; `size` the visual size — they are independent
+ * so the outline stays correct while the design keeps its scale.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Second part of the title, rendered in the accent colour on a new line. */
+  accent?: string;
+  lead?: string;
+  level?: 1 | 2 | 3;
+  size?: 'h1' | 'h2' | 'h3';
+  id?: string;
+  align?: 'start' | 'center';
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
+}
+const { eyebrow, title, accent, lead, level = 2, size = level === 1 ? 'h1' : level === 2 ? 'h2' : 'h3', id, align = 'start', class: className , ...rest } = Astro.props;
+const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
+---
+
+<div {...rest} class:list={['heading', `heading--${align}`, className]}>
+  {eyebrow && <p class="eyebrow" data-reveal>{eyebrow}</p>}
+  <Tag id={id} class={size} data-reveal style="--reveal-delay:1">
+    {title}
+    {accent && <span class="heading__accent">{accent}</span>}
+  </Tag>
+  {lead && <p class="lead" data-reveal style="--reveal-delay:2">{lead}</p>}
+</div>
+
+<style>
+  .heading {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 60rem;
+  }
+  .heading--center {
+    margin-inline: auto;
+    text-align: center;
+    justify-items: center;
+  }
+  .heading__accent {
+    display: block;
+    color: var(--accent);
+  }
+</style>

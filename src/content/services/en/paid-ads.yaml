@@ -1,0 +1,78 @@
+key: paid-ads
+lang: en
+title: Paid Ads
+shortTitle: Paid Ads
+tagline: Google and Meta campaigns measured against enquiries, not clicks.
+metaTitle: Google Ads & Meta Ads Management | Marketixo
+metaDescription: Google Ads and Meta Ads campaigns with proper conversion tracking, landing pages and ongoing optimisation — managed against real enquiries and sales.
+hero:
+  eyebrow: Service 04 — Grow
+  headline: Every euro of ad spend, accounted for.
+  lead: We plan, build and manage Google and Meta campaigns — with conversion tracking set up first, so decisions are based on enquiries and sales, not on impressions.
+problem:
+  heading: Ad budgets leak in predictable places.
+  intro: Most underperforming accounts share the same handful of problems.
+  points:
+    - title: No reliable tracking
+      text: Without conversion tracking, the platform optimises for clicks — and so does the budget.
+    - title: Traffic sent to the wrong page
+      text: Ads point to a home page that doesn’t match the promise in the ad.
+    - title: Set and forget
+      text: Campaigns launched once and never refined, while costs quietly rise.
+solution:
+  heading: Measure first, then spend.
+  text: We set up tracking and consent properly, align each campaign with a landing page built for that audience, and optimise weekly against cost per enquiry.
+  pillars:
+    - title: Tracking you can trust
+      text: GA4, Google Ads and Meta conversions configured with Consent Mode v2.
+    - title: Message match
+      text: Ads and landing pages written as one experience.
+    - title: Continuous optimisation
+      text: Search terms, audiences, bids and creatives reviewed every week.
+included:
+  heading: What’s included
+  items:
+    - title: Google Ads
+      text: Search, Performance Max, Display and YouTube campaigns.
+    - title: Meta Ads
+      text: Facebook and Instagram campaigns for awareness, leads and sales.
+    - title: Campaign strategy
+      text: Goals, audiences, budgets and channel mix based on your margins.
+    - title: Conversion tracking
+      text: Events, goals and offline conversions, set up and tested end to end.
+    - title: Landing-page optimisation
+      text: Dedicated pages and A/B tests that turn paid clicks into enquiries.
+    - title: Campaign management
+      text: Daily monitoring, weekly optimisation, monthly reporting.
+process:
+  heading: How it works
+  steps:
+    - title: Account & tracking audit
+      text: What’s working, what’s wasted, and what isn’t measured.
+    - title: Strategy & setup
+      text: Structure, audiences, creatives and landing pages.
+    - title: Launch & learn
+      text: A controlled start with close monitoring in the first weeks.
+    - title: Optimise & scale
+      text: Budget moves to what converts; what doesn’t is cut.
+benefits:
+  heading: What you get
+  items:
+    - title: Clarity on cost per lead
+      text: You know what a new enquiry costs and which campaign produced it.
+    - title: No wasted spend
+      text: Irrelevant searches and audiences are excluded continuously.
+    - title: Your accounts, your data
+      text: Ad accounts are created in your name; you keep full access and history.
+faq:
+  - q: What budget do we need?
+    a: It depends on your market and goals. We recommend a test budget that is large enough to produce meaningful data — and we tell you honestly if ads aren’t the right channel for you yet.
+  - q: Is the management fee separate from ad spend?
+    a: Yes. Ad spend is paid directly to Google or Meta from your account; our fee covers strategy, setup and management.
+  - q: Do you guarantee a return on ad spend?
+    a: No. Results depend on your offer, pricing and market. We guarantee careful management, honest reporting and quick action on the data.
+  - q: How is tracking handled under GDPR?
+    a: Tracking only runs after consent, and we configure Google Consent Mode v2 so the platforms receive the right signals.
+cta:
+  heading: Make your ad budget work harder.
+  text: Start with an account and tracking audit — we’ll show you where the money goes.

@@ -1,0 +1,447 @@
+---
+/**
+ * Code-drawn illustration for each service — no stock imagery.
+ * Pure SVG + CSS; animates once when revealed and subtly on hover.
+ * Text inside the drawings is technical/neutral, so it needs no translation.
+ */
+import type { ServiceKey } from '~/data/services';
+
+interface Props {
+  service: ServiceKey;
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
+  title?: string;
+}
+const { service, class: className, title , ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['sv', `sv--${service}`, className]} data-reveal>
+  <svg viewBox="0 0 320 200" role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : 'true'} focusable="false">
+    {
+      service === 'web-design-development' && (
+        <g>
+          <rect class="s-frame" x="16" y="14" width="288" height="172" rx="8" />
+          <path class="s-line" d="M16 38h288" />
+          <circle class="s-dot" cx="30" cy="26" r="3" />
+          <circle class="s-dot" cx="40" cy="26" r="3" />
+          <circle class="s-dot" cx="50" cy="26" r="3" />
+          <rect class="s-url" x="110" y="21" width="100" height="10" rx="5" />
+          <rect class="s-ink" x="34" y="56" width="118" height="12" rx="2" />
+          <rect class="s-ink" x="34" y="74" width="86" height="12" rx="2" />
+          <rect class="s-muted" x="34" y="96" width="112" height="5" rx="2" />
+          <rect class="s-muted" x="34" y="106" width="98" height="5" rx="2" />
+          <rect class="s-warm s-pulse" x="34" y="122" width="58" height="18" rx="4" />
+          <rect class="s-fill" x="170" y="56" width="116" height="84" rx="4" />
+          <path class="s-draw s-accent-line" d="M180 128 l20-24 18 14 24-30 24 18 12-10" />
+          <rect class="s-card" x="34" y="152" width="78" height="22" rx="3" />
+          <rect class="s-card" x="120" y="152" width="78" height="22" rx="3" />
+          <rect class="s-card" x="206" y="152" width="80" height="22" rx="3" />
+          <g class="s-chip" transform="translate(222 148)">
+            <rect width="80" height="30" rx="6" class="s-chip-bg" />
+            <circle cx="14" cy="15" r="4" class="s-ok" />
+            <text x="24" y="19" class="s-mono">CWV good</text>
+          </g>
+        </g>
+      )
+    }
+    {
+      service === 'branding-logo-design' && (
+        <g>
+          <circle class="s-guide" cx="96" cy="100" r="70" />
+          <circle class="s-guide" cx="96" cy="100" r="44" />
+          <path class="s-guide" d="M16 100h160M96 20v160M46 50l100 100M146 50 46 150" />
+          <rect class="s-mark" x="62" y="66" width="68" height="68" rx="15" />
+          <path class="s-draw s-mark-x" d="M80 84l32 32" />
+          <path class="s-draw s-mark-a" d="M80 116l30-30M95 85h16v16" />
+          <g class="s-swatches">
+            <rect x="198" y="28" width="44" height="26" rx="3" fill="#001219" stroke="rgb(148 210 189 / .3)" />
+            <rect x="248" y="28" width="44" height="26" rx="3" fill="#005f73" />
+            <rect x="198" y="60" width="44" height="26" rx="3" fill="#0a9396" />
+            <rect x="248" y="60" width="44" height="26" rx="3" fill="#94d2bd" />
+            <rect x="198" y="92" width="44" height="26" rx="3" fill="#e9d8a6" />
+            <rect x="248" y="92" width="44" height="26" rx="3" fill="#ee9b00" />
+          </g>
+          <text x="196" y="166" class="s-big">Aa</text>
+          <text x="248" y="150" class="s-mono">Inter Tight</text>
+          <text x="248" y="164" class="s-mono s-dim">300—800</text>
+        </g>
+      )
+    }
+    {
+      service === 'seo' && (
+        <g>
+          <rect class="s-frame" x="20" y="16" width="200" height="26" rx="13" />
+          <circle class="s-line-c" cx="38" cy="29" r="6" />
+          <path class="s-line" d="M42.5 33.5l4 4" />
+          <rect class="s-muted" x="54" y="26" width="110" height="6" rx="3" />
+          <g class="s-result s-top">
+            <rect x="20" y="56" width="200" height="40" rx="6" class="s-hl" />
+            <rect x="30" y="64" width="64" height="5" rx="2" class="s-warm" />
+            <rect x="30" y="74" width="150" height="7" rx="2" class="s-accent" />
+            <rect x="30" y="86" width="120" height="4" rx="2" class="s-muted" />
+          </g>
+          <g class="s-result">
+            <rect x="30" y="108" width="54" height="4" rx="2" class="s-muted" />
+            <rect x="30" y="116" width="130" height="6" rx="2" class="s-ink" />
+            <rect x="30" y="127" width="110" height="4" rx="2" class="s-muted" />
+          </g>
+          <g class="s-result">
+            <rect x="30" y="146" width="48" height="4" rx="2" class="s-muted" />
+            <rect x="30" y="154" width="120" height="6" rx="2" class="s-ink" />
+            <rect x="30" y="165" width="96" height="4" rx="2" class="s-muted" />
+          </g>
+          <rect class="s-frame" x="236" y="56" width="68" height="128" rx="6" />
+          <path class="s-grid" d="M244 160h52M244 136h52M244 112h52M244 88h52" />
+          <path class="s-draw s-accent-line" d="M246 168 l12-10 10 4 12-22 14-26" />
+          <circle cx="294" cy="114" r="4" class="s-ok" />
+        </g>
+      )
+    }
+    {
+      service === 'paid-ads' && (
+        <g>
+          <g class="s-funnel">
+            <rect x="40" y="26" width="240" height="26" rx="4" class="s-fill" />
+            <rect x="70" y="62" width="180" height="26" rx="4" class="s-fill2" />
+            <rect x="100" y="98" width="120" height="26" rx="4" class="s-fill3" />
+            <rect x="128" y="134" width="64" height="26" rx="4" class="s-warm" />
+          </g>
+          <text x="50" y="43" class="s-mono">reach</text>
+          <text x="80" y="79" class="s-mono">clicks</text>
+          <text x="110" y="115" class="s-mono">leads</text>
+          <text x="138" y="151" class="s-mono s-on-warm">sales</text>
+          <path class="s-line s-dash" d="M290 39v108" />
+          <path class="s-line" d="M286 147l4 6 4-6" />
+          <text x="246" y="182" class="s-mono s-dim">cost / lead</text>
+        </g>
+      )
+    }
+    {
+      service === 'social-media-marketing' && (
+        <g>
+          <g class="s-tiles">
+            <rect x="24" y="24" width="48" height="48" rx="6" class="s-fill" />
+            <rect x="78" y="24" width="48" height="48" rx="6" class="s-fill2" />
+            <rect x="132" y="24" width="48" height="48" rx="6" class="s-fill" />
+            <rect x="24" y="78" width="48" height="48" rx="6" class="s-fill3" />
+            <rect x="78" y="78" width="48" height="48" rx="6" class="s-warm" />
+            <rect x="132" y="78" width="48" height="48" rx="6" class="s-fill2" />
+            <rect x="24" y="132" width="48" height="48" rx="6" class="s-fill2" />
+            <rect x="78" y="132" width="48" height="48" rx="6" class="s-fill" />
+            <rect x="132" y="132" width="48" height="48" rx="6" class="s-fill3" />
+          </g>
+          <rect class="s-frame" x="204" y="24" width="96" height="156" rx="12" />
+          <circle class="s-fill2" cx="224" cy="44" r="8" />
+          <rect class="s-muted" x="238" y="40" width="46" height="5" rx="2" />
+          <rect class="s-fill" x="212" y="60" width="80" height="64" rx="4" />
+          <path class="s-heart" d="M222 140c-4-4-10 0-6 5l6 6 6-6c4-5-2-9-6-5z" />
+          <path class="s-line" d="M240 136h14a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-8l-5 4v-4a3 3 0 0 1-3-3v-6a3 3 0 0 1 2-3z" />
+          <rect class="s-muted" x="214" y="160" width="70" height="4" rx="2" />
+        </g>
+      )
+    }
+    {
+      service === 'content-marketing' && (
+        <g>
+          <rect class="s-frame" x="60" y="12" width="200" height="176" rx="6" />
+          <text x="76" y="54" class="s-quote">“</text>
+          <rect class="s-ink" x="100" y="34" width="140" height="10" rx="2" />
+          <rect class="s-ink" x="100" y="50" width="104" height="10" rx="2" />
+          <path class="s-warm-line" d="M76 74h32" />
+          <g class="s-para">
+            <rect class="s-muted" x="76" y="86" width="168" height="4" rx="2" />
+            <rect class="s-muted" x="76" y="96" width="160" height="4" rx="2" />
+            <rect class="s-muted" x="76" y="106" width="166" height="4" rx="2" />
+            <rect class="s-muted" x="76" y="116" width="120" height="4" rx="2" />
+          </g>
+          <rect class="s-hl" x="76" y="130" width="168" height="28" rx="3" />
+          <rect class="s-accent" x="86" y="139" width="120" height="5" rx="2" />
+          <rect class="s-accent" x="86" y="148" width="90" height="4" rx="2" />
+          <rect class="s-muted" x="76" y="168" width="150" height="4" rx="2" />
+          <g class="s-lang">
+            <rect x="268" y="40" width="40" height="20" rx="4" class="s-chip-bg" />
+            <text x="278" y="54" class="s-mono">EN</text>
+            <rect x="268" y="66" width="40" height="20" rx="4" class="s-chip-bg" />
+            <text x="278" y="80" class="s-mono">DE</text>
+            <rect x="268" y="92" width="40" height="20" rx="4" class="s-chip-bg" />
+            <text x="280" y="106" class="s-mono">IT</text>
+            <rect x="268" y="118" width="40" height="20" rx="4" class="s-chip-bg" />
+            <text x="278" y="132" class="s-mono">SQ</text>
+          </g>
+        </g>
+      )
+    }
+    {
+      service === 'cybersecurity' && (
+        <g>
+          <rect class="s-term" x="14" y="18" width="212" height="164" rx="8" />
+          <text x="28" y="42" class="s-mono s-dim">$ curl -I https://…</text>
+          <text x="28" y="62" class="s-mono">HTTP/2 200</text>
+          <g class="s-checks">
+            <text x="28" y="84" class="s-mono"><tspan class="s-okt">✓</tspan> strict-transport-security</text>
+            <text x="28" y="102" class="s-mono"><tspan class="s-okt">✓</tspan> content-security-policy</text>
+            <text x="28" y="120" class="s-mono"><tspan class="s-okt">✓</tspan> x-content-type-options</text>
+            <text x="28" y="138" class="s-mono"><tspan class="s-okt">✓</tspan> referrer-policy</text>
+            <text x="28" y="156" class="s-mono"><tspan class="s-okt">✓</tspan> frame-ancestors 'self'</text>
+          </g>
+          <path class="s-shield" d="M268 40l-30 12v24c0 22 13 40 30 46 17-6 30-24 30-46V52z" />
+          <path class="s-draw s-shield-check" d="M254 84l10 10 18-20" />
+          <text x="238" y="160" class="s-mono s-dim">OWASP</text>
+          <text x="238" y="174" class="s-mono s-dim">Top 10</text>
+        </g>
+      )
+    }
+    {
+      service === 'software-testing-qa' && (
+        <g>
+          <rect class="s-term" x="14" y="16" width="292" height="168" rx="8" />
+          <text x="28" y="40" class="s-mono s-dim">$ npx playwright test</text>
+          <g class="s-checks">
+            <text x="28" y="64" class="s-mono"><tspan class="s-okt">✓</tspan> home › renders hero and navigation</text>
+            <text x="28" y="82" class="s-mono"><tspan class="s-okt">✓</tspan> contact › validates and submits</text>
+            <text x="28" y="100" class="s-mono"><tspan class="s-okt">✓</tspan> i18n › switches to equivalent page</text>
+            <text x="28" y="118" class="s-mono"><tspan class="s-okt">✓</tspan> api › rejects invalid payload</text>
+            <text x="28" y="136" class="s-mono"><tspan class="s-okt">✓</tspan> a11y › keyboard navigation</text>
+          </g>
+          <rect class="s-bar-bg" x="28" y="154" width="264" height="6" rx="3" />
+          <rect class="s-bar s-grow" x="28" y="154" width="264" height="6" rx="3" />
+          <text x="28" y="176" class="s-mono"><tspan class="s-okt">chromium · firefox · webkit</tspan></text>
+        </g>
+      )
+    }
+  </svg>
+</div>
+
+<style>
+  .sv {
+    position: relative;
+    width: 100%;
+  }
+  .sv svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .sv :global(text) {
+    font-family: var(--font-code);
+  }
+  .s-frame,
+  .s-term {
+    fill: rgb(3 32 42 / 0.6);
+    stroke: rgb(148 210 189 / 0.3);
+  }
+  .s-term {
+    fill: #021820;
+  }
+  .s-line,
+  .s-line-c {
+    fill: none;
+    stroke: rgb(148 210 189 / 0.35);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  .s-dash {
+    stroke-dasharray: 3 4;
+  }
+  .s-grid {
+    stroke: rgb(148 210 189 / 0.1);
+  }
+  .s-guide {
+    fill: none;
+    stroke: rgb(148 210 189 / 0.18);
+    stroke-dasharray: 2 4;
+  }
+  .s-dot {
+    fill: rgb(148 210 189 / 0.3);
+  }
+  .s-url,
+  .s-chip-bg {
+    fill: rgb(0 18 25 / 0.8);
+    stroke: rgb(148 210 189 / 0.25);
+  }
+  .s-ink {
+    fill: #d6ebe5;
+  }
+  .s-muted {
+    fill: rgb(148 210 189 / 0.22);
+  }
+  .s-fill {
+    fill: #005f73;
+  }
+  .s-fill2 {
+    fill: #0a9396;
+  }
+  .s-fill3 {
+    fill: rgb(148 210 189 / 0.55);
+  }
+  .s-card {
+    fill: rgb(148 210 189 / 0.07);
+    stroke: rgb(148 210 189 / 0.18);
+  }
+  .s-hl {
+    fill: rgb(10 147 150 / 0.14);
+    stroke: rgb(10 147 150 / 0.6);
+  }
+  .s-accent {
+    fill: var(--pearl-aqua);
+  }
+  .s-warm {
+    fill: var(--golden-orange);
+  }
+  .s-warm-line {
+    stroke: var(--golden-orange);
+    stroke-width: 2;
+  }
+  .s-accent-line {
+    fill: none;
+    stroke: var(--pearl-aqua);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .s-ok {
+    fill: #5fd3a6;
+  }
+  .s-okt {
+    fill: #5fd3a6;
+  }
+  .s-mono {
+    font-size: 9.5px;
+    fill: #cfe5df;
+  }
+  .s-dim {
+    fill: rgb(148 210 189 / 0.55);
+  }
+  .s-on-warm {
+    fill: #001219;
+    font-weight: 500;
+  }
+  .s-big {
+    font-family: var(--font-body);
+    font-size: 40px;
+    font-weight: 600;
+    fill: #eaf3f0;
+    letter-spacing: -0.04em;
+  }
+  .s-quote {
+    font-family: var(--font-body);
+    font-size: 54px;
+    fill: var(--golden-orange);
+  }
+  .s-mark {
+    fill: #005f73;
+  }
+  .s-mark-x {
+    stroke: #eaf3f0;
+    stroke-width: 7;
+    stroke-linecap: round;
+    fill: none;
+  }
+  .s-mark-a {
+    stroke: var(--golden-orange);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .s-shield {
+    fill: rgb(10 147 150 / 0.14);
+    stroke: var(--dark-cyan);
+    stroke-width: 2;
+  }
+  .s-shield-check {
+    fill: none;
+    stroke: var(--pearl-aqua);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .s-heart {
+    fill: var(--golden-orange);
+  }
+  .s-bar-bg {
+    fill: rgb(148 210 189 / 0.12);
+  }
+  .s-bar {
+    fill: #5fd3a6;
+  }
+
+  /* Motion — once on reveal, gently on hover */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .sv .s-draw {
+      stroke-dasharray: 260;
+      stroke-dashoffset: 260;
+      transition: stroke-dashoffset 1.6s var(--ease-out) 0.3s;
+    }
+    :global(.js) .sv.is-in .s-draw {
+      stroke-dashoffset: 0;
+    }
+    :global(.js) .sv .s-checks text,
+    :global(.js) .sv .s-tiles rect,
+    :global(.js) .sv .s-funnel rect,
+    :global(.js) .sv .s-result,
+    :global(.js) .sv .s-lang > * {
+      opacity: 0;
+      transition: opacity 500ms var(--ease) calc(var(--n, 0) * 1ms);
+    }
+    :global(.js) .sv.is-in .s-checks text,
+    :global(.js) .sv.is-in .s-tiles rect,
+    :global(.js) .sv.is-in .s-funnel rect,
+    :global(.js) .sv.is-in .s-result,
+    :global(.js) .sv.is-in .s-lang > * {
+      opacity: 1;
+    }
+    .sv .s-checks text:nth-child(1),
+    .sv .s-tiles rect:nth-child(-n + 3),
+    .sv .s-funnel rect:nth-child(1) {
+      transition-delay: 250ms;
+    }
+    .sv .s-checks text:nth-child(2),
+    .sv .s-tiles rect:nth-child(n + 4):nth-child(-n + 6),
+    .sv .s-funnel rect:nth-child(2) {
+      transition-delay: 450ms;
+    }
+    .sv .s-checks text:nth-child(3),
+    .sv .s-tiles rect:nth-child(n + 7),
+    .sv .s-funnel rect:nth-child(3) {
+      transition-delay: 650ms;
+    }
+    .sv .s-checks text:nth-child(4),
+    .sv .s-funnel rect:nth-child(4) {
+      transition-delay: 850ms;
+    }
+    .sv .s-checks text:nth-child(5) {
+      transition-delay: 1050ms;
+    }
+    .sv .s-grow {
+      transform-origin: 28px 0;
+      transform: scaleX(0);
+      transition: transform 1.4s var(--ease-out) 0.3s;
+    }
+    .sv.is-in .s-grow {
+      transform: none;
+    }
+    .sv .s-pulse {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: s-pulse 2.8s var(--ease) infinite;
+    }
+    .sv .s-chip {
+      transition: transform 600ms var(--ease-out);
+    }
+    .sv:hover .s-chip,
+    :global(.sc:hover) .sv .s-chip {
+      transform: translate(222px, 140px);
+    }
+  }
+  @keyframes s-pulse {
+    0%,
+    100% {
+      transform: none;
+    }
+    50% {
+      transform: scale(1.06);
+    }
+  }
+</style>

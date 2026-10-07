@@ -1,0 +1,42 @@
+key: medicus-center
+lang: en
+industry: Healthcare — dental clinic
+location: Shkodër, Albania
+summary: >-
+  A four-language website for a dental clinic that welcomes international patients — built to explain
+  treatments clearly and make the first contact easy, from any country.
+metaDescription: >-
+  Case study — a multilingual Next.js website for MEDICUS Dental Clinic in Shkodër, Albania, built for
+  international dental patients. Web, SEO, ads and social.
+overview: >-
+  MEDICUS is a dental clinic in Shkodër, in northern Albania, offering implants, crowns, veneers and complete
+  smile makeovers. Many of its patients travel from abroad, so the website has to do the job of a first
+  consultation for people who have never been to Albania.
+challenge: >-
+  International patients make a considered decision from far away. They need to understand treatments, trust
+  the clinic and get in touch in their own language — often by sending photos or X-rays before they ever speak
+  to a dentist. The site had to serve visitors from the UK, the US, Germany and Italy as well as local
+  patients, and stay fast on mobile.
+approach: >-
+  We planned the site around the patient journey rather than the clinic's structure — treatments first, then
+  dental tourism, proof and contact. A three-step "start your journey" panel and a persistent booking action
+  keep the next step visible on every page, with WhatsApp available for quick questions.
+design: >-
+  A calm navy-and-teal interface with generous typography, clear treatment pages with their own icons, and a
+  gallery and reviews section to build trust. Every page was designed mobile-first, because most first visits
+  come from a phone.
+development: >-
+  The site is built with Next.js and exported as static pages, served from shared hosting with a small PHP mail
+  handler for the contact form — including secure file uploads for photos and X-rays. English, Albanian,
+  Italian and German run on next-intl with localized metadata, hreflang and a sitemap. Google Analytics loads
+  only after cookie consent, and Dentist structured data describes the clinic to search engines.
+result: >-
+  The clinic has a fast, four-language website that works as its international front desk — explaining
+  treatments, building trust and collecting patient requests with their files attached. We continue to
+  support it with SEO, ads and social media.
+highlights:
+  - Four languages with localized metadata and hreflang
+  - Contact form with secure photo and X-ray upload
+  - Static Next.js build on cost-effective shared hosting
+  - Consent-gated analytics and Dentist structured data
+  - Treatment pages, dental-tourism guide, gallery and FAQ

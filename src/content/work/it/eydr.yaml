@@ -1,0 +1,39 @@
+key: eydr
+lang: it
+industry: Ricerca e policy — progetto finanziato dall’UE
+location: Balcani occidentali
+summary: >-
+  Il sito web di EYDR, un progetto guidato da SCiDEV sulla partecipazione dei giovani alla democrazia digitale
+  nei Balcani occidentali — dalle competenze digitali ai diritti digitali.
+metaDescription: >-
+  Caso studio — sito web per EYDR (Youth Digital Rights), progetto finanziato dall’UE e guidato da SCiDEV nei
+  Balcani occidentali. Sviluppo WordPress, SEO, ads e social.
+overview: >-
+  EYDR — Youth Digital Rights — punta a coinvolgere i giovani nel mondo digitale e a renderli protagonisti,
+  sviluppando le loro competenze digitali e accrescendo la consapevolezza dei loro diritti digitali. Guidato
+  da SCiDEV e finanziato dall’Unione europea, riunisce un consorzio di sette istituzioni di quattro paesi.
+challenge: >-
+  I siti di progetto devono rivolgersi a più pubblici contemporaneamente — giovani, organizzazioni partner e
+  finanziatore — e rispettare le regole di visibilità del finanziatore. Devono inoltre essere online in tempi
+  brevi ed essere facili da aggiornare per il team di progetto, man mano che arrivano work package, eventi e
+  risultati.
+approach: >-
+  Abbiamo strutturato il sito secondo l’organizzazione del progetto: che cos’è EYDR, i partner, i work package
+  e le notizie. I loghi dei partner e del finanziatore hanno un posto di rilievo nell’header, come richiedono
+  le linee guida UE sulla visibilità, e ogni pagina riconduce in modo naturale allo scopo del progetto.
+design: >-
+  Un linguaggio visivo luminoso e digitale nel blu di EYDR, in continuità con il brand di SCiDEV, con una
+  navigazione chiara e una hero che riassume in una riga il focus del progetto: la partecipazione dei giovani
+  alla democrazia digitale.
+development: >-
+  Realizzato su WordPress con Elementor, perché il team di progetto possa pubblicare notizie e aggiornare le
+  pagine dei work package senza uno sviluppatore, sulla stessa piattaforma del sito principale di SCiDEV.
+  In parallelo curiamo SEO, ads e social media.
+result: >-
+  EYDR dispone di uno spazio dedicato e facile da gestire, che rispetta i requisiti di visibilità del
+  finanziatore e offre a partner e giovani un unico punto di riferimento per seguire il lavoro del progetto.
+highlights:
+  - Struttura di progetto — partner, work package, notizie
+  - Visibilità del finanziatore UE e dei partner integrata nell’header
+  - Pubblicazione in autonomia con WordPress ed Elementor
+  - Continuità visiva con il sito principale di SCiDEV

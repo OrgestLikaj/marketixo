@@ -1,0 +1,234 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import ContactForm from '~/components/ContactForm.astro';
+import Icon from '~/components/Icon.astro';
+import { site, socialLinks, whatsappLink } from '~/config/site';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { breadcrumbs } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const c = t.contact;
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.contact, path: page.path },
+];
+const socials = socialLinks();
+const wa = whatsappLink();
+const location = [site.address.city, site.address.country].filter(Boolean).join(', ');
+const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(page.path, Astro.site).href };
+---
+
+<BaseLayout page={page} title={c.metaTitle} description={c.metaDescription} schema={[breadcrumbs(crumbs), contactPage]}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={c.eyebrow} title={c.heading} lead={c.lead} size="lg" />
+
+  <section class="section section--flush-top" aria-label={t.form.legend}>
+    <div class="container container--wide contact">
+      <div class="contact__form">
+        <ContactForm lang={lang} />
+      </div>
+
+      <aside class="contact__aside">
+        <div class="box">
+          <h2 class="eyebrow">{c.nextHeading}</h2>
+          <ol class="next" role="list">
+            {
+              c.next.map((n, i) => (
+                <li>
+                  <span class="next__n">{i + 1}</span>
+                  <div>
+                    <h3 class="next__t">{n.title}</h3>
+                    <p class="muted">{n.text}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        {
+          (site.contact.email || site.contact.phone || wa) && (
+            <div class="box">
+              <h2 class="eyebrow">{c.direct}</h2>
+              <ul class="direct" role="list">
+                {site.contact.email && (
+                  <li>
+                    <Icon name="mail" size={20} />
+                    <span>
+                      <span class="direct__l">{c.email}</span>
+                      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+                    </span>
+                  </li>
+                )}
+                {site.contact.phone && (
+                  <li>
+                    <Icon name="phone" size={20} />
+                    <span>
+                      <span class="direct__l">{c.phone}</span>
+                      <a href={`tel:${site.contact.phoneHref}`}>{site.contact.phone}</a>
+                    </span>
+                  </li>
+                )}
+                {wa && (
+                  <li>
+                    <Icon name="whatsapp" size={20} />
+                    <span>
+                      <span class="direct__l">{c.whatsapp}</span>
+                      <a href={wa} target="_blank" rel="noopener">
+                        {site.contact.phone || 'WhatsApp'}
+                      </a>
+                    </span>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )
+        }
+
+        <div class="box">
+          <h2 class="eyebrow">{c.location}</h2>
+          <p class="loc">
+            <Icon name="pin" size={20} />
+            <span>
+              {location}
+              <span class="muted loc__note">{c.remote}</span>
+            </span>
+          </p>
+          {
+            socials.length > 0 && (
+              <ul class="soc" role="list" aria-label={c.social}>
+                {socials.map((s) => (
+                  <li>
+                    <a href={s.url} target="_blank" rel="noopener me">
+                      <Icon name={s.network} size={18} />
+                      <span class="sr-only">{s.network}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .contact__form {
+    padding: clamp(1.5rem, 3.5vw, 3rem);
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+  .contact__aside {
+    display: grid;
+    gap: 2.5rem;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+  .box {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .next {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .next li {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .next__n {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 1px solid var(--pearl-aqua);
+    font-family: var(--font-code);
+    font-size: var(--fs-sm);
+    color: var(--pearl-aqua);
+  }
+  .next__t {
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+  }
+  .next p {
+    font-size: 0.9375rem;
+  }
+  .direct {
+    display: grid;
+    gap: 1rem;
+  }
+  .direct li,
+  .loc {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+  .direct :global(.icon),
+  .loc :global(.icon) {
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--pearl-aqua);
+  }
+  .direct__l {
+    display: block;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--text-subtle);
+  }
+  .direct a {
+    font-size: 1.125rem;
+    text-decoration: none;
+  }
+  .direct a:hover {
+    color: var(--pearl-aqua);
+  }
+  .loc__note {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.9375rem;
+  }
+  .soc {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .soc a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+  }
+  .soc a:hover {
+    color: var(--text);
+    border-color: var(--pearl-aqua);
+  }
+  @media (max-width: 1023px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+    .contact__aside {
+      position: static;
+    }
+  }
+</style>

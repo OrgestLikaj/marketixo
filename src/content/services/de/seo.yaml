@@ -1,0 +1,100 @@
+key: seo
+lang: de
+title: Suchmaschinenoptimierung (SEO)
+shortTitle: SEO
+tagline: Gefunden werden von Menschen, die bereits nach Ihrem Angebot suchen.
+metaTitle: SEO-Agentur – Technisches, lokales & Content-SEO | Marketixo
+metaDescription: >-
+  Technisches SEO, Onpage-Optimierung, lokales SEO und Content-Strategie, damit die richtigen Kunden Sie
+  bei Google finden. Transparente Berichte, keine leeren Versprechen.
+hero:
+  eyebrow: Leistung 03 – Wachsen
+  headline: Seien Sie die Antwort, wenn Ihre Kunden suchen.
+  lead: >-
+    SEO ist der nachhaltigste Marketingkanal überhaupt – wenn er auf einer technisch soliden Website, den
+    richtigen Keywords und Inhalten aufbaut, die wirklich weiterhelfen.
+problem:
+  heading: Gute Unternehmen bleiben unsichtbar – aus Gründen, die sich beheben lassen.
+  intro: >-
+    Die meisten Ranking-Probleme sind kein Mysterium. Es sind technische Fehler, fehlende Inhalte oder
+    Seiten, die sich gegenseitig Konkurrenz machen.
+  points:
+    - title: Suchmaschinen können die Website nicht richtig lesen
+      text: Langsame Seiten, defekte Links, doppelte Inhalte oder fehlende Metadaten bremsen alles aus.
+    - title: Die falschen Suchbegriffe
+      text: Die Seiten sind so geschrieben, wie das Unternehmen spricht – nicht so, wie Kunden suchen.
+    - title: Lokal unsichtbar
+      text: Ein unvollständiges Google-Unternehmensprofil führt dazu, dass auf der Karte die Konkurrenz erscheint statt Sie.
+solution:
+  heading: Erst das Fundament, dann die Autorität.
+  text: >-
+    Wir beginnen mit einem technischen Audit, beheben, was Crawling und Indexierung blockiert, und bauen
+    dann Seiten und Inhalte rund um die tatsächliche Suchnachfrage auf. Jede Empfehlung kommt mit ihrer
+    Begründung.
+  pillars:
+    - title: Technik zuerst
+      text: Crawlbarkeit, Geschwindigkeit, strukturierte Daten, interne Verlinkung und internationale Ausrichtung.
+    - title: Inhalte nach Suchnachfrage
+      text: Keyword-Recherche, die jede Suchintention der passenden Seite zuordnet.
+    - title: Ehrliche Berichte
+      text: Monatliche Berichte zu Rankings, Traffic und Anfragen – verständlich formuliert.
+included:
+  heading: Leistungsumfang
+  items:
+    - title: SEO-Audit
+      text: Eine priorisierte Liste technischer, inhaltlicher und autoritätsbezogener Baustellen – jeweils mit Aufwand und Wirkung.
+    - title: Technisches SEO
+      text: Indexierung, Sitemaps, Canonicals, Weiterleitungen, Core Web Vitals und strukturierte Daten.
+    - title: Onpage-SEO
+      text: Titles, Descriptions, Überschriften, interne Verlinkung und Inhaltsstruktur.
+    - title: Lokales SEO
+      text: Google-Unternehmensprofil, lokale Landingpages, Brancheneinträge und Bewertungsstrategie.
+    - title: Keyword-Strategie
+      text: Recherche und Zuordnung von Suchbegriffen zu Seiten – nach Suchintention und Wert.
+    - title: Content-SEO
+      text: Briefings und Artikel, die echte Fragen beantworten und Verlinkungen verdienen.
+    - title: Internationales SEO
+      text: hreflang, lokalisierte URLs und marktspezifische Keywords für mehrsprachige Websites.
+    - title: Monitoring
+      text: Search Console, Rankings und Analytics – laufend beobachtet und monatlich berichtet.
+process:
+  heading: So arbeiten wir
+  steps:
+    - title: Audit
+      text: Eine vollständige technische und inhaltliche Analyse Ihrer Website und Ihrer Wettbewerber.
+    - title: Roadmap
+      text: Prioritäten nach Wirkung und Aufwand, gemeinsam mit Ihnen abgestimmt.
+    - title: Umsetzung
+      text: Wir beheben und bauen selbst – oder setzen gemeinsam mit Ihren Entwicklern um.
+    - title: Messen & optimieren
+      text: Monatliche Berichte und Anpassungen auf Basis dessen, was die Daten zeigen.
+benefits:
+  heading: Ihr Nutzen
+  items:
+    - title: Traffic, der sich aufbaut
+      text: Anders als Anzeigen bringen gute Rankings dauerhaft Besucher – ohne Kosten pro Klick.
+    - title: Qualifiziertere Anfragen
+      text: Besucher, die genau nach dem gesucht haben, was Sie anbieten.
+    - title: Volle Transparenz
+      text: Sie wissen immer, was wir getan haben, warum und was sich verändert hat.
+faq:
+  - q: Wann sehen wir Ergebnisse?
+    a: >-
+      Technische Korrekturen können innerhalb weniger Wochen Wirkung zeigen. Rankings in umkämpften Märkten
+      erfordern meist mehrere Monate kontinuierlicher Arbeit. Bevor wir starten, geben wir Ihnen eine
+      realistische Einschätzung für Ihren Markt.
+  - q: Können Sie Platz 1 bei Google garantieren?
+    a: >-
+      Niemand kann Rankings seriös garantieren – Googles Algorithmus ist nicht käuflich. Wir garantieren
+      solide Arbeit, Transparenz und einen klaren Plan.
+  - q: Betreuen Sie auch mehrsprachige Websites?
+    a: >-
+      Ja. Wir richten hreflang und lokalisierte URLs ein und recherchieren Keywords für jede Sprache und
+      jeden Markt, damit jede Sprachversion in ihrem eigenen Markt rankt.
+  - q: Schreiben Sie auch die Inhalte?
+    a: >-
+      Ja, auf Englisch, Deutsch, Italienisch und Albanisch – oder wir briefen Ihr Team und prüfen, was es
+      schreibt.
+cta:
+  heading: Finden Sie heraus, was Ihre Website bremst.
+  text: Starten Sie mit einem SEO-Audit – einer klaren Liste, was zu beheben ist und in welcher Reihenfolge.

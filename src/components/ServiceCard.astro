@@ -1,93 +1,136 @@
 ---
 import Icon from './Icon.astro';
-import { serviceUrl, type Service } from '~/data/services';
-import type { Lang } from '~/i18n/ui';
+import ServiceVisual from './ServiceVisual.astro';
+import { serviceMeta, type ServiceKey } from '~/data/services';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
 
 interface Props {
-  service: Service;
+  service: ServiceKey;
+  title: string;
+  tagline: string;
   lang: Lang;
+  visual?: boolean;
+  headingLevel?: 2 | 3;
+  delay?: number;
 }
-const { service, lang } = Astro.props;
-const c = service.copy[lang];
+const { service, title, tagline, lang, visual = true, headingLevel = 3, delay = 0 } = Astro.props;
+const meta = serviceMeta[service];
+const t = useT(lang);
+const H = `h${headingLevel}` as 'h2' | 'h3';
 ---
 
-<a href={serviceUrl(service, lang)} class={`svc-card svc-card--${service.group} reveal`}>
-  <span class="svc-card__icon"><Icon name={service.icon} /></span>
-  <h3>{c.title}</h3>
-  <p>{c.tagline}</p>
-  <span class="svc-card__go" aria-hidden="true"><Icon name="arrow-up-right" size={20} /></span>
-</a>
+<article class="sc" data-reveal style={`--reveal-delay:${delay}`}>
+  <div class="sc__top">
+    <span class="index-num">{meta.index}</span>
+    <span class="sc__group">{t.common.groups[meta.group]}</span>
+  </div>
+  {visual && <ServiceVisual service={service} class="sc__visual" />}
+  <div class="sc__body">
+    <span class="sc__icon"><Icon name={meta.icon} size={22} /></span>
+    <H class="sc__title">
+      <a href={url.service(lang, service)} class="sc__link">{title}</a>
+    </H>
+    <p class="sc__text">{tagline}</p>
+  </div>
+  <span class="sc__arrow" aria-hidden="true"><Icon name="arrow-up-right" size={20} /></span>
+</article>
 
 <style>
-  .svc-card {
-    --accent: var(--signal);
+  .sc {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    min-height: 240px;
-    padding: 28px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    text-decoration: none;
-    transition:
-      transform 0.25s var(--ease),
-      box-shadow 0.25s var(--ease),
-      border-color 0.25s var(--ease);
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    background: var(--bg);
+    transition: background-color 400ms var(--ease);
+    min-height: 100%;
   }
-  .svc-card--grow {
-    --accent: var(--grow);
+  .sc:hover {
+    background: var(--surface-1);
   }
-  .svc-card--protect {
-    --accent: var(--protect);
+  .sc__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
-  .svc-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: transparent;
+  .sc__group {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
   }
-  .svc-card__icon {
+  .sc__visual {
+    opacity: 0.8;
+    transition: opacity 400ms var(--ease);
+  }
+  .sc:hover .sc__visual {
+    opacity: 1;
+  }
+  .sc__body {
     display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    margin-bottom: auto;
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--accent) 12%, white);
-    color: var(--accent);
+    gap: 0.6rem;
+    margin-top: auto;
   }
-  .svc-card h3 {
-    margin: 2rem 0 0.4rem;
-    font-size: 1.3rem;
-  }
-  .svc-card p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.975rem;
-    line-height: 1.55;
-    padding-right: 2rem;
-  }
-  .svc-card__go {
-    position: absolute;
-    top: 28px;
-    right: 28px;
-    display: grid;
+  .sc__icon {
+    display: inline-grid;
     place-items: center;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    transition:
-      background-color 0.2s,
-      color 0.2s,
-      border-color 0.2s,
-      transform 0.25s var(--ease);
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    color: var(--pearl-aqua);
   }
-  .svc-card:hover .svc-card__go {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--white);
-    transform: rotate(45deg);
+  .sc__title {
+    font-size: 1.3125rem;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    padding-right: 2rem;
+  }
+  .sc__link {
+    text-decoration: none;
+  }
+  .sc__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .sc__link:focus-visible {
+    outline: none;
+  }
+  .sc:has(.sc__link:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: -2px;
+  }
+  .sc__text {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .sc__arrow {
+    position: absolute;
+    right: clamp(1.25rem, 2vw, 1.75rem);
+    bottom: clamp(1.25rem, 2vw, 1.75rem);
+    color: var(--text-subtle);
+    transition:
+      color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .sc:hover .sc__arrow {
+    color: var(--golden-orange);
+    transform: translate(3px, -3px);
+  }
+  .sc__arrow {
+    top: auto;
+  }
+  @media (max-width: 639px) {
+    .sc__visual {
+      display: none;
+    }
+    .sc__body {
+      margin-top: 0;
+    }
   }
 </style>

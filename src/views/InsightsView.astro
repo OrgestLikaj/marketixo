@@ -1,0 +1,236 @@
+---
+/** Insights index and topic archives (page.kind 'insights' | 'topic'). */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Icon from '~/components/Icon.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { fmt, formatDate, useT } from '~/i18n';
+import { insightCategories, url, type InsightCategory } from '~/i18n/routes';
+import { getAllPages, insightSlug, publishedInsights, type PageEntry } from '~/lib/pages';
+import { breadcrumbs } from '~/lib/schema';
+import { readingTime } from '~/lib/reading-time';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const ins = t.insights;
+const topic = page.kind === 'topic' ? (page.key as InsightCategory) : undefined;
+const allPosts = await publishedInsights(lang);
+const posts = topic ? allPosts.filter((p) => p.data.categories.includes(topic)) : allPosts;
+const pages = await getAllPages();
+const topicsWithPosts = insightCategories.filter((c) => pages.some((p) => p.kind === 'topic' && p.lang === lang && p.key === c));
+
+const topicName = topic ? ins.categories[topic] : '';
+const title = topic ? fmt(ins.topicTitle, { topic: topicName }) + ' | Marketixo' : ins.metaTitle;
+const description = topic ? fmt(ins.topicDescription, { topic: topicName }) : ins.metaDescription;
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.insights, path: url.section(lang, 'insights') },
+  ...(topic ? [{ name: topicName, path: page.path }] : []),
+];
+const [first, ...rest] = posts;
+const blog = {
+  '@type': 'Blog',
+  name: `Marketixo — ${t.nav.insights}`,
+  url: new URL(page.path, Astro.site).href,
+  blogPost: posts.map((p) => ({ '@type': 'BlogPosting', headline: p.data.title, url: new URL(url.insight(lang, insightSlug(p)), Astro.site).href, datePublished: p.data.pubDate.toISOString() })),
+};
+---
+
+<BaseLayout page={page} title={title} description={description} schema={[breadcrumbs(crumbs), blog]}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={ins.eyebrow} title={topic ? topicName : ins.heading} lead={topic ? description : ins.lead} size="lg" />
+
+  <section class="section section--flush-top" aria-label={ins.heading}>
+    <div class="container container--wide">
+      {
+        topicsWithPosts.length > 0 && (
+          <nav class="topics" aria-label={ins.eyebrow}>
+            <a href={url.section(lang, 'insights')} aria-current={!topic ? 'page' : undefined}>
+              {ins.all}
+            </a>
+            {topicsWithPosts.map((c) => (
+              <a href={url.topic(lang, c)} aria-current={topic === c ? 'page' : undefined}>
+                {ins.categories[c]}
+              </a>
+            ))}
+          </nav>
+        )
+      }
+
+      {posts.length === 0 && <p class="empty">{ins.empty}</p>}
+
+      {
+        first && (
+          <article class="feat" data-reveal>
+            <div class="feat__meta mono">
+              <time datetime={first.data.pubDate.toISOString()}>{formatDate(first.data.pubDate, lang)}</time>
+              <span>·</span>
+              <span>{fmt(ins.readingTime, { n: readingTime(first.body ?? '') })}</span>
+            </div>
+            <h2 class="feat__title">
+              <a href={url.insight(lang, insightSlug(first))}>{first.data.title}</a>
+            </h2>
+            <p class="lead">{first.data.description}</p>
+            <ul class="cats" role="list">
+              {first.data.categories.map((c) => (
+                <li>{ins.categories[c]}</li>
+              ))}
+            </ul>
+            <span class="feat__more" aria-hidden="true">
+              {t.common.readMore} <Icon name="arrow-right" size={16} />
+            </span>
+          </article>
+        )
+      }
+
+      {
+        rest.length > 0 && (
+          <ul class="list" role="list">
+            {rest.map((p) => (
+              <li class="item" data-reveal>
+                <time class="mono item__date" datetime={p.data.pubDate.toISOString()}>
+                  {formatDate(p.data.pubDate, lang)}
+                </time>
+                <div>
+                  <h2 class="item__title">
+                    <a href={url.insight(lang, insightSlug(p))}>{p.data.title}</a>
+                  </h2>
+                  <p class="muted">{p.data.description}</p>
+                </div>
+                <ul class="cats" role="list">
+                  {p.data.categories.map((c) => (
+                    <li>{ins.categories[c]}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .topics a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+  .topics a:hover {
+    color: var(--text);
+    border-color: var(--pearl-aqua);
+  }
+  .topics a[aria-current] {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--ink-black);
+  }
+  .empty {
+    padding: 3rem 0;
+    color: var(--text-muted);
+  }
+  .feat {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(ellipse 60% 80% at 100% 0%, rgb(0 95 115 / 0.45), transparent 70%),
+      var(--surface-1);
+    transition: border-color 400ms var(--ease);
+  }
+  .feat:hover {
+    border-color: var(--line-strong);
+  }
+  .feat__meta {
+    display: flex;
+    gap: 0.6rem;
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+  .feat__title {
+    max-width: 22ch;
+    font-size: clamp(2rem, 1.3rem + 2.8vw, 4rem);
+    letter-spacing: -0.045em;
+  }
+  .feat__title a,
+  .item__title a {
+    text-decoration: none;
+  }
+  .feat__title a::after,
+  .item__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .feat__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--pearl-aqua);
+  }
+  .cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .cats li {
+    padding: 0.3em 0.7em;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-code);
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+  }
+  .list {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+  .item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr) auto;
+    gap: 1rem 2rem;
+    align-items: baseline;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .item__date {
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+  .item__title {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .item:hover .item__title {
+    color: var(--pearl-aqua);
+  }
+  @media (max-width: 767px) {
+    .item {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

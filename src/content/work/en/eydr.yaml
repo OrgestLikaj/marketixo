@@ -1,0 +1,37 @@
+key: eydr
+lang: en
+industry: Research & policy — EU-funded project
+location: Western Balkans
+summary: >-
+  The website of EYDR, a SCiDEV-led project on youth participation in digital democracy across the Western
+  Balkans — from digital skills to digital rights.
+metaDescription: >-
+  Case study — website for EYDR (Youth Digital Rights), an EU-funded project led by SCiDEV across the Western
+  Balkans. WordPress build, SEO, ads and social media.
+overview: >-
+  EYDR — Youth Digital Rights — aims to engage and empower young people in the digital world by building their
+  digital skills and raising awareness of their digital rights. Led by SCiDEV and funded by the European Union,
+  it brings together a consortium of seven institutions from four countries.
+challenge: >-
+  Project websites have to serve several audiences at once — young people, partner organisations and the funder
+  — and meet the funder's visibility rules. They also need to be quick to launch and simple for a project team
+  to update as work packages, events and results come in.
+approach: >-
+  We structured the site around how the project is organised: what EYDR is, the partners, the work packages and
+  the news. Partner and funder branding sit prominently in the header, as EU visibility guidelines require, and
+  every page leads naturally back to the project's purpose.
+design: >-
+  A bright, digital visual language in EYDR's blue that connects to SCiDEV's brand, with clear navigation and a
+  hero that states the project's focus — youth participation in digital democracy — in one line.
+development: >-
+  Built on WordPress with Elementor so the project team can publish news and update work-package pages without
+  a developer, on the same platform family as SCiDEV's main website. SEO, ads and social media support run
+  alongside.
+result: >-
+  EYDR has a dedicated, easy-to-maintain home for the project that meets its funder's visibility requirements
+  and gives partners and young people one place to follow its work.
+highlights:
+  - Project structure — partners, work packages, news
+  - EU funder and partner visibility built into the header
+  - Self-managed publishing in WordPress and Elementor
+  - Visual link to SCiDEV's main website

@@ -1,0 +1,659 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import BrowserFrame from '~/components/BrowserFrame.astro';
+import PhoneFrame from '~/components/PhoneFrame.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import Badge from '~/components/Badge.astro';
+import Icon from '~/components/Icon.astro';
+import Testimonial from '~/components/Testimonial.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { fmt, languageMeta, useT, isLang } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { projectByKey, sortedProjects } from '~/data/projects';
+import { workImages } from '~/lib/work-images';
+import { breadcrumbs, caseStudy } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const cs = t.caseStudy;
+const project = projectByKey(page.key!)!;
+const entry = await getEntry('work', `${lang}/${project.key}`);
+if (!entry) throw new Error(`Missing case study: src/content/work/${lang}/${project.key}.yaml`);
+const c = entry.data;
+const img = workImages(project.key);
+
+const services = await getCollection('services', (e) => e.data.lang === lang);
+const serviceNames = Object.fromEntries(services.map((s) => [s.data.key, s.data.shortTitle]));
+const work = await getCollection('work', (e) => e.data.lang === lang);
+const copyFor = (key: string) => work.find((w) => w.data.key === key)?.data;
+
+// Related: same group first, then projects sharing the most services.
+const others = sortedProjects.filter((p) => p.key !== project.key);
+const siblings = project.group ? others.filter((p) => p.group === project.group) : [];
+const score = (p: typeof project) => (p.group && p.group === project.group ? 10 : 0) + p.services.filter((s) => project.services.includes(s)).length;
+const related = [...others].sort((a, b) => score(b) - score(a)).slice(0, 2);
+
+const idx = sortedProjects.findIndex((p) => p.key === project.key);
+const prev = sortedProjects[(idx - 1 + sortedProjects.length) % sortedProjects.length];
+const next = sortedProjects[(idx + 1) % sortedProjects.length];
+
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.work, path: url.section(lang, 'work') },
+  { name: project.client, path: page.path },
+];
+const og = img.desktop ? await getImage({ src: img.desktop, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpg' }) : undefined;
+const title = `${project.client} — ${c.industry} | Marketixo`;
+const langNames = (project.siteLanguages ?? []).map((l) => (isLang(l) ? languageMeta[l].native : l.toUpperCase()));
+const story = [
+  { id: 'challenge', label: cs.challenge, text: c.challenge },
+  { id: 'approach', label: cs.approach, text: c.approach },
+];
+---
+
+<BaseLayout
+  page={page}
+  title={title.length > 70 ? `${project.client} | Marketixo` : title}
+  description={c.metaDescription}
+  image={og?.src}
+  imageAlt={project.client}
+  schema={[
+    breadcrumbs(crumbs),
+    caseStudy({ name: project.client, description: c.metaDescription, path: page.path, lang, image: og?.src ?? '/og/default.png', client: project.client, clientUrl: project.url, services: project.services.map((s) => serviceNames[s] ?? s) }),
+  ]}
+>
+  <article style={`--brand:${project.brand}`}>
+    <header class="cs-hero">
+      <div class="cs-hero__glow" aria-hidden="true"></div>
+      <div class="container container--wide">
+        <Breadcrumbs lang={lang} items={crumbs} />
+        <div class="cs-hero__grid">
+          <div class="cs-hero__main">
+            <p class="eyebrow" data-reveal>{c.industry}</p>
+            <h1 class="cs-hero__title" data-reveal style="--reveal-delay:1">{project.client}</h1>
+            <p class="lead" data-reveal style="--reveal-delay:2">{c.summary}</p>
+          </div>
+          <dl class="facts" data-reveal style="--reveal-delay:3">
+            <div>
+              <dt>{cs.industry}</dt>
+              <dd>{c.industry}</dd>
+            </div>
+            {
+              c.location && (
+                <div>
+                  <dt>{cs.location}</dt>
+                  <dd>{c.location}</dd>
+                </div>
+              )
+            }
+            <div>
+              <dt>{cs.services}</dt>
+              <dd class="facts__tags">
+                {project.services.map((s) => (
+                  <a href={url.service(lang, s)}>
+                    <Badge tone="accent">{serviceNames[s]}</Badge>
+                  </a>
+                ))}
+              </dd>
+            </div>
+            {
+              langNames.length > 0 && (
+                <div>
+                  <dt>{cs.languages}</dt>
+                  <dd>{langNames.join(' · ')}</dd>
+                </div>
+              )
+            }
+            {
+              (project.url || project.profile) && (
+                <div>
+                  <dt>{project.url ? cs.liveSite : cs.profile}</dt>
+                  <dd>
+                    <a href={project.url ?? project.profile} target="_blank" rel="noopener" class="facts__link">
+                      {new URL((project.url ?? project.profile)!).host.replace(/^www\./, '')}
+                      <Icon name="arrow-up-right" size={14} />
+                      <span class="sr-only">{t.common.opensNewTab}</span>
+                    </a>
+                  </dd>
+                </div>
+              )
+            }
+          </dl>
+        </div>
+      </div>
+    </header>
+
+    {
+      img.desktop ? (
+        <div class="container container--wide cs-shot" data-reveal="mask">
+          <BrowserFrame
+            src={img.desktop}
+            alt={`${project.client} — ${cs.galleryDesktop}`}
+            url={project.url}
+            loading="eager"
+            fetchpriority="high"
+            sizes="(min-width: 1560px) 1520px, 96vw"
+            aspect="16 / 9"
+          />
+        </div>
+      ) : (
+        <div class="container container--wide">
+          <div class="cs-cover" aria-hidden="true">
+            <div class="cs-cover__grid">
+              {Array.from({ length: 12 }, (_, i) => (
+                <span style={`--d:${i}`} />
+              ))}
+            </div>
+            <span class="cs-cover__name">{project.client}</span>
+          </div>
+          <p class="cs-nosite">{cs.noSite}</p>
+        </div>
+      )
+    }
+
+    <section class="section" aria-labelledby="overview">
+      <div class="container container--wide story">
+        <h2 id="overview" class="story__label">{cs.overview}</h2>
+        <p class="story__lead" data-reveal>{c.overview}</p>
+        {
+          story.map((s) => (
+            <>
+              <h2 id={s.id} class="story__label">
+                {s.label}
+              </h2>
+              <p class="story__text" data-reveal>
+                {s.text}
+              </p>
+            </>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section section--line on-surface" aria-labelledby="design">
+      <div class="container container--wide split">
+        <div class="split__text">
+          <h2 id="design" class="eyebrow">{cs.design}</h2>
+          <p class="split__p" data-reveal>{c.design}</p>
+          <h2 id="development" class="eyebrow split__gap">{cs.development}</h2>
+          <p class="split__p" data-reveal>{c.development}</p>
+          <h3 class="eyebrow eyebrow--plain split__gap">{cs.technologies}</h3>
+          <ul role="list" class="tech">
+            {project.technologies.map((tech) => <li><Badge>{tech}</Badge></li>)}
+          </ul>
+        </div>
+        {img.mobile && <PhoneFrame src={img.mobile} alt={`${project.client} — ${cs.galleryMobile}`} class="split__phone" />}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="result">
+      <div class="container container--wide result">
+        <div>
+          <h2 id="result" class="eyebrow">{cs.result}</h2>
+          <p class="result__text" data-reveal>{c.result}</p>
+          {
+            c.results.length > 0 && (
+              <ul role="list" class="metrics">
+                {c.results.map((r) => (
+                  <li>
+                    <strong>{r.value}</strong>
+                    <span>{r.label}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+        <div>
+          <h2 class="eyebrow">{cs.highlights}</h2>
+          <ul role="list" class="highlights">
+            {
+              c.highlights.map((h, i) => (
+                <li data-reveal style={`--reveal-delay:${i}`}>
+                  <Icon name="check" size={18} />
+                  {h}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {
+      img.page && (
+        <section class="section section--flush-top" aria-labelledby="gallery">
+          <div class="container container--wide">
+            <h2 id="gallery" class="eyebrow">
+              {cs.gallery}
+            </h2>
+            <div class="gallery">
+              <figure class="scroller" data-reveal tabindex="0" aria-label={cs.galleryPage}>
+                <div class="scroller__win">
+                  <Image src={img.page} alt={`${project.client} — ${cs.galleryPage}`} widths={[640, 960, 1440]} sizes="(min-width: 1024px) 62vw, 96vw" loading="lazy" layout="none" class="scroller__img" />
+                </div>
+                <figcaption class="mono">{cs.galleryPage}</figcaption>
+              </figure>
+              {img.mobile && (
+                <figure class="gallery__phone" data-reveal style="--reveal-delay:2">
+                  <PhoneFrame src={img.mobile} alt={`${project.client} — ${cs.galleryMobile}`} />
+                  <figcaption class="mono">{cs.galleryMobile}</figcaption>
+                </figure>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <Testimonial lang={lang} project={project.key} />
+
+    {
+      siblings.length > 0 && (
+        <section class="section section--sm section--line" aria-labelledby="group">
+          <div class="container container--wide group">
+            <h2 id="group" class="eyebrow">
+              {fmt(cs.siblings, { group: project.group! })}
+            </h2>
+            <ul role="list" class="group__list">
+              {siblings.map((sib) => (
+                <li>
+                  <a href={url.project(lang, sib.key)}>
+                    <span>{sib.client}</span>
+                    <span class="group__ind">{copyFor(sib.key)?.industry}</span>
+                    <Icon name="arrow-right" size={18} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="section section--line" aria-labelledby="related">
+      <div class="container container--wide">
+        <h2 id="related" class="h2">{cs.related}</h2>
+        <div class="related">
+          {
+            related.map((r) => {
+              const copy = copyFor(r.key);
+              return copy ? <ProjectCard project={r} copy={copy} serviceNames={serviceNames} lang={lang} index={sortedProjects.indexOf(r)} layout="half" /> : null;
+            })
+          }
+        </div>
+        <nav class="pager" aria-label={t.nav.work}>
+          <a href={url.project(lang, prev.key)} rel="prev">
+            <span class="mono">← {cs.prev}</span>
+            <strong>{prev.client}</strong>
+          </a>
+          <a href={url.project(lang, next.key)} rel="next" class="pager__next">
+            <span class="mono">{cs.next} →</span>
+            <strong>{next.client}</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </article>
+
+  <CtaBand lang={lang} heading={cs.cta} accent={t.home.cta.headingAccent} />
+</BaseLayout>
+
+<style>
+  .cs-hero {
+    position: relative;
+    padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px));
+    padding-bottom: clamp(40px, 5vw, 72px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cs-hero__glow {
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 45%, transparent), transparent 70%);
+    opacity: 0.6;
+    z-index: -1;
+  }
+  .cs-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: end;
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+  }
+  .cs-hero__main {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .cs-hero__title {
+    font-size: clamp(3rem, 1.5rem + 6.5vw, 8.5rem);
+    letter-spacing: var(--tracking-display);
+    line-height: 0.9;
+  }
+  .facts {
+    display: grid;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .facts > div {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .facts dt {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    padding-top: 0.2rem;
+  }
+  .facts dd {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+  .facts__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .facts__tags a {
+    text-decoration: none;
+  }
+  .facts__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--pearl-aqua);
+  }
+  .cs-shot {
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+  }
+  .cs-cover {
+    position: relative;
+    display: grid;
+    place-items: end start;
+    aspect-ratio: 16 / 7;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse at 75% 30%, color-mix(in srgb, var(--brand) 60%, transparent), transparent 60%),
+      linear-gradient(135deg, #021a22, color-mix(in srgb, var(--brand) 35%, #001219));
+    overflow: hidden;
+  }
+  .cs-cover__grid {
+    position: absolute;
+    top: 50%;
+    right: 6%;
+    translate: 0 -50%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: min(44%, 460px);
+    transform: rotate(-6deg);
+  }
+  .cs-cover__grid span {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    background: rgb(255 255 255 / calc(0.05 + var(--d) * 0.01));
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .cs-cover__grid span:nth-child(3n + 1) {
+    background: color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+  .cs-cover__name {
+    position: relative;
+    max-width: 50%;
+    font-size: clamp(2rem, 1rem + 4vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    color: #fff;
+  }
+  .cs-nosite {
+    margin-top: 1rem;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--text-subtle);
+  }
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 1.25rem clamp(2rem, 5vw, 5rem);
+  }
+  .story__label {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pearl-aqua);
+    padding-top: 0.6rem;
+  }
+  .story__lead {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .story__text {
+    font-size: var(--fs-lg);
+    color: var(--text-muted);
+    max-width: 64ch;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: center;
+  }
+  .split__text {
+    display: grid;
+    gap: 1rem;
+  }
+  .split__p {
+    font-size: var(--fs-lg);
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+  .split__gap {
+    margin-top: 1.75rem;
+  }
+  .split__phone {
+    max-width: 300px;
+    justify-self: center;
+    rotate: 3deg;
+  }
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .result {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 6vw, 7rem);
+  }
+  .result__text {
+    margin-top: 1.25rem;
+    font-size: clamp(1.375rem, 1.05rem + 1.3vw, 2.125rem);
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+  }
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .metrics strong {
+    display: block;
+    font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+    letter-spacing: -0.05em;
+    color: var(--golden-orange);
+  }
+  .metrics span {
+    color: var(--text-muted);
+  }
+  .highlights {
+    display: grid;
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .highlights li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .highlights :global(.icon) {
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--pearl-aqua);
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    margin-top: 1.5rem;
+  }
+  .gallery figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+  /* Tall screenshot that scrolls inside its window on hover/focus */
+  .scroller {
+    margin: 0;
+  }
+  .scroller__win {
+    height: clamp(320px, 42vw, 640px);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line-strong);
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+  .scroller__img {
+    width: 100%;
+    height: auto;
+    transition: transform 7s var(--ease);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scroller:hover .scroller__img,
+    .scroller:focus-visible .scroller__img {
+      transform: translateY(calc(-100% + clamp(320px, 42vw, 640px)));
+    }
+  }
+  .gallery__phone {
+    margin: 0;
+  }
+  .group__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    margin-top: 1.5rem;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .group__list a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: background-color var(--dur) var(--ease);
+  }
+  .group__list a:hover {
+    background: var(--surface-1);
+  }
+  .group__ind {
+    grid-row: 2;
+    font-weight: 400;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .group__list :global(.icon) {
+    grid-row: span 2;
+    align-self: center;
+    color: var(--pearl-aqua);
+  }
+  .related {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: clamp(4rem, 8vw, 6rem);
+    border-top: 1px solid var(--line);
+  }
+  .pager a {
+    display: grid;
+    gap: 0.4rem;
+    padding-block: 1.5rem;
+    text-decoration: none;
+  }
+  .pager a strong {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    letter-spacing: -0.03em;
+    transition: color var(--dur) var(--ease);
+  }
+  .pager a:hover strong {
+    color: var(--pearl-aqua);
+  }
+  .pager .mono {
+    color: var(--text-subtle);
+  }
+  .pager__next {
+    text-align: right;
+  }
+  @media (max-width: 1023px) {
+    .cs-hero__grid,
+    .split,
+    .result {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 767px) {
+    .story {
+      grid-template-columns: 1fr;
+    }
+    .story__label {
+      padding-top: 0;
+    }
+    .gallery,
+    .related {
+      grid-template-columns: 1fr;
+    }
+    .gallery__phone {
+      max-width: 260px;
+    }
+    .split__phone {
+      max-width: 240px;
+    }
+  }
+</style>

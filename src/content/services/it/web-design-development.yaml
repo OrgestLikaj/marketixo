@@ -1,0 +1,86 @@
+key: web-design-development
+lang: it
+title: Web design e sviluppo
+shortTitle: Sviluppo web
+tagline: Siti e applicazioni web veloci e accessibili, costruiti su codice di cui rispondiamo.
+metaTitle: Agenzia di web design e sviluppo siti web | Marketixo
+metaDescription: Siti web su misura, landing page, e-commerce e applicazioni web — veloci, accessibili, pronti per la SEO e testati prima del lancio. Preventivo a prezzo fisso.
+hero:
+  eyebrow: Servizio 01 — Costruire
+  headline: Siti web che si caricano in fretta, si leggono con chiarezza e trasformano i visitatori in richieste.
+  lead: Da una landing page mirata a una piattaforma multilingue, progettiamo e sviluppiamo siti web che funzionano su ogni schermo, si posizionano bene e continuano a funzionare a lungo dopo il lancio.
+problem:
+  heading: Molti siti web sembrano a posto, ma non rendono.
+  intro: Un sito può vincere premi di design e perdere comunque clienti. I problemi, di solito, non si vedono in uno screenshot.
+  points:
+    - title: Lenti sugli smartphone reali
+      text: Temi pesanti, immagini non ottimizzate e decine di plugin rendono le pagine lentissime con la rete mobile — e i visitatori se ne vanno prima che si carichi la prima schermata.
+    - title: Nessun passo successivo chiaro
+      text: Le pagine descrivono l’azienda ma non dicono mai al visitatore cosa fare, così l’interesse non diventa mai una richiesta.
+    - title: Fragili e difficili da modificare
+      text: Ogni aggiornamento rischia di rompere qualcosa, così i contenuti invecchiano e le piccole correzioni diventano progetti costosi.
+solution:
+  heading: Progettati per le persone, costruiti per durare.
+  text: Partiamo da ciò che i visitatori devono sapere per decidere, progettiamo le pagine attorno a quella decisione e le sviluppiamo su uno stack snello e ben documentato. Performance, accessibilità e SEO fanno parte dello sviluppo — non sono una checklist da spuntare alla fine.
+  pillars:
+    - title: Design a partire dai contenuti
+      text: Wireframe e layout costruiti con i contenuti reali e verificati su dispositivi reali, prima di scrivere una sola riga di codice di produzione.
+    - title: Sviluppo snello
+      text: Pagine statiche o renderizzate lato server, JavaScript ridotto al minimo, immagini ottimizzate e markup pulito. Veloci per costruzione.
+    - title: Pensati per essere modificati
+      text: Un CMS dove serve, impostazioni sensate dove non serve, e documentazione perché il Suo team non dipenda da noi.
+included:
+  heading: Cosa realizziamo
+  items:
+    - title: Siti aziendali
+      text: Siti multipagina che spiegano l’attività, ne danno prova e rendono semplice il contatto.
+    - title: Landing page
+      text: Pagine mirate con un unico obiettivo, per campagne, lanci e lead generation.
+    - title: E-commerce
+      text: Negozi online con WooCommerce o checkout personalizzati con Stripe e PayPal.
+    - title: Applicazioni web
+      text: Portali, dashboard, strumenti di prenotazione e di preventivazione con account e database sicuri.
+    - title: Redesign e migrazioni
+      text: Nuovo design e nuova piattaforma senza perdere i posizionamenti su Google — con un redirect per ogni vecchio URL.
+    - title: Ottimizzazione delle performance
+      text: Audit e interventi su Core Web Vitals, distribuzione delle immagini, caching e codice che blocca il rendering.
+    - title: Siti multilingue
+      text: URL localizzati, hreflang, metadati tradotti e un selettore di lingua che porta alla pagina corrispondente.
+    - title: Assistenza e manutenzione
+      text: Aggiornamenti, backup, monitoraggio dell’uptime e piccole modifiche con un piano mensile prevedibile.
+process:
+  heading: Dal brief al lancio
+  steps:
+    - title: Brief e mappa del sito
+      text: Obiettivi, pubblico, pagine e integrazioni — concordati e documentati.
+    - title: Wireframe
+      text: Struttura delle pagine e gerarchia dei contenuti, verificate prima su mobile.
+    - title: Design visivo
+      text: L’interfaccia completa nel Suo brand, con ogni stato e ogni breakpoint previsti.
+    - title: Sviluppo
+      text: Su un ambiente di staging che può seguire settimana dopo settimana.
+    - title: Test e lancio
+      text: Test cross-browser, di performance, di accessibilità e dei moduli, poi una messa online pianificata con i redirect.
+benefits:
+  heading: Cosa ottiene
+  items:
+    - title: Velocità misurabile
+      text: Puntiamo a Core Web Vitals in verde su dispositivi reali e Le mostriamo il report.
+    - title: Accessibile a tutti
+      text: HTML semantico, navigazione da tastiera, contrasto ed etichette — secondo le pratiche WCAG 2.2 AA.
+    - title: Pronto per la SEO dal primo giorno
+      text: URL puliti, metadati, dati strutturati e sitemap fanno parte di ogni progetto.
+    - title: Proprietà
+      text: Codice, hosting e dominio sono Suoi, con documentazione e una sessione di passaggio di consegne.
+faq:
+  - q: Quanto tempo serve per realizzare un sito web?
+    a: Un sito aziendale mirato richiede in genere dalle quattro alle otto settimane, dall’avvio alla messa online. Applicazioni web e grandi siti multilingue richiedono più tempo — le tempistiche sono indicate nella proposta.
+  - q: Quale piattaforma utilizzerete?
+    a: Quella più adatta al progetto. I siti di contenuti sono spesso realizzati come siti statici veloci con un CMS semplice; per negozi online e redazioni complesse possono essere più indicati WordPress o un’applicazione su misura. Prima che Lei decida, Le spieghiamo vantaggi e compromessi.
+  - q: Potete rifare il nostro sito senza perdere i posizionamenti su Google?
+    a: Sì. Mappiamo ogni URL esistente, manteniamo ciò che si posiziona e impostiamo redirect permanenti, così motori di ricerca e segnalibri arrivano alla nuova pagina corretta.
+  - q: Potremo aggiornare i contenuti in autonomia?
+    a: Sì. Riceve un editor adatto al Suo team e una breve sessione di formazione. Se preferisce, possiamo gestire noi gli aggiornamenti con un piano di manutenzione.
+cta:
+  heading: Costruiamo un sito web che si guadagni il suo posto.
+  text: Ci invii il Suo sito attuale o la Sua idea. Le risponderemo con una valutazione onesta e un preventivo a prezzo fisso.

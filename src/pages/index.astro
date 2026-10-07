@@ -1,5 +1,87 @@
 ---
-import View from '~/views/HomePage.astro';
+/**
+ * Root URL (x-default). On Apache, .htaccess already redirects "/" to the visitor's
+ * language (cookie → Accept-Language → English). This page is the fallback: it picks a
+ * language in the browser, and without JavaScript it offers the four languages as links.
+ */
+import { site } from '~/config/site';
+import { defaultLang, languageMeta, locales } from '~/i18n/config';
+import Logo from '~/components/Logo.astro';
+import '~/styles/global.css';
+
+const abs = (p: string) => new URL(p, site.url).href;
 ---
 
-<View lang="en" />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.name} — Digital agency</title>
+    <meta name="description" content="Marketixo — design, technology, marketing, security and quality. Choose your language." />
+    <link rel="canonical" href={abs('/')} />
+    {locales.map((l) => <link rel="alternate" hreflang={languageMeta[l].hreflang} href={abs(`/${l}/`)} />)}
+    <link rel="alternate" hreflang="x-default" href={abs('/')} />
+    {site.noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content={site.themeColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline define:vars={{ locales, defaultLang }}>
+      (function () {
+        var m = document.cookie.match(/(?:^|; )mx_lang=([a-z]{2})/);
+        var pick = m && locales.indexOf(m[1]) > -1 ? m[1] : null;
+        if (!pick) {
+          var prefs = navigator.languages || [navigator.language || ''];
+          for (var i = 0; i < prefs.length && !pick; i++) {
+            var code = String(prefs[i]).slice(0, 2).toLowerCase();
+            if (locales.indexOf(code) > -1) pick = code;
+          }
+        }
+        location.replace('/' + (pick || defaultLang) + '/');
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="gate">
+      <Logo size={44} />
+      <ul role="list">
+        {
+          locales.map((l) => (
+            <li>
+              <a href={`/${l}/`} hreflang={l} lang={l}>
+                <span class="mono">{languageMeta[l].short}</span> {languageMeta[l].native}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <style>
+      .gate {
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        gap: 2rem;
+      }
+      .gate ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      .gate a {
+        display: inline-flex;
+        gap: 0.6rem;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 1.1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        text-decoration: none;
+      }
+      .gate .mono {
+        color: var(--pearl-aqua);
+      }
+    </style>
+  </body>
+</html>

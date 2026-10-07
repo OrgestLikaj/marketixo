@@ -1,0 +1,100 @@
+key: software-testing-qa
+lang: de
+title: Softwaretests & QA
+shortTitle: QA & Tests
+tagline: Manuelle und automatisierte Tests, die Fehler finden, bevor Ihre Nutzer es tun.
+metaTitle: Softwaretests & QA – manuell und automatisiert | Marketixo
+metaDescription: >-
+  Manuelle Tests, Testautomatisierung mit Playwright, API- und Regressionstests, QA-Strategie und
+  CI/CD-Integration für Web- und Mobile-Anwendungen.
+hero:
+  eyebrow: Leistung 08 – Schützen
+  headline: Mit gutem Gefühl veröffentlichen. Bei jedem Release.
+  lead: >-
+    Wir testen Web- und Mobile-Anwendungen manuell und automatisiert – und bauen die Testsuites und
+    Pipelines, die Regressionen auch dann noch abfangen, wenn wir längst nicht mehr dabei sind.
+problem:
+  heading: Fehler, die Nutzer finden, sind die teuersten.
+  intro: Wenn Tests nur eine Nebensache sind, hängt die Qualität von Glück und Nachtschichten ab.
+  points:
+    - title: Releases machen Bestehendes kaputt
+      text: Eine Korrektur an einer Stelle verursacht einen Fehler dort, wo niemand nachgesehen hat.
+    - title: Beim Testen wird zuerst gekürzt
+      text: Unter Termindruck wird die QA in den letzten Nachmittag vor dem Launch gequetscht.
+    - title: Automatisierung, der niemand traut
+      text: Instabile Tests werden ignoriert – und die Testsuite schützt irgendwann gar nichts mehr.
+solution:
+  heading: Qualität als Teil des Prozesses.
+  text: >-
+    Wir kombinieren exploratives manuelles Testen mit zuverlässiger Automatisierung in Ihrer
+    CI/CD-Pipeline, sodass jede Änderung geprüft wird, bevor sie bei den Nutzern ankommt.
+  pillars:
+    - title: Risikobasierte Strategie
+      text: Der Aufwand konzentriert sich auf die Abläufe, die für Nutzer und Umsatz am wichtigsten sind.
+    - title: Zuverlässige Automatisierung
+      text: Wartbare Playwright- und API-Testsuites mit stabilen Selektoren und klaren Reports.
+    - title: Kontinuierliches Feedback
+      text: Tests laufen bei jedem Pull Request und zeitgesteuert gegen Staging und Produktion.
+included:
+  heading: Leistungsumfang
+  items:
+    - title: Manuelle Tests
+      text: Explorative und skriptbasierte Tests durch erfahrene Testerinnen und Tester.
+    - title: Testautomatisierung
+      text: End-to-End-Testsuites mit Playwright, Page Objects und Fixtures.
+    - title: API-Tests
+      text: Contract-, Funktions- und Negativtests für REST-APIs.
+    - title: Tests von Webanwendungen
+      text: Browserübergreifende Tests in Chromium, Firefox und WebKit.
+    - title: Mobile Tests
+      text: Responsive- und Gerätetests auf echten Smartphones und Emulatoren.
+    - title: Regressionstests
+      text: Automatisierte Testsuites, die bestehende Funktionen bei jeder Änderung absichern.
+    - title: End-to-End-Tests
+      text: Vollständige Nutzerwege – von der Registrierung bis zum Checkout.
+    - title: QA-Strategie & Testplanung
+      text: Teststrategie, Testfälle, Testumgebungen und Freigabekriterien.
+    - title: Tests in CI/CD
+      text: Tests integriert in GitHub Actions oder GitLab CI, mit Reporting-Dashboards.
+process:
+  heading: So arbeiten wir
+  steps:
+    - title: Bestandsaufnahme
+      text: Aktuelle Qualität, Risiken, Tools und Release-Prozess.
+    - title: Planung
+      text: Strategie, Prioritäten und Testfälle, abgestimmt mit Ihrem Team.
+    - title: Testen & automatisieren
+      text: Manuelle Tests plus eine Automatisierungssuite für die kritischen Pfade.
+    - title: Integrieren & übergeben
+      text: Pipelines, Reports und Dokumentation, die Ihr Team selbst betreiben und erweitern kann.
+benefits:
+  heading: Ihr Nutzen
+  items:
+    - title: Weniger Störungen im Livebetrieb
+      text: Regressionen werden in der Pipeline abgefangen, nicht von Kunden entdeckt.
+    - title: Schnellere Releases
+      text: Automatisierte Prüfungen ersetzen langsame, repetitive manuelle Testrunden.
+    - title: Transparenz
+      text: Klare Reports darüber, was getestet wurde, was bestanden hat und was nicht.
+faq:
+  - q: Welche Tools setzen Sie ein?
+    a: >-
+      Für End-to-End-Tests vor allem Playwright mit TypeScript, für APIs Bruno und codebasierte Testsuites
+      und für Pipelines GitHub Actions oder GitLab CI. Wir passen uns an Ihren Technologie-Stack an.
+  - q: Können Sie Software testen, die ein anderes Unternehmen entwickelt hat?
+    a: >-
+      Ja. Unabhängige Tests sind oft die wertvollsten – wir haben kein Interesse daran, dass der Code
+      besteht.
+  - q: Manuelle oder automatisierte Tests?
+    a: >-
+      Beides. Automatisierung sichert die kritischen, wiederkehrenden Abläufe ab; Menschen erkunden,
+      beurteilen die Bedienbarkeit und finden das Unerwartete.
+  - q: Arbeiten Sie direkt in unserem Team mit?
+    a: >-
+      Wir können eine Testerin oder einen Tester in Ihre Sprints einbinden oder die Tests als klar
+      abgegrenztes Projekt mit Abschlussbericht liefern.
+cta:
+  heading: Releases, ohne den Atem anzuhalten.
+  text: >-
+    Erzählen Sie uns von Ihrer Anwendung und Ihrem Release-Prozess – wir zeigen Ihnen, wo Tests am meisten
+    bringen.

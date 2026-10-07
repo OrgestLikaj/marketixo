@@ -1,22 +1,30 @@
 {
-  "name": "marketixo",
+  "name": "marketixo-site",
   "type": "module",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/postbuild.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "screenshots": "node --experimental-strip-types --no-warnings scripts/screenshot-work.mjs"
+    "screenshots": "node scripts/screenshot-work.mjs",
+    "test": "playwright test",
+    "qa:screens": "node scripts/qa-screens.mjs",
+    "qa:site": "node scripts/check-site.mjs dist",
+    "brand": "node scripts/make-brand-assets.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.3.0",
-    "@fontsource/space-grotesk": "^5.3.0",
-    "astro": "^7.3.5"
+    "astro": "^7.3.5",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.20.5",
     "playwright": "^1.56.1",
     "typescript": "^6.0.3"
   }

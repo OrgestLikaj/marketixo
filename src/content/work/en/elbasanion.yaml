@@ -1,0 +1,41 @@
+key: elbasanion
+lang: en
+industry: Media — local news
+location: Elbasan, Albania
+summary: >-
+  A custom newspaper platform for ElbasaniON, the digital news outlet for Elbasan — built for a newsroom
+  that publishes all day, with a civic reporting tool for readers.
+metaDescription: >-
+  Case study — custom WordPress news platform for ElbasaniON in Elbasan, Albania: breaking news, ad slots,
+  citizen reporting, SEO, ads and social media.
+overview: >-
+  ElbasaniON is a digital newspaper covering Elbasan and its region — current affairs, investigations, the
+  city, environment, community, youth, culture and multimedia. Its newsroom publishes throughout the day and
+  depends on the website for both readers and advertising revenue.
+challenge: >-
+  A news site lives or dies by speed and structure. Editors need to publish and reorder stories quickly,
+  readers need to see what is new the moment they arrive, and advertisers need reliable placements — all
+  without the slow, plugin-heavy themes many news sites end up with.
+approach: >-
+  We built a custom newspaper theme instead of adapting a generic one. The front page is organised in
+  configurable sections — a lead story grid, a breaking-news ticker and category blocks — so the editorial
+  team controls the hierarchy from the WordPress Customizer, while dedicated ad slots sit where they perform
+  without disrupting reading.
+design: >-
+  A clear news layout in ElbasaniON's red and green, with strong photography, category labels on every story
+  and a navigation that mirrors the newsroom's sections — from Aktualitet to Multimedia.
+development: >-
+  A classic PHP WordPress theme with no page builder and only light vanilla JavaScript, which keeps pages fast
+  and maintenance simple. It includes breaking news, related and popular posts, a weather widget, breadcrumbs
+  and SEO structure. Readers can also report local problems through "Raporto një problem", the civic reporting
+  tool we built — with photo upload, anonymous mode and spam protection.
+result: >-
+  ElbasaniON runs on a purpose-built platform its newsroom controls day to day, with room for advertising and
+  a direct channel for readers to report issues in their city. We continue to support it with SEO, ads and
+  social media.
+highlights:
+  - Custom WordPress newspaper theme, no page builder
+  - Breaking-news ticker and configurable front-page sections
+  - Dedicated advertising placements
+  - Citizen reporting with "Raporto një problem"
+  - Albanian-language newsroom workflow

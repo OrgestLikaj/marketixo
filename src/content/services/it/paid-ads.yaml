@@ -1,0 +1,78 @@
+key: paid-ads
+lang: it
+title: Pubblicità online (Google e Meta Ads)
+shortTitle: Pubblicità online
+tagline: Campagne Google e Meta misurate sulle richieste, non sui clic.
+metaTitle: Gestione campagne Google Ads e Meta Ads | Marketixo
+metaDescription: Campagne Google Ads e Meta Ads con tracciamento delle conversioni, landing page dedicate e ottimizzazione continua, gestite su richieste e vendite reali.
+hero:
+  eyebrow: Servizio 04 — Crescere
+  headline: Ogni euro di budget pubblicitario, rendicontato.
+  lead: Pianifichiamo, configuriamo e gestiamo campagne Google e Meta, impostando per prima cosa il tracciamento delle conversioni. Così le decisioni si basano su richieste e vendite, non sulle impressioni.
+problem:
+  heading: I budget pubblicitari si disperdono sempre negli stessi punti.
+  intro: La maggior parte degli account poco performanti ha in comune gli stessi pochi problemi.
+  points:
+    - title: Nessun tracciamento affidabile
+      text: Senza tracciamento delle conversioni, la piattaforma ottimizza per i clic — e il budget segue la stessa strada.
+    - title: Traffico sulla pagina sbagliata
+      text: Gli annunci rimandano a una home page che non mantiene la promessa dell’annuncio.
+    - title: Campagne lasciate a sé stesse
+      text: Campagne lanciate una volta e mai perfezionate, mentre i costi salgono senza che nessuno se ne accorga.
+solution:
+  heading: Prima misurare, poi investire.
+  text: Configuriamo correttamente tracciamento e consenso, abbiniamo a ogni campagna una landing page pensata per quel pubblico e ottimizziamo ogni settimana in base al costo per richiesta.
+  pillars:
+    - title: Dati affidabili
+      text: Conversioni GA4, Google Ads e Meta configurate con Consent Mode v2.
+    - title: Coerenza del messaggio
+      text: Annunci e landing page scritti come un’unica esperienza.
+    - title: Ottimizzazione continua
+      text: Termini di ricerca, pubblici, offerte e creatività rivisti ogni settimana.
+included:
+  heading: Cosa include
+  items:
+    - title: Google Ads
+      text: Campagne sulla rete di ricerca, Performance Max, Display e YouTube.
+    - title: Meta Ads
+      text: Campagne Facebook e Instagram per notorietà, contatti e vendite.
+    - title: Strategia delle campagne
+      text: Obiettivi, pubblici, budget e mix di canali definiti in base ai Suoi margini.
+    - title: Tracciamento delle conversioni
+      text: Eventi, obiettivi e conversioni offline, configurati e testati dall’inizio alla fine.
+    - title: Ottimizzazione delle landing page
+      text: Pagine dedicate e test A/B che trasformano i clic a pagamento in richieste.
+    - title: Gestione delle campagne
+      text: Monitoraggio quotidiano, ottimizzazione settimanale, report mensile.
+process:
+  heading: Come funziona
+  steps:
+    - title: Audit di account e tracciamento
+      text: Cosa funziona, cosa viene sprecato e cosa non viene misurato.
+    - title: Strategia e configurazione
+      text: Struttura, pubblici, creatività e landing page.
+    - title: Lancio e apprendimento
+      text: Un avvio controllato, con un monitoraggio attento nelle prime settimane.
+    - title: Ottimizzazione e crescita
+      text: Il budget si sposta su ciò che converte; ciò che non converte viene tagliato.
+benefits:
+  heading: Cosa ottiene
+  items:
+    - title: Chiarezza sul costo per contatto
+      text: Sa quanto costa una nuova richiesta e quale campagna l’ha generata.
+    - title: Nessuno spreco
+      text: Ricerche e pubblici non pertinenti vengono esclusi in modo continuativo.
+    - title: Account e dati restano Suoi
+      text: Gli account pubblicitari vengono creati a Suo nome e Lei mantiene pieno accesso e cronologia completa.
+faq:
+  - q: Di quale budget abbiamo bisogno?
+    a: Dipende dal mercato e dagli obiettivi. Consigliamo un budget di prova abbastanza ampio da produrre dati significativi — e Le diciamo con onestà se la pubblicità non è ancora il canale giusto per Lei.
+  - q: Il compenso per la gestione è separato dalla spesa pubblicitaria?
+    a: Sì. La spesa pubblicitaria viene pagata direttamente a Google o a Meta dal Suo account; il nostro compenso copre strategia, configurazione e gestione.
+  - q: Garantite un ritorno sulla spesa pubblicitaria?
+    a: No. I risultati dipendono dall’offerta, dai prezzi e dal mercato. Garantiamo una gestione attenta, report onesti e interventi rapidi sulla base dei dati.
+  - q: Come viene gestito il tracciamento nel rispetto del GDPR?
+    a: Il tracciamento si attiva solo dopo il consenso, e configuriamo Google Consent Mode v2 affinché le piattaforme ricevano i segnali corretti.
+cta:
+  heading: Faccia rendere di più il Suo budget pubblicitario.
+  text: Inizi con un audit dell’account e del tracciamento — Le mostreremo dove vanno a finire i soldi.

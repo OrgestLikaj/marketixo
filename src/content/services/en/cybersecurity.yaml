@@ -1,0 +1,80 @@
+key: cybersecurity
+lang: en
+title: Cybersecurity
+shortTitle: Cybersecurity
+tagline: Assessments and hardening for websites and web applications.
+metaTitle: Website & Web Application Security Services | Marketixo
+metaDescription: Security assessments, vulnerability testing and hardening for websites and web applications. Practical fixes, clear reports, secure development practices.
+hero:
+  eyebrow: Service 07 — Protect
+  headline: Close the doors before someone tries them.
+  lead: Most attacks on small and mid-sized businesses are automated and opportunistic. We find the weaknesses they look for — and fix them.
+problem:
+  heading: Small sites are targets too.
+  intro: Bots scan the internet for known weaknesses around the clock. They don’t care how big you are.
+  points:
+    - title: Outdated software
+      text: Unpatched CMS cores, plugins and libraries with publicly known vulnerabilities.
+    - title: Missing basic protections
+      text: No security headers, weak form handling, exposed admin areas and default settings.
+    - title: No plan for an incident
+      text: No backups tested, no monitoring, no idea who to call when something goes wrong.
+solution:
+  heading: Practical security, explained clearly.
+  text: We assess your website or application against established practices such as the OWASP Top 10, rank the findings by real-world risk, and fix them — or guide your developers through it.
+  pillars:
+    - title: Assess
+      text: Structured review of configuration, code, dependencies and exposed surfaces.
+    - title: Harden
+      text: Headers, access control, input validation, updates and safe defaults.
+    - title: Sustain
+      text: Monitoring, backups and secure development habits that keep it that way.
+included:
+  heading: What’s included
+  items:
+    - title: Website security
+      text: Hardening for WordPress and custom sites — updates, plugins, permissions and backups.
+    - title: Security assessments
+      text: A structured review of your site or app, with a prioritised report.
+    - title: Vulnerability assessment
+      text: Automated and manual checks for known vulnerabilities and misconfigurations.
+    - title: Security hardening
+      text: Security headers, CSP, TLS, access control and server configuration.
+    - title: Web application security
+      text: Authentication, sessions, input handling and API security reviews.
+    - title: Security best practices
+      text: Secure coding guidelines, dependency hygiene and secret management.
+    - title: Security consulting
+      text: Advice on architecture, vendors and policies — in plain language.
+process:
+  heading: How it works
+  steps:
+    - title: Scope & authorisation
+      text: Agreed targets, rules and a written authorisation before any testing.
+    - title: Assessment
+      text: Configuration, dependency, application and infrastructure checks.
+    - title: Report
+      text: Findings ranked by risk, with evidence and concrete fixes.
+    - title: Remediate & retest
+      text: Fixes implemented and verified with a follow-up check.
+benefits:
+  heading: What you get
+  items:
+    - title: Fewer open doors
+      text: The common, automated attack paths closed first.
+    - title: Clear priorities
+      text: A report that says what matters most, not a 200-page scan dump.
+    - title: Confidence for clients and partners
+      text: Evidence that you take your customers’ data seriously.
+faq:
+  - q: Can you make our website 100% secure?
+    a: No one honestly can. Security is about reducing risk to an acceptable level and being ready to respond — that is what we help you do.
+  - q: Do you only test, or also fix?
+    a: Both. We can implement fixes ourselves or work with your developers and verify their changes.
+  - q: Is testing safe for our live site?
+    a: We agree the scope, timing and methods in writing, avoid disruptive tests on production, and use a staging copy where possible.
+  - q: Do you help with GDPR?
+    a: We cover the technical side — secure forms, data minimisation, encryption and consent. For legal advice we work alongside your lawyer or data protection officer.
+cta:
+  heading: Find out where you stand.
+  text: Start with a security assessment of your website or application.

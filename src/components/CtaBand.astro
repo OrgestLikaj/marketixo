@@ -1,87 +1,102 @@
 ---
-import Icon from './Icon.astro';
-import { whatsappLink } from '~/config/site';
-import { t, url, type Lang } from '~/i18n/ui';
+import Button from './Button.astro';
+import { site } from '~/config/site';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
 
 interface Props {
   lang: Lang;
-  title?: string;
+  heading?: string;
+  accent?: string;
   text?: string;
 }
-const { lang } = Astro.props;
-const s = t(lang);
-const copy = {
-  en: {
-    title: 'Ready to grow? Let’s talk.',
-    text: 'Tell us where you are and where you want to be. You’ll get an honest recommendation and a clear, fixed quote — free and without obligation.',
-  },
-  de: {
-    title: 'Bereit zu wachsen? Lassen Sie uns sprechen.',
-    text: 'Erzählen Sie uns, wo Sie stehen und wo Sie hinwollen. Sie erhalten eine ehrliche Empfehlung und ein klares Festpreisangebot — kostenlos und unverbindlich.',
-  },
-}[lang];
-const title = Astro.props.title ?? copy.title;
-const text = Astro.props.text ?? copy.text;
+const { lang, heading, accent, text } = Astro.props;
+const t = useT(lang);
+const h = heading ?? t.home.cta.heading;
+const a = heading ? accent : (accent ?? t.home.cta.headingAccent);
+const body = text ?? t.home.cta.text;
 ---
 
-<section class="cta-band">
-  <div class="container">
-    <div class="cta-band__box reveal">
-      <div class="cta-band__glow" aria-hidden="true"></div>
-      <h2>{title}</h2>
-      <p class="lead">{text}</p>
-      <div class="btn-row">
-        <a href={url('contact', lang) + '#quote'} class="btn btn--signal">
-          {s.cta.quote}
-          <Icon name="arrow" class="arrow" />
-        </a>
-        <a href={whatsappLink(s.whatsappText)} class="btn btn--ghost" target="_blank" rel="noopener">
-          <Icon name="whatsapp" />
-          {s.cta.whatsapp}
-        </a>
+<section class="cta" aria-labelledby="cta-title">
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="cta__glow" aria-hidden="true"></div>
+  <div class="container cta__inner">
+    <h2 id="cta-title" class="cta__title" data-reveal>
+      {h}
+      {a && <span class="cta__accent">{a}</span>}
+    </h2>
+    <div class="cta__side" data-reveal style="--reveal-delay:2">
+      <p class="lead">{body}</p>
+      <div class="cta__actions">
+        <Button href={url.section(lang, 'contact')} size="lg">{t.common.letsTalk}</Button>
+        {
+          site.contact.bookingUrl ? (
+            <Button href={site.contact.bookingUrl} variant="secondary" size="lg" external>
+              {t.common.bookConsultation}
+            </Button>
+          ) : (
+            <Button href={url.section(lang, 'work')} variant="secondary" size="lg">
+              {t.common.viewWork}
+            </Button>
+          )
+        }
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .cta-band {
-    padding-block: var(--section);
-  }
-  .cta-band__box {
+  .cta {
     position: relative;
+    padding-block: clamp(96px, 13vw, 200px);
     overflow: hidden;
+    border-top: 1px solid var(--line);
     isolation: isolate;
-    padding: clamp(40px, 7vw, 96px);
-    border-radius: calc(var(--radius-lg) + 8px);
-    background: var(--ink);
-    color: var(--on-ink);
   }
-  .cta-band__glow {
+  .cta__glow {
     position: absolute;
+    inset: auto -10% -60% 30%;
+    height: 120%;
+    background: radial-gradient(closest-side, rgb(10 147 150 / 0.45), rgb(0 95 115 / 0.2) 50%, transparent);
     z-index: -1;
-    right: -15%;
-    bottom: -60%;
-    width: 70%;
+  }
+  .cta__glow::after {
+    content: '';
+    position: absolute;
+    right: 10%;
+    bottom: 40%;
+    width: 30%;
     aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgb(255 90 31 / 0.55), rgb(255 90 31 / 0) 65%);
-    filter: blur(10px);
+    background: radial-gradient(closest-side, rgb(238 155 0 / 0.25), transparent);
   }
-  .cta-band h2 {
-    max-width: 16ch;
+  .cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
   }
-  .cta-band .lead {
-    max-width: 560px;
-    color: var(--on-ink-muted);
-    margin-bottom: 2rem;
+  .cta__title {
+    font-size: clamp(2.75rem, 1.4rem + 5.5vw, 7rem);
+    letter-spacing: var(--tracking-display);
+    line-height: 0.92;
   }
-  .cta-band .btn--ghost {
-    --btn-fg: var(--on-ink);
+  .cta__accent {
+    display: block;
+    padding-bottom: 0.08em;
+    background: var(--grad-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  .cta-band .btn--ghost:hover {
-    --btn-bg: var(--white);
-    --btn-fg: var(--ink);
-    border-color: var(--white);
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 899px) {
+    .cta__inner {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

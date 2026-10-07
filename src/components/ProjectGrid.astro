@@ -1,0 +1,167 @@
+---
+/**
+ * Editorial, asymmetric portfolio layout: feature → two staggered halves → wide → …
+ * With `filter`, buttons narrow the list by category; the layout pattern is
+ * re-applied to the visible projects so the grid never has holes. Without JS,
+ * every project is shown.
+ */
+import ProjectCard from './ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { useT, type Lang } from '~/i18n';
+import type { Project, WorkCategory } from '~/data/projects';
+
+interface Props {
+  projects: Project[];
+  lang: Lang;
+  filter?: boolean;
+  headingLevel?: 2 | 3;
+}
+const { projects, lang, filter = false, headingLevel = 3 } = Astro.props;
+const t = useT(lang);
+const work = await getCollection('work', (e) => e.data.lang === lang);
+const services = await getCollection('services', (e) => e.data.lang === lang);
+const serviceNames = Object.fromEntries(services.map((s) => [s.data.key, s.data.shortTitle]));
+
+const layoutFor = (i: number) => (['feature', 'half', 'half', 'wide', 'half', 'half'] as const)[i % 6];
+const items = projects
+  .map((p) => ({ project: p, copy: work.find((w) => w.data.key === p.key)?.data }))
+  .filter((i): i is { project: Project; copy: NonNullable<typeof i.copy> } => Boolean(i.copy));
+
+const order: WorkCategory[] = ['web', 'branding', 'ecommerce', 'marketing', 'seo', 'multilingual', 'healthcare', 'corporate'];
+const categories = order.filter((c) => items.some((i) => i.project.categories.includes(c)));
+---
+
+<div class="pg" data-project-grid>
+  {
+    filter && (
+      <div class="pg__filter" role="group" aria-label={t.workPage.filterLabel}>
+        <button type="button" class="pg__chip" data-filter="all" aria-pressed="true">
+          {t.workPage.all} <span class="pg__n">{items.length}</span>
+        </button>
+        {categories.map((c) => (
+          <button type="button" class="pg__chip" data-filter={c} aria-pressed="false">
+            {t.workPage.categories[c]} <span class="pg__n">{items.filter((i) => i.project.categories.includes(c)).length}</span>
+          </button>
+        ))}
+        <p class="sr-only" role="status" data-filter-status />
+      </div>
+    )
+  }
+
+  <div class="pg__list">
+    {
+      items.map((item, i) => (
+        <div class="pg__cell" data-layout={layoutFor(i)} data-offset={i % 3 === 2 ? 'true' : undefined} data-cell>
+          <ProjectCard
+            project={item.project}
+            copy={item.copy}
+            serviceNames={serviceNames}
+            lang={lang}
+            index={i}
+            layout={layoutFor(i)}
+            headingLevel={headingLevel}
+            eager={i === 0 && filter}
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const PATTERN = ['feature', 'half', 'half', 'wide', 'half', 'half'];
+  document.querySelectorAll<HTMLElement>('[data-project-grid]').forEach((grid) => {
+    const chips = grid.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const cells = [...grid.querySelectorAll<HTMLElement>('[data-cell]')];
+    const status = grid.querySelector<HTMLElement>('[data-filter-status]');
+    if (!chips.length) return;
+
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        const value = chip.dataset.filter!;
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        let n = 0;
+        for (const cell of cells) {
+          const cats = cell.querySelector<HTMLElement>('[data-categories]')?.dataset.categories?.split(' ') ?? [];
+          const show = value === 'all' || cats.includes(value);
+          cell.hidden = !show;
+          delete cell.dataset.offset;
+          if (show) {
+            cell.dataset.layout = PATTERN[n % PATTERN.length];
+            if (n % 3 === 2) cell.dataset.offset = 'true';
+            // Keep each card's own layout class in sync with its new position.
+            const card = cell.firstElementChild as HTMLElement | null;
+            card?.classList.remove('pc--feature', 'pc--wide', 'pc--half');
+            card?.classList.add(`pc--${cell.dataset.layout}`);
+            card?.classList.add('is-in');
+            n++;
+          }
+        }
+        // A lone half at the end spans the full row.
+        const visible = cells.filter((c) => !c.hidden);
+        const last = visible.at(-1);
+        if (last && last.dataset.layout === 'half' && visible.at(-2)?.dataset.layout !== 'half') last.dataset.layout = 'solo';
+        if (status) status.textContent = `${n}`;
+      }),
+    );
+  });
+</script>
+
+<style>
+  .pg__filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .pg__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+  .pg__chip:hover {
+    color: var(--text);
+    border-color: var(--pearl-aqua);
+  }
+  .pg__chip[aria-pressed='true'] {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--ink-black);
+  }
+  .pg__n {
+    font-family: var(--font-code);
+    font-size: 0.6875rem;
+    opacity: 0.7;
+  }
+  .pg__list {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 3vw, 48px);
+    row-gap: clamp(64px, 9vw, 140px);
+  }
+  .pg__cell {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  @media (min-width: 768px) {
+    .pg__cell[data-layout='half'] {
+      grid-column: span 6;
+    }
+    /* Editorial stagger: the second half of a pair sits lower */
+    .pg__cell[data-layout='half'][data-offset] {
+      margin-top: clamp(48px, 9vw, 140px);
+    }
+    .pg__cell[data-layout='solo'] {
+      grid-column: 3 / span 8;
+    }
+  }
+</style>

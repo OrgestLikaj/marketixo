@@ -1,0 +1,95 @@
+---
+/**
+ * Privacy Policy, Cookie Policy and Legal Notice / Impressum.
+ * Markdown lives in src/content/legal/<lang>/. Tokens like {{legalName}} are filled
+ * from src/config/site.ts; missing values show as [COMPANY NAME] etc.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import { formattedAddress, orPlaceholder, site } from '~/config/site';
+import { formatDate, useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { breadcrumbs } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const entries = await getCollection('legal', (e) => e.data.lang === lang && e.data.page === page.kind);
+const entry = entries[0];
+if (!entry) throw new Error(`Missing legal page: src/content/legal/${lang}/${page.kind}.md`);
+
+const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const tokens: Record<string, string> = {
+  siteName: site.name,
+  siteUrl: site.url,
+  legalName: orPlaceholder(site.company.legalName, 'legalName'),
+  legalForm: site.company.legalForm,
+  representative: orPlaceholder(site.company.representative, 'representative'),
+  address: formattedAddress(),
+  email: orPlaceholder(site.contact.email, 'email'),
+  phone: orPlaceholder(site.contact.phone, 'phone'),
+  vatId: orPlaceholder(site.company.vatId, 'vatId'),
+  registration: orPlaceholder(site.company.registration, 'registration'),
+  cookiePolicyUrl: url.section(lang, 'cookies'),
+  privacyUrl: url.section(lang, 'privacy'),
+};
+// Tokens appear as {{name}} in text and URL-encoded (%7B%7Bname%7D%7D) inside link targets.
+const html = (entry.rendered?.html ?? '').replace(/(?:\{\{|%7B%7B)(\w+)(?:\}\}|%7D%7D)/g, (m, k: string) => (k in tokens ? esc(tokens[k]) : m));
+const hasPlaceholders = /\[[A-Z ]{4,}\]/.test(html);
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: entry.data.title, path: page.path },
+];
+---
+
+<BaseLayout page={page} title={`${entry.data.title} | ${site.name}`} description={entry.data.description} schema={[breadcrumbs(crumbs)]}>
+  <PageHero lang={lang} crumbs={crumbs} title={entry.data.title} size="lg">
+    <p class="mono updated">{t.legalPage.updated}: {formatDate(entry.data.updated, lang)}</p>
+  </PageHero>
+  <div class="on-paper legal">
+    <div class="container container--text">
+      {hasPlaceholders && <p class="notice" role="note">{t.legalPage.draftNotice}</p>}
+      <div class="prose" set:html={html} />
+      {page.kind === 'cookies' && (
+        <p class="settings">
+          <button type="button" data-cookie-settings class="settings__btn">{t.footer.cookieSettings}</button>
+        </p>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .updated {
+    color: var(--text-subtle);
+    font-size: var(--fs-xs);
+  }
+  .legal {
+    padding-block: clamp(48px, 7vw, 104px);
+  }
+  .notice {
+    margin-bottom: 2rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--burnt-caramel);
+    background: rgb(202 103 2 / 0.08);
+    font-size: var(--fs-sm);
+  }
+  .settings {
+    margin-top: 2.5rem;
+  }
+  .settings__btn {
+    min-height: 48px;
+    padding: 0 1.25rem;
+    border: 1px solid var(--on-paper);
+    border-radius: var(--radius);
+    background: var(--on-paper);
+    color: var(--paper);
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>

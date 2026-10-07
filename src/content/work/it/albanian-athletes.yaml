@@ -1,0 +1,37 @@
+key: albanian-athletes
+lang: it
+industry: Sport — sviluppo degli atleti
+location: Regno Unito e Albania
+summary: >-
+  Un sito web per Albanian Athletes Group, che sostiene i giovani calciatori albanesi con percorsi di crescita,
+  profili e contatti con opportunità internazionali.
+metaDescription: >-
+  Caso studio — sito web per Albanian Athletes Group: percorsi dei giocatori, profili degli atleti, storie di
+  successo e donazioni. Sviluppo WordPress, SEO, ads e social.
+overview: >-
+  Albanian Athletes Group (AAG), fondato nel 2020, sostiene gli atleti albanesi — soprattutto giovani
+  calciatori — con opportunità di crescita, individuazione dei talenti e contatti con club e opportunità
+  internazionali. Opera dal Regno Unito, in partnership con Carshalton Athletic.
+challenge: >-
+  AAG si rivolge a pubblici molto diversi: giovani giocatori e le loro famiglie, club e osservatori, e
+  sostenitori pronti a fare una donazione. Il sito doveva ispirare i primi, informare i secondi e offrire ai
+  terzi un modo chiaro per contribuire — presentando i giocatori in modo credibile.
+approach: >-
+  Abbiamo organizzato il sito attorno al percorso dell’atleta: chi è AAG, i profili dei giocatori, i percorsi
+  di crescita strutturati, le storie di successo, la consulenza e le notizie — con i recapiti e un pulsante
+  per le donazioni ben visibile sempre a portata di mano.
+design: >-
+  Grandi fotografie calcistiche ricche di emozione accompagnate da brevi frasi, lo stemma rosso di AAG e un
+  layout pulito e sportivo che rende profili e percorsi facili da consultare.
+development: >-
+  Realizzato su WordPress con WPBakery, perché il team possa aggiornare in autonomia profili, storie e
+  notizie, e collegato ai servizi Google tramite Site Kit per dati di ricerca e analytics. In parallelo
+  curiamo SEO, ads e social media.
+result: >-
+  Albanian Athletes Group ha un sito web che presenta in modo credibile giocatori e programmi a club e
+  famiglie, e offre ai sostenitori un modo diretto per contribuire.
+highlights:
+  - Profili dei giocatori, percorsi di crescita e storie di successo
+  - Invito alla donazione nell’header
+  - Contenuti gestiti in autonomia in WordPress
+  - Google Site Kit per dati di ricerca e analytics

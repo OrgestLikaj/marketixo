@@ -1,0 +1,93 @@
+key: paid-ads
+lang: de
+title: Online-Werbung (Google & Meta Ads)
+shortTitle: Online-Werbung
+tagline: Google- und Meta-Kampagnen, gemessen an Anfragen statt an Klicks.
+metaTitle: Google Ads & Meta Ads Betreuung | Marketixo
+metaDescription: >-
+  Google-Ads- und Meta-Ads-Kampagnen mit sauberem Conversion-Tracking, passenden Landingpages und
+  laufender Optimierung – gesteuert nach echten Anfragen und Verkäufen.
+hero:
+  eyebrow: Leistung 04 – Wachsen
+  headline: Jeder Euro Werbebudget – nachvollziehbar eingesetzt.
+  lead: >-
+    Wir planen, erstellen und betreuen Kampagnen bei Google und Meta. Das Conversion-Tracking richten wir
+    zuerst ein – damit Entscheidungen auf Anfragen und Verkäufen beruhen, nicht auf Impressionen.
+problem:
+  heading: Werbebudgets versickern an vorhersehbaren Stellen.
+  intro: Die meisten schwachen Werbekonten haben dieselben wenigen Probleme.
+  points:
+    - title: Kein verlässliches Tracking
+      text: Ohne Conversion-Tracking optimiert die Plattform auf Klicks – und das Budget gleich mit.
+    - title: Traffic landet auf der falschen Seite
+      text: Anzeigen führen auf eine Startseite, die nicht hält, was die Anzeige verspricht.
+    - title: Einmal eingerichtet, nie wieder angefasst
+      text: Kampagnen werden einmal gestartet und nie verfeinert, während die Kosten still steigen.
+solution:
+  heading: Erst messen, dann investieren.
+  text: >-
+    Wir richten Tracking und Einwilligung korrekt ein, stimmen jede Kampagne auf eine Landingpage ab, die
+    für genau diese Zielgruppe gebaut ist, und optimieren wöchentlich auf die Kosten pro Anfrage.
+  pillars:
+    - title: Tracking, dem Sie vertrauen können
+      text: GA4-, Google-Ads- und Meta-Conversions, eingerichtet mit Consent Mode v2.
+    - title: Stimmige Botschaft
+      text: Anzeige und Landingpage als ein durchgängiges Erlebnis geschrieben.
+    - title: Laufende Optimierung
+      text: Suchbegriffe, Zielgruppen, Gebote und Anzeigenmotive – jede Woche geprüft.
+included:
+  heading: Leistungsumfang
+  items:
+    - title: Google Ads
+      text: Such-, Performance-Max-, Display- und YouTube-Kampagnen.
+    - title: Meta Ads
+      text: Facebook- und Instagram-Kampagnen für Bekanntheit, Leads und Verkäufe.
+    - title: Kampagnenstrategie
+      text: Ziele, Zielgruppen, Budgets und Kanalmix auf Basis Ihrer Margen.
+    - title: Conversion-Tracking
+      text: Events, Ziele und Offline-Conversions – durchgängig eingerichtet und getestet.
+    - title: Landingpage-Optimierung
+      text: Eigene Seiten und A/B-Tests, die bezahlte Klicks in Anfragen verwandeln.
+    - title: Kampagnenbetreuung
+      text: Tägliches Monitoring, wöchentliche Optimierung, monatliche Berichte.
+process:
+  heading: So arbeiten wir
+  steps:
+    - title: Konto- & Tracking-Audit
+      text: Was funktioniert, was Geld verschwendet und was gar nicht gemessen wird.
+    - title: Strategie & Einrichtung
+      text: Kontostruktur, Zielgruppen, Anzeigenmotive und Landingpages.
+    - title: Start & Lernphase
+      text: Ein kontrollierter Start mit engmaschigem Monitoring in den ersten Wochen.
+    - title: Optimieren & skalieren
+      text: Das Budget fließt in das, was konvertiert; was nicht funktioniert, wird gestrichen.
+benefits:
+  heading: Ihr Nutzen
+  items:
+    - title: Klarheit über die Kosten pro Lead
+      text: Sie wissen, was eine neue Anfrage kostet und welche Kampagne sie gebracht hat.
+    - title: Kein verschwendetes Budget
+      text: Irrelevante Suchanfragen und Zielgruppen werden laufend ausgeschlossen.
+    - title: Ihre Konten, Ihre Daten
+      text: Werbekonten werden auf Ihren Namen angelegt; Sie behalten vollen Zugriff und die gesamte Historie.
+faq:
+  - q: Welches Budget brauchen wir?
+    a: >-
+      Das hängt von Ihrem Markt und Ihren Zielen ab. Wir empfehlen ein Testbudget, das groß genug ist, um
+      aussagekräftige Daten zu liefern – und sagen Ihnen ehrlich, wenn Anzeigen für Sie (noch) nicht der
+      richtige Kanal sind.
+  - q: Ist die Betreuungsgebühr vom Werbebudget getrennt?
+    a: >-
+      Ja. Das Werbebudget zahlen Sie direkt aus Ihrem Konto an Google oder Meta; unser Honorar deckt
+      Strategie, Einrichtung und Betreuung ab.
+  - q: Garantieren Sie einen bestimmten ROAS?
+    a: >-
+      Nein. Die Ergebnisse hängen von Ihrem Angebot, Ihren Preisen und Ihrem Markt ab. Wir garantieren
+      sorgfältige Betreuung, ehrliche Berichte und schnelles Handeln auf Basis der Daten.
+  - q: Wie wird das Tracking DSGVO-konform umgesetzt?
+    a: >-
+      Das Tracking läuft erst nach der Einwilligung, und wir konfigurieren Google Consent Mode v2, damit die
+      Plattformen die richtigen Signale erhalten.
+cta:
+  heading: Holen Sie mehr aus Ihrem Werbebudget.
+  text: Starten Sie mit einem Konto- und Tracking-Audit – wir zeigen Ihnen, wohin das Geld fließt.

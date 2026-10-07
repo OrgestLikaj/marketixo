@@ -1,0 +1,44 @@
+key: medicus-center
+lang: sq
+industry: Shëndetësi — klinikë dentare
+location: Shkodër, Shqipëri
+summary: >-
+  Një faqe në katër gjuhë për një klinikë dentare që pret pacientë ndërkombëtarë — e ndërtuar për t’i
+  shpjeguar qartë trajtimet dhe për ta bërë të lehtë kontaktin e parë, nga çdo vend.
+metaDescription: >-
+  Rast studimi — faqe shumëgjuhëshe në Next.js për MEDICUS Dental Clinic në Shkodër, e ndërtuar për pacientë
+  dentarë ndërkombëtarë. Ueb, SEO, reklama dhe rrjete sociale.
+overview: >-
+  MEDICUS është një klinikë dentare në Shkodër, në veri të Shqipërisë, që ofron implante, kurora, faseta dhe
+  rikonstruksion të plotë të buzëqeshjes. Shumë nga pacientët e saj vijnë nga jashtë, ndaj faqja duhet të
+  kryejë punën e një konsulte të parë për njerëz që nuk kanë qenë kurrë në Shqipëri.
+challenge: >-
+  Pacientët ndërkombëtarë marrin një vendim të menduar mirë nga larg. Ata duhet të kuptojnë trajtimet, t’i
+  besojnë klinikës dhe t’i shkruajnë në gjuhën e tyre — shpesh duke dërguar foto ose radiografi para se të
+  flasin me një dentist. Faqja duhej t’u shërbente vizitorëve nga Mbretëria e Bashkuar, SHBA-ja, Gjermania
+  dhe Italia, si edhe pacientëve vendas, dhe të mbetej e shpejtë në celular.
+approach: >-
+  E planifikuam faqen rreth rrugëtimit të pacientit, jo rreth strukturës së klinikës — së pari trajtimet,
+  pastaj turizmi dentar, dëshmitë dhe kontakti. Një panel me tre hapa „nisni rrugëtimin tuaj“ dhe një
+  buton rezervimi gjithmonë i dukshëm e mbajnë hapin e radhës para syve në çdo faqe, me WhatsApp në
+  dispozicion për pyetje të shpejta.
+design: >-
+  Një ndërfaqe e qetë në blu të errët dhe gurkali, me tipografi të ajrosur, faqe trajtimesh të qarta me ikonat e
+  veta, si dhe një galeri dhe seksion vlerësimesh për të ndërtuar besim. Çdo faqe u projektua fillimisht për
+  celularin, sepse shumica e vizitave të para vijnë nga telefoni.
+development: >-
+  Faqja është ndërtuar me Next.js dhe eksportuar si faqe statike, e shërbyer nga hosting i përbashkët me një
+  skript të vogël PHP për dërgimin e formularit të kontaktit me email — përfshirë ngarkimin e sigurt të
+  fotove dhe radiografive. Anglishtja, shqipja, italishtja dhe gjermanishtja funksionojnë me next-intl, me
+  meta të dhëna të lokalizuara, hreflang dhe sitemap. Google Analytics ngarkohet vetëm pas pëlqimit për
+  cookies, ndërsa të dhënat e strukturuara Dentist ua përshkruajnë klinikën motorëve të kërkimit.
+result: >-
+  Klinika ka një faqe të shpejtë në katër gjuhë që funksionon si recepsioni i saj ndërkombëtar — shpjegon
+  trajtimet, ndërton besim dhe mbledh kërkesat e pacientëve bashkë me skedarët e tyre. Vazhdojmë ta
+  mbështesim me SEO, reklama dhe rrjete sociale.
+highlights:
+  - Katër gjuhë me meta të dhëna të lokalizuara dhe hreflang
+  - Formular kontakti me ngarkim të sigurt fotosh dhe radiografish
+  - Ndërtim statik me Next.js në hosting të përbashkët me kosto të ulët
+  - Analitikë vetëm me pëlqim dhe të dhëna të strukturuara Dentist
+  - Faqe trajtimesh, udhëzues për turizmin dentar, galeri dhe pyetje të shpeshta

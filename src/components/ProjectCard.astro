@@ -1,205 +1,269 @@
 ---
+/**
+ * Portfolio card. Layout variants are set by ProjectGrid:
+ *   feature — full width, large image
+ *   wide    — image 8/12 + text 4/12
+ *   half    — half width (optionally offset for an editorial stagger)
+ */
+import BrowserFrame from './BrowserFrame.astro';
+import Badge from './Badge.astro';
 import Icon from './Icon.astro';
-import { services } from '~/data/services';
-import type { Project } from '~/data/work';
-import type { Lang } from '~/i18n/ui';
-import { hostOf, logoFor, screenshotFor } from '~/lib/assets';
+import type { CollectionEntry } from 'astro:content';
+import type { Project } from '~/data/projects';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { workImages } from '~/lib/work-images';
 
 interface Props {
   project: Project;
+  copy: CollectionEntry<'work'>['data'];
+  serviceNames: Record<string, string>;
   lang: Lang;
+  index: number;
+  layout?: 'feature' | 'wide' | 'half';
+  headingLevel?: 2 | 3;
+  eager?: boolean;
 }
-const { project, lang } = Astro.props;
-const tags = project.services
-  .map((k) => services.find((s) => s.key === k)?.copy[lang].title.split(' (')[0])
-  .filter(Boolean);
-const image = screenshotFor(project.key, project.image);
-const logo = logoFor(project.key, project.logo);
-const host = hostOf(project.url);
-const visit = lang === 'de' ? 'Website ansehen' : 'Visit website';
+const { project, copy, serviceNames, lang, index, layout = 'half', headingLevel = 3, eager = false } = Astro.props;
+const t = useT(lang);
+const img = workImages(project.key);
+const href = url.project(lang, project.key);
+const H = `h${headingLevel}` as 'h2' | 'h3';
+const num = String(index + 1).padStart(2, '0');
+const sizes =
+  layout === 'feature' ? '(min-width: 1400px) 1320px, 94vw' : layout === 'wide' ? '(min-width: 1024px) 66vw, 94vw' : '(min-width: 768px) 46vw, 94vw';
+const aspect = layout === 'feature' ? '16 / 8' : layout === 'wide' ? '16 / 10' : '4 / 3';
 ---
 
-<a class="project reveal" href={project.url} target="_blank" rel="noopener">
-  <div class="project__cover" style={`--c:${project.color}`}>
-    <div class="project__mock">
-      <div class="project__bar" aria-hidden="true">
-        <i></i><i></i><i></i>
-        <span class="project__url">{host}</span>
-      </div>
-      {
-        image ? (
-          <img src={image} alt={`${project.client} — ${host}`} loading="lazy" decoding="async" width="1440" height="900" />
-        ) : (
-          <div class="project__body" aria-hidden="true">
-            {logo ? <img class="project__logo" src={logo} alt="" /> : <span class="project__name">{project.client}</span>}
-            <span class="project__l"></span>
-            <span class="project__l project__l--short"></span>
-            <span class="project__btn"></span>
+<article
+  class:list={['pc', `pc--${layout}`]}
+  data-categories={project.categories.join(' ')}
+  data-reveal
+  style={`--brand:${project.brand}`}
+>
+  <div class="pc__media">
+    {
+      img.desktop ? (
+        <BrowserFrame
+          src={img.desktop}
+          alt={`${project.client} — ${copy.industry}`}
+          url={project.url}
+          sizes={sizes}
+          aspect={aspect}
+          loading={eager ? 'eager' : 'lazy'}
+          class="pc__frame"
+        />
+      ) : (
+        <div class="pc__cover" style={`aspect-ratio:${aspect}`} aria-hidden="true">
+          <div class="pc__tiles">
+            {Array.from({ length: 9 }, (_, i) => (
+              <span style={`--d:${i}`} />
+            ))}
           </div>
-        )
-      }
+          <span class="pc__cover-name">{project.client}</span>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="pc__body">
+    <div class="pc__meta">
+      <span class="index-num">{num}</span>
+      <span class="pc__industry">{copy.industry}</span>
     </div>
+    <H class="pc__title">
+      <a href={href} class="pc__link">{project.client}</a>
+    </H>
+    {layout !== 'half' && <p class="pc__summary">{copy.summary}</p>}
+    <ul class="pc__tags" role="list" aria-label={t.caseStudy.services}>
+      {project.services.map((s) => <li><Badge>{serviceNames[s] ?? s}</Badge></li>)}
+    </ul>
+    <span class="pc__cta" aria-hidden="true">
+      {t.common.viewProject}
+      <Icon name="arrow-right" size={16} />
+    </span>
   </div>
-  <div class="project__meta">
-    <h3>{project.client}</h3>
-    {project.year && <span class="project__year">{project.year}</span>}
-  </div>
-  <p>{project.summary[lang]}</p>
-  {project.result && <p class="project__result">{project.result[lang]}</p>}
-  <ul class="project__tags">
-    {tags.map((tag) => <li class="tag">{tag}</li>)}
-  </ul>
-  <span class="project__visit">{visit} <Icon name="arrow-up-right" size={16} /></span>
-</a>
+</article>
 
 <style>
-  .project {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-decoration: none;
-  }
-  .project__cover {
+  .pc {
     position: relative;
-    overflow: hidden;
-    aspect-ratio: 16 / 10;
-    margin-bottom: 0.75rem;
-    border-radius: var(--radius-lg);
-    background:
-      radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--c) 55%, white) 0%, transparent 60%),
-      var(--c);
-  }
-  .project__mock {
-    position: absolute;
-    left: 9%;
-    right: 9%;
-    top: 12%;
-    bottom: -4%;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-    background: var(--white);
-    box-shadow: 0 30px 60px rgb(0 0 0 / 0.25);
-    transition: transform 0.6s var(--ease);
-  }
-  .project:hover .project__mock {
-    transform: translateY(-6px);
-  }
-  .project__mock > img {
-    width: 100%;
-    height: calc(100% - 33px);
-    object-fit: cover;
-    object-position: top;
-  }
-  .project__bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 33px;
-    padding: 0 12px;
-    border-bottom: 1px solid #eee;
-  }
-  .project__bar i {
-    flex: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e3e3e3;
-  }
-  .project__url {
-    flex: 1;
-    margin-left: 8px;
-    padding: 2px 10px;
-    border-radius: 6px;
-    background: #f3f3f3;
-    font-size: 0.6875rem;
-    color: #777;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .project__body {
     display: grid;
-    gap: 10px;
-    padding: 10% 10%;
+    gap: 1.5rem;
+    align-content: start;
   }
-  .project__name {
-    margin-bottom: 8px;
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    color: var(--c);
+  .pc__media {
+    position: relative;
+    border-radius: var(--radius-lg);
   }
-  .project__logo {
-    height: 48px;
-    width: auto;
-    max-width: 70%;
-    margin-bottom: 8px;
-    object-fit: contain;
-    object-position: left;
+  /* Brand-coloured halo behind the screenshot, revealed on hover */
+  .pc__media::before {
+    content: '';
+    position: absolute;
+    inset: 8% 6% -4%;
+    background: var(--brand);
+    filter: blur(60px);
+    opacity: 0.18;
+    z-index: -1;
+    transition: opacity 600ms var(--ease);
   }
-  .project__body span.project__l {
-    display: block;
-    height: 10px;
-    border-radius: 6px;
-    background: #ececec;
+  .pc:hover .pc__media::before {
+    opacity: 0.38;
   }
-  .project__body .project__l--short {
-    width: 60%;
+  .pc :global(.bf__img) {
+    transition: transform 1.4s var(--ease-out);
   }
-  .project__body .project__btn {
-    display: block;
-    width: 32%;
-    height: 22px;
-    margin-top: 6px;
-    border-radius: 999px;
-    background: var(--c);
+  .pc:hover :global(.bf__img) {
+    transform: scale(1.035);
   }
-  .project__meta {
+  .pc__body {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .pc__meta {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
     gap: 1rem;
   }
-  .project h3 {
-    margin: 0;
-    font-size: 1.375rem;
+  .pc__industry {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
   }
-  .project__year {
-    font-size: 0.875rem;
-    color: var(--muted);
+  .pc__title {
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+    letter-spacing: -0.035em;
+    line-height: 1.05;
   }
-  .project p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.975rem;
+  .pc--feature .pc__title {
+    font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem);
   }
-  .project .project__result {
-    color: var(--signal-dark);
-    font-weight: 600;
+  .pc__link {
+    text-decoration: none;
   }
-  .project__tags {
+  /* Whole card is clickable via the title link */
+  .pc__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .pc__link:focus-visible {
+    outline: none;
+  }
+  .pc:has(.pc__link:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 8px;
+    border-radius: var(--radius-lg);
+  }
+  .pc__summary {
+    color: var(--text-muted);
+    max-width: 52ch;
+  }
+  .pc__tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    list-style: none;
-    margin: 0.5rem 0 0;
+    margin: 0.25rem 0 0;
     padding: 0;
+    list-style: none;
   }
-  .section--white .project__tags .tag {
-    background: var(--paper);
-  }
-  .project__visit {
+  .pc__cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.5rem;
     margin-top: 0.5rem;
-    font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9375rem;
+    color: var(--pearl-aqua);
   }
-  .project:hover .project__visit {
-    color: var(--signal-dark);
+  .pc__cta :global(.icon) {
+    transition: transform var(--dur) var(--ease);
+  }
+  .pc:hover .pc__cta :global(.icon) {
+    transform: translateX(4px);
+  }
+
+  /* Feature: title and summary side by side under the image */
+  @media (min-width: 900px) {
+    .pc--feature .pc__body {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      grid-template-areas:
+        'meta meta'
+        'title summary'
+        'title tags'
+        'title cta';
+      column-gap: 3rem;
+    }
+    .pc--feature .pc__meta {
+      grid-area: meta;
+    }
+    .pc--feature .pc__title {
+      grid-area: title;
+    }
+    .pc--feature .pc__summary {
+      grid-area: summary;
+    }
+    .pc--feature .pc__tags {
+      grid-area: tags;
+    }
+    .pc--feature .pc__cta {
+      grid-area: cta;
+    }
+    .pc--wide {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      align-items: end;
+      gap: clamp(1.5rem, 3vw, 3rem);
+    }
+  }
+
+  /* Cover for projects without a website screenshot */
+  .pc__cover {
+    position: relative;
+    display: grid;
+    place-items: end start;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--brand) 55%, transparent), transparent 60%),
+      linear-gradient(135deg, #021a22, color-mix(in srgb, var(--brand) 35%, #001219));
+    overflow: hidden;
+  }
+  .pc__tiles {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    translate: 0 -50%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: min(46%, 300px);
+    transform: rotate(-6deg);
+  }
+  .pc__tiles span {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: rgb(255 255 255 / calc(0.06 + var(--d) * 0.015));
+    border: 1px solid rgb(255 255 255 / 0.12);
+    transition: transform 600ms var(--ease-out);
+    transition-delay: calc(var(--d) * 30ms);
+  }
+  .pc__tiles span:nth-child(3n + 2) {
+    background: color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+  .pc:hover .pc__tiles span {
+    transform: translateY(-6px);
+  }
+  .pc__cover-name {
+    position: relative;
+    max-width: 50%;
+    font-size: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #fff;
   }
 </style>

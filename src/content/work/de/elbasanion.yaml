@@ -1,0 +1,43 @@
+key: elbasanion
+lang: de
+industry: Medien – Lokalnachrichten
+location: Elbasan, Albanien
+summary: >-
+  Eine individuell entwickelte Nachrichtenplattform für ElbasaniON, das digitale Nachrichtenportal für Elbasan –
+  gebaut für eine Redaktion, die den ganzen Tag über veröffentlicht, mit einem Bürgermelde-Tool für Leser.
+metaDescription: >-
+  Fallstudie – individuelle WordPress-Nachrichtenplattform für ElbasaniON in Elbasan, Albanien: Eilmeldungen,
+  Werbeplätze, Bürgermeldungen, SEO, Werbung, Social Media.
+overview: >-
+  ElbasaniON ist eine digitale Zeitung für Elbasan und die Region – Aktuelles, Recherchen, Stadt, Umwelt,
+  Gesellschaft, Jugend, Kultur und Multimedia. Die Redaktion veröffentlicht über den ganzen Tag und ist sowohl
+  für ihre Leser als auch für ihre Werbeeinnahmen auf die Website angewiesen.
+challenge: >-
+  Eine Nachrichtenseite steht und fällt mit Tempo und Struktur. Redakteure müssen Beiträge schnell
+  veröffentlichen und neu anordnen können, Leser müssen sofort sehen, was neu ist, und Werbekunden brauchen
+  verlässliche Platzierungen – ohne die langsamen, mit Plugins überladenen Themes, bei denen viele
+  Nachrichtenseiten am Ende landen.
+approach: >-
+  Statt ein generisches Theme anzupassen, haben wir ein individuelles Zeitungs-Theme entwickelt. Die Startseite
+  ist in konfigurierbare Bereiche gegliedert – ein Raster für die Aufmacher, ein Eilmeldungsticker und
+  Kategorieblöcke –, sodass die Redaktion die Gewichtung selbst im WordPress Customizer steuert. Eigene
+  Werbeplätze sitzen dort, wo sie wirken, ohne den Lesefluss zu stören.
+design: >-
+  Ein klares Nachrichtenlayout im Rot und Grün von ElbasaniON, mit starker Fotografie, Kategorielabels an jedem
+  Beitrag und einer Navigation, die die Ressorts der Redaktion abbildet – von Aktualitet bis Multimedia.
+development: >-
+  Ein klassisches PHP-WordPress-Theme ohne Page-Builder und mit nur wenig Vanilla-JavaScript – das hält die
+  Seiten schnell und die Wartung einfach. Es umfasst Eilmeldungen, verwandte und beliebte Beiträge, ein
+  Wetter-Widget, Breadcrumbs und eine SEO-gerechte Struktur. Leser können zudem lokale Probleme über
+  „Raporto një problem“ melden, das von uns entwickelte Bürgermelde-Tool – mit Foto-Upload, anonymem Modus und
+  Spamschutz.
+result: >-
+  ElbasaniON läuft auf einer eigens entwickelten Plattform, die die Redaktion im Alltag selbst steuert – mit
+  Raum für Werbung und einem direkten Kanal, über den Leser Probleme in ihrer Stadt melden können. Wir betreuen
+  die Plattform weiterhin mit SEO, Werbung und Social Media.
+highlights:
+  - Individuelles WordPress-Zeitungs-Theme ohne Page-Builder
+  - Eilmeldungsticker und konfigurierbare Startseitenbereiche
+  - Eigene Werbeplätze
+  - Bürgermeldungen mit „Raporto një problem“
+  - Redaktionsablauf in albanischer Sprache

@@ -1,0 +1,70 @@
+---
+/** Numbered process — editorial rows with a large index. */
+interface Props {
+  steps: { title: string; text: string }[];
+  label?: string;
+  compact?: boolean;
+}
+const { steps, label, compact = false } = Astro.props;
+---
+
+<ol class:list={['ps', { 'ps--compact': compact }]} role="list" aria-label={label}>
+  {
+    steps.map((step, i) => (
+      <li class="ps__row" data-reveal style={`--reveal-delay:${Math.min(i, 4)}`}>
+        <span class="ps__num" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3 class="ps__title">{step.title}</h3>
+        <p class="ps__text">{step.text}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .ps {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .ps__row {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 4fr) minmax(0, 6fr);
+    gap: 1.5rem;
+    align-items: baseline;
+    padding-block: clamp(1.25rem, 2.4vw, 2rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .ps__num {
+    font-family: var(--font-code);
+    font-size: var(--fs-sm);
+    color: var(--accent);
+    transition: color var(--dur) var(--ease);
+  }
+  .ps__title {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    letter-spacing: -0.04em;
+  }
+  .ps__text {
+    max-width: 46ch;
+    color: var(--text-muted);
+  }
+  .ps--compact .ps__title {
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem);
+  }
+  @media (hover: hover) {
+    .ps__row:hover .ps__num {
+      color: var(--burnt-caramel);
+    }
+  }
+  @media (max-width: 767px) {
+    .ps__row {
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 0.4rem 1rem;
+    }
+    .ps__text {
+      grid-column: 2;
+    }
+  }
+</style>

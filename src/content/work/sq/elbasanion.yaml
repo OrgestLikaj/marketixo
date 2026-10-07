@@ -1,0 +1,42 @@
+key: elbasanion
+lang: sq
+industry: Media — lajme lokale
+location: Elbasan, Shqipëri
+summary: >-
+  Një platformë gazete e ndërtuar me porosi për ElbasaniON, mediumin dixhital të lajmeve për Elbasanin — e
+  krijuar për një redaksi që publikon gjatë gjithë ditës, me një mjet raportimi qytetar për lexuesit.
+metaDescription: >-
+  Rast studimi — platformë lajmesh në WordPress për ElbasaniON në Elbasan: lajme të fundit, hapësira reklamash, raportim qytetar, SEO, reklama, rrjete sociale.
+overview: >-
+  ElbasaniON është një gazetë dixhitale që mbulon Elbasanin dhe rajonin e tij — aktualitet, investigime,
+  qytetin, mjedisin, komunitetin, të rinjtë, kulturën dhe multimedian. Redaksia publikon gjatë gjithë ditës
+  dhe mbështetet te faqja e internetit si për lexuesit, ashtu edhe për të ardhurat nga reklamat.
+challenge: >-
+  Një faqe lajmesh qëndron ose bie nga shpejtësia dhe struktura. Redaktorët duhet të publikojnë dhe të
+  rirendisin lajmet shpejt, lexuesit duhet të shohin çfarë është e re sapo hyjnë në faqe, ndërsa reklamuesit
+  kanë nevojë për hapësira të besueshme — e gjithë kjo pa temat e ngadalta, të mbingarkuara me plugin-e, në të
+  cilat përfundojnë shumë faqe lajmesh.
+approach: >-
+  Ndërtuam një temë gazete me porosi, në vend që të përshtatnim një temë të përgjithshme. Kryefaqja është e
+  organizuar në seksione të konfigurueshme — një rrjetë me lajmet kryesore, një shirit lajmesh të fundit dhe
+  blloqe sipas kategorive — që ekipi editorial ta kontrollojë hierarkinë nga WordPress Customizer, ndërsa
+  hapësirat e dedikuara për reklama qëndrojnë aty ku japin rezultat, pa e ndërprerë leximin.
+design: >-
+  Një faqosje e qartë lajmesh në ngjyrat e kuqe dhe jeshile të ElbasaniON, me fotografi të fuqishme, etiketa
+  kategorie në çdo lajm dhe një navigim që pasqyron rubrikat e redaksisë — nga Aktualitet te Multimedia.
+development: >-
+  Një temë klasike WordPress në PHP, pa page builder dhe vetëm me pak JavaScript të thjeshtë (vanilla), çka i
+  mban faqet të shpejta dhe mirëmbajtjen të thjeshtë. Përfshin lajmet e fundit, artikuj të ngjashëm dhe më të
+  lexuar, një widget moti, breadcrumbs dhe strukturë SEO. Lexuesit mund të raportojnë edhe probleme lokale
+  përmes "Raporto një problem", mjetit të raportimit qytetar që kemi ndërtuar — me ngarkim fotosh, modalitet
+  anonim dhe mbrojtje nga spam-i.
+result: >-
+  ElbasaniON funksionon mbi një platformë të ndërtuar enkas, që redaksia e kontrollon çdo ditë, me hapësirë
+  për reklama dhe një kanal të drejtpërdrejtë që lexuesit të raportojnë problemet në qytetin e tyre. Vazhdojmë
+  ta mbështesim me SEO, reklama dhe rrjete sociale.
+highlights:
+  - Temë gazete WordPress me porosi, pa page builder
+  - Shirit lajmesh të fundit dhe seksione të konfigurueshme në kryefaqe
+  - Hapësira të dedikuara për reklama
+  - Raportim qytetar me "Raporto një problem"
+  - Rrjedhë pune për një redaksi në gjuhën shqipe

@@ -1,0 +1,238 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import Icon from '~/components/Icon.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { fmt, formatDate, useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { insightSlug, publishedInsights, type PageEntry } from '~/lib/pages';
+import { article, breadcrumbs } from '~/lib/schema';
+import { readingTime } from '~/lib/reading-time';
+import { site } from '~/config/site';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const ins = t.insights;
+const entry = (await getEntry('insights', page.entryId!))!;
+const { Content } = await render(entry);
+const d = entry.data;
+const minutes = readingTime(entry.body ?? '');
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.insights, path: url.section(lang, 'insights') },
+  { name: d.title, path: page.path },
+];
+const image = d.ogImage ?? site.ogImage;
+const more = (await publishedInsights(lang)).filter((p) => p.id !== entry.id).slice(0, 3);
+const section = ins.categories[d.categories[0]];
+---
+
+<BaseLayout
+  page={page}
+  title={d.seoTitle ?? (d.title.length > 58 ? d.title : `${d.title} | Marketixo`)}
+  description={d.description}
+  image={image}
+  type="article"
+  canonical={d.canonical}
+  article={{ published: d.pubDate, modified: d.updatedDate, author: d.author, section, tags: d.tags }}
+  schema={[
+    breadcrumbs(crumbs),
+    article({ title: d.title, description: d.description, path: page.path, lang, image, author: d.author, published: d.pubDate, modified: d.updatedDate, keywords: d.tags, section }),
+  ]}
+>
+  <article>
+    <header class="ah">
+      <div class="blueprint" aria-hidden="true"></div>
+      <div class="container container--text ah__inner">
+        <Breadcrumbs lang={lang} items={crumbs} />
+        <ul class="ah__cats" role="list">
+          {
+            d.categories.map((c) => (
+              <li>
+                <a href={url.topic(lang, c)}>{ins.categories[c]}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <h1 class="ah__title">{d.title}</h1>
+        <p class="lead">{d.description}</p>
+        <dl class="ah__meta">
+          <div>
+            <dt>{ins.by}</dt>
+            <dd>{d.author}</dd>
+          </div>
+          <div>
+            <dt>{ins.published}</dt>
+            <dd><time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate, lang)}</time></dd>
+          </div>
+          {
+            d.updatedDate && (
+              <div>
+                <dt>{ins.updated}</dt>
+                <dd>
+                  <time datetime={d.updatedDate.toISOString()}>{formatDate(d.updatedDate, lang)}</time>
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt class="sr-only">{fmt(ins.readingTime, { n: minutes })}</dt>
+            <dd>{fmt(ins.readingTime, { n: minutes })}</dd>
+          </div>
+        </dl>
+      </div>
+    </header>
+
+    <div class="on-paper body">
+      <div class="container container--text">
+        <div class="prose">
+          <Content />
+        </div>
+        {
+          d.tags.length > 0 && (
+            <div class="tags">
+              <h2 class="eyebrow eyebrow--plain">{ins.tags}</h2>
+              <ul role="list">
+                {d.tags.map((tag) => (
+                  <li>#{tag}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </article>
+
+  {
+    more.length > 0 && (
+      <section class="section section--sm" aria-labelledby="more-title">
+        <div class="container container--wide">
+          <h2 id="more-title" class="eyebrow">
+            {ins.related}
+          </h2>
+          <ul class="more" role="list">
+            {more.map((p) => (
+              <li>
+                <a href={url.insight(lang, insightSlug(p))}>
+                  <time class="mono" datetime={p.data.pubDate.toISOString()}>
+                    {formatDate(p.data.pubDate, lang)}
+                  </time>
+                  <strong>{p.data.title}</strong>
+                  <Icon name="arrow-right" size={18} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .ah {
+    position: relative;
+    padding-top: calc(var(--header-h) + clamp(40px, 6vw, 96px));
+    padding-bottom: clamp(48px, 6vw, 88px);
+    overflow: hidden;
+  }
+  .ah__inner {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .ah__cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .ah__cats a {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--pearl-aqua);
+    text-decoration: none;
+  }
+  .ah__title {
+    font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+  }
+  .ah__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin: 0.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-sm);
+  }
+  .ah__meta div {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .ah__meta dt {
+    color: var(--text-subtle);
+  }
+  .ah__meta dd {
+    margin: 0;
+  }
+  .body {
+    padding-block: clamp(56px, 8vw, 112px);
+  }
+  .tags {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .tags ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    font-family: var(--font-code);
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .more {
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .more a {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+  }
+  .more strong {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .more a:hover strong {
+    color: var(--pearl-aqua);
+  }
+  .more .mono {
+    font-size: var(--fs-xs);
+    color: var(--text-subtle);
+  }
+  @media (max-width: 639px) {
+    .more a {
+      grid-template-columns: 1fr auto;
+    }
+    .more .mono {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

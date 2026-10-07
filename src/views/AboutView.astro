@@ -1,0 +1,231 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Section from '~/components/Section.astro';
+import Heading from '~/components/Heading.astro';
+import Icon from '~/components/Icon.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { languageMeta, locales, useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { breadcrumbs } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const a = t.about;
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.about, path: page.path },
+];
+const aboutPage = { '@type': 'AboutPage', name: a.metaTitle, url: new URL(page.path, Astro.site).href, about: { '@id': `${Astro.site?.origin}/#organization` } };
+---
+
+<BaseLayout page={page} title={a.metaTitle} description={a.metaDescription} schema={[breadcrumbs(crumbs), aboutPage]}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={a.eyebrow} title={a.heading} lead={a.lead} />
+
+  <Section labelledby="what-title" line>
+    <div class="container container--wide what">
+      <h2 id="what-title" class="eyebrow">{a.whatHeading}</h2>
+      <p class="what__text" data-reveal>{a.what}</p>
+    </div>
+  </Section>
+
+  <Section tone="surface" labelledby="disc-title">
+    <div class="container container--wide">
+      <Heading title={a.disciplinesHeading} id="disc-title" />
+      <ol class="disc" role="list">
+        {
+          a.disciplines.map((d, i) => (
+            <li class="disc__item" data-reveal style={`--reveal-delay:${i}`}>
+              <span class="index-num">0{i + 1}</span>
+              <h3 class="disc__t">{d.title}</h3>
+              <p class="muted">{d.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </Section>
+
+  <Section labelledby="how-title">
+    <div class="container container--wide">
+      <Heading eyebrow={a.eyebrow} title={a.howHeading} id="how-title" />
+      <ul class="principles" role="list">
+        {
+          a.principles.map((p, i) => (
+            <li class="principle" data-reveal style={`--reveal-delay:${i % 3}`}>
+              <span class="principle__n">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="h3">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <Section tone="paper" labelledby="intl-title">
+    <div class="container container--wide intl">
+      <div>
+        <h2 id="intl-title" class="h2" data-reveal>{a.intlHeading}</h2>
+        <p class="lead intl__text" data-reveal>{a.intl}</p>
+      </div>
+      <ul class="langs" role="list" data-reveal>
+        {
+          locales.map((l) => (
+            <li>
+              <span class="langs__code">{languageMeta[l].short}</span>
+              <span class="langs__name" lang={l}>{languageMeta[l].native}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <Section labelledby="expect-title">
+    <div class="container container--wide expect">
+      <h2 id="expect-title" class="h2" data-reveal>{a.expectHeading}</h2>
+      <ul class="expect__list" role="list">
+        {
+          a.expect.map((e, i) => (
+            <li data-reveal style={`--reveal-delay:${i}`}>
+              <Icon name="check" size={20} />
+              {e}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .what {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 1.5rem clamp(2rem, 5vw, 5rem);
+  }
+  .what > .eyebrow {
+    align-self: start;
+    padding-top: 0.9rem;
+  }
+  .what__text {
+    font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.75rem);
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+  .disc {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .disc__item {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    background: var(--surface-1);
+  }
+  .disc__t {
+    font-size: clamp(1.5rem, 1.15rem + 1.2vw, 2.25rem);
+    letter-spacing: -0.045em;
+  }
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2.5rem, 4vw, 4rem) clamp(2rem, 4vw, 4rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .principle {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .principle__n {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--golden-orange);
+  }
+  .intl {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+  }
+  .intl__text {
+    margin-top: 1.5rem;
+  }
+  .langs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .langs li {
+    display: grid;
+    gap: 0.25rem;
+    padding: 1.5rem;
+    background: var(--paper);
+  }
+  .langs__code {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--dark-teal);
+  }
+  .langs__name {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+  .expect {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+  .expect__list {
+    border-top: 1px solid var(--line);
+  }
+  .expect__list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-lg);
+  }
+  .expect__list :global(.icon) {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--pearl-aqua);
+  }
+  @media (max-width: 1099px) {
+    .disc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .principles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 767px) {
+    .what,
+    .intl,
+    .expect,
+    .principles,
+    .disc {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

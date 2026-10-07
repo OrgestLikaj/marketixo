@@ -1,0 +1,80 @@
+key: cybersecurity
+lang: it
+title: Sicurezza informatica
+shortTitle: Sicurezza informatica
+tagline: Valutazioni di sicurezza e hardening per siti e applicazioni web.
+metaTitle: Sicurezza per siti web e applicazioni web | Marketixo
+metaDescription: Valutazioni di sicurezza, analisi delle vulnerabilità e hardening per siti e applicazioni web. Interventi concreti, report chiari, pratiche di sviluppo sicuro.
+hero:
+  eyebrow: Servizio 07 — Proteggere
+  headline: Chiudere le porte prima che qualcuno provi ad aprirle.
+  lead: Gran parte degli attacchi contro piccole e medie imprese è automatizzata e opportunistica. Individuiamo le vulnerabilità che questi attacchi cercano — e le risolviamo.
+problem:
+  heading: Anche i siti piccoli sono un bersaglio.
+  intro: I bot scandagliano internet giorno e notte alla ricerca di vulnerabilità note. Le dimensioni dell’azienda non contano.
+  points:
+    - title: Software non aggiornato
+      text: Core del CMS, plugin e librerie senza patch, con vulnerabilità pubblicamente note.
+    - title: Protezioni di base assenti
+      text: Nessun security header, gestione dei moduli debole, aree di amministrazione esposte e impostazioni predefinite.
+    - title: Nessun piano in caso di incidente
+      text: Backup mai testati, nessun monitoraggio, nessuna idea di chi chiamare quando qualcosa va storto.
+solution:
+  heading: Sicurezza concreta, spiegata con chiarezza.
+  text: Valutiamo il sito o l’applicazione rispetto a pratiche consolidate come la OWASP Top 10, classifichiamo le criticità in base al rischio reale e le risolviamo — oppure guidiamo i Suoi sviluppatori nel farlo.
+  pillars:
+    - title: Valutare
+      text: Analisi strutturata di configurazione, codice, dipendenze e superfici esposte.
+    - title: Rafforzare
+      text: Header, controllo degli accessi, validazione degli input, aggiornamenti e impostazioni sicure.
+    - title: Mantenere
+      text: Monitoraggio, backup e buone abitudini di sviluppo sicuro che preservano il risultato nel tempo.
+included:
+  heading: Cosa include
+  items:
+    - title: Sicurezza del sito web
+      text: Hardening per WordPress e siti su misura — aggiornamenti, plugin, permessi e backup.
+    - title: Valutazioni di sicurezza
+      text: Un’analisi strutturata del sito o dell’app, con un report ordinato per priorità.
+    - title: Analisi delle vulnerabilità
+      text: Controlli automatici e manuali per individuare vulnerabilità note e configurazioni errate.
+    - title: Hardening
+      text: Security header, CSP, TLS, controllo degli accessi e configurazione del server.
+    - title: Sicurezza delle applicazioni web
+      text: Revisione di autenticazione, sessioni, gestione degli input e sicurezza delle API.
+    - title: Best practice di sicurezza
+      text: Linee guida per la scrittura di codice sicuro, gestione delle dipendenze e dei secret.
+    - title: Consulenza sulla sicurezza
+      text: Indicazioni su architettura, fornitori e policy, in un linguaggio chiaro.
+process:
+  heading: Come funziona
+  steps:
+    - title: Perimetro e autorizzazione
+      text: Obiettivi e regole concordati e un’autorizzazione scritta prima di qualsiasi test.
+    - title: Valutazione
+      text: Controlli su configurazione, dipendenze, applicazione e infrastruttura.
+    - title: Report
+      text: Criticità classificate per rischio, con evidenze e correzioni concrete.
+    - title: Correzione e nuova verifica
+      text: Correzioni implementate e verificate con un controllo successivo.
+benefits:
+  heading: Cosa ottiene
+  items:
+    - title: Meno porte aperte
+      text: I percorsi di attacco più comuni e automatizzati vengono chiusi per primi.
+    - title: Priorità chiare
+      text: Un report che dice cosa conta davvero, non 200 pagine di output di una scansione.
+    - title: Fiducia per clienti e partner
+      text: La prova concreta che i dati dei Suoi clienti vengono presi sul serio.
+faq:
+  - q: Potete rendere il nostro sito sicuro al 100%?
+    a: Nessuno può farlo, onestamente. La sicurezza consiste nel ridurre il rischio a un livello accettabile ed essere pronti a reagire — ed è in questo che La aiutiamo.
+  - q: Vi limitate a testare o correggete anche?
+    a: Entrambe le cose. Possiamo implementare le correzioni direttamente oppure lavorare con i Suoi sviluppatori e verificarne le modifiche.
+  - q: I test sono sicuri per il nostro sito online?
+    a: Concordiamo per iscritto perimetro, tempi e metodi, evitiamo test invasivi in produzione e, dove possibile, utilizziamo una copia di staging.
+  - q: Ci aiutate anche con il GDPR?
+    a: Ci occupiamo della parte tecnica — moduli sicuri, minimizzazione dei dati, crittografia e consenso. Per la consulenza legale collaboriamo con il Suo avvocato o con il responsabile della protezione dei dati (DPO).
+cta:
+  heading: Scopra a che punto è la Sua sicurezza.
+  text: Inizi con una valutazione di sicurezza del Suo sito web o della Sua applicazione.

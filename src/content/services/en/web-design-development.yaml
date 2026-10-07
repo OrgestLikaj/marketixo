@@ -1,0 +1,86 @@
+key: web-design-development
+lang: en
+title: Web Design & Development
+shortTitle: Web Development
+tagline: Fast, accessible websites and web apps, built on code we can stand behind.
+metaTitle: Web Design & Development Agency | Marketixo
+metaDescription: Custom websites, landing pages, e-commerce and web applications — fast, accessible, SEO-ready and tested before launch. Get a fixed quote.
+hero:
+  eyebrow: Service 01 — Build
+  headline: Websites that load fast, read clearly and turn visitors into enquiries.
+  lead: From a focused landing page to a multilingual platform, we design and build websites that work on every screen, rank well and keep working long after launch.
+problem:
+  heading: Most websites look fine and still underperform.
+  intro: A site can win design awards and still lose customers. The problems are usually invisible in a screenshot.
+  points:
+    - title: Slow on real phones
+      text: Heavy themes, unoptimised images and a dozen plugins make pages crawl on mobile data — and visitors leave before the first screen loads.
+    - title: No clear next step
+      text: Pages describe the company but never tell a visitor what to do, so interest never becomes an enquiry.
+    - title: Fragile and hard to change
+      text: Every update risks breaking something, so content goes stale and small fixes become expensive projects.
+solution:
+  heading: Designed for people, engineered for the long run.
+  text: We start from what your visitors need to decide, design the pages around that decision, and build them on a lean, well-documented stack. Performance, accessibility and SEO are part of the build — not a checklist at the end.
+  pillars:
+    - title: Content-first design
+      text: Wireframes and layouts built with your real content, reviewed on real devices before a line of production code is written.
+    - title: Lean engineering
+      text: Static or server-rendered pages, minimal JavaScript, optimised images and clean markup. Fast by construction.
+    - title: Built to be edited
+      text: A CMS where it helps, sensible defaults where it doesn't, and documentation so your team isn't dependent on us.
+included:
+  heading: What we build
+  items:
+    - title: Corporate websites
+      text: Multi-page sites that explain what you do, prove it, and make contacting you easy.
+    - title: Landing pages
+      text: Focused single-purpose pages for campaigns, launches and lead generation.
+    - title: E-commerce
+      text: Online shops with WooCommerce or custom checkouts with Stripe and PayPal.
+    - title: Web applications
+      text: Portals, dashboards, booking and quote tools with secure accounts and databases.
+    - title: Redesigns & migrations
+      text: New design and platform without losing your Google rankings — every old URL redirected.
+    - title: Performance optimisation
+      text: Audits and fixes for Core Web Vitals, image delivery, caching and render-blocking code.
+    - title: Multilingual websites
+      text: Localized URLs, hreflang, translated metadata and a language switcher that maps to the right page.
+    - title: Care & maintenance
+      text: Updates, backups, uptime monitoring and small changes on a predictable monthly plan.
+process:
+  heading: From brief to launch
+  steps:
+    - title: Brief & sitemap
+      text: Goals, audience, pages and integrations — agreed and documented.
+    - title: Wireframes
+      text: Page structure and content hierarchy, tested on mobile first.
+    - title: Visual design
+      text: The full interface in your brand, with every state and breakpoint covered.
+    - title: Development
+      text: Built on a staging site you can follow week by week.
+    - title: Testing & launch
+      text: Cross-browser, performance, accessibility and form testing, then a planned go-live with redirects.
+benefits:
+  heading: What you get
+  items:
+    - title: Speed you can measure
+      text: We target green Core Web Vitals on real devices and show you the report.
+    - title: Accessible to everyone
+      text: Semantic HTML, keyboard support, contrast and labels — built to WCAG 2.2 AA practices.
+    - title: Search-ready from day one
+      text: Clean URLs, metadata, structured data and a sitemap are part of every build.
+    - title: Ownership
+      text: Code, hosting and domain are yours, with documentation and a handover session.
+faq:
+  - q: How long does a website take?
+    a: A focused business website typically takes four to eight weeks from kickoff to launch. Web applications and large multilingual sites take longer — you get a timeline with the proposal.
+  - q: Which platform will you use?
+    a: The one that suits the job. Content sites are often built as fast static sites with a simple CMS; shops and complex content teams may be better served by WordPress or a custom application. We explain the trade-offs before you decide.
+  - q: Can you redesign our site without losing Google rankings?
+    a: Yes. We map every existing URL, keep what ranks, and set up permanent redirects so search engines and bookmarks land on the right new page.
+  - q: Will we be able to update the content ourselves?
+    a: Yes. You get an editor suited to your team and a short training session. If you prefer, we can handle updates on a care plan.
+cta:
+  heading: Let’s build a website that earns its place.
+  text: Send us your current site or your idea. We’ll reply with an honest assessment and a fixed quote.

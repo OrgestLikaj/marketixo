@@ -1,0 +1,37 @@
+key: albanian-athletes
+lang: en
+industry: Sport — athlete development
+location: United Kingdom & Albania
+summary: >-
+  A website for Albanian Athletes Group, which supports young Albanian footballers with pathways, profiles and
+  connections to international opportunities.
+metaDescription: >-
+  Case study — website for Albanian Athletes Group: player pathways, athlete profiles, success stories and
+  donations. WordPress build, SEO, ads and social media.
+overview: >-
+  Albanian Athletes Group (AAG), founded in 2020, supports Albanian athletes — mainly young footballers — with
+  development opportunities, talent identification and connections to clubs and international opportunities.
+  It works from the United Kingdom, in partnership with Carshalton Athletic.
+challenge: >-
+  AAG speaks to very different audiences: young players and their families, clubs and scouts, and supporters
+  who might donate. The website had to inspire the first, inform the second and give the third a clear way to
+  help — while presenting players credibly.
+approach: >-
+  We organised the site around the athlete's journey: who AAG is, player profiles, structured player pathways,
+  success stories, consultancy and news — with contact details and a prominent donation button always within
+  reach.
+design: >-
+  Big, emotional football photography with short statements set against it, AAG's red crest and a clean,
+  sporty layout that keeps profiles and pathways easy to scan.
+development: >-
+  Built on WordPress with WPBakery so the team can update profiles, stories and news themselves, connected to
+  Google services through Site Kit for search and analytics insight. SEO, ads and social media support run
+  alongside.
+result: >-
+  Albanian Athletes Group has a website that presents its players and programmes credibly to clubs and
+  families, and gives supporters a direct way to contribute.
+highlights:
+  - Player profiles, pathways and success stories
+  - Donation call-to-action in the header
+  - Self-managed content in WordPress
+  - Google Site Kit for search and analytics insight

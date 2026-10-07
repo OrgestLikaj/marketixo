@@ -1,0 +1,393 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import ServiceVisual from '~/components/ServiceVisual.astro';
+import Button from '~/components/Button.astro';
+import Heading from '~/components/Heading.astro';
+import Section from '~/components/Section.astro';
+import ProcessSteps from '~/components/ProcessSteps.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import Faq from '~/components/Faq.astro';
+import Icon from '~/components/Icon.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { serviceKeys, serviceMeta, type ServiceKey } from '~/data/services';
+import { sortedProjects } from '~/data/projects';
+import { breadcrumbs, faqPage, service as serviceSchema } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const key = page.key as ServiceKey;
+const t = useT(lang);
+const entry = await getEntry('services', `${lang}/${key}`);
+if (!entry) throw new Error(`Missing service content: src/content/services/${lang}/${key}.yaml`);
+const s = entry.data;
+const meta = serviceMeta[key];
+
+const all = await getCollection('services', (e) => e.data.lang === lang);
+const others = serviceKeys.filter((k) => k !== key).map((k) => ({ key: k, title: all.find((a) => a.data.key === k)?.data.title ?? k }));
+const serviceNames = Object.fromEntries(all.map((a) => [a.data.key, a.data.shortTitle]));
+
+const work = await getCollection('work', (e) => e.data.lang === lang);
+const related = sortedProjects
+  .filter((p) => p.services.includes(key))
+  .slice(0, 2)
+  .map((p) => ({ project: p, copy: work.find((w) => w.data.key === p.key)!.data }))
+  .filter((r) => r.copy);
+const proof = (t.service.proof as Record<string, string>)[key];
+
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.services, path: url.section(lang, 'services') },
+  { name: s.title, path: page.path },
+];
+const contactHref = `${url.section(lang, 'contact')}?service=${meta.formKey}`;
+const schema = [
+  breadcrumbs(crumbs),
+  serviceSchema({ name: s.title, description: s.metaDescription, path: page.path, lang, serviceType: s.title, offers: s.included.items.map((i) => i.title) }),
+  faqPage(s.faq),
+];
+---
+
+<BaseLayout page={page} title={s.metaTitle} description={s.metaDescription} schema={schema}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={s.hero.eyebrow} title={s.hero.headline} lead={s.hero.lead} size="lg">
+    <div class="hero-actions" data-reveal style="--reveal-delay:3">
+      <Button href={contactHref} size="lg">{t.common.startProject}</Button>
+      {related.length > 0 && <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewWork}</Button>}
+    </div>
+    <ServiceVisual slot="aside" service={key} class="hero-visual" />
+  </PageHero>
+
+  <!-- Problem -->
+  <Section labelledby="problem-title" line>
+    <div class="container container--wide two-col">
+      <div>
+        <p class="eyebrow" data-reveal>{t.service.problem}</p>
+        <h2 id="problem-title" class="h2 mt" data-reveal>{s.problem.heading}</h2>
+        <p class="lead mt" data-reveal>{s.problem.intro}</p>
+      </div>
+      <ol class="problems" role="list">
+        {
+          s.problem.points.map((p, i) => (
+            <li class="problem" data-reveal style={`--reveal-delay:${i}`}>
+              <span class="problem__n" aria-hidden="true">
+                ×{String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="problem__t">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </Section>
+
+  <!-- Solution -->
+  <Section tone="surface" labelledby="solution-title">
+    <div class="container container--wide">
+      <Heading eyebrow={t.service.solution} title={s.solution.heading} lead={s.solution.text} id="solution-title" />
+      <ul class="pillars" role="list">
+        {
+          s.solution.pillars.map((p, i) => (
+            <li class="pillar" data-reveal style={`--reveal-delay:${i}`}>
+              <span class="index-num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="h3">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- Included -->
+  <Section labelledby="included-title">
+    <div class="container container--wide">
+      <Heading eyebrow={t.service.included} title={s.included.heading} id="included-title" />
+      <ul class="included" role="list">
+        {
+          s.included.items.map((item, i) => (
+            <li class="inc" data-reveal style={`--reveal-delay:${i % 4}`}>
+              <span class="inc__icon" aria-hidden="true">
+                <Icon name="check" size={18} />
+              </span>
+              <h3 class="inc__t">{item.title}</h3>
+              <p class="inc__d">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- Process -->
+  <Section tone="paper" labelledby="process-title">
+    <div class="container container--wide two-col two-col--process">
+      <div class="sticky">
+        <Heading eyebrow={t.service.process} title={s.process.heading} id="process-title" />
+      </div>
+      <ProcessSteps steps={s.process.steps} label={s.process.heading} compact />
+    </div>
+  </Section>
+
+  <!-- Benefits -->
+  <Section labelledby="benefits-title">
+    <div class="container container--wide">
+      <Heading eyebrow={t.service.benefits} title={s.benefits.heading} id="benefits-title" />
+      <ul class="benefits" role="list">
+        {
+          s.benefits.items.map((b, i) => (
+            <li class="benefit" data-reveal style={`--reveal-delay:${i}`}>
+              <h3 class="benefit__t">{b.title}</h3>
+              <p class="muted">{b.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- Related work, or proof on our own site for services without client case studies -->
+  {
+    related.length > 0 ? (
+      <Section labelledby="work-title" line>
+        <div class="container container--wide">
+          <Heading eyebrow={t.service.work} title={t.home.work.heading} id="work-title" />
+          <div class="related">
+            {related.map((r, i) => (
+              <ProjectCard project={r.project} copy={r.copy} serviceNames={serviceNames} lang={lang} index={i} layout="half" />
+            ))}
+          </div>
+        </div>
+      </Section>
+    ) : proof ? (
+      <Section labelledby="proof-title" line>
+        <div class="container container--wide proof">
+          <p class="eyebrow" data-reveal>{t.service.proofHeading}</p>
+          <h2 id="proof-title" class="proof__text" data-reveal>
+            {proof}
+          </h2>
+        </div>
+      </Section>
+    ) : null
+  }
+
+  <!-- FAQ -->
+  <Section tone="surface" labelledby="faq-title">
+    <div class="container container--wide two-col">
+      <div class="sticky">
+        <Heading eyebrow="FAQ" title={t.service.faq} id="faq-title" size="h2" />
+      </div>
+      <Faq items={s.faq} />
+    </div>
+  </Section>
+
+  <!-- Other services -->
+  <Section size="sm" labelledby="other-title" line>
+    <div class="container container--wide">
+      <h2 id="other-title" class="eyebrow">{t.service.other}</h2>
+      <ul class="others" role="list">
+        {
+          others.map((o) => (
+            <li>
+              <a href={url.service(lang, o.key)} class="other">
+                <Icon name={serviceMeta[o.key].icon} size={18} />
+                {o.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <CtaBand lang={lang} heading={s.cta.heading} text={s.cta.text} />
+</BaseLayout>
+
+<style>
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .hero-visual {
+    max-width: 520px;
+    margin-left: auto;
+  }
+  .mt {
+    margin-top: 1.25rem;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: start;
+  }
+  .two-col--process {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  }
+  .sticky {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+  .problems {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .problem {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: 0.4rem 1rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .problem__n {
+    grid-row: span 2;
+    font-family: var(--font-code);
+    font-size: var(--fs-sm);
+    color: #e2734d;
+  }
+  .problem__t {
+    font-size: 1.375rem;
+    letter-spacing: -0.025em;
+  }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .pillar {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--surface-1);
+  }
+  .included {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2.25rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .inc {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .inc__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgb(10 147 150 / 0.16);
+    color: var(--pearl-aqua);
+  }
+  .inc__t {
+    font-size: 1.1875rem;
+    letter-spacing: -0.02em;
+  }
+  .inc__d {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+  }
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .benefit {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--dark-cyan);
+  }
+  .benefit__t {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+    letter-spacing: -0.035em;
+  }
+  .related {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .proof {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .proof__text {
+    max-width: 30ch;
+    font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    font-weight: 500;
+  }
+  .others {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .other {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: all var(--dur) var(--ease);
+  }
+  .other:hover {
+    color: var(--text);
+    border-color: var(--pearl-aqua);
+  }
+  .other :global(.icon) {
+    color: var(--dark-cyan);
+  }
+  @media (max-width: 1099px) {
+    .included {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 899px) {
+    .two-col,
+    .two-col--process {
+      grid-template-columns: 1fr;
+    }
+    .sticky {
+      position: static;
+    }
+    .pillars,
+    .related {
+      grid-template-columns: 1fr;
+    }
+    .hero-visual {
+      margin-left: 0;
+      max-width: 420px;
+    }
+  }
+  @media (max-width: 539px) {
+    .included {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

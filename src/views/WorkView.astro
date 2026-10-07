@@ -1,0 +1,39 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import ProjectGrid from '~/components/ProjectGrid.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import ClientLogos from '~/components/ClientLogos.astro';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { sortedProjects } from '~/data/projects';
+import { breadcrumbs } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const wp = t.workPage;
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.work, path: page.path },
+];
+const list = {
+  '@type': 'ItemList',
+  itemListElement: sortedProjects.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.client, url: new URL(url.project(lang, p.key), Astro.site).href })),
+};
+---
+
+<BaseLayout page={page} title={wp.metaTitle} description={wp.metaDescription} schema={[breadcrumbs(crumbs), list]}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={wp.eyebrow} title={wp.heading} lead={wp.lead} />
+  <section class="section section--flush-top" aria-label={wp.heading}>
+    <div class="container">
+      <ProjectGrid projects={sortedProjects} lang={lang} filter headingLevel={2} />
+    </div>
+  </section>
+  <ClientLogos lang={lang} />
+  <CtaBand lang={lang} />
+</BaseLayout>

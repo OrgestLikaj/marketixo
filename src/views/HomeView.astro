@@ -1,0 +1,586 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/Button.astro';
+import Heading from '~/components/Heading.astro';
+import Section from '~/components/Section.astro';
+import ServiceCard from '~/components/ServiceCard.astro';
+import Pipeline from '~/components/Pipeline.astro';
+import ProjectGrid from '~/components/ProjectGrid.astro';
+import ProcessSteps from '~/components/ProcessSteps.astro';
+import TechGrid from '~/components/TechGrid.astro';
+import Testimonial from '~/components/Testimonial.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import ClientLogos from '~/components/ClientLogos.astro';
+import Icon from '~/components/Icon.astro';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { serviceKeys } from '~/data/services';
+import { featuredProjects, projectByKey } from '~/data/projects';
+import { workImages } from '~/lib/work-images';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const h = t.home;
+const services = await getCollection('services', (e) => e.data.lang === lang);
+const byKey = Object.fromEntries(services.map((s) => [s.data.key, s.data]));
+
+// Hero "proof stack": real screenshots of live client work.
+const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ project: projectByKey(key)!, img: workImages(key) }));
+---
+
+<BaseLayout page={page} title={h.metaTitle} description={t.meta.defaultDescription}>
+  <!-- ───────────── Hero ───────────── -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="blueprint" aria-hidden="true"></div>
+    <div class="hero__glow hero__glow--a" aria-hidden="true"></div>
+    <div class="hero__glow hero__glow--b" aria-hidden="true"></div>
+
+    <div class="container container--wide hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</p>
+        <h1 id="hero-title" class="display hero__title" data-split>
+          {
+            h.hero.lines.map((line, i) => (
+              <span class="split-line" style={`--line:${i}`}>
+                <span class:list={{ 'hero__accent': i === h.hero.lines.length - 1 }}>{line}</span>
+              </span>
+            ))
+          }
+        </h1>
+        <p class="lead hero__lead" data-reveal style="--reveal-delay:4">{h.hero.lead}</p>
+        <div class="hero__actions" data-reveal style="--reveal-delay:5">
+          <Button href={url.section(lang, 'contact')} size="lg">{t.common.startProject}</Button>
+          <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewWork}</Button>
+        </div>
+      </div>
+
+      <div class="hero__proof" aria-label={h.hero.previewLabel} role="group">
+        {
+          stack.map(({ project, img }, i) =>
+            img.desktop ? (
+              <a href={url.project(lang, project.key)} class={`proof proof--${i}`} style={`--brand:${project.brand}`}>
+                <span class="proof__bar" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <Image
+                  src={img.desktop}
+                  alt={project.client}
+                  widths={[400, 640, 900]}
+                  sizes="(min-width: 1100px) 34vw, 70vw"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                  layout="none"
+                  class="proof__img"
+                />
+                <span class="proof__label">{project.client}</span>
+              </a>
+            ) : null,
+          )
+        }
+        <div class="status" aria-hidden="true">
+          <p class="status__head">
+            <span class="status__dot"></span>
+            {h.hero.status}
+          </p>
+          <ul role="list">
+            {h.hero.pillars.map((p) => (
+              <li>
+                <Icon name="check" size={13} /> {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container--wide">
+      <ul class="pillars" role="list" data-reveal style="--reveal-delay:6">
+        {
+          h.hero.pillars.map((p, i) => (
+            <li>
+              <span class="index-num">0{i + 1}</span>
+              {p}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────── Clients ───────────── -->
+  <ClientLogos lang={lang} />
+
+  <!-- ───────────── Services ───────────── -->
+  <Section labelledby="services-title">
+    <div class="container container--wide">
+      <div class="split-head">
+        <Heading eyebrow={h.services.eyebrow} title={h.services.heading} id="services-title" />
+        <p class="lead" data-reveal style="--reveal-delay:2">{h.services.lead}</p>
+      </div>
+      <ul class="svc-grid" role="list">
+        {
+          serviceKeys.map((key, i) => (
+            <li>
+              <ServiceCard service={key} title={byKey[key]?.title ?? key} tagline={byKey[key]?.tagline ?? ''} lang={lang} delay={i % 4} />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="after" data-reveal>
+        <Button href={url.section(lang, 'services')} variant="ghost">{t.common.exploreServices}</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ───────────── Why us ───────────── -->
+  <Section tone="surface" labelledby="why-title">
+    <div class="container container--wide">
+      <Heading eyebrow={h.why.eyebrow} title={h.why.heading} lead={h.why.lead} id="why-title" />
+      <div class="why__pipe">
+        <Pipeline steps={h.why.chain} status={h.hero.status} />
+      </div>
+      <ul class="why__points" role="list">
+        {
+          h.why.points.map((p, i) => (
+            <li data-reveal style={`--reveal-delay:${i}`}>
+              <h3 class="h3">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- ───────────── Selected work ───────────── -->
+  <Section labelledby="work-title">
+    <div class="container">
+      <div class="split-head">
+        <Heading eyebrow={h.work.eyebrow} title={h.work.heading} id="work-title" />
+        <p class="lead" data-reveal style="--reveal-delay:2">{h.work.lead}</p>
+      </div>
+      <ProjectGrid projects={featuredProjects} lang={lang} />
+      <div class="after after--center" data-reveal>
+        <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewAllWork}</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ───────────── Process ───────────── -->
+  <Section tone="paper" labelledby="process-title">
+    <div class="container container--wide process">
+      <div class="process__head">
+        <Heading eyebrow={h.process.eyebrow} title={h.process.heading} lead={h.process.lead} id="process-title" />
+      </div>
+      <ProcessSteps steps={h.process.steps} label={h.process.heading} />
+    </div>
+  </Section>
+
+  <!-- ───────────── Technology ───────────── -->
+  <Section labelledby="tech-title">
+    <div class="container container--wide">
+      <div class="split-head">
+        <Heading eyebrow={h.tech.eyebrow} title={h.tech.heading} id="tech-title" />
+        <p class="lead" data-reveal style="--reveal-delay:2">{h.tech.lead}</p>
+      </div>
+      <TechGrid areas={t.tech} />
+    </div>
+  </Section>
+
+  <Testimonial lang={lang} />
+
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + clamp(32px, 6vw, 88px));
+    padding-bottom: clamp(40px, 5vw, 64px);
+    display: grid;
+    align-content: space-between;
+    gap: clamp(48px, 6vw, 80px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero__glow {
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero__glow--a {
+    top: -25%;
+    right: -20%;
+    width: 85vw;
+    max-width: 1300px;
+    aspect-ratio: 1;
+    background: radial-gradient(closest-side, rgb(0 95 115 / 0.7), rgb(10 147 150 / 0.18) 55%, transparent 75%);
+  }
+  .hero__glow--b {
+    bottom: -35%;
+    left: 20%;
+    width: 50vw;
+    aspect-ratio: 1;
+    background: radial-gradient(closest-side, rgb(238 155 0 / 0.16), transparent 70%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__glow--a {
+      animation: drift 18s var(--ease) infinite alternate;
+    }
+    .hero__glow--b {
+      animation: drift 22s var(--ease) infinite alternate-reverse;
+    }
+  }
+  @keyframes drift {
+    to {
+      transform: translate(-4%, 3%) scale(1.06);
+    }
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  .hero__copy {
+    display: grid;
+    gap: 1.75rem;
+    align-content: start;
+  }
+  .hero__title {
+    margin-left: -0.05em;
+    /* Keep headline + lead + CTAs inside the first screen on laptops */
+    font-size: min(var(--fs-display), 15.5svh);
+  }
+  @media (max-width: 1099px) {
+    .hero__title {
+      font-size: var(--fs-display);
+    }
+  }
+  .hero__accent {
+    background: var(--grad-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.06em;
+  }
+  .hero__lead {
+    max-width: 52ch;
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Proof stack */
+  .hero__proof {
+    position: relative;
+    aspect-ratio: 5 / 6;
+    max-height: 72vh;
+    width: 100%;
+  }
+  .proof {
+    position: absolute;
+    width: 82%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #0b2630;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    transition:
+      transform 700ms var(--ease-out),
+      box-shadow 700ms var(--ease-out);
+  }
+  .proof--0 {
+    top: 2%;
+    right: 0;
+    z-index: 3;
+  }
+  .proof--1 {
+    top: 30%;
+    left: 0;
+    z-index: 2;
+    width: 70%;
+  }
+  .proof--2 {
+    bottom: 2%;
+    right: 6%;
+    z-index: 1;
+    width: 64%;
+  }
+  .proof:hover,
+  .proof:focus-visible {
+    z-index: 5;
+    transform: translateY(-6px) scale(1.02);
+    box-shadow:
+      0 0 0 1px var(--brand),
+      var(--shadow-lg);
+  }
+  .proof__bar {
+    display: flex;
+    gap: 5px;
+    height: 22px;
+    align-items: center;
+    padding-inline: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .proof__bar i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgb(148 210 189 / 0.25);
+  }
+  .proof__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+  }
+  .proof__label {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-sm);
+    background: rgb(0 18 25 / 0.85);
+    font-family: var(--font-code);
+    font-size: 0.6875rem;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 400ms var(--ease);
+  }
+  .proof:hover .proof__label,
+  .proof:focus-visible .proof__label {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .proof--0 {
+      animation: float 9s var(--ease) infinite alternate;
+    }
+    .proof--1 {
+      animation: float 11s var(--ease) infinite alternate-reverse;
+    }
+    .proof--2 {
+      animation: float 13s var(--ease) infinite alternate;
+    }
+    .proof:hover {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes float {
+    to {
+      translate: 0 -12px;
+    }
+  }
+  .status {
+    position: absolute;
+    left: -6%;
+    bottom: 8%;
+    z-index: 4;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+    background: rgb(2 24 32 / 0.92);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(8px);
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+  }
+  .status__head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .status__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #5fd3a6;
+    box-shadow: 0 0 0 4px rgb(95 211 166 / 0.18);
+  }
+  .status ul {
+    display: grid;
+    gap: 0.2rem;
+    color: var(--text-muted);
+  }
+  .status li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .status :global(.icon) {
+    color: #5fd3a6;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .status li {
+      opacity: 0;
+      animation: tick 400ms var(--ease) forwards;
+    }
+    .status li:nth-child(1) { animation-delay: 1.4s; }
+    .status li:nth-child(2) { animation-delay: 1.7s; }
+    .status li:nth-child(3) { animation-delay: 2s; }
+    .status li:nth-child(4) { animation-delay: 2.3s; }
+    .status li:nth-child(5) { animation-delay: 2.6s; }
+  }
+  @keyframes tick {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .pillars li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 1.1rem 0;
+    font-size: clamp(0.9375rem, 0.85rem + 0.4vw, 1.125rem);
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 1099px) {
+    .hero {
+      min-height: auto;
+    }
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+    .hero__proof {
+      aspect-ratio: 16 / 11;
+      max-height: none;
+      max-width: 720px;
+    }
+    .proof--0 { width: 74%; }
+    .proof--1 { top: 22%; width: 62%; }
+    .proof--2 { width: 56%; }
+    .status {
+      left: auto;
+      right: 0;
+      bottom: -2%;
+    }
+  }
+  @media (max-width: 639px) {
+    .pillars {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 1rem;
+    }
+    .pillars li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .status {
+      display: none;
+    }
+  }
+
+  /* ── Shared section patterns ── */
+  .split-head {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 2rem clamp(2rem, 5vw, 6rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 6vw, 5.5rem);
+  }
+  @media (max-width: 899px) {
+    .split-head {
+      grid-template-columns: 1fr;
+    }
+  }
+  .after {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+  .after--center {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(4rem, 8vw, 7rem);
+  }
+
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .svc-grid > li {
+    display: flex;
+  }
+  .svc-grid > li > :global(*) {
+    flex: 1;
+  }
+  @media (max-width: 1099px) {
+    .svc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 639px) {
+    .svc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .why__pipe {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+  }
+  .why__points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem clamp(2rem, 4vw, 4rem);
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--line);
+  }
+  .why__points li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  @media (max-width: 899px) {
+    .why__points {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .process {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: start;
+  }
+  .process__head {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+  @media (max-width: 1023px) {
+    .process {
+      grid-template-columns: 1fr;
+    }
+    .process__head {
+      position: static;
+    }
+  }
+</style>

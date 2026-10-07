@@ -1,0 +1,80 @@
+key: cybersecurity
+lang: sq
+title: Siguri kibernetike
+shortTitle: Siguri kibernetike
+tagline: Vlerësime dhe forcim sigurie për faqe interneti dhe aplikacione uebi.
+metaTitle: Siguria e faqeve dhe e aplikacioneve të uebit | Marketixo
+metaDescription: Vlerësime sigurie, testim dobësish dhe forcim sigurie për faqe interneti dhe aplikacione uebi. Rregullime praktike, raporte të qarta, praktika zhvillimi të sigurt.
+hero:
+  eyebrow: Shërbimi 07 — Mbrojtje
+  headline: Mbyllini dyert para se dikush t’i provojë.
+  lead: Shumica e sulmeve ndaj bizneseve të vogla dhe të mesme janë të automatizuara dhe oportuniste. Ne gjejmë dobësitë që kërkojnë ato — dhe i rregullojmë.
+problem:
+  heading: Edhe faqet e vogla janë në shënjestër.
+  intro: Bot-ët skanojnë internetin pa pushim, në kërkim të dobësive të njohura. Nuk u intereson sa i madh jeni.
+  points:
+    - title: Softuer i vjetëruar
+      text: CMS, plugin-e dhe librari të papërditësuara, me dobësi të njohura publikisht.
+    - title: Mungojnë mbrojtjet bazë
+      text: Pa header-a sigurie, trajtim i dobët i formularëve, zona administrimi të ekspozuara dhe cilësime të paracaktuara.
+    - title: Asnjë plan për incidentet
+      text: Asnjë backup i testuar, asnjë monitorim, asnjë ide kë të thërrasësh kur diçka shkon keq.
+solution:
+  heading: Siguri praktike, e shpjeguar qartë.
+  text: E vlerësojmë faqen ose aplikacionin tuaj sipas praktikave të njohura si OWASP Top 10, i renditim gjetjet sipas rrezikut real dhe i rregullojmë — ose i udhëheqim zhvilluesit tuaj në këtë proces.
+  pillars:
+    - title: Vlerësim
+      text: Rishikim i strukturuar i konfigurimit, kodit, varësive dhe sipërfaqeve të ekspozuara.
+    - title: Forcim
+      text: Header-a, kontroll aksesi, validim i të dhënave hyrëse, përditësime dhe cilësime të sigurta si parazgjedhje.
+    - title: Qëndrueshmëri
+      text: Monitorim, backup dhe zakone zhvillimi të sigurt që e ruajnë këtë nivel.
+included:
+  heading: Çfarë përfshihet
+  items:
+    - title: Siguria e faqes së internetit
+      text: Forcim sigurie për WordPress dhe faqe me porosi — përditësime, plugin-e, leje dhe backup.
+    - title: Vlerësime sigurie
+      text: Një rishikim i strukturuar i faqes ose aplikacionit tuaj, me raport sipas prioriteteve.
+    - title: Vlerësim i dobësive
+      text: Kontrolle të automatizuara dhe manuale për dobësi të njohura dhe konfigurime të gabuara.
+    - title: Forcim sigurie (hardening)
+      text: Header-a sigurie, CSP, TLS, kontroll aksesi dhe konfigurim i serverit.
+    - title: Siguria e aplikacioneve të uebit
+      text: Rishikime të autentikimit, sesioneve, trajtimit të të dhënave hyrëse dhe sigurisë së API-ve.
+    - title: Praktikat më të mira të sigurisë
+      text: Udhëzime për kodim të sigurt, higjienë e varësive dhe menaxhim i sekreteve.
+    - title: Konsulencë sigurie
+      text: Këshilla për arkitekturën, furnitorët dhe politikat — në gjuhë të thjeshtë.
+process:
+  heading: Si funksionon
+  steps:
+    - title: Fushëveprimi dhe autorizimi
+      text: Objektiva dhe rregulla të rëna dakord, si dhe autorizim me shkrim para çdo testimi.
+    - title: Vlerësimi
+      text: Kontrolle të konfigurimit, varësive, aplikacionit dhe infrastrukturës.
+    - title: Raporti
+      text: Gjetjet të renditura sipas rrezikut, me prova dhe rregullime konkrete.
+    - title: Rregullimi dhe ritestimi
+      text: Rregullimet zbatohen dhe verifikohen me një kontroll pasues.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Më pak dyer të hapura
+      text: Rrugët e zakonshme dhe të automatizuara të sulmit mbyllen të parat.
+    - title: Prioritete të qarta
+      text: Një raport që tregon çfarë ka më shumë rëndësi, jo 200 faqe rezultatesh skanimi.
+    - title: Besim për klientët dhe partnerët
+      text: Dëshmi se të dhënat e klientëve tuaj i merrni seriozisht.
+faq:
+  - q: A mund ta bëni faqen tonë 100% të sigurt?
+    a: Askush nuk mund ta bëjë këtë sinqerisht. Siguria ka të bëjë me uljen e rrezikut në një nivel të pranueshëm dhe me gatishmërinë për të reaguar — dhe pikërisht këtu ju ndihmojmë.
+  - q: Vetëm testoni, apo edhe rregulloni?
+    a: Të dyja. Mund t’i zbatojmë vetë rregullimet ose të punojmë me zhvilluesit tuaj dhe të verifikojmë ndryshimet e tyre.
+  - q: A është testimi i sigurt për faqen tonë live?
+    a: Fushëveprimin, kohën dhe metodat i biem dakord me shkrim, shmangim testet që mund ta ndërpresin funksionimin në prodhim dhe, kur është e mundur, përdorim një kopje testimi (staging).
+  - q: A ndihmoni me GDPR-në?
+    a: Mbulojmë anën teknike — formularë të sigurt, minimizim të të dhënave, enkriptim dhe pëlqim. Për këshillim ligjor punojmë krah juristit tuaj ose zyrtarit për mbrojtjen e të dhënave.
+cta:
+  heading: Zbuloni ku qëndroni.
+  text: Nisni me një vlerësim sigurie të faqes ose të aplikacionit tuaj.

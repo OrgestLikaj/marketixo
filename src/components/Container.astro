@@ -1,0 +1,14 @@
+---
+interface Props {
+  width?: 'default' | 'wide' | 'text';
+  as?: string;
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
+}
+const { width = 'default', as: Tag = 'div', class: className , ...rest } = Astro.props;
+---
+
+<Tag {...rest} class:list={['container', { 'container--wide': width === 'wide', 'container--text': width === 'text' }, className]}>
+  <slot />
+</Tag>

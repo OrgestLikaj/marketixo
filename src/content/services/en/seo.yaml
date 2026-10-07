@@ -1,0 +1,82 @@
+key: seo
+lang: en
+title: Search Engine Optimization
+shortTitle: SEO
+tagline: Get found by people already searching for what you offer.
+metaTitle: SEO Agency — Technical, Local & Content SEO | Marketixo
+metaDescription: Technical SEO, on-page optimisation, local SEO and content strategy that help the right customers find you on Google. Transparent reporting, no empty promises.
+hero:
+  eyebrow: Service 03 — Grow
+  headline: Be the answer when your customers search.
+  lead: SEO is the most durable marketing channel there is — when it’s built on a technically sound site, the right keywords and content that genuinely helps.
+problem:
+  heading: Good businesses stay invisible for fixable reasons.
+  intro: Most ranking problems aren’t mysterious. They are technical errors, missing content or pages competing with each other.
+  points:
+    - title: Search engines can’t read the site properly
+      text: Slow pages, broken links, duplicate content or missing metadata hold everything back.
+    - title: Targeting the wrong words
+      text: Pages are written for how the company talks, not for what customers type.
+    - title: Invisible locally
+      text: An incomplete Google Business Profile means competitors appear on the map instead of you.
+solution:
+  heading: Fix the foundation, then build authority.
+  text: We start with a technical audit, fix what blocks crawling and indexing, then build pages and content around real search demand. Every recommendation comes with the reason behind it.
+  pillars:
+    - title: Technical first
+      text: Crawlability, speed, structured data, internal links and international setup.
+    - title: Demand-led content
+      text: Keyword research that maps search intent to the right page.
+    - title: Honest reporting
+      text: Monthly reports on rankings, traffic and enquiries — in plain language.
+included:
+  heading: What’s included
+  items:
+    - title: SEO audit
+      text: A prioritised list of technical, content and authority issues, with effort and impact for each.
+    - title: Technical SEO
+      text: Indexing, sitemaps, canonicals, redirects, Core Web Vitals and structured data.
+    - title: On-page SEO
+      text: Titles, descriptions, headings, internal linking and content structure.
+    - title: Local SEO
+      text: Google Business Profile, local landing pages, citations and review strategy.
+    - title: Keyword strategy
+      text: Research and mapping of search terms to pages, by intent and value.
+    - title: Content SEO
+      text: Briefs and articles that answer real questions and earn links.
+    - title: International SEO
+      text: hreflang, localized URLs and market-specific keywords for multilingual sites.
+    - title: Monitoring
+      text: Search Console, rankings and analytics tracked and reported monthly.
+process:
+  heading: How it works
+  steps:
+    - title: Audit
+      text: A full technical and content review of your site and competitors.
+    - title: Roadmap
+      text: Priorities ranked by impact and effort, agreed with you.
+    - title: Implementation
+      text: We fix and build — or work with your developers to do it.
+    - title: Measure & iterate
+      text: Monthly reporting and adjustments based on what the data shows.
+benefits:
+  heading: What you get
+  items:
+    - title: Compounding traffic
+      text: Unlike ads, good rankings keep bringing visitors without paying per click.
+    - title: Better-qualified leads
+      text: Visitors who searched for exactly what you offer.
+    - title: A clear picture
+      text: You always know what we did, why, and what changed.
+faq:
+  - q: How long until we see results?
+    a: Technical fixes can show effects within weeks. Competitive rankings usually take several months of consistent work. We set realistic expectations based on your market before we start.
+  - q: Can you guarantee first place on Google?
+    a: No one can honestly guarantee rankings — Google’s algorithm isn’t for sale. We guarantee sound work, transparency and a clear plan.
+  - q: Do you do SEO for multilingual websites?
+    a: Yes. We set up hreflang, localized URLs and market-specific keyword research for each language, so each version ranks in its own market.
+  - q: Do you write the content too?
+    a: Yes, in English, German, Italian and Albanian — or we brief your team and review what they write.
+cta:
+  heading: Find out what’s holding your site back.
+  text: Start with an SEO audit — a clear list of what to fix and in which order.

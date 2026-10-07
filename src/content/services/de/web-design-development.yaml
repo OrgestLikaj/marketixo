@@ -1,0 +1,122 @@
+key: web-design-development
+lang: de
+title: Webdesign & Entwicklung
+shortTitle: Webentwicklung
+tagline: Schnelle, barrierearme Websites und Web-Apps – auf Code gebaut, für den wir geradestehen.
+metaTitle: Agentur für Webdesign & Webentwicklung | Marketixo
+metaDescription: >-
+  Individuelle Websites, Landingpages, Onlineshops und Webanwendungen – schnell, barrierearm,
+  SEO-ready und vor dem Launch getestet. Zum Festpreis.
+hero:
+  eyebrow: Leistung 01 – Aufbauen
+  headline: Websites, die schnell laden, klar kommunizieren und Besucher zu Anfragen machen.
+  lead: >-
+    Von der fokussierten Landingpage bis zur mehrsprachigen Plattform: Wir gestalten und entwickeln
+    Websites, die auf jedem Bildschirm funktionieren, gut ranken und auch lange nach dem Launch zuverlässig
+    laufen.
+problem:
+  heading: Die meisten Websites sehen gut aus – und bleiben trotzdem hinter ihren Möglichkeiten.
+  intro: >-
+    Eine Website kann Designpreise gewinnen und trotzdem Kunden verlieren. Die Ursachen sieht man auf
+    einem Screenshot meist nicht.
+  points:
+    - title: Langsam auf echten Smartphones
+      text: >-
+        Schwere Themes, unoptimierte Bilder und ein Dutzend Plugins lassen Seiten im Mobilfunknetz kriechen
+        – und Besucher springen ab, bevor der erste Bildschirm geladen ist.
+    - title: Kein klarer nächster Schritt
+      text: >-
+        Die Seiten beschreiben das Unternehmen, sagen Besuchern aber nie, was sie tun sollen. So wird aus
+        Interesse keine Anfrage.
+    - title: Fragil und schwer zu ändern
+      text: >-
+        Jedes Update kann etwas kaputt machen. Also veralten Inhalte, und kleine Korrekturen werden zu teuren
+        Projekten.
+solution:
+  heading: Für Menschen gestaltet, für die Zukunft gebaut.
+  text: >-
+    Wir gehen von dem aus, was Ihre Besucher für ihre Entscheidung brauchen, gestalten die Seiten rund um
+    diese Entscheidung und setzen sie auf einem schlanken, gut dokumentierten Technologie-Stack um.
+    Performance, Barrierefreiheit und SEO sind Teil der Entwicklung – keine Checkliste am Schluss.
+  pillars:
+    - title: Content-first-Design
+      text: >-
+        Wireframes und Layouts mit Ihren echten Inhalten, geprüft auf echten Geräten, bevor die erste Zeile
+        Produktionscode entsteht.
+    - title: Schlanke Technik
+      text: >-
+        Statische oder serverseitig gerenderte Seiten, minimales JavaScript, optimierte Bilder und sauberes
+        Markup. Schnell von Grund auf.
+    - title: Leicht zu pflegen
+      text: >-
+        Ein CMS, wo es hilft, sinnvolle Standards, wo nicht – und eine Dokumentation, damit Ihr Team nicht
+        von uns abhängig ist.
+included:
+  heading: Was wir entwickeln
+  items:
+    - title: Unternehmenswebsites
+      text: Mehrseitige Websites, die erklären, was Sie tun, es belegen und die Kontaktaufnahme leicht machen.
+    - title: Landingpages
+      text: Fokussierte Seiten mit einem einzigen Ziel – für Kampagnen, Produktstarts und Leadgenerierung.
+    - title: E-Commerce
+      text: Onlineshops mit WooCommerce oder individuelle Checkouts mit Stripe und PayPal.
+    - title: Webanwendungen
+      text: Portale, Dashboards, Buchungs- und Angebotstools mit sicheren Benutzerkonten und Datenbanken.
+    - title: Relaunches & Migrationen
+      text: Neues Design und neue Plattform, ohne Ihre Google-Rankings zu verlieren – jede alte URL wird weitergeleitet.
+    - title: Performance-Optimierung
+      text: Analyse und Optimierung von Core Web Vitals, Bildauslieferung, Caching und render-blockierendem Code.
+    - title: Mehrsprachige Websites
+      text: Lokalisierte URLs, hreflang, übersetzte Metadaten und ein Sprachumschalter, der zur richtigen Seite führt.
+    - title: Pflege & Wartung
+      text: Updates, Backups, Uptime-Monitoring und kleine Änderungen in einem planbaren monatlichen Wartungspaket.
+process:
+  heading: Vom Briefing bis zum Launch
+  steps:
+    - title: Briefing & Sitemap
+      text: Ziele, Zielgruppe, Seiten und Schnittstellen – abgestimmt und dokumentiert.
+    - title: Wireframes
+      text: Seitenstruktur und Inhaltshierarchie, zuerst auf dem Smartphone getestet.
+    - title: Visuelles Design
+      text: Die komplette Oberfläche in Ihrem Markenauftritt, mit allen Zuständen und Breakpoints.
+    - title: Entwicklung
+      text: Umsetzung in einer Staging-Umgebung, in der Sie den Fortschritt Woche für Woche verfolgen.
+    - title: Tests & Launch
+      text: >-
+        Browser-, Performance-, Barrierefreiheits- und Formulartests, danach ein geplanter Go-live mit
+        Weiterleitungen.
+benefits:
+  heading: Ihr Nutzen
+  items:
+    - title: Messbare Geschwindigkeit
+      text: Wir streben grüne Core Web Vitals auf echten Geräten an und zeigen Ihnen den Bericht.
+    - title: Für alle zugänglich
+      text: Semantisches HTML, Tastaturbedienung, Kontraste und Beschriftungen – nach den Praktiken von WCAG 2.2 AA umgesetzt.
+    - title: Vom ersten Tag an suchmaschinenfreundlich
+      text: Saubere URLs, Metadaten, strukturierte Daten und eine Sitemap gehören zu jedem Projekt.
+    - title: Alles gehört Ihnen
+      text: Code, Hosting und Domain gehören Ihnen – mit Dokumentation und Übergabesitzung.
+faq:
+  - q: Wie lange dauert eine Website?
+    a: >-
+      Eine fokussierte Unternehmenswebsite braucht vom Kick-off bis zum Launch in der Regel vier bis acht
+      Wochen. Webanwendungen und große mehrsprachige Websites dauern länger – den Zeitplan erhalten Sie
+      mit dem Angebot.
+  - q: Welche Plattform setzen Sie ein?
+    a: >-
+      Die, die zur Aufgabe passt. Content-Websites setzen wir oft als schnelle statische Seiten mit einem
+      einfachen CMS um; für Shops und große Redaktionsteams eignen sich WordPress oder eine individuelle
+      Anwendung manchmal besser. Wir erklären Ihnen die Vor- und Nachteile, bevor Sie entscheiden.
+  - q: Können Sie unsere Website neu gestalten, ohne dass wir Google-Rankings verlieren?
+    a: >-
+      Ja. Wir erfassen jede bestehende URL, behalten, was rankt, und richten dauerhafte Weiterleitungen
+      ein, damit Suchmaschinen und Lesezeichen auf der richtigen neuen Seite landen.
+  - q: Können wir die Inhalte selbst bearbeiten?
+    a: >-
+      Ja. Sie erhalten einen Editor, der zu Ihrem Team passt, und eine kurze Schulung. Auf Wunsch übernehmen
+      wir die Pflege im Rahmen eines Wartungspakets.
+cta:
+  heading: Bauen wir eine Website, die sich bezahlt macht.
+  text: >-
+    Schicken Sie uns Ihre aktuelle Website oder Ihre Idee. Sie erhalten eine ehrliche Einschätzung und
+    ein Festpreisangebot.

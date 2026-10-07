@@ -1,54 +1,113 @@
 ---
-import { locales, localeMeta, routes, type Alternates, type Lang } from '~/i18n/ui';
+/**
+ * EN · DE · IT · SQ — links to the equivalent page in each language.
+ * Clicking stores the choice in a first-party cookie (mx_lang) so the root URL
+ * and future visits open in the same language.
+ */
+import { languageMeta, locales, useT, type Lang } from '~/i18n';
+import { switchTarget, type PageEntry } from '~/lib/pages';
 
 interface Props {
-  lang: Lang;
-  alternates: Alternates;
+  page: Pick<PageEntry, 'lang' | 'alternates' | 'kind'>;
+  variant?: 'inline' | 'stacked';
 }
-const { lang, alternates } = Astro.props;
-// Fall back to the other language's home page when a page has no translation.
-const target = (l: Lang) => alternates[l] ?? routes.home[l];
+const { page, variant = 'inline' } = Astro.props;
+const t = useT(page.lang);
+const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), meta: languageMeta[l] }));
 ---
 
-<div class="lang" role="group" aria-label="Language">
-  {
-    locales.map((l) =>
-      l === lang ? (
-        <span class="lang__item is-current" aria-current="true" title={localeMeta[l].label}>
-          {localeMeta[l].short}
-        </span>
-      ) : (
-        <a class="lang__item" href={target(l)} hreflang={l} lang={l} title={localeMeta[l].label}>
-          {localeMeta[l].short}
-        </a>
-      ),
-    )
-  }
-</div>
+<nav class:list={['lang', `lang--${variant}`]} aria-label={t.nav.language}>
+  <ul role="list">
+    {
+      items.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            hreflang={item.meta.hreflang}
+            lang={item.lang}
+            data-lang={item.lang}
+            aria-current={item.lang === page.lang ? 'true' : undefined}
+            title={item.meta.native}
+          >
+            <span class="lang__short" aria-hidden={variant === 'stacked' ? 'true' : undefined}>{item.meta.short}</span>
+            {variant === 'stacked' ? <span class="lang__native">{item.meta.native}</span> : <span class="sr-only">{item.meta.native}</span>}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-lang]');
+    if (link) document.cookie = `mx_lang=${link.dataset.lang}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+  });
+</script>
 
 <style>
-  .lang {
+  .lang ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lang a {
     display: inline-flex;
-    padding: 3px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--white);
-  }
-  .lang__item {
-    padding: 0.35rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    line-height: 1;
+    align-items: center;
+    gap: 0.75rem;
     text-decoration: none;
-    color: var(--muted);
+    color: var(--text-subtle);
+    transition: color var(--dur) var(--ease);
   }
-  .lang__item:hover {
-    color: var(--ink);
+  .lang a:hover {
+    color: var(--text);
   }
-  .lang__item.is-current {
-    background: var(--ink);
-    color: var(--white);
+  .lang a[aria-current] {
+    color: var(--text);
+  }
+
+  /* Inline: EN · DE · IT · SQ */
+  .lang--inline ul {
+    gap: 0;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+  }
+  .lang--inline li + li::before {
+    content: '·';
+    color: var(--text-subtle);
+    opacity: 0.6;
+    padding-inline: 0.15rem;
+  }
+  .lang--inline a {
+    padding: 0.55rem 0.3rem;
+    min-height: 44px;
+  }
+  .lang--inline a[aria-current] .lang__short {
+    border-bottom: 1px solid var(--golden-orange);
+  }
+
+  /* Stacked: large tap targets for the mobile menu */
+  .lang--stacked ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .lang--stacked a {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    min-height: 52px;
+  }
+  .lang--stacked a[aria-current] {
+    border-color: var(--pearl-aqua);
+    background: rgb(148 210 189 / 0.06);
+  }
+  .lang--stacked .lang__short {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--pearl-aqua);
   }
 </style>

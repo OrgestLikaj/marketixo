@@ -1,0 +1,36 @@
+key: albanian-athletes
+lang: sq
+industry: Sport — zhvillim atletësh
+location: Mbretëria e Bashkuar & Shqipëri
+summary: >-
+  Një faqe interneti për Albanian Athletes Group, që mbështet futbollistët e rinj shqiptarë me rrugë zhvillimi,
+  profile dhe lidhje me mundësi ndërkombëtare.
+metaDescription: >-
+  Rast studimi — faqe për Albanian Athletes Group: rrugë zhvillimi, profile atletësh, histori suksesi dhe donacione. WordPress, SEO, reklama, rrjete sociale.
+overview: >-
+  Albanian Athletes Group (AAG), e themeluar në vitin 2020, mbështet atletët shqiptarë — kryesisht futbollistë
+  të rinj — me mundësi zhvillimi, identifikim talentesh dhe lidhje me klube dhe mundësi ndërkombëtare. Vepron
+  nga Mbretëria e Bashkuar, në partneritet me Carshalton Athletic.
+challenge: >-
+  AAG u flet audiencave shumë të ndryshme: lojtarëve të rinj dhe familjeve të tyre, klubeve dhe skautëve, si
+  dhe mbështetësve që mund të dhurojnë. Faqja duhej të frymëzonte të parët, të informonte të dytët dhe t’u
+  jepte të tretëve një mënyrë të qartë për të ndihmuar — duke i prezantuar lojtarët në mënyrë të besueshme.
+approach: >-
+  E organizuam faqen rreth rrugëtimit të atletit: kush është AAG, profilet e lojtarëve, rrugët e strukturuara
+  të zhvillimit, historitë e suksesit, konsulenca dhe lajmet — me të dhënat e kontaktit dhe një buton të
+  dukshëm për donacione gjithmonë në dispozicion.
+design: >-
+  Fotografi të mëdha dhe emocionuese futbolli, me deklarata të shkurtra mbi to, stema e kuqe e AAG dhe një
+  faqosje e pastër, sportive, që i bën profilet dhe rrugët e zhvillimit të lehta për t’u shfletuar.
+development: >-
+  E ndërtuar në WordPress me WPBakery, që ekipi të përditësojë vetë profilet, historitë dhe lajmet, e lidhur
+  me shërbimet e Google përmes Site Kit për të dhëna mbi kërkimin dhe analitikën. Mbështetja me SEO, reklama
+  dhe rrjete sociale ecën paralelisht.
+result: >-
+  Albanian Athletes Group ka një faqe interneti që i prezanton lojtarët dhe programet e saj në mënyrë të
+  besueshme para klubeve dhe familjeve, dhe u jep mbështetësve një mënyrë të drejtpërdrejtë për të kontribuar.
+highlights:
+  - Profile lojtarësh, rrugë zhvillimi dhe histori suksesi
+  - Thirrje për donacion në header
+  - Përmbajtje e menaxhuar vetë në WordPress
+  - Google Site Kit për të dhëna mbi kërkimin dhe analitikën

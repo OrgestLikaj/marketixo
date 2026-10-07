@@ -1,0 +1,78 @@
+key: paid-ads
+lang: sq
+title: Reklama me pagesë (Google & Meta Ads)
+shortTitle: Reklama me pagesë
+tagline: Fushata në Google dhe Meta që maten me kërkesa, jo me klikime.
+metaTitle: Menaxhim i Google Ads dhe Meta Ads | Marketixo
+metaDescription: Fushata Google Ads dhe Meta Ads me matje të saktë të konvertimeve, landing page dhe optimizim të vazhdueshëm — të menaxhuara sipas kërkesave dhe shitjeve reale.
+hero:
+  eyebrow: Shërbimi 04 — Rritje
+  headline: Çdo euro e shpenzuar për reklama, e llogaritur.
+  lead: Planifikojmë, ndërtojmë dhe menaxhojmë fushata në Google dhe Meta — me matjen e konvertimeve të vendosur që në fillim, që vendimet të bazohen te kërkesat dhe shitjet, jo te shfaqjet.
+problem:
+  heading: Buxhetet e reklamave rrjedhin në vende të parashikueshme.
+  intro: Shumica e llogarive që nuk japin rezultat kanë të njëjtat pak probleme.
+  points:
+    - title: Pa matje të besueshme
+      text: Pa matjen e konvertimeve, platforma optimizon për klikime — dhe po ashtu edhe buxheti.
+    - title: Trafik i dërguar te faqja e gabuar
+      text: Reklamat çojnë te kryefaqja, e cila nuk përputhet me premtimin e reklamës.
+    - title: Ngrihen dhe harrohen
+      text: Fushata të nisura një herë dhe të papërmirësuara kurrë, ndërkohë që kostot rriten pa u vënë re.
+solution:
+  heading: Së pari matim, pastaj shpenzojmë.
+  text: Vendosim siç duhet matjen dhe pëlqimin, e lidhim çdo fushatë me një landing page të ndërtuar për atë publik dhe optimizojmë çdo javë sipas kostos për kërkesë.
+  pillars:
+    - title: Matje që i besoni
+      text: Konvertime në GA4, Google Ads dhe Meta, të konfiguruara me Consent Mode v2.
+    - title: Mesazh i njëjtë
+      text: Reklamat dhe landing page shkruhen si një përvojë e vetme.
+    - title: Optimizim i vazhdueshëm
+      text: Termat e kërkimit, audiencat, ofertat dhe kreativet rishikohen çdo javë.
+included:
+  heading: Çfarë përfshihet
+  items:
+    - title: Google Ads
+      text: Fushata Search, Performance Max, Display dhe YouTube.
+    - title: Meta Ads
+      text: Fushata në Facebook dhe Instagram për njohje, kërkesa dhe shitje.
+    - title: Strategji fushatash
+      text: Objektiva, audienca, buxhete dhe ndarje kanalesh bazuar në marzhet tuaja.
+    - title: Matja e konvertimeve
+      text: Ngjarje, objektiva dhe konvertime offline, të konfiguruara dhe të testuara nga fillimi në fund.
+    - title: Optimizim i landing page
+      text: Faqe të dedikuara dhe teste A/B që i kthejnë klikimet me pagesë në kërkesa.
+    - title: Menaxhim fushatash
+      text: Monitorim ditor, optimizim javor, raportim mujor.
+process:
+  heading: Si funksionon
+  steps:
+    - title: Auditim i llogarisë dhe i matjes
+      text: Çfarë funksionon, çfarë shpërdorohet dhe çfarë nuk matet.
+    - title: Strategjia dhe konfigurimi
+      text: Struktura, audiencat, kreativet dhe landing page.
+    - title: Nisja dhe mësimi
+      text: Një nisje e kontrolluar, me monitorim të afërt në javët e para.
+    - title: Optimizimi dhe zgjerimi
+      text: Buxheti kalon te ajo që konverton; ajo që nuk konverton ndërpritet.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Qartësi për koston për kërkesë
+      text: E dini sa kushton një kërkesë e re dhe cila fushatë e solli.
+    - title: Asnjë shpenzim i kotë
+      text: Kërkimet dhe audiencat jo të rëndësishme përjashtohen vazhdimisht.
+    - title: Llogaritë tuaja, të dhënat tuaja
+      text: Llogaritë e reklamave krijohen në emrin tuaj; ju ruani qasjen dhe historikun e plotë.
+faq:
+  - q: Çfarë buxheti na duhet?
+    a: Varet nga tregu dhe objektivat tuaja. Rekomandojmë një buxhet testimi mjaftueshëm të madh për të dhënë të dhëna kuptimplota — dhe ju themi sinqerisht nëse reklamat ende nuk janë kanali i duhur për ju.
+  - q: A është tarifa e menaxhimit e ndarë nga shpenzimi për reklama?
+    a: Po. Shpenzimi për reklama paguhet drejtpërdrejt te Google ose Meta nga llogaria juaj; tarifa jonë mbulon strategjinë, konfigurimin dhe menaxhimin.
+  - q: A garantoni kthim nga shpenzimi për reklama?
+    a: Jo. Rezultatet varen nga oferta, çmimet dhe tregu juaj. Ne garantojmë menaxhim të kujdesshëm, raportim të sinqertë dhe veprim të shpejtë sipas të dhënave.
+  - q: Si trajtohet matja sipas GDPR-së?
+    a: Matja aktivizohet vetëm pas pëlqimit, dhe konfigurojmë Google Consent Mode v2 që platformat të marrin sinjalet e duhura.
+cta:
+  heading: Bëjeni buxhetin e reklamave të punojë më shumë.
+  text: Nisni me një auditim të llogarisë dhe të matjes — do t’ju tregojmë ku shkojnë paratë.

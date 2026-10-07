@@ -1,0 +1,78 @@
+key: content-marketing
+lang: en
+title: Content Marketing
+shortTitle: Content
+tagline: Clear, useful writing that ranks, persuades and gets shared.
+metaTitle: Content Marketing & Website Copywriting | Marketixo
+metaDescription: Website copy, SEO articles, campaign and social content written in English, German, Italian and Albanian — clear, useful and built around search demand.
+hero:
+  eyebrow: Service 06 — Grow
+  headline: Words that do a job.
+  lead: We write website copy, articles and campaign content that answers real questions, earns search traffic and makes the case for choosing you.
+problem:
+  heading: Content is everywhere. Useful content is rare.
+  intro: Publishing more isn’t the answer if nobody reads it.
+  points:
+    - title: Copy about the company, not the customer
+      text: Pages list services and history, but never answer what the visitor came to find out.
+    - title: Blogs without a strategy
+      text: Articles written to “keep the site fresh” that target no search and serve no goal.
+    - title: Translated, not localized
+      text: Machine-translated pages that sound wrong to native speakers and rank poorly.
+solution:
+  heading: Strategy, then sentences.
+  text: We decide what each piece of content is for — ranking, persuading or retaining — research what your audience needs, and write it clearly, in their language.
+  pillars:
+    - title: Research-led
+      text: Search data, customer questions and competitor gaps shape every brief.
+    - title: Written by people
+      text: Clear, accurate copy by writers who understand the subject.
+    - title: Native in four languages
+      text: Written for each market in English, German, Italian and Albanian.
+included:
+  heading: What’s included
+  items:
+    - title: Content strategy
+      text: Topics, formats, channels and a calendar tied to business goals.
+    - title: Website copy
+      text: Home, service and landing pages written to inform and convert.
+    - title: SEO content
+      text: Articles and guides built around search intent and internal linking.
+    - title: Blog content
+      text: Regular, well-researched articles that build expertise and trust.
+    - title: Social content
+      text: Captions, carousels and scripts that match each platform.
+    - title: Campaign content
+      text: Emails, ads and landing copy for launches and promotions.
+process:
+  heading: How it works
+  steps:
+    - title: Research
+      text: Audience questions, search demand and what competitors miss.
+    - title: Plan
+      text: An editorial calendar with a clear purpose for each piece.
+    - title: Write & edit
+      text: Drafts, your feedback, a final edit for clarity and accuracy.
+    - title: Publish & measure
+      text: Optimised publication and tracking of traffic and conversions.
+benefits:
+  heading: What you get
+  items:
+    - title: Traffic that lasts
+      text: Evergreen articles keep attracting visitors long after publication.
+    - title: Stronger conversion
+      text: Clear pages that answer objections before a visitor has to ask.
+    - title: A consistent voice
+      text: One tone across website, social and campaigns.
+faq:
+  - q: Do you use AI to write content?
+    a: We may use tools for research and outlines, but every piece is written, edited and fact-checked by a person who is accountable for it.
+  - q: Can you write in our industry’s language?
+    a: Yes. We interview your experts and use your materials, so the content is accurate and specific — not generic.
+  - q: How often should we publish?
+    a: Consistency matters more than volume. For most businesses, two to four strong articles a month outperform daily filler.
+  - q: Do you translate existing content?
+    a: We localize rather than translate — content is adapted to each market’s terminology, search terms and expectations.
+cta:
+  heading: Have something worth saying?
+  text: We’ll help you say it clearly — and make sure the right people read it.

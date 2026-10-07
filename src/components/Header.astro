@@ -1,376 +1,452 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import Button from './Button.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { t, url, type Alternates, type Lang } from '~/i18n/ui';
-import { groupOrder, servicesByGroup, serviceUrl } from '~/data/services';
+import { getCollection } from 'astro:content';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { serviceKeys, serviceMeta, type ServiceGroup } from '~/data/services';
+import type { PageEntry, PageKind } from '~/lib/pages';
 
 interface Props {
-  lang: Lang;
-  alternates: Alternates;
+  page: Pick<PageEntry, 'lang' | 'path' | 'alternates' | 'kind'>;
 }
-const { lang, alternates } = Astro.props;
-const s = t(lang);
-const path = Astro.url.pathname;
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
 
-const nav = [
-  { href: url('work', lang), label: s.nav.work },
-  { href: url('about', lang), label: s.nav.about },
-  { href: url('blog', lang), label: s.nav.blog },
-  { href: url('contact', lang), label: s.nav.contact },
+const serviceCopy = await getCollection('services', (e) => e.data.lang === lang);
+const services = serviceKeys.map((key) => ({
+  key,
+  ...serviceMeta[key],
+  title: serviceCopy.find((s) => s.data.key === key)?.data.shortTitle ?? key,
+  href: url.service(lang, key),
+}));
+const groups: ServiceGroup[] = ['build', 'grow', 'protect'];
+
+const nav: { label: string; href: string; kinds: PageKind[]; mega?: boolean }[] = [
+  { label: t.nav.home, href: url.section(lang, 'home'), kinds: ['home'] },
+  { label: t.nav.services, href: url.section(lang, 'services'), kinds: ['services', 'service'], mega: true },
+  { label: t.nav.work, href: url.section(lang, 'work'), kinds: ['work', 'project'] },
+  { label: t.nav.about, href: url.section(lang, 'about'), kinds: ['about'] },
+  { label: t.nav.insights, href: url.section(lang, 'insights'), kinds: ['insights', 'insight', 'topic'] },
+  { label: t.nav.contact, href: url.section(lang, 'contact'), kinds: ['contact'] },
 ];
-const servicesHref = url('services', lang);
-const isActive = (href: string) => path.startsWith(href) && href !== url('home', lang);
+const isActive = (kinds: PageKind[]) => kinds.includes(page.kind);
+const contactHref = url.section(lang, 'contact');
 ---
 
-<header class="site-header" data-header>
-  <div class="container site-header__inner">
-    <a href={url('home', lang)} class="site-header__logo" aria-label="Marketixo — home">
+<header class="hdr" data-header>
+  <div class="hdr__bar container container--wide">
+    <a class="hdr__logo" href={url.section(lang, 'home')} aria-label={`Marketixo — ${t.nav.home}`}>
       <Logo />
     </a>
 
-    <nav class="site-nav" aria-label="Main">
-      <ul class="site-nav__list">
-        <li class="site-nav__item site-nav__item--has-menu">
-          <a href={servicesHref} class="site-nav__link" aria-current={isActive(servicesHref) ? 'page' : undefined}>
-            {s.nav.services}
-            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          </a>
-          <div class="mega">
-            <div class="mega__inner">
-              {
-                groupOrder.map((g) => (
-                  <div class="mega__col">
-                    <p class={`mega__group mega__group--${g}`}>{s.groups[g].name}</p>
-                    <ul>
-                      {servicesByGroup(g).map((svc) => (
-                        <li>
-                          <a href={serviceUrl(svc, lang)} class="mega__link">
-                            <span class={`mega__icon mega__icon--${g}`}>
-                              <Icon name={svc.icon} size={18} />
-                            </span>
-                            <span>
-                              <strong>{svc.copy[lang].title}</strong>
-                              <small>{svc.copy[lang].tagline}</small>
-                            </span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        </li>
+    <nav class="hdr__nav" aria-label={t.nav.mainNav}>
+      <ul role="list" class="hdr__links">
         {
           nav.map((item) => (
-            <li class="site-nav__item">
-              <a href={item.href} class="site-nav__link" aria-current={isActive(item.href) ? 'page' : undefined}>
+            <li class:list={['hdr__item', { 'has-mega': item.mega }]}>
+              <a href={item.href} class="hdr__link" aria-current={isActive(item.kinds) ? 'page' : undefined}>
                 {item.label}
+                {item.mega && <Icon name="chevron-down" size={14} class="hdr__chev" />}
               </a>
+              {item.mega && (
+                <div class="mega">
+                  <div class="mega__inner">
+                    {groups.map((g) => (
+                      <div class="mega__col">
+                        <p class="mega__group">
+                          <span>{t.common.groups[g]}</span> {t.common.groupLines[g]}
+                        </p>
+                        <ul role="list">
+                          {services
+                            .filter((s) => s.group === g)
+                            .map((s) => (
+                              <li>
+                                <a href={s.href} class="mega__link">
+                                  <Icon name={s.icon} size={20} />
+                                  <span>{s.title}</span>
+                                </a>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    ))}
+                    <a href={item.href} class="mega__all">
+                      {t.nav.allServices} <Icon name="arrow-right" size={16} />
+                    </a>
+                  </div>
+                </div>
+              )}
             </li>
           ))
         }
       </ul>
     </nav>
 
-    <div class="site-header__actions">
-      <LanguageSwitcher lang={lang} alternates={alternates} />
-      <a href={url('contact', lang) + '#quote'} class="btn btn--signal btn--sm site-header__cta">{s.cta.quoteShort}</a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
-        <span class="visually-hidden">{s.nav.menu}</span>
-        <Icon name="menu" class="menu-toggle__open" />
-        <Icon name="close" class="menu-toggle__close" />
+    <div class="hdr__end">
+      <LanguageSwitcher page={page} />
+      <Button href={contactHref} size="sm" class="hdr__cta">{t.nav.cta}</Button>
+      <button class="hdr__burger" type="button" aria-haspopup="dialog" aria-controls="mnav" data-menu-open>
+        <Icon name="menu" />
+        <span class="sr-only">{t.nav.menu}</span>
       </button>
-    </div>
-  </div>
-
-  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
-    <div class="container">
-      <ul class="mobile-menu__list">
-        <li><a href={servicesHref}>{s.nav.services}</a></li>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-      </ul>
-      <div class="mobile-menu__services">
-        {
-          groupOrder.map((g) => (
-            <div>
-              <p class={`mega__group mega__group--${g}`}>{s.groups[g].name}</p>
-              <ul>
-                {servicesByGroup(g).map((svc) => (
-                  <li>
-                    <a href={serviceUrl(svc, lang)}>{svc.copy[lang].title}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-      <a href={url('contact', lang) + '#quote'} class="btn btn--signal mobile-menu__cta">{s.cta.quote}</a>
     </div>
   </div>
 </header>
 
+<dialog class="mnav" id="mnav" aria-label={t.nav.mainNav} data-menu>
+  <div class="mnav__top container">
+    <Logo />
+    <button type="button" class="mnav__close" data-menu-close>
+      <Icon name="close" />
+      <span class="sr-only">{t.nav.close}</span>
+    </button>
+  </div>
+  <nav class="mnav__body container" aria-label={t.nav.mainNav}>
+    <ul role="list" class="mnav__links">
+      {
+        nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a href={item.href} aria-current={isActive(item.kinds) ? 'page' : undefined}>
+              <span class="index-num">0{i + 1}</span>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mnav__lang">
+      <p class="eyebrow eyebrow--plain">{t.nav.language}</p>
+      <LanguageSwitcher page={page} variant="stacked" />
+    </div>
+    <Button href={contactHref} size="lg" class="mnav__cta">{t.nav.cta}</Button>
+  </nav>
+</dialog>
+
 <script>
+  // Compact header after scrolling.
   const header = document.querySelector<HTMLElement>('[data-header]');
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  if (header) {
+    let ticking = false;
+    const update = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+      ticking = false;
+    };
+    update();
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+  }
 
-  const setOpen = (open: boolean) => {
-    if (!toggle || !menu) return;
-    toggle.setAttribute('aria-expanded', String(open));
-    menu.hidden = !open;
-    document.documentElement.classList.toggle('menu-open', open);
-  };
-
-  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
-  matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
-
-  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // Mobile menu: a modal <dialog> gives focus trapping and Esc-to-close for free.
+  const dialog = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  if (dialog && opener) {
+    opener.addEventListener('click', () => {
+      dialog.showModal();
+      document.documentElement.classList.add('menu-open');
+    });
+    dialog.querySelector('[data-menu-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.documentElement.classList.remove('menu-open');
+      opener.focus();
+    });
+    dialog.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => dialog.close()));
+    window.matchMedia('(min-width: 1100px)').addEventListener('change', (e) => e.matches && dialog.open && dialog.close());
+  }
 </script>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
+  .hdr {
+    position: fixed;
+    inset: 0 0 auto;
     z-index: 50;
-    background: rgb(247 245 240 / 0.86);
-    backdrop-filter: saturate(1.4) blur(14px);
-    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    transition:
+      background-color 300ms var(--ease),
+      border-color 300ms var(--ease),
+      backdrop-filter 300ms var(--ease);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s var(--ease);
   }
-  .site-header.is-scrolled {
+  .hdr.is-scrolled {
+    background: rgb(0 18 25 / 0.94);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
     border-bottom-color: var(--line);
   }
-  .site-header__inner {
+  .hdr__bar {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    height: 76px;
+    gap: 2rem;
+    height: var(--header-h);
+    transition: height 300ms var(--ease);
   }
-  .site-header__logo {
+  .hdr.is-scrolled .hdr__bar {
+    height: 62px;
+  }
+  .hdr__logo {
     text-decoration: none;
     flex: none;
-  }
-  .site-header__actions {
+    min-height: 44px;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-left: auto;
   }
-
-  .site-nav {
-    display: none;
-    margin-left: 1.5rem;
+  .hdr__nav {
+    margin-inline: auto;
   }
-  .site-nav__list {
+  .hdr__links {
     display: flex;
     gap: 0.25rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
-  .site-nav__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.55rem 0.85rem;
-    border-radius: 999px;
-    font-size: 0.975rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--text);
-    transition: background-color 0.15s;
-  }
-  .site-nav__link:hover,
-  .site-nav__link[aria-current='page'] {
-    background: rgb(13 15 20 / 0.06);
-  }
-
-  /* Services mega menu */
-  .site-nav__item--has-menu {
+  .hdr__item {
     position: relative;
   }
+  .hdr__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: color var(--dur) var(--ease);
+  }
+  .hdr__link:hover,
+  .hdr__link[aria-current] {
+    color: var(--text);
+  }
+  .hdr__link[aria-current]::after {
+    content: '';
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.2rem;
+    height: 1px;
+    background: var(--golden-orange);
+  }
+  .hdr__chev {
+    opacity: 0.6;
+    transition: transform var(--dur) var(--ease);
+  }
+  .has-mega:hover .hdr__chev,
+  .has-mega:focus-within .hdr__chev {
+    transform: rotate(180deg);
+  }
+  .hdr__end {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .hdr__burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  /* Mega menu */
   .mega {
     position: absolute;
     top: 100%;
-    left: -1rem;
-    padding-top: 14px;
-    visibility: hidden;
+    left: 50%;
+    width: min(860px, 80vw);
+    padding-top: 0.75rem;
+    transform: translate(-50%, 6px);
     opacity: 0;
-    transform: translateY(6px);
+    visibility: hidden;
     transition:
-      opacity 0.18s var(--ease),
-      transform 0.18s var(--ease),
-      visibility 0.18s;
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease),
+      visibility 0s linear var(--dur);
   }
-  .site-nav__item--has-menu:hover .mega,
-  .site-nav__item--has-menu:focus-within .mega {
-    visibility: visible;
+  .has-mega:hover .mega,
+  .has-mega:focus-within .mega {
     opacity: 1;
-    transform: none;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
   }
   .mega__inner {
     display: grid;
-    grid-template-columns: repeat(3, 260px);
-    gap: 1.25rem;
-    padding: 1.5rem;
-    background: var(--white);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 2rem;
+    padding: 1.75rem;
+    background: rgb(3 32 42 / 0.97);
+    backdrop-filter: blur(16px);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
   }
-  .mega ul,
-  .mobile-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
   .mega__group {
-    margin: 0 0 0.6rem 0.6rem;
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--text-subtle);
+    margin-bottom: 0.75rem;
   }
-  .mega__group::before {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin-right: 0.5rem;
-    border-radius: 2px;
-    vertical-align: 1px;
-    background: var(--group, var(--signal));
-  }
-  .mega__group--build {
-    --group: var(--build);
-  }
-  .mega__group--grow {
-    --group: var(--grow);
-  }
-  .mega__group--protect {
-    --group: var(--protect);
+  .mega__group span {
+    color: var(--pearl-aqua);
+    margin-right: 0.4em;
   }
   .mega__link {
-    display: grid;
-    grid-template-columns: 34px 1fr;
-    gap: 0.75rem;
-    padding: 0.6rem;
-    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.6rem;
+    margin-inline: -0.6rem;
+    border-radius: var(--radius-sm);
     text-decoration: none;
-    line-height: 1.35;
+    font-size: 0.9375rem;
+    color: var(--text);
+    transition: background-color var(--dur) var(--ease);
+  }
+  .mega__link .icon {
+    color: var(--dark-cyan);
+    flex: none;
   }
   .mega__link:hover {
-    background: var(--paper);
+    background: rgb(148 210 189 / 0.07);
   }
-  .mega__link strong {
-    display: block;
-    font-size: 0.9375rem;
-    font-weight: 600;
-  }
-  .mega__link small {
-    display: block;
-    font-size: 0.8125rem;
-    color: var(--muted);
-  }
-  .mega__icon {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    background: var(--paper);
-    color: var(--ink);
+  .mega__all {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-self: start;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    font-size: var(--fs-sm);
+    color: var(--pearl-aqua);
+    text-decoration: none;
   }
 
-  /* Mobile */
-  .menu-toggle {
+  /* Mobile menu */
+  .mnav {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--bg);
+    color: var(--text);
+    overflow-y: auto;
+  }
+  .mnav::backdrop {
+    background: var(--bg);
+  }
+  .mnav[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  .mnav__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+    flex: none;
+  }
+  .mnav__close {
+    width: 44px;
+    height: 44px;
     display: grid;
     place-items: center;
-    width: 46px;
-    height: 46px;
-    padding: 0;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    background: var(--white);
-    color: var(--ink);
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--text);
     cursor: pointer;
   }
-  .menu-toggle :global(.menu-toggle__close),
-  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__open) {
-    display: none;
+  .mnav__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    padding-block: 1.5rem 2.5rem;
+    flex: 1;
   }
-  .menu-toggle[aria-expanded='true'] :global(.menu-toggle__close) {
-    display: block;
+  .mnav__links li {
+    border-bottom: 1px solid var(--line);
   }
-  .mobile-menu {
-    position: fixed;
-    inset: 76px 0 0;
-    overflow-y: auto;
-    padding-block: 1.5rem 3rem;
-    background: var(--paper);
-    border-top: 1px solid var(--line);
-  }
-  .mobile-menu__list {
-    display: grid;
-    gap: 0.25rem;
-    margin-bottom: 2rem !important;
-  }
-  .mobile-menu__list a {
-    display: block;
-    padding: 0.4rem 0;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+  .mnav__links a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
     text-decoration: none;
   }
-  .mobile-menu__services {
+  .mnav__links a[aria-current] {
+    color: var(--pearl-aqua);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mnav[open] .mnav__links li {
+      animation: mnav-in 600ms var(--ease-out) both;
+      animation-delay: calc(var(--i) * 45ms + 60ms);
+    }
+  }
+  @keyframes mnav-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  .mnav__lang {
     display: grid;
-    gap: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
+    gap: 0.75rem;
   }
-  .mobile-menu__services .mega__group {
-    margin-left: 0;
-  }
-  .mobile-menu__services a {
-    display: block;
-    padding: 0.35rem 0;
-    text-decoration: none;
-    color: var(--muted);
-  }
-  .mobile-menu__cta {
-    width: 100%;
-    margin-top: 2rem;
-  }
-  :global(html.menu-open) {
-    overflow: hidden;
+  .mnav__cta {
+    margin-top: auto;
   }
 
-  .site-header__cta {
-    display: none;
-  }
-  @media (min-width: 560px) {
-    .site-header__cta {
+  @media (max-width: 1099px) {
+    .hdr__nav,
+    .hdr__end :global(.lang),
+    .hdr__cta {
+      display: none;
+    }
+    .hdr__end {
+      margin-left: auto;
+    }
+    .hdr__burger {
       display: inline-flex;
     }
   }
-  @media (min-width: 1024px) {
-    .site-nav {
-      display: block;
+  @media (max-width: 1240px) and (min-width: 1100px) {
+    .hdr__bar {
+      gap: 1rem;
     }
-    .menu-toggle {
-      display: none;
+    .hdr__link {
+      padding-inline: 0.6rem;
     }
+    .hdr__link[aria-current]::after {
+      left: 0.6rem;
+      right: 0.6rem;
+    }
+  }
+  :global(html.menu-open) {
+    overflow: hidden;
   }
 </style>

@@ -1,0 +1,97 @@
+key: cybersecurity
+lang: de
+title: Cybersicherheit
+shortTitle: Cybersicherheit
+tagline: Sicherheitsanalysen und Härtung für Websites und Webanwendungen.
+metaTitle: IT-Sicherheit für Websites & Webanwendungen | Marketixo
+metaDescription: >-
+  Sicherheitsanalysen, Schwachstellenprüfungen und Härtung für Websites und Webanwendungen. Praktische
+  Lösungen, klare Berichte, sichere Entwicklungspraktiken.
+hero:
+  eyebrow: Leistung 07 – Schützen
+  headline: Schließen Sie die Türen, bevor jemand daran rüttelt.
+  lead: >-
+    Die meisten Angriffe auf kleine und mittlere Unternehmen sind automatisiert und opportunistisch. Wir
+    finden die Schwachstellen, nach denen sie suchen – und beheben sie.
+problem:
+  heading: Auch kleine Websites sind Ziele.
+  intro: >-
+    Bots durchsuchen das Internet rund um die Uhr nach bekannten Schwachstellen. Wie groß Ihr Unternehmen
+    ist, spielt dabei keine Rolle.
+  points:
+    - title: Veraltete Software
+      text: Nicht gepatchte CMS, Plugins und Bibliotheken mit öffentlich bekannten Sicherheitslücken.
+    - title: Fehlender Grundschutz
+      text: Keine Security-Header, unsichere Formularverarbeitung, offen erreichbare Admin-Bereiche und Standardeinstellungen.
+    - title: Kein Plan für den Ernstfall
+      text: Keine getesteten Backups, kein Monitoring und keine Ahnung, wen man anruft, wenn etwas schiefgeht.
+solution:
+  heading: Praktische Sicherheit, klar erklärt.
+  text: >-
+    Wir prüfen Ihre Website oder Anwendung anhand etablierter Standards wie den OWASP Top 10, priorisieren
+    die Ergebnisse nach ihrem tatsächlichen Risiko und beheben sie – oder begleiten Ihre Entwickler dabei.
+  pillars:
+    - title: Analysieren
+      text: Strukturierte Prüfung von Konfiguration, Code, Abhängigkeiten und Angriffsflächen.
+    - title: Härten
+      text: Header, Zugriffskontrolle, Eingabevalidierung, Updates und sichere Standardeinstellungen.
+    - title: Absichern
+      text: Monitoring, Backups und sichere Entwicklungsgewohnheiten, damit es so bleibt.
+included:
+  heading: Leistungsumfang
+  items:
+    - title: Website-Sicherheit
+      text: Härtung für WordPress und individuelle Websites – Updates, Plugins, Berechtigungen und Backups.
+    - title: Sicherheitsanalysen
+      text: Eine strukturierte Prüfung Ihrer Website oder Anwendung mit priorisiertem Bericht.
+    - title: Schwachstellenanalyse
+      text: Automatisierte und manuelle Prüfungen auf bekannte Schwachstellen und Fehlkonfigurationen.
+    - title: Härtung
+      text: Security-Header, CSP, TLS, Zugriffskontrolle und Serverkonfiguration.
+    - title: Sicherheit von Webanwendungen
+      text: Prüfung von Authentifizierung, Sessions, Eingabeverarbeitung und API-Sicherheit.
+    - title: Sicherheits-Best-Practices
+      text: Richtlinien für sicheres Programmieren, Pflege von Abhängigkeiten und Verwaltung von Zugangsdaten.
+    - title: Sicherheitsberatung
+      text: Beratung zu Architektur, Dienstleistern und Richtlinien – verständlich erklärt.
+process:
+  heading: So arbeiten wir
+  steps:
+    - title: Umfang & Autorisierung
+      text: Vereinbarte Ziele und Regeln sowie eine schriftliche Freigabe vor jedem Test.
+    - title: Analyse
+      text: Prüfung von Konfiguration, Abhängigkeiten, Anwendung und Infrastruktur.
+    - title: Bericht
+      text: Ergebnisse nach Risiko geordnet, mit Nachweisen und konkreten Lösungen.
+    - title: Beheben & erneut prüfen
+      text: Korrekturen werden umgesetzt und mit einer Nachprüfung bestätigt.
+benefits:
+  heading: Ihr Nutzen
+  items:
+    - title: Weniger offene Türen
+      text: Die gängigen, automatisierten Angriffswege werden zuerst geschlossen.
+    - title: Klare Prioritäten
+      text: Ein Bericht, der sagt, was am wichtigsten ist – kein 200-seitiger Scan-Ausdruck.
+    - title: Vertrauen bei Kunden und Partnern
+      text: Der Nachweis, dass Sie die Daten Ihrer Kunden ernst nehmen.
+faq:
+  - q: Können Sie unsere Website zu 100 % sicher machen?
+    a: >-
+      Das kann niemand ehrlicherweise versprechen. Bei Sicherheit geht es darum, Risiken auf ein
+      vertretbares Maß zu senken und im Ernstfall reaktionsfähig zu sein – genau dabei unterstützen wir Sie.
+  - q: Testen Sie nur, oder beheben Sie auch?
+    a: >-
+      Beides. Wir setzen Korrekturen selbst um oder arbeiten mit Ihren Entwicklern zusammen und prüfen deren
+      Änderungen.
+  - q: Ist das Testen für unsere Live-Website gefahrlos?
+    a: >-
+      Wir vereinbaren Umfang, Zeitpunkt und Methoden schriftlich, verzichten auf störende Tests im
+      Produktivsystem und nutzen nach Möglichkeit eine Staging-Kopie.
+  - q: Unterstützen Sie bei der DSGVO?
+    a: >-
+      Wir decken die technische Seite ab – sichere Formulare, Datenminimierung, Verschlüsselung und
+      Einwilligung. Für die rechtliche Beratung arbeiten wir mit Ihrer Anwältin, Ihrem Anwalt oder Ihrem
+      Datenschutzbeauftragten zusammen.
+cta:
+  heading: Finden Sie heraus, wo Sie stehen.
+  text: Starten Sie mit einer Sicherheitsanalyse Ihrer Website oder Anwendung.

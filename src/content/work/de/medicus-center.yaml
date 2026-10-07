@@ -1,0 +1,45 @@
+key: medicus-center
+lang: de
+industry: Gesundheitswesen – Zahnklinik
+location: Shkodër, Albanien
+summary: >-
+  Eine viersprachige Website für eine Zahnklinik mit internationalen Patienten – gebaut, um Behandlungen
+  verständlich zu erklären und die erste Kontaktaufnahme aus jedem Land einfach zu machen.
+metaDescription: >-
+  Fallstudie – mehrsprachige Next.js-Website für die MEDICUS Zahnklinik in Shkodër, Albanien, für
+  internationale Patienten. Web, SEO, Werbung und Social Media.
+overview: >-
+  MEDICUS ist eine Zahnklinik in Shkodër im Norden Albaniens und bietet Implantate, Kronen, Veneers und
+  komplette ästhetische Gebisssanierungen an. Viele Patienten reisen aus dem Ausland an – die Website
+  übernimmt daher die Rolle eines ersten Beratungsgesprächs für Menschen, die noch nie in Albanien waren.
+challenge: >-
+  Internationale Patienten treffen eine wohlüberlegte Entscheidung aus der Ferne. Sie müssen die
+  Behandlungen verstehen, der Klinik vertrauen und in ihrer eigenen Sprache Kontakt aufnehmen können – oft,
+  indem sie Fotos oder Röntgenbilder schicken, bevor sie überhaupt mit einem Zahnarzt gesprochen haben. Die
+  Website sollte Besucher aus Großbritannien, den USA, Deutschland und Italien ebenso ansprechen wie
+  Patienten vor Ort und auch mobil schnell bleiben.
+approach: >-
+  Wir haben die Website entlang der Patient Journey geplant statt entlang der Klinikstruktur: zuerst die
+  Behandlungen, dann Dentaltourismus, Belege und Kontakt. Ein dreistufiges Panel „Starten Sie Ihre Reise“
+  und eine durchgehend sichtbare Terminbuchung halten den nächsten Schritt auf jeder Seite präsent; für
+  schnelle Fragen steht WhatsApp bereit.
+design: >-
+  Eine ruhige Oberfläche in Marineblau und Petrol mit großzügiger Typografie, klaren Behandlungsseiten mit
+  eigenen Icons sowie Galerie und Bewertungen, die Vertrauen schaffen. Jede Seite wurde Mobile-first
+  gestaltet, weil die meisten Erstbesuche vom Smartphone kommen.
+development: >-
+  Die Website ist mit Next.js gebaut und als statische Seiten exportiert. Sie läuft auf Shared Hosting mit
+  einem schlanken PHP-Mailskript für das Kontaktformular – inklusive sicherem Datei-Upload für Fotos und
+  Röntgenbilder. Englisch, Albanisch, Italienisch und Deutsch laufen über next-intl mit lokalisierten
+  Metadaten, hreflang und Sitemap. Google Analytics lädt erst nach der Cookie-Einwilligung, und
+  strukturierte Daten vom Typ „Dentist“ beschreiben die Klinik für Suchmaschinen.
+result: >-
+  Die Klinik hat eine schnelle, viersprachige Website, die als internationaler Empfang funktioniert: Sie
+  erklärt Behandlungen, schafft Vertrauen und nimmt Patientenanfragen samt Unterlagen entgegen. Wir
+  betreuen sie weiterhin bei SEO, Werbung und Social Media.
+highlights:
+  - Vier Sprachen mit lokalisierten Metadaten und hreflang
+  - Kontaktformular mit sicherem Upload für Fotos und Röntgenbilder
+  - Statischer Next.js-Build auf kostengünstigem Shared Hosting
+  - Analytics erst nach Einwilligung und strukturierte Daten vom Typ „Dentist“
+  - Behandlungsseiten, Ratgeber zum Dentaltourismus, Galerie und FAQ

@@ -1,0 +1,269 @@
+---
+/**
+ * Cookie consent (GDPR / ePrivacy). Rules implemented:
+ *  - No analytics or marketing script is requested before consent.
+ *  - "Reject" is as prominent as "Accept"; choices can be changed any time
+ *    (footer → Cookie settings).
+ *  - Google Consent Mode v2 signals are updated to match the choice.
+ *  - If no tracking IDs are configured, no banner is shown at all.
+ */
+import { site } from '~/config/site';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const a = site.analytics;
+const hasTracking = Boolean(a.ga4Id || a.gtmId || a.metaPixelId);
+const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
+---
+
+<div
+  class="cc"
+  data-consent
+  data-ga4={a.ga4Id}
+  data-gtm={a.gtmId}
+  data-pixel={a.metaPixelId}
+  data-enabled={hasTracking ? 'true' : 'false'}
+  hidden
+>
+  <section class="cc__banner" role="region" aria-labelledby="cc-title">
+    <h2 id="cc-title" class="cc__title">{t.cookies.title}</h2>
+    <p class="cc__text">
+      {t.cookies.text}
+      <a href={url.section(lang, 'cookies')}>{t.cookies.policy}</a>
+    </p>
+    <div class="cc__actions">
+      <button type="button" class="cc__btn cc__btn--solid" data-cc="accept">{t.cookies.accept}</button>
+      <button type="button" class="cc__btn cc__btn--solid" data-cc="reject">{t.cookies.reject}</button>
+      <button type="button" class="cc__btn cc__btn--link" data-cc="settings">{t.cookies.customize}</button>
+    </div>
+  </section>
+</div>
+
+<dialog class="ccd" data-consent-dialog aria-labelledby="ccd-title">
+  <form method="dialog" class="ccd__form">
+    <h2 id="ccd-title" class="ccd__title">{t.cookies.title}</h2>
+    <p class="ccd__intro">{t.cookies.text}</p>
+    <fieldset class="ccd__opts">
+      <legend class="sr-only">{t.cookies.customize}</legend>
+      <div class="ccd__opt">
+        <div>
+          <p class="ccd__name">{t.cookies.necessary}</p>
+          <p class="ccd__desc">{t.cookies.necessaryText}</p>
+        </div>
+        <span class="ccd__always">{t.cookies.alwaysOn}</span>
+      </div>
+      <label class="ccd__opt">
+        <div>
+          <span class="ccd__name">{t.cookies.analytics}</span>
+          <span class="ccd__desc">{t.cookies.analyticsText}</span>
+        </div>
+        <input type="checkbox" name="analytics" class="ccd__switch" />
+      </label>
+      {
+        hasMarketing || !hasTracking ? (
+          <label class="ccd__opt">
+            <div>
+              <span class="ccd__name">{t.cookies.marketing}</span>
+              <span class="ccd__desc">{t.cookies.marketingText}</span>
+            </div>
+            <input type="checkbox" name="marketing" class="ccd__switch" />
+          </label>
+        ) : null
+      }
+    </fieldset>
+    <div class="ccd__actions">
+      <button type="submit" value="save" class="cc__btn cc__btn--solid">{t.cookies.save}</button>
+      <button type="submit" value="accept" class="cc__btn cc__btn--ghost">{t.cookies.accept}</button>
+      <button type="submit" value="reject" class="cc__btn cc__btn--ghost">{t.cookies.reject}</button>
+    </div>
+    <a class="ccd__policy" href={url.section(lang, 'cookies')}>{t.cookies.policy}</a>
+  </form>
+</dialog>
+
+<script>
+  import { initConsent } from '~/scripts/consent';
+  initConsent();
+</script>
+
+<style>
+  .cc {
+    position: fixed;
+    left: clamp(12px, 2vw, 24px);
+    right: clamp(12px, 2vw, 24px);
+    bottom: clamp(12px, 2vw, 24px);
+    z-index: 80;
+    display: flex;
+    justify-content: flex-start;
+    pointer-events: none;
+  }
+  .cc__banner {
+    pointer-events: auto;
+    width: min(460px, 100%);
+    padding: 1.4rem;
+    background: var(--surface-2);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cc__banner {
+      animation: cc-in 600ms var(--ease-out) both;
+    }
+  }
+  @keyframes cc-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+  .cc__title,
+  .ccd__title {
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+  .cc__text {
+    margin-top: 0.5rem;
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .cc__text a {
+    color: var(--pearl-aqua);
+    margin-left: 0.25em;
+  }
+  .cc__actions,
+  .ccd__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+  }
+  .cc__btn {
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--text);
+  }
+  /* Accept and reject share the same visual weight. */
+  .cc__btn--solid {
+    background: var(--text);
+    color: var(--ink-black);
+    border-color: var(--text);
+    flex: 1 1 auto;
+  }
+  .cc__btn--solid:hover {
+    background: var(--pearl-aqua);
+    border-color: var(--pearl-aqua);
+  }
+  .cc__btn--ghost:hover {
+    border-color: var(--pearl-aqua);
+  }
+  .cc__btn--link {
+    border-color: transparent;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    padding-inline: 0.5rem;
+  }
+
+  .ccd {
+    width: min(560px, calc(100% - 24px));
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+  }
+  .ccd::backdrop {
+    background: rgb(0 18 25 / 0.7);
+    backdrop-filter: blur(4px);
+  }
+  .ccd__form {
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+  .ccd__intro {
+    margin-top: 0.5rem;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .ccd__opts {
+    border: 0;
+    padding: 0;
+    margin: 1.25rem 0 0;
+  }
+  .ccd__opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .ccd__opt > div {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ccd__name {
+    font-weight: 600;
+  }
+  .ccd__desc {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .ccd__always {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--pearl-aqua);
+    white-space: nowrap;
+  }
+  .ccd__switch {
+    appearance: none;
+    flex: none;
+    width: 46px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--surface-3);
+    border: 1px solid var(--line-strong);
+    position: relative;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease);
+  }
+  .ccd__switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition:
+      transform var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+  .ccd__switch:checked {
+    background: var(--dark-cyan);
+    border-color: var(--dark-cyan);
+  }
+  .ccd__switch:checked::after {
+    transform: translateX(20px);
+    background: #fff;
+  }
+  .ccd__policy {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: var(--fs-sm);
+    color: var(--pearl-aqua);
+  }
+</style>

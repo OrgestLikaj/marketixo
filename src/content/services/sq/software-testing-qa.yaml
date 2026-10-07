@@ -1,0 +1,84 @@
+key: software-testing-qa
+lang: sq
+title: Testim softueri & QA
+shortTitle: QA & Testim
+tagline: Testim manual dhe i automatizuar që i kap problemet para përdoruesve tuaj.
+metaTitle: Testim softueri & QA — manual dhe i automatizuar | Marketixo
+metaDescription: Testim manual, automatizim testesh me Playwright, testim API dhe regresioni, strategji QA dhe integrim në CI/CD për aplikacione uebi dhe celulare.
+hero:
+  eyebrow: Shërbimi 08 — Mbrojtje
+  headline: Publikoni me siguri. Në çdo version.
+  lead: Testojmë aplikacione uebi dhe celulare manualisht dhe automatikisht — dhe ndërtojmë paketat e testeve dhe pipeline-at që vazhdojnë të kapin regresionet edhe shumë kohë pasi kemi ikur.
+problem:
+  heading: Gabimet që i gjejnë përdoruesit janë më të kushtueshmet.
+  intro: Kur testimi lihet për në fund, cilësia varet nga fati dhe nga netët pa gjumë.
+  points:
+    - title: Versionet e reja prishin funksione të vjetra
+      text: Një rregullim në një vend shkakton një defekt diku ku askush nuk mendoi të kontrollonte.
+    - title: Testimi është i pari që shkurtohet
+      text: Afatet e ngjeshin QA-në në pasditen e fundit para publikimit.
+    - title: Automatizim të cilit nuk i beson askush
+      text: Testet e paqëndrueshme injorohen, dhe paketa e testeve nuk mbron më asgjë.
+solution:
+  heading: Cilësia si pjesë e procesit.
+  text: Kombinojmë testimin manual eksplorues me automatizim të besueshëm, që ekzekutohet në pipeline-in tuaj CI/CD, që çdo ndryshim të kontrollohet para se të arrijë te përdoruesit.
+  pillars:
+    - title: Strategji e bazuar te rreziku
+      text: Përpjekja përqendrohet te rrjedhat që kanë më shumë rëndësi për përdoruesit dhe të ardhurat.
+    - title: Automatizim i besueshëm
+      text: Paketa testesh Playwright dhe API të mirëmbajtshme, me selektorë të qëndrueshëm dhe raporte të qarta.
+    - title: Reagim i vazhdueshëm
+      text: Testet ekzekutohen në çdo pull request dhe sipas orarit ndaj mjedisit staging dhe prodhimit.
+included:
+  heading: Çfarë përfshihet
+  items:
+    - title: Testim manual
+      text: Testim eksplorues dhe sipas skenarëve nga testues me përvojë.
+    - title: Automatizim testesh
+      text: Paketa end-to-end me Playwright, page objects dhe fixtures.
+    - title: Testim API
+      text: Teste kontrate, funksionale dhe negative për REST API.
+    - title: Testim i aplikacioneve të uebit
+      text: Testim i përputhshmërisë në Chromium, Firefox dhe WebKit.
+    - title: Testim në celular
+      text: Testim responsive dhe në pajisje, në telefona realë dhe emulatorë.
+    - title: Testim regresioni
+      text: Paketa të automatizuara që mbrojnë funksionet ekzistuese në çdo ndryshim.
+    - title: Testim end-to-end
+      text: Rrugëtime të plota të përdoruesit, nga regjistrimi deri te pagesa.
+    - title: Strategji QA dhe planifikim testesh
+      text: Strategjia e testimit, rastet e testimit, mjediset dhe kriteret e publikimit.
+    - title: Testim në CI/CD
+      text: Teste të integruara në GitHub Actions ose GitLab CI, me panele raportimi.
+process:
+  heading: Si funksionon
+  steps:
+    - title: Vlerësimi
+      text: Cilësia aktuale, rreziqet, mjetet dhe procesi i publikimit.
+    - title: Plani
+      text: Strategjia, prioritetet dhe rastet e testimit, të rëna dakord me ekipin tuaj.
+    - title: Testimi dhe automatizimi
+      text: Testim manual, plus një paketë e automatizuar për rrugët kritike.
+    - title: Integrimi dhe dorëzimi
+      text: Pipeline, raporte dhe dokumentacion që ekipi juaj mund t’i ekzekutojë dhe t’i zgjerojë.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Më pak incidente në prodhim
+      text: Regresionet kapen në pipeline, jo nga klientët.
+    - title: Publikime më të shpejta
+      text: Kontrollet e automatizuara zëvendësojnë raundet manuale të ngadalta dhe përsëritëse.
+    - title: Transparencë
+      text: Raporte të qarta për çfarë u testua, çfarë kaloi dhe çfarë jo.
+faq:
+  - q: Cilat mjete përdorni?
+    a: Kryesisht Playwright me TypeScript për testet end-to-end, Bruno dhe paketa të bazuara në kod për API-të, si dhe GitHub Actions ose GitLab CI për pipeline-at. Përshtatemi me teknologjitë tuaja.
+  - q: A mund të testoni softuer të ndërtuar nga një kompani tjetër?
+    a: Po. Testimi i pavarur shpesh është më i vlefshmi — nuk kemi asnjë interes që kodi të kalojë.
+  - q: Testim manual apo i automatizuar?
+    a: Të dyja. Automatizimi mbron rrugët kritike dhe përsëritëse; njerëzit eksplorojnë, gjykojnë përdorshmërinë dhe gjejnë të papriturat.
+  - q: A punoni brenda ekipit tonë?
+    a: Mund të vendosim një testues në sprintet tuaja ose ta ofrojmë testimin si projekt të përcaktuar, me raport.
+cta:
+  heading: Publikoni pa e mbajtur frymën.
+  text: Na tregoni për aplikacionin dhe procesin tuaj të publikimit — do t’ju sugjerojmë ku testimi do të ndihmojë më shumë.

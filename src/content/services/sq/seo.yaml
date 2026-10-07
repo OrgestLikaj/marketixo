@@ -1,0 +1,82 @@
+key: seo
+lang: sq
+title: SEO (optimizim për motorët e kërkimit)
+shortTitle: SEO
+tagline: Gjendeni nga njerëzit që po kërkojnë tashmë atë që ofroni.
+metaTitle: Agjenci SEO — SEO teknike, lokale dhe e përmbajtjes | Marketixo
+metaDescription: SEO teknike, optimizim on-page, SEO lokale dhe strategji përmbajtjeje që i ndihmojnë klientët e duhur t’ju gjejnë në Google. Raportim transparent, pa premtime boshe.
+hero:
+  eyebrow: Shërbimi 03 — Rritje
+  headline: Jini përgjigjja kur klientët tuaj kërkojnë.
+  lead: SEO-ja është kanali më i qëndrueshëm i marketingut — kur mbështetet në një faqe teknikisht të shëndoshë, në fjalët kyçe të duhura dhe në përmbajtje që ndihmon vërtet.
+problem:
+  heading: Biznese të mira mbeten të padukshme për arsye që zgjidhen.
+  intro: Shumica e problemeve me renditjen nuk janë mister. Janë gabime teknike, përmbajtje që mungon ose faqe që konkurrojnë me njëra-tjetrën.
+  points:
+    - title: Motorët e kërkimit nuk e lexojnë dot faqen siç duhet
+      text: Faqe të ngadalta, lidhje të prishura, përmbajtje e dublikuar ose meta të dhëna që mungojnë e pengojnë gjithçka.
+    - title: Synohen fjalët e gabuara
+      text: Faqet janë shkruar me gjuhën e kompanisë, jo me atë që klientët shkruajnë në kërkim.
+    - title: E padukshme në nivel lokal
+      text: Një Google Business Profile i paplotë bën që në hartë të shfaqen konkurrentët, jo ju.
+solution:
+  heading: Rregullojmë themelin, pastaj ndërtojmë autoritet.
+  text: Nisim me një auditim teknik, rregullojmë atë që pengon crawling-un dhe indeksimin, pastaj ndërtojmë faqe dhe përmbajtje rreth kërkesës reale në kërkim. Çdo rekomandim vjen bashkë me arsyen pas tij.
+  pillars:
+    - title: Teknika në radhë të parë
+      text: Crawling-u, shpejtësia, të dhënat e strukturuara, lidhjet e brendshme dhe konfigurimi ndërkombëtar.
+    - title: Përmbajtje sipas kërkesës
+      text: Kërkim fjalësh kyçe që e lidh qëllimin e kërkimit me faqen e duhur.
+    - title: Raportim i sinqertë
+      text: Raporte mujore për renditjen, trafikun dhe kërkesat — në gjuhë të thjeshtë.
+included:
+  heading: Çfarë përfshihet
+  items:
+    - title: Auditim SEO
+      text: Një listë me prioritete të problemeve teknike, të përmbajtjes dhe të autoritetit, me mundimin dhe ndikimin për secilin.
+    - title: SEO teknike
+      text: Indeksimi, sitemap-et, canonical, ridrejtimet, Core Web Vitals dhe të dhënat e strukturuara.
+    - title: SEO on-page
+      text: Titujt, përshkrimet, nëntitujt, lidhjet e brendshme dhe struktura e përmbajtjes.
+    - title: SEO lokale
+      text: Google Business Profile, landing page lokale, citime dhe strategji vlerësimesh.
+    - title: Strategji fjalësh kyçe
+      text: Kërkimi dhe lidhja e termave të kërkimit me faqet, sipas qëllimit dhe vlerës.
+    - title: SEO e përmbajtjes
+      text: Udhëzime shkrimi dhe artikuj që u përgjigjen pyetjeve reale dhe fitojnë lidhje.
+    - title: SEO ndërkombëtare
+      text: hreflang, URL të lokalizuara dhe fjalë kyçe për çdo treg në faqet shumëgjuhëshe.
+    - title: Monitorim
+      text: Search Console, renditja dhe analitika, të ndjekura dhe të raportuara çdo muaj.
+process:
+  heading: Si funksionon
+  steps:
+    - title: Auditimi
+      text: Një rishikim i plotë teknik dhe i përmbajtjes së faqes suaj dhe të konkurrentëve.
+    - title: Plani i veprimit
+      text: Prioritetet të renditura sipas ndikimit dhe mundimit, të rëna dakord me ju.
+    - title: Zbatimi
+      text: Rregullojmë dhe ndërtojmë vetë — ose punojmë me zhvilluesit tuaj për ta bërë.
+    - title: Matja dhe përmirësimi
+      text: Raportim mujor dhe përshtatje sipas asaj që tregojnë të dhënat.
+benefits:
+  heading: Çfarë përfitoni
+  items:
+    - title: Trafik që shtohet me kohën
+      text: Ndryshe nga reklamat, një renditje e mirë vazhdon të sjellë vizitorë pa paguar për çdo klikim.
+    - title: Kërkesa më të kualifikuara
+      text: Vizitorë që kanë kërkuar pikërisht atë që ofroni.
+    - title: Një pamje e qartë
+      text: Gjithmonë e dini çfarë bëmë, pse dhe çfarë ndryshoi.
+faq:
+  - q: Sa kohë duhet për të parë rezultate?
+    a: Rregullimet teknike mund të japin efekt brenda disa javësh. Renditja në fusha konkurruese zakonisht kërkon disa muaj punë të vazhdueshme. Para se të nisim, vendosim pritshmëri realiste bazuar në tregun tuaj.
+  - q: A mund të garantoni vendin e parë në Google?
+    a: Askush nuk mund ta garantojë sinqerisht renditjen — algoritmi i Google nuk shitet. Ne garantojmë punë të shëndoshë, transparencë dhe një plan të qartë.
+  - q: A bëni SEO për faqe shumëgjuhëshe?
+    a: Po. Vendosim hreflang, URL të lokalizuara dhe kërkim fjalësh kyçe për çdo gjuhë e treg, që secili version të renditet në tregun e vet.
+  - q: A e shkruani edhe përmbajtjen?
+    a: Po, në anglisht, gjermanisht, italisht dhe shqip — ose i japim ekipit tuaj udhëzimet dhe rishikojmë atë që shkruajnë.
+cta:
+  heading: Zbuloni çfarë po e mban mbrapa faqen tuaj.
+  text: Nisni me një auditim SEO — një listë e qartë e asaj që duhet rregulluar dhe me çfarë radhe.

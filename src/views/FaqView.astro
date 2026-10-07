@@ -1,0 +1,42 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Faq from '~/components/Faq.astro';
+import Button from '~/components/Button.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { useT } from '~/i18n';
+import { url } from '~/i18n/routes';
+import { breadcrumbs, faqPage } from '~/lib/schema';
+import type { PageEntry } from '~/lib/pages';
+
+interface Props {
+  page: PageEntry;
+}
+const { page } = Astro.props;
+const lang = page.lang;
+const t = useT(lang);
+const f = t.faqPage;
+const crumbs = [
+  { name: t.nav.home, path: url.section(lang, 'home') },
+  { name: t.nav.faq, path: page.path },
+];
+---
+
+<BaseLayout page={page} title={f.metaTitle} description={f.metaDescription} schema={[breadcrumbs(crumbs), faqPage(f.items)]}>
+  <PageHero lang={lang} crumbs={crumbs} eyebrow={f.eyebrow} title={f.heading} lead={f.lead} size="lg" />
+  <section class="section section--flush-top" aria-label={f.heading}>
+    <div class="container container--text">
+      <Faq items={f.items} level={2} />
+      <div class="more" data-reveal>
+        <Button href={url.section(lang, 'services')} variant="ghost">{t.common.exploreServices}</Button>
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .more {
+    margin-top: 2.5rem;
+  }
+</style>

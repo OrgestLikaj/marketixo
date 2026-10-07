@@ -1,0 +1,30 @@
+---
+/**
+ * Page section. `tone` switches the colour context: dark (default), surface
+ * (slightly lifted) or paper (light editorial). Spacing comes from tokens.
+ */
+interface Props {
+  tone?: 'dark' | 'surface' | 'paper';
+  size?: 'default' | 'sm';
+  line?: boolean;
+  flushTop?: boolean;
+  id?: string;
+  class?: string;
+  /** Forwarded attributes (incl. the parent's scoped-style id). */
+  [key: string]: unknown;
+  labelledby?: string;
+}
+const { tone = 'dark', size = 'default', line, flushTop, id, class: className, labelledby , ...rest } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  {...rest} class:list={[
+    'section',
+    { 'section--sm': size === 'sm', 'section--line': line, 'section--flush-top': flushTop, 'on-paper': tone === 'paper', 'on-surface': tone === 'surface' },
+    className,
+  ]}
+>
+  <slot />
+</section>

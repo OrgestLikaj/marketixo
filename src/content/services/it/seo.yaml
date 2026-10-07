@@ -1,0 +1,82 @@
+key: seo
+lang: it
+title: SEO (ottimizzazione per i motori di ricerca)
+shortTitle: SEO
+tagline: Si faccia trovare da chi sta già cercando ciò che offre.
+metaTitle: Agenzia SEO — SEO tecnica, locale e dei contenuti | Marketixo
+metaDescription: SEO tecnica, ottimizzazione on-page, SEO locale e strategia dei contenuti per farsi trovare su Google dai clienti giusti. Report trasparenti, niente promesse vuote.
+hero:
+  eyebrow: Servizio 03 — Crescere
+  headline: Sia Lei la risposta, quando i Suoi clienti cercano.
+  lead: La SEO è il canale di marketing più duraturo che esista — a patto che poggi su un sito tecnicamente solido, sulle parole chiave giuste e su contenuti davvero utili.
+problem:
+  heading: Aziende valide restano invisibili per motivi risolvibili.
+  intro: La maggior parte dei problemi di posizionamento non ha nulla di misterioso. Si tratta di errori tecnici, contenuti mancanti o pagine in concorrenza tra loro.
+  points:
+    - title: I motori di ricerca non leggono bene il sito
+      text: Pagine lente, link interrotti, contenuti duplicati o metadati mancanti frenano tutto il resto.
+    - title: Le parole chiave sbagliate
+      text: Le pagine sono scritte con il linguaggio dell’azienda, non con le parole che i clienti digitano.
+    - title: Invisibili a livello locale
+      text: Un Profilo dell’attività su Google incompleto fa comparire sulla mappa i concorrenti al posto Suo.
+solution:
+  heading: Prima le fondamenta, poi l’autorevolezza.
+  text: Partiamo da un audit tecnico, risolviamo ciò che ostacola scansione e indicizzazione, poi costruiamo pagine e contenuti sulla domanda di ricerca reale. Ogni raccomandazione è accompagnata dalla sua motivazione.
+  pillars:
+    - title: Prima la parte tecnica
+      text: Scansionabilità, velocità, dati strutturati, link interni e configurazione internazionale.
+    - title: Contenuti guidati dalla domanda
+      text: Una ricerca delle parole chiave che associa ogni intento di ricerca alla pagina giusta.
+    - title: Report onesti
+      text: Report mensili su posizionamenti, traffico e richieste, in un linguaggio chiaro.
+included:
+  heading: Cosa include
+  items:
+    - title: Audit SEO
+      text: Un elenco ordinato per priorità dei problemi tecnici, di contenuto e di autorevolezza, con impegno e impatto stimati per ciascuno.
+    - title: SEO tecnica
+      text: Indicizzazione, sitemap, canonical, redirect, Core Web Vitals e dati strutturati.
+    - title: SEO on-page
+      text: Title, meta description, intestazioni, link interni e struttura dei contenuti.
+    - title: SEO locale
+      text: Profilo dell’attività su Google, landing page locali, citazioni e strategia per le recensioni.
+    - title: Strategia delle parole chiave
+      text: Ricerca e mappatura dei termini di ricerca sulle pagine, per intento e valore.
+    - title: SEO dei contenuti
+      text: Brief e articoli che rispondono a domande reali e guadagnano link.
+    - title: SEO internazionale
+      text: hreflang, URL localizzati e parole chiave specifiche per ogni mercato nei siti multilingue.
+    - title: Monitoraggio
+      text: Search Console, posizionamenti e analytics monitorati e rendicontati ogni mese.
+process:
+  heading: Come funziona
+  steps:
+    - title: Audit
+      text: Un’analisi tecnica e dei contenuti completa del Suo sito e dei concorrenti.
+    - title: Roadmap
+      text: Priorità ordinate per impatto e impegno, concordate con Lei.
+    - title: Implementazione
+      text: Correggiamo e costruiamo noi, oppure lavoriamo con i Suoi sviluppatori.
+    - title: Misurazione e ottimizzazione
+      text: Report mensili e aggiustamenti basati su ciò che mostrano i dati.
+benefits:
+  heading: Cosa ottiene
+  items:
+    - title: Traffico che cresce nel tempo
+      text: A differenza della pubblicità, un buon posizionamento continua a portare visitatori senza pagare per ogni clic.
+    - title: Contatti più qualificati
+      text: Visitatori che hanno cercato esattamente ciò che offre.
+    - title: Un quadro chiaro
+      text: Sa sempre che cosa abbiamo fatto, perché e che cosa è cambiato.
+faq:
+  - q: Dopo quanto tempo vedremo i risultati?
+    a: Gli interventi tecnici possono produrre effetti nel giro di poche settimane. Posizionarsi su ricerche competitive richiede di solito diversi mesi di lavoro costante. Prima di iniziare definiamo aspettative realistiche in base al Suo mercato.
+  - q: Potete garantire il primo posto su Google?
+    a: Nessuno può garantire onestamente un posizionamento — l’algoritmo di Google non è in vendita. Garantiamo un lavoro solido, trasparenza e un piano chiaro.
+  - q: Vi occupate di SEO per siti multilingue?
+    a: Sì. Configuriamo hreflang, URL localizzati e una ricerca delle parole chiave specifica per ogni lingua, così ciascuna versione si posiziona nel proprio mercato.
+  - q: Scrivete anche i contenuti?
+    a: Sì, in inglese, tedesco, italiano e albanese. In alternativa prepariamo i brief per il Suo team e rivediamo i testi.
+cta:
+  heading: Scopra cosa frena il Suo sito.
+  text: Inizi con un audit SEO — un elenco chiaro di cosa correggere e in quale ordine.
