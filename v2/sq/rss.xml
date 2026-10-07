@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marketixo — Artikuj</title>
+    <link>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/</link>
+    <atom:link href="https://orgestlikaj.github.io/marketixo/v2/sq/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Artikuj praktikë për zhvillimin e uebit, SEO-në, marketingun dixhital, branding-un, sigurinë kibernetike dhe testimin e softuerit.</description>
+    <language>sq</language>
+    <item>
+      <title>Faqe shumëgjuhëshe që renditen: URL, hreflang dhe përkthime të mirëfillta</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/faqe-shumegjuhesh-seo/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/faqe-shumegjuhesh-seo/</guid>
+      <description>Udhëzues praktik për një faqe shumëgjuhëshe që motorët e kërkimit e kuptojnë — struktura e URL-ve, hreflang, ndërrimi i gjuhës dhe përmbajtja e lokalizuar.</description>
+      <pubDate>Wed, 07 Oct 2026 00:00:00 GMT</pubDate>
+      <category>SEO</category>
+      <category>Zhvillim uebi</category>
+    </item>
+    <item>
+      <title>Shtatë bazat e sigurisë që duhet të ketë çdo faqe biznesi</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/siguria-e-faqes-bazat/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/siguria-e-faqes-bazat/</guid>
+      <description>Shumica e sulmeve ndaj faqeve të bizneseve të vogla janë të automatizuara. Këto shtatë masa mbyllin dyert që ato kërkojnë — pa buxhet korporate.</description>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Siguri kibernetike</category>
+      <category>Zhvillim uebi</category>
+    </item>
+  </channel>
+</rss>

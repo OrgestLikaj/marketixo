@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marketixo — Insights</title>
+    <link>https://orgestlikaj.github.io/marketixo/v2/it/insights/</link>
+    <atom:link href="https://orgestlikaj.github.io/marketixo/v2/it/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Articoli pratici su sviluppo web, SEO, marketing digitale, branding, sicurezza informatica e software testing.</description>
+    <language>it</language>
+    <item>
+      <title>Siti multilingue che si posizionano: URL, hreflang e traduzioni vere</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/</guid>
+      <description>Guida pratica per costruire un sito multilingue che i motori di ricerca capiscono: struttura degli URL, hreflang, cambio lingua e contenuti localizzati.</description>
+      <pubDate>Wed, 07 Oct 2026 00:00:00 GMT</pubDate>
+      <category>SEO</category>
+      <category>Sviluppo web</category>
+    </item>
+    <item>
+      <title>Sette misure di sicurezza di base per ogni sito aziendale</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/</guid>
+      <description>Gran parte degli attacchi ai siti delle piccole imprese è automatizzata. Queste sette misure chiudono le porte che cercano, senza budget da grande azienda.</description>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Sicurezza informatica</category>
+      <category>Sviluppo web</category>
+    </item>
+  </channel>
+</rss>

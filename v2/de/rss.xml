@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marketixo — Insights</title>
+    <link>https://orgestlikaj.github.io/marketixo/v2/de/insights/</link>
+    <atom:link href="https://orgestlikaj.github.io/marketixo/v2/de/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Praxisnahe Artikel zu Webentwicklung, SEO, digitalem Marketing, Branding, Cybersicherheit und Softwaretests.</description>
+    <language>de</language>
+    <item>
+      <title>Mehrsprachige Websites, die ranken: URLs, hreflang und echte Übersetzungen</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/</guid>
+      <description>Ein Praxisleitfaden für mehrsprachige Websites, die Suchmaschinen verstehen – mit URL-Struktur, hreflang, Sprachumschalter und lokalisierten Inhalten.</description>
+      <pubDate>Wed, 07 Oct 2026 00:00:00 GMT</pubDate>
+      <category>SEO</category>
+      <category>Webentwicklung</category>
+    </item>
+    <item>
+      <title>Sieben Sicherheitsgrundlagen, die jede Unternehmenswebsite braucht</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/</guid>
+      <description>Die meisten Angriffe auf Websites kleiner Unternehmen laufen automatisiert. Diese sieben Maßnahmen schließen die Lücken, nach denen sie suchen – ganz ohne Konzernbudget.</description>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Cybersicherheit</category>
+      <category>Webentwicklung</category>
+    </item>
+  </channel>
+</rss>

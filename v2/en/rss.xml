@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marketixo — Insights</title>
+    <link>https://orgestlikaj.github.io/marketixo/v2/en/insights/</link>
+    <atom:link href="https://orgestlikaj.github.io/marketixo/v2/en/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Practical articles on web development, SEO, digital marketing, branding, cybersecurity and software testing.</description>
+    <language>en</language>
+    <item>
+      <title>Multilingual websites that rank: URLs, hreflang and real translations</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/en/insights/multilingual-website-seo/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/en/insights/multilingual-website-seo/</guid>
+      <description>A practical guide to building a multilingual website that search engines understand — URL structure, hreflang, language switching and localized content.</description>
+      <pubDate>Wed, 07 Oct 2026 00:00:00 GMT</pubDate>
+      <category>SEO</category>
+      <category>Web development</category>
+    </item>
+    <item>
+      <title>Seven security basics every business website should have</title>
+      <link>https://orgestlikaj.github.io/marketixo/v2/en/insights/website-security-basics/</link>
+      <guid>https://orgestlikaj.github.io/marketixo/v2/en/insights/website-security-basics/</guid>
+      <description>Most attacks on small business websites are automated. These seven measures close the doors they look for — no enterprise budget required.</description>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <category>Cybersecurity</category>
+      <category>Web development</category>
+    </item>
+  </channel>
+</rss>
