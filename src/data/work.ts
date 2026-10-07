@@ -154,6 +154,8 @@ export interface Client {
   client: string;
   url?: string;
   logo?: string;
+  /** Service keys from src/data/services.ts, shown when hovering the logo. Optional. */
+  services?: string[];
 }
 
 export const otherClients: Client[] = [
@@ -170,7 +172,7 @@ export const otherClients: Client[] = [
 
 /** Everyone, for the logo strip: project clients first, then the logo-only ones. */
 export const allClients: Client[] = [
-  ...projects.map(({ key, client, url, profile, logo }) => ({ key, client, url: url ?? profile, logo })),
+  ...projects.map(({ key, client, url, profile, logo, services }) => ({ key, client, url: url ?? profile, logo, services })),
   ...otherClients,
 ];
 

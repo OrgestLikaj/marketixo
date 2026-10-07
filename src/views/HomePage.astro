@@ -5,7 +5,7 @@ import ServiceExplorer from '~/components/ServiceExplorer.astro';
 import FeaturedWork from '~/components/FeaturedWork.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
-import ClientLogos from '~/components/ClientLogos.astro';
+import LogoGrid from '~/components/LogoGrid.astro';
 import { whatsappLink } from '~/config/site';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
 import { services } from '~/data/services';
@@ -54,6 +54,8 @@ const copy = {
     ],
     workEyebrow: 'Recent work',
     workTitle: 'Websites we built and grow',
+    clientsTitle: 'All brands we’ve worked with',
+    clientsHint: 'Hover over a logo to see what we did.',
     testimonialsTitle: 'What clients say',
     faq: [
       { q: 'How much does a website or marketing project cost?', a: 'Every business is different, so we give you a fixed price after a short call. Small business websites typically start in the low four figures; ongoing marketing is a monthly package. You always know the price before we start.' },
@@ -97,6 +99,8 @@ const copy = {
     ],
     workEyebrow: 'Aktuelle Projekte',
     workTitle: 'Websites, die wir bauen und wachsen lassen',
+    clientsTitle: 'Alle Marken, mit denen wir arbeiten',
+    clientsHint: 'Fahren Sie über ein Logo, um zu sehen, was wir gemacht haben.',
     testimonialsTitle: 'Das sagen unsere Kunden',
     faq: [
       { q: 'Was kostet eine Website oder ein Marketingprojekt?', a: 'Jedes Unternehmen ist anders, deshalb erhalten Sie nach einem kurzen Gespräch einen Festpreis. Websites für kleine Unternehmen beginnen meist im niedrigen vierstelligen Bereich; laufendes Marketing ist ein Monatspaket. Den Preis kennen Sie immer, bevor wir starten.' },
@@ -186,9 +190,6 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         </div>
       </div>
     </div>
-    <div class="container hero__clients">
-      <ClientLogos lang={lang} />
-    </div>
   </section>
 
   <!-- Marquee -->
@@ -275,6 +276,12 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
       </div>
       <FeaturedWork lang={lang} />
+
+      <div class="clients-head">
+        <h3>{copy.clientsTitle}</h3>
+        <p>{copy.clientsHint}</p>
+      </div>
+      <LogoGrid lang={lang} withCta />
     </div>
   </section>
 
@@ -564,12 +571,30 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
     }
   }
 
-  .hero__clients {
-    margin-top: clamp(48px, 6vw, 80px);
-  }
-  .hero__clients > :global(.clients) {
-    padding-top: 2rem;
+  /* Client logos under recent work */
+  .clients-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin: clamp(56px, 7vw, 88px) 0 1.25rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--line);
+  }
+  .clients-head h3 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+  }
+  .clients-head p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  @media (hover: none) {
+    .clients-head p {
+      display: none;
+    }
   }
 
   /* Marquee */

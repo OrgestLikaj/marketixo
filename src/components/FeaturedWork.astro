@@ -8,7 +8,7 @@ import Icon from './Icon.astro';
 import { featured, type Project } from '~/data/work';
 import type { Lang } from '~/i18n/ui';
 import { logoFor, screenshotFor } from '~/lib/assets';
-import { projectLink, projectServices } from '~/lib/work';
+import { projectLink, projectServices, serviceShort } from '~/lib/work';
 
 interface Props {
   lang: Lang;
@@ -17,17 +17,7 @@ interface Props {
 const { lang, projects = featured } = Astro.props;
 const visit = lang === 'de' ? 'Website ansehen' : 'Visit website';
 
-/** Short service labels, so the tags fit on one line. */
-const short: Record<string, Record<Lang, string>> = {
-  'web-design': { en: 'Website', de: 'Website' },
-  branding: { en: 'Branding', de: 'Branding' },
-  seo: { en: 'SEO', de: 'SEO' },
-  'paid-ads': { en: 'Ads', de: 'Werbung' },
-  'social-media': { en: 'Social media', de: 'Social Media' },
-  'content-marketing': { en: 'Content', de: 'Content' },
-  cybersecurity: { en: 'Security', de: 'Sicherheit' },
-  'software-testing': { en: 'Testing', de: 'Tests' },
-};
+
 
 const items = projects.slice(0, 3).map((p, i) => ({
   p,
@@ -36,7 +26,7 @@ const items = projects.slice(0, 3).map((p, i) => ({
   link: projectLink(p),
   logo: logoFor(p.key, p.logo),
   shot: screenshotFor(p.key, p.image),
-  services: projectServices(p, lang).map((x) => ({ ...x, label: short[x.key]?.[lang] ?? x.title })),
+  services: projectServices(p, lang).map((x) => ({ ...x, label: serviceShort(x.key, lang) })),
 }));
 ---
 

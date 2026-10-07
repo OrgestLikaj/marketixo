@@ -3,7 +3,8 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import WorkGallery from '~/components/WorkGallery.astro';
 import CtaBand from '~/components/CtaBand.astro';
-import ClientLogos from '~/components/ClientLogos.astro';
+import LogoGrid from '~/components/LogoGrid.astro';
+import { otherClients } from '~/data/work';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
 import { breadcrumbSchema } from '~/lib/schema';
 
@@ -17,12 +18,14 @@ const copy = {
     title: 'Our Work: Websites, Branding & Marketing Projects',
     description: 'Selected websites, logos, brand identities and marketing campaigns created by Marketixo for businesses across Europe.',
     h1: 'Work we’re proud of.',
+    moreTitle: 'More brands we’ve worked with',
     lead: 'Websites we designed and built — and then grew with SEO, ads and social media. Want to see something specific for your industry? Just ask.',
   },
   de: {
     title: 'Referenzen: Websites, Branding & Marketingprojekte',
     description: 'Ausgewählte Websites, Logos, Markenauftritte und Marketingkampagnen, die Marketixo für Unternehmen in ganz Europa umgesetzt hat.',
     h1: 'Projekte, auf die wir stolz sind.',
+    moreTitle: 'Weitere Marken, mit denen wir arbeiten',
     lead: 'Websites, die wir gestaltet und entwickelt — und dann mit SEO, Werbung und Social Media zum Wachsen gebracht haben. Sie möchten Beispiele aus Ihrer Branche sehen? Fragen Sie uns einfach.',
   },
 }[lang];
@@ -49,8 +52,21 @@ const crumbs = [
   <section class="section section--white" style="padding-top:clamp(48px,6vw,80px)">
     <div class="container">
       <WorkGallery lang={lang} />
-      <div style="margin-top:clamp(56px,7vw,96px)"><ClientLogos lang={lang} variant="wall" /></div>
+      <div class="more">
+        <h2>{copy.moreTitle}</h2>
+        <LogoGrid lang={lang} clients={otherClients} cols={3} />
+      </div>
     </div>
   </section>
   <CtaBand lang={lang} />
 </BaseLayout>
+
+<style>
+  .more {
+    margin-top: clamp(56px, 7vw, 96px);
+  }
+  .more h2 {
+    margin-bottom: 1.25rem;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+  }
+</style>
