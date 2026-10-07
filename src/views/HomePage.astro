@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Icon from '~/components/Icon.astro';
-import ServiceCard from '~/components/ServiceCard.astro';
+import ServiceExplorer from '~/components/ServiceExplorer.astro';
 import WorkGallery from '~/components/WorkGallery.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import ClientLogos from '~/components/ClientLogos.astro';
 import { whatsappLink } from '~/config/site';
 import { alternatesFor, t, url, type Lang } from '~/i18n/ui';
-import { groupOrder, services, servicesByGroup } from '~/data/services';
+import { services } from '~/data/services';
 import { testimonials } from '~/data/work';
 import { faqSchema } from '~/lib/schema';
 
@@ -217,23 +217,7 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         <p class="lead">{copy.servicesText}</p>
       </div>
 
-      <div class="groups">
-        {
-          groupOrder.map((g) => (
-            <div class={`group group--${g}`}>
-              <div class="group__head">
-                <h3>{s.groups[g].name}</h3>
-                <p>{s.groups[g].text}</p>
-              </div>
-              <div class="group__cards">
-                {servicesByGroup(g).map((svc) => (
-                  <ServiceCard service={svc} lang={lang} />
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </div>
+      <ServiceExplorer lang={lang} />
     </div>
   </section>
 
@@ -628,52 +612,6 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
   @keyframes marquee {
     to {
       transform: translateX(-50%);
-    }
-  }
-
-  /* Services groups */
-  .groups {
-    display: grid;
-    gap: clamp(48px, 6vw, 72px);
-  }
-  .group {
-    display: grid;
-    gap: 1.5rem;
-  }
-  @media (min-width: 1000px) {
-    .group {
-      grid-template-columns: 280px 1fr;
-      gap: 3rem;
-    }
-  }
-  .group__head {
-    padding-top: 1rem;
-    border-top: 2px solid var(--accent);
-  }
-  .group--build {
-    --accent: var(--build);
-  }
-  .group--grow {
-    --accent: var(--grow);
-  }
-  .group--protect {
-    --accent: var(--protect);
-  }
-  .group__head h3 {
-    margin: 0 0 0.4rem;
-    font-size: 1.75rem;
-  }
-  .group__head p {
-    margin: 0;
-    color: var(--muted);
-  }
-  .group__cards {
-    display: grid;
-    gap: 16px;
-  }
-  @media (min-width: 640px) {
-    .group__cards {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 

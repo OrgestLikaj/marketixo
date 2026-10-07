@@ -77,6 +77,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Components often set their own display; make sure the hidden attribute always wins. */
+[hidden] {
+  display: none !important;
+}
+
 img,
 svg {
   display: block;

@@ -1,0 +1,355 @@
+---
+/**
+ * Home page services: a numbered list grouped by Build / Grow / Protect, with a detail panel
+ * that follows the hovered or focused service (desktop). Every row is a real link to the
+ * service page, and all panel content is in the HTML, so it works without JavaScript and is
+ * fully indexable. On small screens the panel is hidden and each row shows a one-line summary.
+ */
+import Icon from './Icon.astro';
+import { t, url, type Lang } from '~/i18n/ui';
+import { groupOrder, servicesByGroup, serviceUrl } from '~/data/services';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = t(lang);
+const more = lang === 'de' ? 'Zur Leistung' : 'Explore service';
+const included = lang === 'de' ? 'Inklusive' : 'Included';
+
+let n = 0;
+const groups = groupOrder.map((g) => ({
+  key: g,
+  name: s.groups[g].name,
+  text: s.groups[g].text,
+  items: servicesByGroup(g).map((svc) => ({ svc, num: String(++n).padStart(2, '0'), c: svc.copy[lang] })),
+}));
+const all = groups.flatMap((g) => g.items.map((i) => ({ ...i, group: g.key, groupName: g.name })));
+---
+
+<div class="explorer" data-explorer>
+  <div class="explorer__list">
+    {
+      groups.map((g) => (
+        <div class={`explorer__group explorer__group--${g.key}`}>
+          <p class="explorer__label">
+            <span>{g.name}</span>
+            <small>{g.text}</small>
+          </p>
+          <ul>
+            {g.items.map(({ svc, num, c }) => (
+              <li>
+                <a
+                  href={serviceUrl(svc, lang)}
+                  class="explorer__row"
+                  data-key={svc.key}
+                  aria-current={num === '01' ? 'true' : undefined}
+                >
+                  <span class="explorer__num">{num}</span>
+                  <span class="explorer__text">
+                    <span class="explorer__title">{c.title}</span>
+                    <span class="explorer__tagline">{c.tagline}</span>
+                  </span>
+                  <span class="explorer__arrow" aria-hidden="true">
+                    <Icon name="arrow-up-right" size={18} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="explorer__stage" aria-live="polite">
+    {
+      all.map(({ svc, c, group, groupName, num }, i) => (
+        <article class={`panel panel--${group}`} data-panel={svc.key} hidden={i !== 0}>
+          <div class="panel__top">
+            <span class="panel__icon">
+              <Icon name={svc.icon} size={26} />
+            </span>
+            <span class="panel__badge">
+              {groupName} · {num}
+            </span>
+          </div>
+          <h3>{c.headline}</h3>
+          <p class="panel__intro">{c.intro}</p>
+          <p class="panel__label">{included}</p>
+          <ul class="check-list panel__list">
+            {c.deliverables.slice(0, 4).map((d) => (
+              <li>{d}</li>
+            ))}
+          </ul>
+          <div class="btn-row panel__actions">
+            <a href={serviceUrl(svc, lang)} class="btn btn--signal btn--sm">
+              {more} <Icon name="arrow" class="arrow" />
+            </a>
+            <a href={url('contact', lang) + '#quote'} class="btn btn--ghost btn--sm">
+              {s.cta.quoteShort}
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-explorer]').forEach((root) => {
+    const rows = root.querySelectorAll<HTMLAnchorElement>('[data-key]');
+    const panels = root.querySelectorAll<HTMLElement>('[data-panel]');
+    const show = (key: string) => {
+      rows.forEach((r) => (r.dataset.key === key ? r.setAttribute('aria-current', 'true') : r.removeAttribute('aria-current')));
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== key));
+    };
+    rows.forEach((row) => {
+      const key = row.dataset.key!;
+      row.addEventListener('mouseenter', () => show(key));
+      row.addEventListener('focus', () => show(key));
+    });
+  });
+</script>
+
+<style>
+  .explorer {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .explorer {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: start;
+    }
+  }
+
+  /* ---------- List ---------- */
+  .explorer__list {
+    display: grid;
+    gap: 2rem;
+  }
+  .explorer__group {
+    --accent: var(--build);
+  }
+  .explorer__group--grow {
+    --accent: var(--grow);
+  }
+  .explorer__group--protect {
+    --accent: var(--protect);
+  }
+  .explorer__group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .explorer__label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  .explorer__label span {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .explorer__label small {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .explorer__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.75rem 1rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--muted);
+    transition:
+      color 0.2s,
+      background-color 0.2s,
+      padding-left 0.3s var(--ease);
+  }
+  .explorer__row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18%;
+    bottom: 18%;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s var(--ease);
+  }
+  .explorer__num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+  }
+  .explorer__text {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .explorer__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .explorer__tagline {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+  .explorer__arrow {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition:
+      background-color 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .explorer__row:hover .explorer__arrow,
+  .explorer__row:focus-visible .explorer__arrow {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+    transform: rotate(45deg);
+  }
+
+  /* ---------- Detail panel ---------- */
+  .explorer__stage {
+    display: none;
+  }
+  .panel {
+    --accent: var(--build);
+    display: grid;
+    gap: 1rem;
+    padding: clamp(28px, 3vw, 40px);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(90% 70% at 100% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+      var(--white);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+    box-shadow: var(--shadow);
+    animation: panel-in 0.35s var(--ease);
+  }
+  .panel--grow {
+    --accent: var(--grow);
+  }
+  .panel--protect {
+    --accent: var(--protect);
+  }
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  .panel__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .panel__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--accent);
+    color: var(--white);
+  }
+  .panel__badge {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 12%, white);
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .panel h3 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  }
+  .panel__intro {
+    margin: 0;
+    color: var(--muted);
+  }
+  .panel__label {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .panel__list {
+    gap: 0.6rem;
+    font-size: 0.975rem;
+  }
+  .panel__list li::before {
+    background-color: color-mix(in srgb, var(--accent) 14%, white);
+  }
+  .panel__actions {
+    margin-top: 0.75rem;
+  }
+
+  /* Desktop: list + sticky panel; the active row is highlighted and the tagline lives in the panel. */
+  @media (min-width: 1000px) {
+    .explorer__stage {
+      display: block;
+      position: sticky;
+      top: 100px;
+    }
+    .explorer__tagline {
+      display: none;
+    }
+    .explorer__row[aria-current='true'] {
+      padding-left: 1.25rem;
+      background: var(--white);
+      color: var(--ink);
+    }
+    .explorer__row[aria-current='true']::before {
+      transform: scaleY(1);
+    }
+    .explorer__row[aria-current='true'] .explorer__arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+  }
+  @media (max-width: 999px) {
+    .explorer__row {
+      grid-template-columns: 2rem minmax(0, 1fr) auto;
+      padding-inline: 0;
+    }
+  }
+</style>
