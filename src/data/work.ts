@@ -7,8 +7,8 @@ import type { Lang } from '~/i18n/ui';
  * project `url` to /public/work/<key>.webp, and the cards pick them up automatically.
  * Until a screenshot exists, a branded cover with the client name is drawn instead.
  *
- * Logos: put them in /public/clients/<key>.svg (or .png) and set `logo` on the client.
- * Until then the logo strip shows the client name as a wordmark.
+ * Logos: /public/clients/<key>.(svg|png|webp), found automatically by key. Clients without one
+ * show their name instead.
  *
  * Layout: change `workLayout` below to switch how projects are shown on the Home and Work pages.
  * Compare all layouts side by side at /work-layouts/ (not linked anywhere, not indexed).
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     client: 'SCiDEV',
     url: 'https://scidevcenter.org/',
     services: fullService,
-    color: '#1F4FD6',
+    color: '#15234C',
     summary: {
       en: 'Center for Science and Innovation for Development, a Tirana-based think tank working on research, policy and science communication in the Western Balkans.',
       de: 'Center for Science and Innovation for Development, ein Thinktank aus Tirana für Forschung, Politikberatung und Wissenschaftskommunikation im Westbalkan.',
@@ -64,26 +64,26 @@ export const projects: Project[] = [
   },
   {
     key: 'medicus',
-    client: 'Medicus Center',
+    client: 'Medicus Health Center',
     url: 'https://medicuscenter.al/',
     services: fullService,
-    color: '#0E9F8E',
-    summary: { en: 'Full digital presence for Medicus Center.', de: 'Kompletter Online-Auftritt für Medicus Center.' },
+    color: '#87A926',
+    summary: { en: 'Full digital presence for Medicus Health Center.', de: 'Kompletter Online-Auftritt für Medicus Health Center.' },
   },
   {
     key: 'ir',
-    client: 'IR',
+    client: 'IR Real Estate & Management',
     url: 'https://ir.al/',
     services: fullService,
-    color: '#FF5A1F',
-    summary: { en: 'Full digital presence for IR.', de: 'Kompletter Online-Auftritt für IR.' },
+    color: '#9A804D',
+    summary: { en: 'Full digital presence for IR Real Estate & Management.', de: 'Kompletter Online-Auftritt für IR Real Estate & Management.' },
   },
   {
     key: 'finman',
     client: 'Finman',
     url: 'https://finman.al/',
     services: fullService,
-    color: '#0D3B66',
+    color: '#012954',
     summary: { en: 'Full digital presence for Finman.', de: 'Kompletter Online-Auftritt für Finman.' },
   },
   {
@@ -91,23 +91,23 @@ export const projects: Project[] = [
     client: 'Fintrade',
     url: 'https://fintrade.al/',
     services: fullService,
-    color: '#7C3AED',
+    color: '#202E6C',
     summary: { en: 'Full digital presence for Fintrade.', de: 'Kompletter Online-Auftritt für Fintrade.' },
   },
   {
     key: 'albstar',
-    client: 'Albstar',
+    client: 'AlbStar',
     url: 'https://albstar.al/',
     services: fullService,
-    color: '#C81E3A',
-    summary: { en: 'Full digital presence for Albstar.', de: 'Kompletter Online-Auftritt für Albstar.' },
+    color: '#021A67',
+    summary: { en: 'Full digital presence for AlbStar.', de: 'Kompletter Online-Auftritt für AlbStar.' },
   },
   {
     key: 'eydr',
     client: 'EYDR',
     url: 'https://eydr.scidevcenter.org/',
     services: fullService,
-    color: '#0F766E',
+    color: '#093C8E',
     summary: {
       en: 'SCiDEV project on youth participation in digital democracy, from digital skills to digital rights, across the Western Balkans.',
       de: 'SCiDEV-Projekt zur Beteiligung junger Menschen an digitaler Demokratie, von digitalen Kompetenzen bis zu digitalen Rechten, im Westbalkan.',
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     client: 'Albanian Athletes Group',
     url: 'https://albanianathletesgroup.com/',
     services: fullService,
-    color: '#D9480F',
+    color: '#E30613',
     summary: {
       en: 'Full digital presence for Albanian Athletes Group.',
       de: 'Kompletter Online-Auftritt für Albanian Athletes Group.',
@@ -126,23 +126,52 @@ export const projects: Project[] = [
   },
   {
     key: 'elbasanion',
-    client: 'Elbasanion',
+    client: 'ElbasaniON',
     url: 'https://elbasanion.al/new',
     services: fullService,
-    color: '#9A3412',
+    color: '#DD0917',
     summary: {
-      en: 'Full digital presence for Elbasanion.',
-      de: 'Kompletter Online-Auftritt für Elbasanion.',
+      en: 'Full digital presence for ElbasaniON.',
+      de: 'Kompletter Online-Auftritt für ElbasaniON.',
     },
   },
   {
     key: 'implant-swiss',
-    client: 'Implant Swiss Albania',
+    client: 'ImplantSwiss Albania',
     profile: 'https://www.instagram.com/implantswissalbania/',
     services: fullService,
-    color: '#0A7CBF',
-    summary: { en: 'Full digital presence for Implant Swiss Albania.', de: 'Kompletter Online-Auftritt für Implant Swiss Albania.' },
+    color: '#D32121',
+    summary: { en: 'Full digital presence for ImplantSwiss Albania.', de: 'Kompletter Online-Auftritt für ImplantSwiss Albania.' },
   },
+];
+
+/**
+ * Other clients we've worked with, shown as logos only (no project card) until there is a
+ * website or more detail to show. Logos live in /public/clients/<key>.(svg|png|webp).
+ */
+export interface Client {
+  key: string;
+  client: string;
+  url?: string;
+  logo?: string;
+}
+
+export const otherClients: Client[] = [
+  { key: 'impact', client: 'Impact SHPK' },
+  { key: 'souvlaki-station', client: 'Souvlaki Station' },
+  { key: 'smileprovider', client: 'SmileProvider Clinic' },
+  { key: 'newdent', client: 'NewDent Clinic' },
+  { key: 'subashi-dental', client: 'Subashi Dental Clinic' },
+  { key: 'arena-center', client: 'Arena Center' },
+  { key: 'tirana-factoring', client: 'Tirana Factoring & Lease' },
+  { key: 'aksoy', client: 'Aksoy Hukuk Bürosu' },
+  { key: 'altana', client: 'ALTANA Luxury Residence' },
+];
+
+/** Everyone, for the logo strip: project clients first, then the logo-only ones. */
+export const allClients: Client[] = [
+  ...projects.map(({ key, client, url, profile, logo }) => ({ key, client, url: url ?? profile, logo })),
+  ...otherClients,
 ];
 
 /** Projects with a live website — used by the 'cards' layout, which needs a site to frame. */
