@@ -1,0 +1,390 @@
+---
+/**
+ * "Recent work" on the home page: one large project and two smaller ones, each shown as a
+ * browser window on the client's brand colour. Inside the window is the real screenshot when
+ * /public/work/<key>.* exists, otherwise a mock homepage built around the client's logo.
+ */
+import Icon from './Icon.astro';
+import { featured, type Project } from '~/data/work';
+import type { Lang } from '~/i18n/ui';
+import { logoFor, screenshotFor } from '~/lib/assets';
+import { projectLink, projectServices } from '~/lib/work';
+
+interface Props {
+  lang: Lang;
+  projects?: Project[];
+}
+const { lang, projects = featured } = Astro.props;
+const visit = lang === 'de' ? 'Website ansehen' : 'Visit website';
+
+/** Short service labels, so the tags fit on one line. */
+const short: Record<string, Record<Lang, string>> = {
+  'web-design': { en: 'Website', de: 'Website' },
+  branding: { en: 'Branding', de: 'Branding' },
+  seo: { en: 'SEO', de: 'SEO' },
+  'paid-ads': { en: 'Ads', de: 'Werbung' },
+  'social-media': { en: 'Social media', de: 'Social Media' },
+  'content-marketing': { en: 'Content', de: 'Content' },
+  cybersecurity: { en: 'Security', de: 'Sicherheit' },
+  'software-testing': { en: 'Testing', de: 'Tests' },
+};
+
+const items = projects.slice(0, 3).map((p, i) => ({
+  p,
+  num: String(i + 1).padStart(2, '0'),
+  big: i === 0,
+  link: projectLink(p),
+  logo: logoFor(p.key, p.logo),
+  shot: screenshotFor(p.key, p.image),
+  services: projectServices(p, lang).map((x) => ({ ...x, label: short[x.key]?.[lang] ?? x.title })),
+}));
+---
+
+<ul class="feat">
+  {
+    items.map(({ p, num, big, link, logo, shot, services }, i) => (
+      <li class:list={['feat__item reveal', { 'feat__item--big': big }]} style={`--c:${p.color};transition-delay:${i * 90}ms`}>
+        <a class="feat__card" href={link?.href} target="_blank" rel="noopener">
+          <div class="feat__head">
+            <span class="feat__num">{num}</span>
+            <div class="feat__meta">
+              <h3>{p.client}</h3>
+              <ul class="feat__tags" aria-label={services.map((x) => x.title).join(', ')}>
+                {services.map((x) => (
+                  <li title={x.title}>{x.label}</li>
+                ))}
+              </ul>
+              {big && <p class="feat__summary">{p.summary[lang]}</p>}
+            </div>
+            <span class="feat__go" aria-hidden="true">
+              <Icon name="arrow-up-right" size={20} />
+            </span>
+          </div>
+
+          <div class="feat__browser" aria-hidden="true">
+            <div class="feat__bar">
+              <i />
+              <i />
+              <i />
+              <span class="feat__url">{link?.label}</span>
+            </div>
+            {shot ? (
+              <img class="feat__shot" src={shot} alt="" loading="lazy" decoding="async" width="1440" height="900" />
+            ) : (
+              <div class="feat__page">
+                <div class="feat__nav">
+                  {logo ? <img src={logo} alt="" loading="lazy" decoding="async" /> : <b>{p.client}</b>}
+                  <span />
+                  <span />
+                  <span />
+                  <em />
+                </div>
+                <div class="feat__hero">
+                  {logo && <img class="feat__hero-logo" src={logo} alt="" loading="lazy" decoding="async" />}
+                  <span class="feat__line feat__line--lg" />
+                  <span class="feat__line" />
+                  <span class="feat__btn" />
+                </div>
+                {big && (
+                  <div class="feat__tiles">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <span class="visually-hidden">
+            {visit}: {link?.label}
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .feat {
+    display: grid;
+    gap: clamp(14px, 1.8vw, 22px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 900px) {
+    .feat {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(300px, auto));
+    }
+    .feat__item--big {
+      grid-row: span 2;
+    }
+  }
+  .feat__item {
+    display: flex;
+    min-width: 0;
+  }
+
+  /* Card: brand colour (darkened a touch so white text always reads), browser bleeding off the bottom. */
+  .feat__card {
+    --ink-c: color-mix(in srgb, var(--c) 78%, #000);
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.4vw, 32px);
+    width: 100%;
+    min-height: 340px;
+    padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px) 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(80% 70% at 100% 0%, color-mix(in srgb, var(--c) 60%, white) 0%, transparent 60%),
+      linear-gradient(160deg, var(--c), var(--ink-c));
+    color: var(--white);
+    text-decoration: none;
+  }
+  .feat__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse 70% 70% at 90% 10%, #000 10%, transparent 70%);
+  }
+  .feat__item--big .feat__card {
+    min-height: 100%;
+  }
+
+  .feat__head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+  }
+  .feat__num {
+    padding-top: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.75;
+  }
+  .feat__meta {
+    display: grid;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+  .feat__meta h3 {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  }
+  .feat__item--big .feat__meta h3 {
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  }
+  .feat__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .feat__tags li {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    background: rgb(255 255 255 / 0.1);
+  }
+  .feat__summary {
+    max-width: 46ch;
+    margin: 0.25rem 0 0;
+    font-size: 0.975rem;
+    line-height: 1.5;
+    color: rgb(255 255 255 / 0.88);
+  }
+  .feat__go {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--ink-c);
+    transition: transform 0.35s var(--ease);
+  }
+  .feat__card:hover .feat__go,
+  .feat__card:focus-visible .feat__go {
+    transform: rotate(45deg);
+  }
+
+  /* Browser window */
+  .feat__browser {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 190px;
+    margin-bottom: -28px;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+    background: var(--white);
+    box-shadow: 0 30px 60px rgb(0 0 0 / 0.28);
+    transform: translateY(10px);
+    transition: transform 0.6s var(--ease);
+  }
+  .feat__card:hover .feat__browser {
+    transform: translateY(-4px);
+  }
+  .feat__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    height: 34px;
+    padding: 0 12px;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  .feat__bar i {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e2e2e2;
+  }
+  .feat__url {
+    flex: 1;
+    max-width: 60%;
+    margin-left: 8px;
+    padding: 3px 12px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #777;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .feat__shot {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Mock homepage around the logo */
+  .feat__page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6%;
+    padding: 4% 6% 0;
+    color: var(--ink);
+  }
+  .feat__nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .feat__nav img {
+    height: 26px;
+    width: auto;
+    max-width: 30%;
+    margin-right: auto;
+    object-fit: contain;
+  }
+  .feat__nav b {
+    margin-right: auto;
+    font-family: var(--font-display);
+  }
+  .feat__nav span {
+    width: 7%;
+    height: 7px;
+    border-radius: 4px;
+    background: #e8e8e8;
+  }
+  .feat__nav em {
+    width: 14%;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--c);
+  }
+  .feat__hero {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 12px;
+    flex: 1;
+    padding: 4% 0 7%;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--c) 7%, white);
+  }
+  .feat__hero-logo {
+    height: clamp(56px, 7vw, 92px);
+    width: auto;
+    max-width: 70%;
+    margin-block: 6% 4px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+  .feat__item:not(.feat__item--big) .feat__hero-logo {
+    height: clamp(40px, 4.2vw, 58px);
+  }
+  .feat__line {
+    width: 46%;
+    height: 8px;
+    border-radius: 5px;
+    background: #e3e3e3;
+  }
+  .feat__line--lg {
+    width: 62%;
+    height: 12px;
+    background: color-mix(in srgb, var(--c) 30%, #ddd);
+  }
+  .feat__btn {
+    width: 22%;
+    height: 22px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: var(--c);
+  }
+  .feat__item--big .feat__hero {
+    flex: none;
+    padding: 7% 0 6%;
+  }
+  .feat__tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4%;
+    flex: 1;
+    min-height: 90px;
+  }
+  .feat__tiles span {
+    border-radius: 10px;
+    background:
+      linear-gradient(#e6e6e6, #e6e6e6) 14% 70% / 60% 7px no-repeat,
+      linear-gradient(#ececec, #ececec) 14% 84% / 44% 7px no-repeat,
+      linear-gradient(color-mix(in srgb, var(--c) 55%, white), color-mix(in srgb, var(--c) 55%, white)) 14% 22% / 26px 26px no-repeat,
+      #f6f6f6;
+  }
+  .feat__item:not(.feat__item--big) .feat__line:not(.feat__line--lg) {
+    display: none;
+  }
+
+  @media (max-width: 899px) {
+    .feat__card {
+      min-height: 380px;
+    }
+  }
+</style>

@@ -2,7 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Icon from '~/components/Icon.astro';
 import ServiceExplorer from '~/components/ServiceExplorer.astro';
-import WorkGallery from '~/components/WorkGallery.astro';
+import FeaturedWork from '~/components/FeaturedWork.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import ClientLogos from '~/components/ClientLogos.astro';
@@ -52,8 +52,8 @@ const copy = {
       { title: 'Build & launch', text: 'We design, build and test, with check-ins at every milestone.' },
       { title: 'Measure & improve', text: 'We track what matters and keep improving after launch.' },
     ],
-    workEyebrow: 'Selected work',
-    workTitle: 'Recent projects',
+    workEyebrow: 'Recent work',
+    workTitle: 'Websites we built and grow',
     testimonialsTitle: 'What clients say',
     faq: [
       { q: 'How much does a website or marketing project cost?', a: 'Every business is different, so we give you a fixed price after a short call. Small business websites typically start in the low four figures; ongoing marketing is a monthly package. You always know the price before we start.' },
@@ -95,8 +95,8 @@ const copy = {
       { title: 'Umsetzung & Launch', text: 'Wir gestalten, entwickeln und testen — mit Abstimmung bei jedem Meilenstein.' },
       { title: 'Messen & verbessern', text: 'Wir messen, was zählt, und optimieren auch nach dem Launch weiter.' },
     ],
-    workEyebrow: 'Ausgewählte Projekte',
-    workTitle: 'Aktuelle Referenzen',
+    workEyebrow: 'Aktuelle Projekte',
+    workTitle: 'Websites, die wir bauen und wachsen lassen',
     testimonialsTitle: 'Das sagen unsere Kunden',
     faq: [
       { q: 'Was kostet eine Website oder ein Marketingprojekt?', a: 'Jedes Unternehmen ist anders, deshalb erhalten Sie nach einem kurzen Gespräch einen Festpreis. Websites für kleine Unternehmen beginnen meist im niedrigen vierstelligen Bereich; laufendes Marketing ist ein Monatspaket. Den Preis kennen Sie immer, bevor wir starten.' },
@@ -274,7 +274,7 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
         </div>
         <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
       </div>
-      <WorkGallery lang={lang} limit={3} />
+      <FeaturedWork lang={lang} />
     </div>
   </section>
 
