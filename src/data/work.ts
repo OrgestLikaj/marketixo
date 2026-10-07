@@ -176,10 +176,6 @@ export const allClients: Client[] = [
   ...otherClients,
 ];
 
-/** Projects featured as "Recent work" on the home page, in this order. */
-export const featuredKeys = ['medicus', 'elbasanion', 'scidev'];
-export const featured = featuredKeys.flatMap((k) => projects.filter((p) => p.key === k));
-
 /** Projects with a live website — used by the 'cards' layout, which needs a site to frame. */
 export const showcase = projects.filter((p) => p.url);
 

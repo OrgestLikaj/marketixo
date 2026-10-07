@@ -2,7 +2,6 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Icon from '~/components/Icon.astro';
 import ServiceExplorer from '~/components/ServiceExplorer.astro';
-import FeaturedWork from '~/components/FeaturedWork.astro';
 import Faq from '~/components/Faq.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import LogoGrid from '~/components/LogoGrid.astro';
@@ -53,8 +52,7 @@ const copy = {
       { title: 'Measure & improve', text: 'We track what matters and keep improving after launch.' },
     ],
     workEyebrow: 'Recent work',
-    workTitle: 'Websites we built and grow',
-    clientsTitle: 'All brands we’ve worked with',
+    workTitle: 'Brands we’ve worked with',
     clientsHint: 'Hover over a logo to see what we did.',
     testimonialsTitle: 'What clients say',
     faq: [
@@ -98,8 +96,7 @@ const copy = {
       { title: 'Messen & verbessern', text: 'Wir messen, was zählt, und optimieren auch nach dem Launch weiter.' },
     ],
     workEyebrow: 'Aktuelle Projekte',
-    workTitle: 'Websites, die wir bauen und wachsen lassen',
-    clientsTitle: 'Alle Marken, mit denen wir arbeiten',
+    workTitle: 'Marken, mit denen wir arbeiten',
     clientsHint: 'Fahren Sie über ein Logo, um zu sehen, was wir gemacht haben.',
     testimonialsTitle: 'Das sagen unsere Kunden',
     faq: [
@@ -273,13 +270,10 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
           <span class="eyebrow">{copy.workEyebrow}</span>
           <h2 style="margin-top:1rem">{copy.workTitle}</h2>
         </div>
-        <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
-      </div>
-      <FeaturedWork lang={lang} />
-
-      <div class="clients-head">
-        <h3>{copy.clientsTitle}</h3>
-        <p>{copy.clientsHint}</p>
+        <div class="work-aside">
+          <p class="work-hint">{copy.clientsHint}</p>
+          <a href={url('work', lang)} class="link-arrow">{s.cta.allWork} <Icon name="arrow" /></a>
+        </div>
       </div>
       <LogoGrid lang={lang} withCta />
     </div>
@@ -571,28 +565,24 @@ const marquee = services.map((svc) => svc.copy[lang].title.split(' (')[0]);
     }
   }
 
-  /* Client logos under recent work */
-  .clients-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 2rem;
-    margin: clamp(56px, 7vw, 88px) 0 1.25rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
+  /* Recent work: hint + link beside the heading */
+  .work-aside {
+    display: grid;
+    justify-items: end;
+    gap: 0.5rem;
   }
-  .clients-head h3 {
-    margin: 0;
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
-  }
-  .clients-head p {
+  .work-hint {
     margin: 0;
     color: var(--muted);
     font-size: 0.9375rem;
   }
+  @media (max-width: 700px) {
+    .work-aside {
+      justify-items: start;
+    }
+  }
   @media (hover: none) {
-    .clients-head p {
+    .work-hint {
       display: none;
     }
   }
