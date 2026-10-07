@@ -53,6 +53,18 @@ Upload the **contents** of `dist/` — including the hidden `.htaccess` — into
 with *cPanel → File Manager* (upload a zip, then *Extract*) or an FTP client such as FileZilla
 (enable "show hidden files").
 
+## Preview on GitHub Pages
+
+Every push to `marketixo-v2` publishes a preview to
+**https://orgestlikaj.github.io/marketixo/v2/** (`.github/workflows/pages.yml`).
+
+- It is built under the `/marketixo/v2` sub-path (`BASE_PATH`) and marked `noindex`.
+- GitHub Pages can't run PHP, so the contact form shows an error there. `.htaccess` rules
+  (redirects, security headers) don't apply on Pages either; test those on Namecheap.
+- To build the same thing locally:
+  `BASE_PATH=/marketixo/v2 PUBLIC_SITE_URL=https://orgestlikaj.github.io npm run build`
+  (on Git Bash prefix `MSYS_NO_PATHCONV=1`), then `npx astro preview`.
+
 ## 3. After the first deploy
 
 - [ ] `https://marketixo.com/` redirects to `/en/` (or `/de/`, `/it/`, `/sq/` by browser language)

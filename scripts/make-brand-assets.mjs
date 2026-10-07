@@ -45,13 +45,13 @@ writeFileSync(
     {
       name: 'Marketixo',
       short_name: 'Marketixo',
-      start_url: '/',
+      start_url: './',
       display: 'standalone',
       background_color: '#001219',
       theme_color: '#001219',
       icons: [
-        { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+        { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
       ],
     },
     null,

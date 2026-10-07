@@ -1,0 +1,54 @@
+name: GitHub Pages preview (v2)
+
+# Publishes a preview of this branch to https://<owner>.github.io/<repo>/v2/
+# (for OrgestLikaj/marketixo: https://orgestlikaj.github.io/marketixo/v2/).
+#
+# - Built under the /<repo>/v2 sub-path and marked noindex, so it never competes
+#   with the real domain in search results.
+# - Published into the v2/ folder of the gh-pages branch with keep_files, so the
+#   existing preview at the root of gh-pages stays untouched.
+# - GitHub Pages has no PHP, so the contact form can't send from the preview.
+#
+# One-time setup (already done for this repo): Settings → Pages → Build and deployment →
+# Source: "Deploy from a branch", Branch: gh-pages / (root).
+
+on:
+  push:
+    branches: [marketixo-v2]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-v2
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build preview (sub-path, noindex)
+        run: npm run build
+        env:
+          PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io
+          BASE_PATH: /${{ github.event.repository.name }}/v2
+          NOINDEX: 'true'
+
+      - name: Publish to gh-pages/v2
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: v2
+          keep_files: true
+          commit_message: 'Preview build (v2)'

@@ -7,13 +7,14 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Button from '~/components/Button.astro';
 import { locales, useT } from '~/i18n';
 import { url } from '~/i18n/routes';
+import { base } from '~/lib/base';
 
 const page = { lang: 'en' as const, path: '/404.html', alternates: {}, kind: 'thanks' as const, noindex: true };
 const t = useT('en');
 ---
 
 <BaseLayout page={page} title={t.notFound.metaTitle} description={t.notFound.text}>
-  <section class="nf">
+  <section class="nf" data-base={base}>
     <div class="blueprint" aria-hidden="true"></div>
     <div class="container nf__inner">
       <p class="nf__code" aria-hidden="true">404</p>
@@ -37,7 +38,8 @@ const t = useT('en');
     </div>
   </section>
   <script>
-    const seg = location.pathname.split('/')[1];
+    const prefix = document.querySelector<HTMLElement>('[data-base]')?.dataset.base ?? '';
+    const seg = location.pathname.slice(prefix.length).split('/')[1];
     const block = document.querySelector<HTMLElement>(`[data-nf-lang="${seg}"]`);
     if (block && seg !== 'en') {
       document.querySelectorAll<HTMLElement>('[data-nf-lang]').forEach((el) => (el.hidden = el !== block));

@@ -15,6 +15,8 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
 const dist = process.argv[2] ?? 'dist';
+// Sub-path builds (GitHub Pages preview): BASE_PATH=/marketixo/v2
+const base = (process.env.BASE_PATH ?? '').replace(/\/$/, '');
 const errors = [];
 const warnings = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);
@@ -23,15 +25,19 @@ const warn = (file, msg) => warnings.push(`${file}: ${msg}`);
 const walk = (dir) => readdirSync(dir).flatMap((f) => (statSync(join(dir, f)).isDirectory() ? walk(join(dir, f)) : [join(dir, f)]));
 const all = walk(dist);
 const html = all.filter((f) => f.endsWith('.html'));
-const toUrl = (file) => '/' + relative(dist, file).split(sep).join('/').replace(/index\.html$/, '').replace(/\.html$/, '.html');
+const toUrl = (file) => base + '/' + relative(dist, file).split(sep).join('/').replace(/index\.html$/, '').replace(/\.html$/, '.html');
 
 // Site origin from the sitemap (absolute URLs).
 const sitemap = existsSync(join(dist, 'sitemap.xml')) ? readFileSync(join(dist, 'sitemap.xml'), 'utf8') : '';
 const origin = (sitemap.match(/<loc>(https?:\/\/[^/<]+)/) ?? [])[1] ?? '';
 
 const exists = (path) => {
-  const clean = decodeURI(path.split('#')[0].split('?')[0]);
+  let clean = decodeURI(path.split('#')[0].split('?')[0]);
   if (!clean.startsWith('/')) return true;
+  if (base) {
+    if (!clean.startsWith(base + '/')) return false; // escapes the sub-path → broken on the preview
+    clean = clean.slice(base.length);
+  }
   const p = join(dist, clean);
   return (existsSync(p) && statSync(p).isFile()) || existsSync(join(p, 'index.html'));
 };
@@ -53,12 +59,12 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/
 const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`)) ?? [])[1];
 
 for (const [url, src] of pages) {
-  const isGate = url === '/' || url === '/404.html';
+  const isGate = url === base + '/' || url === base + '/404.html';
   const noindex = /<meta name="robots" content="noindex/.test(src);
 
   const lang = (src.match(/<html[^>]*\slang="([^"]+)"/) ?? [])[1];
   if (!lang) err(url, 'missing <html lang>');
-  else if (!isGate && !url.startsWith(`/${lang}/`)) err(url, `lang="${lang}" does not match URL`);
+  else if (!isGate && !url.startsWith(`${base}/${lang}/`)) err(url, `lang="${lang}" does not match URL`);
 
   const rawTitle = (src.match(/<title>([^<]*)<\/title>/) ?? [])[1];
   const title = rawTitle && decode(rawTitle);
@@ -76,7 +82,7 @@ for (const [url, src] of pages) {
   }
 
   const h1 = (src.match(/<h1[\s>]/g) ?? []).length;
-  if (!isGate && h1 !== 1 && url !== '/404.html') err(url, `${h1} <h1> elements (expected 1)`);
+  if (!isGate && h1 !== 1) err(url, `${h1} <h1> elements (expected 1)`);
 
   if (!isGate) {
     const canonical = (src.match(/<link rel="canonical" href="([^"]+)"/) ?? [])[1];
@@ -104,7 +110,7 @@ for (const [url, src] of pages) {
   // Links & assets
   for (const m of src.matchAll(/\s(?:href|src)="(\/[^"]*)"/g)) {
     const target = m[1];
-    if (target.startsWith('//') || target.startsWith('/_image') || target.startsWith('/api/')) continue;
+    if (target.startsWith('//') || target.startsWith(base + '/_image') || target.startsWith(base + '/api/')) continue;
     if (!exists(target)) err(url, `broken internal link/asset ${target}`);
   }
   for (const m of src.matchAll(/\ssrcset="([^"]+)"/g)) {

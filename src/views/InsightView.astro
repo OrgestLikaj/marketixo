@@ -10,6 +10,7 @@ import { insightSlug, publishedInsights, type PageEntry } from '~/lib/pages';
 import { article, breadcrumbs } from '~/lib/schema';
 import { readingTime } from '~/lib/reading-time';
 import { site } from '~/config/site';
+import { withBase } from '~/lib/base';
 
 interface Props {
   page: PageEntry;
@@ -27,7 +28,7 @@ const crumbs = [
   { name: t.nav.insights, path: url.section(lang, 'insights') },
   { name: d.title, path: page.path },
 ];
-const image = d.ogImage ?? site.ogImage;
+const image = d.ogImage ? withBase(d.ogImage) : site.ogImage;
 const more = (await publishedInsights(lang)).filter((p) => p.id !== entry.id).slice(0, 3);
 const section = ins.categories[d.categories[0]];
 ---

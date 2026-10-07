@@ -9,6 +9,7 @@ import { site } from '~/config/site';
 import { useT, type Lang } from '~/i18n';
 import type { PageEntry } from '~/lib/pages';
 import { graph, organization, website } from '~/lib/schema';
+import { withBase } from '~/lib/base';
 
 interface Props {
   page: Pick<PageEntry, 'lang' | 'path' | 'alternates' | 'kind' | 'noindex'>;
@@ -29,7 +30,7 @@ const { page, title, description, image, imageAlt, type, article, canonical, sch
 const lang: Lang = page.lang;
 const t = useT(lang);
 const jsonLd = graph(organization(lang), website(lang, t.meta.defaultDescription), ...schema);
-const xDefault = page.kind === 'home' ? '/' : undefined;
+const xDefault = page.kind === 'home' ? withBase('/') : undefined;
 ---
 
 <!doctype html>
@@ -62,12 +63,12 @@ const xDefault = page.kind === 'home' ? '/' : undefined;
     <meta name="theme-color" content={site.themeColor} />
     <meta name="color-scheme" content="dark light" />
     <meta name="format-detection" content="telephone=no" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="sitemap" href="/sitemap.xml" />
-    {page.kind === 'insights' && <link rel="alternate" type="application/rss+xml" title={`${site.name} — ${t.nav.insights}`} href={`/${lang}/rss.xml`} />}
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
+    <link rel="sitemap" href={withBase('/sitemap.xml')} />
+    {page.kind === 'insights' && <link rel="alternate" type="application/rss+xml" title={`${site.name} — ${t.nav.insights}`} href={withBase(`/${lang}/rss.xml`)} />}
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">{t.nav.skip}</a>

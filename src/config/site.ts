@@ -8,6 +8,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 import { NOINDEX, SITE_URL } from './env.mjs';
+import { withBase } from '~/lib/base';
 
 export const site = {
   /** Brand name used in titles, logo alt text and copy. */
@@ -68,10 +69,10 @@ export const site = {
   },
 
   /** Contact form endpoint (PHP on Namecheap). */
-  formEndpoint: '/api/contact.php',
+  formEndpoint: withBase('/api/contact.php'),
 
   /** Default Open Graph image (public/). Pages can override. */
-  ogImage: '/og/default.png',
+  ogImage: withBase('/og/default.png'),
   themeColor: '#001219',
 };
 

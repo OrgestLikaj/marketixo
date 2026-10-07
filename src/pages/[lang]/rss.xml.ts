@@ -5,6 +5,7 @@ import { useT } from '~/i18n';
 import { url } from '~/i18n/routes';
 import { insightSlug, publishedInsights } from '~/lib/pages';
 import { site } from '~/config/site';
+import { withBase } from '~/lib/base';
 
 export const getStaticPaths = (() => locales.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
@@ -32,7 +33,7 @@ ${p.data.categories.map((c) => `      <category>${esc(t.insights.categories[c])}
   <channel>
     <title>${esc(`${site.name} — ${t.nav.insights}`)}</title>
     <link>${abs(url.section(lang, 'insights'))}</link>
-    <atom:link href="${abs(`/${lang}/rss.xml`)}" rel="self" type="application/rss+xml"/>
+    <atom:link href="${abs(withBase(`/${lang}/rss.xml`))}" rel="self" type="application/rss+xml"/>
     <description>${esc(t.insights.metaDescription)}</description>
     <language>${lang}</language>
 ${items}

@@ -15,6 +15,7 @@ import { url } from '~/i18n/routes';
 import { projectByKey, sortedProjects } from '~/data/projects';
 import { workImages } from '~/lib/work-images';
 import { breadcrumbs, caseStudy } from '~/lib/schema';
+import { site } from '~/config/site';
 import type { PageEntry } from '~/lib/pages';
 
 interface Props {
@@ -67,7 +68,7 @@ const story = [
   imageAlt={project.client}
   schema={[
     breadcrumbs(crumbs),
-    caseStudy({ name: project.client, description: c.metaDescription, path: page.path, lang, image: og?.src ?? '/og/default.png', client: project.client, clientUrl: project.url, services: project.services.map((s) => serviceNames[s] ?? s) }),
+    caseStudy({ name: project.client, description: c.metaDescription, path: page.path, lang, image: og?.src ?? site.ogImage, client: project.client, clientUrl: project.url, services: project.services.map((s) => serviceNames[s] ?? s) }),
   ]}
 >
   <article style={`--brand:${project.brand}`}>

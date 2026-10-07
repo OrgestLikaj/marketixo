@@ -7,6 +7,7 @@
 import { site } from '~/config/site';
 import { defaultLang, languageMeta, locales } from '~/i18n/config';
 import Logo from '~/components/Logo.astro';
+import { base, withBase } from '~/lib/base';
 import '~/styles/global.css';
 
 const abs = (p: string) => new URL(p, site.url).href;
@@ -19,13 +20,13 @@ const abs = (p: string) => new URL(p, site.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{site.name} — Digital agency</title>
     <meta name="description" content="Marketixo — design, technology, marketing, security and quality. Choose your language." />
-    <link rel="canonical" href={abs('/')} />
-    {locales.map((l) => <link rel="alternate" hreflang={languageMeta[l].hreflang} href={abs(`/${l}/`)} />)}
-    <link rel="alternate" hreflang="x-default" href={abs('/')} />
+    <link rel="canonical" href={abs(withBase('/'))} />
+    {locales.map((l) => <link rel="alternate" hreflang={languageMeta[l].hreflang} href={abs(withBase(`/${l}/`))} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(withBase('/'))} />
     {site.noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content={site.themeColor} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <script is:inline define:vars={{ locales, defaultLang }}>
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <script is:inline define:vars={{ locales, defaultLang, base }}>
       (function () {
         var m = document.cookie.match(/(?:^|; )mx_lang=([a-z]{2})/);
         var pick = m && locales.indexOf(m[1]) > -1 ? m[1] : null;
@@ -36,7 +37,7 @@ const abs = (p: string) => new URL(p, site.url).href;
             if (locales.indexOf(code) > -1) pick = code;
           }
         }
-        location.replace('/' + (pick || defaultLang) + '/');
+        location.replace(base + '/' + (pick || defaultLang) + '/');
       })();
     </script>
   </head>
@@ -47,7 +48,7 @@ const abs = (p: string) => new URL(p, site.url).href;
         {
           locales.map((l) => (
             <li>
-              <a href={`/${l}/`} hreflang={l} lang={l}>
+              <a href={withBase(`/${l}/`)} hreflang={l} lang={l}>
                 <span class="mono">{languageMeta[l].short}</span> {languageMeta[l].native}
               </a>
             </li>

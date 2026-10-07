@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
-import { SITE_URL } from './src/config/env.mjs';
+import { BASE_PATH, SITE_URL } from './src/config/env.mjs';
 
 /**
  * Static build for Namecheap shared hosting (Apache + PHP).
@@ -8,6 +8,8 @@ import { SITE_URL } from './src/config/env.mjs';
  */
 export default defineConfig({
   site: SITE_URL,
+  // '/' in production; e.g. '/marketixo/v2' for the GitHub Pages preview (see .github/workflows/pages.yml).
+  base: BASE_PATH,
   trailingSlash: 'always',
   build: {
     format: 'directory',

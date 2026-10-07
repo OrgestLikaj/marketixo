@@ -4,6 +4,7 @@
  * (src/lib/pages.ts); each page kind renders its view from src/views/.
  */
 import { getAllPages, type PageEntry } from '~/lib/pages';
+import { stripBase } from '~/lib/base';
 import HomeView from '~/views/HomeView.astro';
 import ServicesView from '~/views/ServicesView.astro';
 import ServiceView from '~/views/ServiceView.astro';
@@ -20,7 +21,7 @@ import ThanksView from '~/views/ThanksView.astro';
 export async function getStaticPaths() {
   const pages = await getAllPages();
   return pages.map((page) => {
-    const rest = page.path.split('/').filter(Boolean).slice(1).join('/');
+    const rest = stripBase(page.path).split('/').filter(Boolean).slice(1).join('/');
     return { params: { lang: page.lang, slug: rest || undefined }, props: { page } };
   });
 }

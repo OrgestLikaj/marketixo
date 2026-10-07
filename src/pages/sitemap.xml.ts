@@ -7,6 +7,7 @@ import type { APIRoute } from 'astro';
 import { getAllPages } from '~/lib/pages';
 import { languageMeta, locales } from '~/i18n/config';
 import { site } from '~/config/site';
+import { withBase } from '~/lib/base';
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -21,7 +22,7 @@ export const GET: APIRoute = async () => {
       alts.length > 1
         ? [
             ...alts.map((l) => `    <xhtml:link rel="alternate" hreflang="${languageMeta[l].hreflang}" href="${abs(p.alternates[l]!)}"/>`),
-            ...(p.alternates.en ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(p.kind === 'home' ? '/' : p.alternates.en)}"/>`] : []),
+            ...(p.alternates.en ? [`    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(p.kind === 'home' ? withBase('/') : p.alternates.en)}"/>`] : []),
           ].join('\n')
         : '';
     return `  <url>\n    <loc>${abs(p.path)}</loc>\n    <lastmod>${today}</lastmod>\n${links}\n  </url>`;

@@ -10,6 +10,7 @@
  * If a page is already live, add a 301 for the old URL in public/.htaccess.
  */
 import type { Lang } from './config';
+import { withBase } from '~/lib/base';
 import type { ServiceKey } from '~/data/services';
 
 export type Section =
@@ -66,7 +67,7 @@ export const categorySlugs: Record<InsightCategory, Record<Lang, string>> = {
 /** Sub-path for category archives inside insights: /en/insights/topic/seo/ */
 export const topicSegment: Record<Lang, string> = { en: 'topic', de: 'thema', it: 'tema', sq: 'teme' };
 
-const join = (...parts: string[]) => '/' + parts.filter(Boolean).join('/') + '/';
+const join = (...parts: string[]) => withBase('/' + parts.filter(Boolean).join('/') + '/');
 
 export const url = {
   section: (lang: Lang, section: Section) => join(lang, segments[section][lang]),
