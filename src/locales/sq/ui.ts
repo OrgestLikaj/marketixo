@@ -284,7 +284,7 @@ const sq: UI = {
     email: 'Email',
     phone: 'Telefon',
     whatsapp: 'WhatsApp',
-    location: 'Vendndodhja',
+    location: 'Vendndodhjet',
     social: 'Rrjete sociale',
     remote: 'Punojmë me klientë në gjithë Evropën, në vend dhe në distancë.',
   },

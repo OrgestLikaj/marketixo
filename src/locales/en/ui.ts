@@ -284,7 +284,7 @@ const en = {
     email: 'Email',
     phone: 'Phone',
     whatsapp: 'WhatsApp',
-    location: 'Location',
+    location: 'Locations',
     social: 'Social',
     remote: 'Working with clients across Europe, on site and remotely.',
   },

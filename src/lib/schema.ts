@@ -36,6 +36,11 @@ export function organization(lang: Lang) {
       addressLocality: a.city,
       addressCountry: a.countryCode,
     }),
+    location: site.offices.map((o) => ({
+      '@type': 'Place',
+      name: `${site.name} ${o.city.en}`,
+      address: { '@type': 'PostalAddress', addressLocality: o.city.en, addressCountry: o.countryCode },
+    })),
     areaServed: site.areaServed.map((c) => ({ '@type': 'Country', name: c })),
     knowsLanguage: locales.map((l) => languageMeta[l].hreflang),
     sameAs: socialLinks().map((s) => s.url),

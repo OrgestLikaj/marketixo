@@ -285,7 +285,7 @@ const it: UI = {
     email: 'E-mail',
     phone: 'Telefono',
     whatsapp: 'WhatsApp',
-    location: 'Sede',
+    location: 'Sedi',
     social: 'Social',
     remote: 'Lavoriamo con clienti in tutta Europa, in presenza e da remoto.',
   },

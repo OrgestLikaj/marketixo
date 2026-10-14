@@ -9,6 +9,7 @@
  */
 import { NOINDEX, SITE_URL } from './env.mjs';
 import { withBase } from '~/lib/base';
+import type { Lang } from '~/i18n/config';
 
 export const site = {
   /** Brand name used in titles, logo alt text and copy. */
@@ -42,6 +43,25 @@ export const site = {
     country: 'Albania',
     countryCode: 'AL',
   },
+
+  /**
+   * Office locations — listed on the contact page and as `location` in Organization schema.
+   * City and country names are localized per language.
+   */
+  offices: [
+    {
+      key: 'tirana',
+      countryCode: 'AL',
+      city: { en: 'Tirana', de: 'Tirana', it: 'Tirana', sq: 'Tiranë' },
+      country: { en: 'Albania', de: 'Albanien', it: 'Albania', sq: 'Shqipëri' },
+    },
+    {
+      key: 'vienna',
+      countryCode: 'AT',
+      city: { en: 'Vienna', de: 'Wien', it: 'Vienna', sq: 'Vjenë' },
+      country: { en: 'Austria', de: 'Österreich', it: 'Austria', sq: 'Austri' },
+    },
+  ] as { key: string; countryCode: string; city: Record<Lang, string>; country: Record<Lang, string> }[],
 
   /** Markets we serve — used in Organization schema `areaServed`. */
   areaServed: ['AL', 'XK', 'DE', 'AT', 'CH', 'IT'],

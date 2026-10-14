@@ -284,7 +284,7 @@ const de: UI = {
     email: 'E-Mail',
     phone: 'Telefon',
     whatsapp: 'WhatsApp',
-    location: 'Standort',
+    location: 'Standorte',
     social: 'Social Media',
     remote: 'Wir arbeiten mit Kunden in ganz Europa – vor Ort und remote.',
   },

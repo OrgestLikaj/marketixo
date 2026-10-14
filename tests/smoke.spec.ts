@@ -78,6 +78,15 @@ test('contact form validates required fields before sending', async ({ page }) =
   await expect(page.locator('#project-form-email-err')).not.toBeEmpty();
 });
 
+test('contact page lists both offices, localized', async ({ page }) => {
+  await page.goto('/en/contact/');
+  await expect(page.locator('[data-office="tirana"]')).toContainText('Tirana');
+  await expect(page.locator('[data-office="vienna"]')).toContainText('Vienna');
+  await page.goto('/de/kontakt/');
+  await expect(page.locator('[data-office="vienna"]')).toContainText('Wien');
+  await expect(page.locator('[data-office="vienna"]')).toContainText('Österreich');
+});
+
 test('service pre-selection from a service page link', async ({ page }) => {
   await page.goto('/en/contact/?service=seo');
   await expect(page.locator('input[name="services[]"][value="seo"]')).toBeChecked();

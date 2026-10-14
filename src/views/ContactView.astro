@@ -22,7 +22,6 @@ const crumbs = [
 ];
 const socials = socialLinks();
 const wa = whatsappLink();
-const location = [site.address.city, site.address.country].filter(Boolean).join(', ');
 const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(page.path, Astro.site).href };
 ---
 
@@ -94,13 +93,20 @@ const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(pa
 
         <div class="box">
           <h2 class="eyebrow">{c.location}</h2>
-          <p class="loc">
-            <Icon name="pin" size={20} />
-            <span>
-              {location}
-              <span class="muted loc__note">{c.remote}</span>
-            </span>
-          </p>
+          <ul class="offices" role="list">
+            {
+              site.offices.map((o) => (
+                <li class="loc" data-office={o.key}>
+                  <Icon name="pin" size={20} />
+                  <span>
+                    <strong class="loc__city">{o.city[lang]}</strong>
+                    <span class="muted">{o.country[lang]}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="muted loc__note">{c.remote}</p>
           {
             socials.length > 0 && (
               <ul class="soc" role="list" aria-label={c.social}>
@@ -201,9 +207,21 @@ const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(pa
   .direct a:hover {
     color: var(--pearl-aqua);
   }
+  .offices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .loc span {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .loc__city {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
   .loc__note {
-    display: block;
-    margin-top: 0.25rem;
     font-size: 0.9375rem;
   }
   .soc {
