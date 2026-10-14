@@ -87,6 +87,14 @@ test('contact page lists both offices, localized', async ({ page }) => {
   await expect(page.locator('[data-office="vienna"]')).toContainText('Österreich');
 });
 
+test('contact details: email and WhatsApp', async ({ page }) => {
+  await page.goto('/en/contact/');
+  await expect(page.locator('a[href="mailto:info@marketixo.eu"]').first()).toBeVisible();
+  await expect(page.locator('a[href^="https://wa.me/436705554057"]')).toHaveText(/\+43 670 5554057/);
+  await expect(page.locator('input[name="contact_method"][value="whatsapp"]')).toHaveCount(1);
+  await expect(page.locator('footer a[href="mailto:info@marketixo.eu"]')).toBeVisible();
+});
+
 test('service pre-selection from a service page link', async ({ page }) => {
   await page.goto('/en/contact/?service=seo');
   await expect(page.locator('input[name="services[]"][value="seo"]')).toBeChecked();

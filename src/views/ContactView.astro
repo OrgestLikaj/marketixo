@@ -81,7 +81,7 @@ const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(pa
                     <span>
                       <span class="direct__l">{c.whatsapp}</span>
                       <a href={wa} target="_blank" rel="noopener">
-                        {site.contact.phone || 'WhatsApp'}
+                        {site.contact.whatsappDisplay || site.contact.phone || 'WhatsApp'}
                       </a>
                     </span>
                   </li>

@@ -6,7 +6,7 @@
  * so it can never be downloaded. Never commit the real file.
  */
 return [
-    'mail_to'     => 'hello@marketixo.com',     // inbox that receives project requests
+    'mail_to'     => 'info@marketixo.eu',       // inbox that receives project requests
     'mail_from'   => 'no-reply@marketixo.com',  // must be a mailbox that exists in cPanel → Email Accounts
     'site_name'   => 'Marketixo',
     'min_seconds' => 3,

@@ -28,10 +28,11 @@ export const site = {
   },
 
   contact: {
-    email: '', // [EMAIL]  e.g. "hello@marketixo.com"
+    email: 'info@marketixo.eu',
     phone: '', // [PHONE]  display format, e.g. "+355 69 000 0000"
     phoneHref: '', // digits with country code, e.g. "+355690000000"
-    whatsapp: '', // digits only, e.g. "355690000000" — leave empty to hide
+    whatsapp: '436705554057', // digits only, international format — empty hides WhatsApp
+    whatsappDisplay: '+43 670 5554057', // how the WhatsApp number is shown
     bookingUrl: '', // Cal.com / Calendly link for "Book a consultation" — empty hides it
   },
 
