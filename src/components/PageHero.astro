@@ -47,6 +47,16 @@ const hasAside = Astro.slots.has('aside');
     background: radial-gradient(closest-side, rgb(0 95 115 / 0.55), rgb(10 147 150 / 0.12) 55%, transparent);
     z-index: -1;
   }
+  /* Fade the glow and grid into the page, so the hero never ends in a hard edge */
+  .ph::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 45%;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    z-index: -1;
+    pointer-events: none;
+  }
   .ph__inner {
     display: grid;
     gap: 3rem;

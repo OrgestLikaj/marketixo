@@ -145,6 +145,8 @@ const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(pa
     gap: 2.5rem;
     position: sticky;
     top: calc(var(--header-h) + 2rem);
+    /* Line the first heading up with the form's content, clear of the hero above */
+    padding-top: clamp(1.5rem, 3.5vw, 3rem);
   }
   .box {
     display: grid;
@@ -247,6 +249,7 @@ const contactPage = { '@type': 'ContactPage', name: c.metaTitle, url: new URL(pa
     }
     .contact__aside {
       position: static;
+      padding-top: 0;
     }
   }
 </style>
