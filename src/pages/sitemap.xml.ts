@@ -1,12 +1,13 @@
 /**
  * sitemap.xml with hreflang alternates for every page (xhtml:link), generated
  * from the same page registry as the router — so it can never list a URL that
- * doesn't exist or miss one that does.
+ * doesn't exist or miss one that does. public/sitemap.xsl makes it readable in a browser.
  */
 import type { APIRoute } from 'astro';
 import { getAllPages } from '~/lib/pages';
 import { languageMeta, locales } from '~/i18n/config';
 import { site } from '~/config/site';
+import { withBase } from '~/lib/base';
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -28,6 +29,7 @@ export const GET: APIRoute = async () => {
   });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="${withBase('/sitemap.xsl')}"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.join('\n')}
 </urlset>
