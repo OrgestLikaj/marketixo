@@ -38,7 +38,7 @@ const items = clientLogos.map((c) => ({ ...c, img: logoFor(c.key) })).filter((c)
     <ul class="cl__grid" role="list">
       {
         items.map((c, i) => (
-          <li class:list={['cl__cell', { 'cl__cell--dark': c.dark }]} data-reveal style={`--reveal-delay:${i % 5}`}>
+          <li class:list={['cl__cell', { 'cl__cell--dark': c.dark }]} data-reveal style={`--reveal-delay:${i % 5}${c.height ? `;--logo-h:${c.height}px` : ''}`}>
             {c.project ? (
               <a href={url.project(lang, c.project)} class="cl__link">
                 <Image src={c.img!} alt={c.client} widths={[160, 320]} sizes="160px" class="cl__logo" layout="none" />
@@ -104,7 +104,7 @@ const items = clientLogos.map((c) => ({ ...c, img: logoFor(c.key) })).filter((c)
   .cl__logo {
     width: auto;
     max-width: min(150px, 100%);
-    max-height: 56px;
+    max-height: var(--logo-h, 56px);
     object-fit: contain;
     filter: grayscale(1) contrast(1.1);
     opacity: 0.62;

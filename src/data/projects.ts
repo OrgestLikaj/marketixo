@@ -174,6 +174,8 @@ export interface ClientLogo {
   project?: string;
   /** Logo artwork is light (made for dark backgrounds) → shown on a dark tile. */
   dark?: boolean;
+  /** Max logo height in px (default 56). Tall/square marks with small text need more. */
+  height?: number;
 }
 
 export const clientLogos: ClientLogo[] = [
@@ -186,7 +188,7 @@ export const clientLogos: ClientLogo[] = [
   { key: 'fintrade', client: 'Fintrade', project: 'fintrade' },
   { key: 'eydr', client: 'EYDR', project: 'eydr' },
   { key: 'albanian-athletes', client: 'Albanian Athletes Group', project: 'albanian-athletes' },
-  { key: 'implant-swiss', client: 'Implant Swiss Albania', project: 'implant-swiss-albania', dark: true },
+  { key: 'implant-swiss', client: 'Implant Swiss Albania', project: 'implant-swiss-albania', height: 80 },
   { key: 'arena-center', client: 'Arena Center' },
   { key: 'altana', client: 'ALTANA Luxury Residence' },
   { key: 'tirana-factoring', client: 'Tirana Factoring & Lease' },
