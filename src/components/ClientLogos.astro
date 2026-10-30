@@ -22,6 +22,18 @@ const t = useT(lang);
 const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/clients/*.{webp,png,svg}', { eager: true });
 const logoFor = (key: string) => Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.\w+$/, '') === key)?.[1].default;
 const items = clientLogos.map((c) => ({ ...c, img: logoFor(c.key) })).filter((c) => c.img);
+// Equal visual weight: every logo gets the same area (w × h), whatever its shape, so wide
+// wordmarks and square badges look the same size. Capped so very wide/tall marks still fit.
+const AREA = 5800;
+const MAX_W = 160;
+const MAX_H = 76;
+const logoWidth = (img: ImageMetadata) => {
+  const ratio = img.width / img.height;
+  let w = Math.sqrt(AREA * ratio);
+  if (w > MAX_W) w = MAX_W;
+  if (w / ratio > MAX_H) w = MAX_H * ratio;
+  return Math.round(w);
+};
 const groups = clientGroups
   .map((g) => ({ key: g, label: t.home.clients.groups[g], items: items.filter((c) => c.group === g) }))
   .filter((g) => g.items.length > 0);
@@ -52,7 +64,7 @@ const groups = clientGroups
                 <li
                   class:list={['cl__cell', { 'cl__cell--dark': c.dark }]}
                   data-reveal
-                  style={`--reveal-delay:${i % 5}${c.height ? `;--logo-h:${c.height}px` : ''}`}
+                  style={`--reveal-delay:${i % 5};--logo-w:${logoWidth(c.img!)}px`}
                 >
                   {c.project ? (
                     <a href={url.project(lang, c.project)} class="cl__link">
@@ -143,14 +155,13 @@ const groups = clientGroups
     display: grid;
     place-items: center;
     height: clamp(96px, 9vw, 128px);
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 1rem;
     text-decoration: none;
     transition: background-color 400ms var(--ease);
   }
   .cl__logo {
-    width: auto;
-    max-width: min(150px, 100%);
-    max-height: var(--logo-h, 56px);
+    width: min(var(--logo-w, 140px), 100%);
+    height: auto;
     object-fit: contain;
     filter: grayscale(1) contrast(1.1);
     opacity: 0.62;
@@ -159,14 +170,20 @@ const groups = clientGroups
       opacity 400ms var(--ease),
       transform 400ms var(--ease);
   }
-  .cl__link:hover .cl__logo,
   .cl__link:focus-visible .cl__logo {
     filter: none;
     opacity: 1;
-    transform: translateY(-6px);
   }
-  a.cl__link:hover {
-    background: rgb(255 255 255 / 0.55);
+  /* Desktop (real hover + mouse) only: white tile, logo in colour, slight lift */
+  @media (hover: hover) and (pointer: fine) {
+    .cl__link:hover {
+      background: #fff;
+    }
+    .cl__link:hover .cl__logo {
+      filter: none;
+      opacity: 1;
+      transform: translateY(-6px);
+    }
   }
   .cl__more {
     position: absolute;
@@ -181,10 +198,15 @@ const groups = clientGroups
     transform: translateY(4px);
     transition: all 400ms var(--ease);
   }
-  .cl__link:hover .cl__more,
   .cl__link:focus-visible .cl__more {
     opacity: 1;
     transform: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cl__link:hover .cl__more {
+      opacity: 1;
+      transform: none;
+    }
   }
   .cl__link:focus-visible {
     outline-offset: -3px;

@@ -179,14 +179,12 @@ export interface ClientLogo {
   project?: string;
   /** Logo artwork is light (made for dark backgrounds) → shown on a dark tile. */
   dark?: boolean;
-  /** Max logo height in px (default 56). Tall/square marks with small text need more. */
-  height?: number;
 }
 
 export const clientLogos: ClientLogo[] = [
   // Healthcare & dental clinics
   { key: 'medicus', client: 'MEDICUS Dental Clinic', group: 'health', project: 'medicus-center' },
-  { key: 'implant-swiss', client: 'Implant Swiss Albania', group: 'health', project: 'implant-swiss-albania', height: 80 },
+  { key: 'implant-swiss', client: 'Implant Swiss Albania', group: 'health', project: 'implant-swiss-albania' },
   { key: 'smileprovider', client: 'SmileProvider Clinic', group: 'health' },
   { key: 'newdent', client: 'NewDent Clinic', group: 'health' },
   { key: 'subashi-dental', client: 'Subashi Dental Clinic', group: 'health' },
