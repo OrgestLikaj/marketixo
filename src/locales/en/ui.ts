@@ -94,6 +94,12 @@ const en = {
       eyebrow: 'Clients',
       heading: 'Businesses and organisations we’ve worked with.',
       caseStudy: 'Case study',
+      groups: {
+        health: 'Healthcare & dental clinics',
+        property: 'Real estate, construction & industry',
+        civic: 'Research, media & sport',
+        business: 'Finance, legal & hospitality',
+      },
     },
     work: {
       eyebrow: 'Selected work',

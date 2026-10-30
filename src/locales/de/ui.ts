@@ -94,6 +94,12 @@ const de: UI = {
       eyebrow: 'Kunden',
       heading: 'Unternehmen und Organisationen, mit denen wir arbeiten.',
       caseStudy: 'Fallstudie',
+      groups: {
+        health: 'Gesundheit & Zahnkliniken',
+        property: 'Immobilien, Bau & Industrie',
+        civic: 'Forschung, Medien & Sport',
+        business: 'Finanzen, Recht & Gastronomie',
+      },
     },
     work: {
       eyebrow: 'Ausgewählte Referenzen',

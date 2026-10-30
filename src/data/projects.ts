@@ -167,9 +167,14 @@ export const featuredProjects = projects
  * Client logos (public/clients/<key>.webp) for the logo strip. Project clients link to their
  * case study; logo-only clients are shown without a link until there is more to show.
  */
+/** Client groups for the logo wall, in display order. Labels: locales → home.clients.groups. */
+export const clientGroups = ['health', 'property', 'civic', 'business'] as const;
+export type ClientGroup = (typeof clientGroups)[number];
+
 export interface ClientLogo {
   key: string;
   client: string;
+  group: ClientGroup;
   /** Project key when there is a case study. */
   project?: string;
   /** Logo artwork is light (made for dark backgrounds) → shown on a dark tile. */
@@ -179,23 +184,27 @@ export interface ClientLogo {
 }
 
 export const clientLogos: ClientLogo[] = [
-  { key: 'medicus', client: 'MEDICUS Dental Clinic', project: 'medicus-center' },
-  { key: 'scidev', client: 'SCiDEV', project: 'scidev' },
-  { key: 'ir', client: 'IR Real Estate & Management', project: 'ir-real-estate' },
-  { key: 'albstar', client: 'Albstar', project: 'albstar' },
-  { key: 'elbasanion', client: 'ElbasaniON', project: 'elbasanion' },
-  { key: 'finman', client: 'Finman Group', project: 'finman' },
-  { key: 'fintrade', client: 'Fintrade', project: 'fintrade' },
-  { key: 'eydr', client: 'EYDR', project: 'eydr' },
-  { key: 'albanian-athletes', client: 'Albanian Athletes Group', project: 'albanian-athletes' },
-  { key: 'implant-swiss', client: 'Implant Swiss Albania', project: 'implant-swiss-albania', height: 80 },
-  { key: 'arena-center', client: 'Arena Center' },
-  { key: 'altana', client: 'ALTANA Luxury Residence' },
-  { key: 'tirana-factoring', client: 'Tirana Factoring & Lease' },
-  { key: 'impact', client: 'Impact SHPK' },
-  { key: 'smileprovider', client: 'SmileProvider Clinic' },
-  { key: 'newdent', client: 'NewDent Clinic' },
-  { key: 'subashi-dental', client: 'Subashi Dental Clinic' },
-  { key: 'souvlaki-station', client: 'Souvlaki Station' },
-  { key: 'aksoy', client: 'Aksoy Hukuk Bürosu' },
+  // Healthcare & dental clinics
+  { key: 'medicus', client: 'MEDICUS Dental Clinic', group: 'health', project: 'medicus-center' },
+  { key: 'implant-swiss', client: 'Implant Swiss Albania', group: 'health', project: 'implant-swiss-albania', height: 80 },
+  { key: 'smileprovider', client: 'SmileProvider Clinic', group: 'health' },
+  { key: 'newdent', client: 'NewDent Clinic', group: 'health' },
+  { key: 'subashi-dental', client: 'Subashi Dental Clinic', group: 'health' },
+  // Real estate, construction & industry
+  { key: 'finman', client: 'Finman Group', group: 'property', project: 'finman' },
+  { key: 'ir', client: 'IR Real Estate & Management', group: 'property', project: 'ir-real-estate' },
+  { key: 'albstar', client: 'Albstar', group: 'property', project: 'albstar' },
+  { key: 'fintrade', client: 'Fintrade', group: 'property', project: 'fintrade' },
+  { key: 'arena-center', client: 'Arena Center', group: 'property' },
+  { key: 'altana', client: 'ALTANA Luxury Residence', group: 'property' },
+  { key: 'impact', client: 'Impact SHPK', group: 'property' },
+  // Research, media & sport
+  { key: 'scidev', client: 'SCiDEV', group: 'civic', project: 'scidev' },
+  { key: 'eydr', client: 'EYDR', group: 'civic', project: 'eydr' },
+  { key: 'elbasanion', client: 'ElbasaniON', group: 'civic', project: 'elbasanion' },
+  { key: 'albanian-athletes', client: 'Albanian Athletes Group', group: 'civic', project: 'albanian-athletes' },
+  // Finance, legal & hospitality
+  { key: 'tirana-factoring', client: 'Tirana Factoring & Lease', group: 'business' },
+  { key: 'aksoy', client: 'Aksoy Hukuk Bürosu', group: 'business' },
+  { key: 'souvlaki-station', client: 'Souvlaki Station', group: 'business' },
 ];

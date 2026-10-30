@@ -95,6 +95,12 @@ const it: UI = {
       eyebrow: 'Clienti',
       heading: 'Aziende e organizzazioni con cui abbiamo lavorato.',
       caseStudy: 'Caso studio',
+      groups: {
+        health: 'Sanità e cliniche dentali',
+        property: 'Immobiliare, edilizia e industria',
+        civic: 'Ricerca, media e sport',
+        business: 'Finanza, legale e ristorazione',
+      },
     },
     work: {
       eyebrow: 'Progetti selezionati',

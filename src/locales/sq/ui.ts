@@ -94,6 +94,12 @@ const sq: UI = {
       eyebrow: 'Klientë',
       heading: 'Biznese dhe organizata me të cilat kemi punuar.',
       caseStudy: 'Rast studimi',
+      groups: {
+        health: 'Shëndetësi & klinika dentare',
+        property: 'Pasuri të paluajtshme, ndërtim & industri',
+        civic: 'Kërkim, media & sport',
+        business: 'Financë, ligj & mikpritje',
+      },
     },
     work: {
       eyebrow: 'Projekte të përzgjedhura',
