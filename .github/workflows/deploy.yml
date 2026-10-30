@@ -8,7 +8,8 @@ name: Build, test & deploy
 #   FTP_PASSWORD
 # Optional repository variables (Settings → Variables): PUBLIC_SITE_URL, PUBLIC_GA4_ID,
 # PUBLIC_GTM_ID, PUBLIC_META_PIXEL_ID, PUBLIC_GSC_VERIFICATION, NOINDEX ("true" for staging),
-# FTP_SERVER_DIR (default ./public_html/).
+# FTP_SERVER_DIR (default ./ — the FTP account opens in the site's web root,
+# /home/whitxqbc/marketixo.eu; use ./public_html/ for an account rooted at the home folder).
 
 on:
   push:
@@ -59,4 +60,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./dist/
-          server-dir: ${{ vars.FTP_SERVER_DIR || './public_html/' }}
+          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}

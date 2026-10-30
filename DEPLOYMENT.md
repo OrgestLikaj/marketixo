@@ -42,7 +42,7 @@ Node.js runtime, database or extra services needed.
    - **Variables (optional):** `PUBLIC_SITE_URL`, `PUBLIC_GA4_ID`, `PUBLIC_GTM_ID`,
      `PUBLIC_META_PIXEL_ID`, `PUBLIC_GSC_VERIFICATION`, `FTP_SERVER_DIR`
      — **`FTP_SERVER_DIR` = `./`** when the FTP account opens in the web root (as above);
-     the default `./public_html/` is only right for an account rooted at the home folder.
+     this is also the workflow default, so the variable is only needed to override it.
 4. Every push runs type checks, the build, static QA and Playwright tests. Pushes to `main`
    deploy over **FTPS**. Only changed files are uploaded.
 
