@@ -146,13 +146,22 @@ test('scroll reveals: every animated element becomes visible once it is in view'
   for (const path of ['/en/', '/en/work/albstar/', '/en/work/implant-swiss-albania/', '/en/services/seo/', '/en/about/']) {
     await page.goto(path);
     await page.waitForFunction(() => (window as unknown as { __mxReveal?: boolean }).__mxReveal === true);
-    const targets = page.locator('[data-reveal], [data-split]');
-    const count = await targets.count();
-    for (let i = 0; i < count; i++) {
-      const el = targets.nth(i);
-      await el.scrollIntoViewIfNeeded();
-      await expect(el, `${path}: element #${i} never revealed`).toHaveClass(/(^|\s)is-in(\s|$)/, { timeout: 3000 });
-    }
+    // Bring each animated element into view (inside the page — fast) and wait for it to reveal.
+    const hidden = await page.evaluate(async () => {
+      const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const missing: string[] = [];
+      for (const el of document.querySelectorAll<HTMLElement>('[data-reveal], [data-split]')) {
+        el.scrollIntoView({ block: 'center', behavior: 'instant' });
+        let ok = false;
+        for (let t = 0; t < 20 && !ok; t++) {
+          await frame();
+          ok = el.classList.contains('is-in');
+        }
+        if (!ok) missing.push(`${el.tagName.toLowerCase()}.${el.className}`);
+      }
+      return missing;
+    });
+    expect(hidden, `${path} has elements that never revealed`).toEqual([]);
   }
   // The case-study screenshot ends fully visible (not left clipped by the mask reveal).
   await page.goto('/en/work/albstar/');
