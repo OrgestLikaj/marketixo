@@ -15,7 +15,7 @@ interface Props {
 const { src, alt, sizes = '(min-width: 1024px) 280px, 45vw', loading = 'lazy', class: className , ...rest } = Astro.props;
 ---
 
-<figure {...rest} class:list={['pf', className]}>
+<figure {...rest} class:list={['pf', className]} style={`--screen-ratio:${src.width} / ${src.height}`}>
   <div class="pf__screen">
     <Image src={src} alt={alt} widths={[240, 360, 480, 720]} sizes={sizes} loading={loading} decoding="async" class="pf__img" layout="none" />
   </div>
@@ -29,11 +29,11 @@ const { src, alt, sizes = '(min-width: 1024px) 280px, 45vw', loading = 'lazy', c
     background: linear-gradient(160deg, #123c48, #04202a);
     border: 1px solid var(--line-strong);
     box-shadow: var(--shadow-lg);
-    aspect-ratio: 390 / 844;
   }
+  /* The screen takes the screenshot's own proportions, so nothing is ever cropped */
   .pf__screen {
     position: relative;
-    height: 100%;
+    aspect-ratio: var(--screen-ratio, 390 / 844);
     border-radius: 27px;
     overflow: hidden;
     background: #fff;

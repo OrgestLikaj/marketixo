@@ -3,7 +3,8 @@
  * (src/data/projects.ts) into src/assets/work/<key>/:
  *
  *   desktop.jpg  1440×900 viewport @2x  — cards, case-study hero
- *   mobile.jpg   390×844 viewport @2x   — device mock-ups
+ *   mobile.jpg   iPhone 13 (390×844) @2x — device mock-ups; only saved when the page
+ *                renders at 100% with no sideways overflow (a real phone view)
  *   page.jpg     first 1440×3600px of the page @1x — scrolling gallery
  *
  *   npm run screenshots                 # all projects
@@ -12,7 +13,7 @@
  * Astro optimises these into responsive AVIF/WebP at build time, so the originals
  * can stay large. Uses Playwright's Chromium, or the installed Chrome as a fallback.
  */
-import { chromium } from 'playwright';
+import { chromium, devices } from 'playwright';
 import { mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
@@ -76,15 +77,30 @@ const ua =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36';
 const desktop = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, userAgent: ua, locale: 'en-US' });
 const tall = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, userAgent: ua, locale: 'en-US' });
-const mobile = await browser.newContext({
-  viewport: { width: 390, height: 844 },
-  deviceScaleFactor: 2,
-  isMobile: true,
-  hasTouch: true,
-  locale: 'en-US',
-  userAgent:
-    'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
-});
+// Full-height phone screen (390×844) to match the phone mock-up on the site.
+const mobile = await browser.newContext({ ...devices['iPhone 13'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, locale: 'en-US' });
+
+/**
+ * Sliders and page builders often size themselves from a wider initial layout. In mobile
+ * mode the browser then zooms out to fit that temporary overflow, which makes a responsive
+ * site look broken. Let the layout settle (and re-run resize handlers) before capturing.
+ */
+async function settledMobileShot(page, path) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await page.evaluate(() => window.dispatchEvent(new Event('resize')));
+    await page.waitForTimeout(1500);
+    const ok = await page.evaluate(
+      () => window.visualViewport.scale > 0.99 && document.documentElement.scrollWidth <= window.innerWidth + 1,
+    );
+    if (ok) {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(300);
+      await page.screenshot({ path, type: 'jpeg', quality: 86 });
+      return true;
+    }
+  }
+  return false;
+}
 
 let failed = 0;
 for (const p of targets) {
@@ -111,8 +127,9 @@ for (const p of targets) {
     await page.close();
 
     page = await open(mobile, p.url);
-    await page.screenshot({ path: `${dir}/mobile.jpg`, type: 'jpeg', quality: 86 });
+    const mobileOk = await settledMobileShot(page, `${dir}/mobile.jpg`);
     await page.close();
+    if (!mobileOk) console.warn(`  ! ${p.client}: page overflows or is zoomed on a phone — mobile.jpg not updated`);
     console.log(`✓ ${p.client.padEnd(30)} ${((Date.now() - t) / 1000).toFixed(1)}s`);
   } catch (err) {
     failed++;
