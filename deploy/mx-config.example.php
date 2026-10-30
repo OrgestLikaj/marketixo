@@ -2,8 +2,9 @@
 /**
  * Server-side configuration for public_html/api/contact.php.
  *
- * Copy to   /home/<cpanel-user>/mx-config.php   (ONE LEVEL ABOVE public_html)
- * so it can never be downloaded. Never commit the real file.
+ * Optional — contact.php already sends to info@marketixo.eu from info@marketixo.eu.
+ * Only needed to override those defaults. Copy to /home/<cpanel-user>/mx-config.php
+ * (ONE LEVEL ABOVE the web root) so it can never be downloaded. Never commit the real file.
  */
 return [
     'mail_to'     => 'info@marketixo.eu',       // inbox that receives project requests

@@ -10,15 +10,15 @@ Node.js runtime, database or extra services needed.
    AutoSSL*. Wait until `https://` works before going further (the `.htaccess` forces HTTPS and
    sends HSTS).
 2. **PHP version** — *cPanel → Select PHP Version*: choose **PHP 8.1 or newer**.
-3. **Mailboxes** — *cPanel → Email Accounts*: create
-   - the inbox that receives requests (e.g. `info@marketixo.eu`)
-   - a sender mailbox for the form (e.g. `no-reply@marketixo.eu`).
-   Sending *from* your own domain is what keeps form emails out of spam.
+3. **Mailbox** — *cPanel → Email Accounts*: make sure **`info@marketixo.eu`** exists. The form
+   sends requests to it, and from it (sending *from* your own domain keeps them out of spam);
+   *Reply* goes to the visitor.
 4. **Email authentication** — *cPanel → Email Deliverability*: make sure SPF and DKIM show
    valid. Add a DMARC record (e.g. `v=DMARC1; p=quarantine; rua=mailto:info@marketixo.eu`).
-5. **Form configuration (secrets stay off the web)** — upload
-   `deploy/mx-config.example.php` to the folder **one level above the site's web root**,
-   rename it to `mx-config.php`, and set `mail_to` / `mail_from`.
+5. **Form configuration (optional)** — the defaults in `api/contact.php` work as they are. To
+   send to another inbox or from another mailbox, upload `deploy/mx-config.example.php` to the
+   folder **one level above the site's web root**, rename it to `mx-config.php`, and set
+   `mail_to` / `mail_from`.
 
    **marketixo.eu is an addon domain** — its web root is `~/marketixo.eu`, not `public_html`:
 
@@ -114,7 +114,7 @@ Every push to `marketixo-v2` publishes a preview to
 | Symptom | Fix |
 | --- | --- |
 | 500 error on every page | A directive in `.htaccess` isn't allowed by the server. Comment out the `Header` lines one block at a time to find it (LiteSpeed accepts all of them on current Namecheap servers). |
-| Form says "Something went wrong" | `mx-config.php` missing or wrong path; check `mail_from` exists. Errors are logged to `public_html/api/error_log`. |
+| Form says "Something went wrong" | Check that the `mail_from` mailbox (default `info@marketixo.eu`) exists, and any `mx-config.php` values. Errors are logged to `~/marketixo.eu/api/error_log`. |
 | Form mails land in spam | Verify SPF/DKIM in *Email Deliverability*; `mail_from` must be on the same domain. |
 | Old CSS/JS after deploy | HTML is never cached; hard-refresh once. Assets have hashed names, so stale files can't be served. |
 | Fonts missing | Make sure the `_astro/` folder was uploaded completely. |

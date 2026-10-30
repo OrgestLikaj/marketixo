@@ -22,7 +22,7 @@ marketixo-site/
 │  ├─ api/contact.php        Contact form handler (validation, spam + rate limiting)
 │  ├─ og/default.png         Default social-sharing image
 │  └─ favicon.*, icons, site.webmanifest
-├─ deploy/mx-config.example.php   Server-side form config (copied outside public_html)
+├─ deploy/mx-config.example.php   Optional override of the form's mail settings (copied outside the web root)
 ├─ docs/GLOSSARY.md          Terminology per language + voice rules
 ├─ scripts/
 │  ├─ screenshot-work.mjs    Captures portfolio screenshots from live client sites
@@ -99,7 +99,8 @@ First run of the tests: `npx playwright install chromium firefox webkit`.
 ## 4. Environment variables
 
 All variables are **public** build-time values (they end up in HTML). Secrets never go here —
-the mail configuration lives in `mx-config.php` on the server.
+the form's mail settings are defaults in `public/api/contact.php`, optionally overridden by
+`mx-config.php` on the server.
 
 | Variable | Example | Purpose |
 | --- | --- | --- |
@@ -212,7 +213,7 @@ Before go-live (manual):
 - [ ] Fill in `src/config/site.ts` (legal entity, address, email, phone, VAT, socials)
 - [ ] Have privacy policy, cookie policy and Impressum reviewed by a lawyer
 - [ ] Review the case-study texts with each client (no metrics are claimed)
-- [ ] Create `mx-config.php` on the server and send a test enquiry in each language
+- [ ] Send a test enquiry in each language and check it arrives in info@marketixo.eu
 - [ ] Check https://securityheaders.com and Lighthouse on the live domain
 - [ ] Test on real iOS Safari and Android Chrome; spot-check Edge
 - [ ] Submit the sitemap in Google Search Console; set up GA4 / Ads only if needed
