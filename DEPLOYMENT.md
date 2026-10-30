@@ -11,11 +11,11 @@ Node.js runtime, database or extra services needed.
    sends HSTS).
 2. **PHP version** — *cPanel → Select PHP Version*: choose **PHP 8.1 or newer**.
 3. **Mailboxes** — *cPanel → Email Accounts*: create
-   - the inbox that receives requests (e.g. `hello@marketixo.com`)
-   - a sender mailbox for the form (e.g. `no-reply@marketixo.com`).
+   - the inbox that receives requests (e.g. `info@marketixo.eu`)
+   - a sender mailbox for the form (e.g. `no-reply@marketixo.eu`).
    Sending *from* your own domain is what keeps form emails out of spam.
 4. **Email authentication** — *cPanel → Email Deliverability*: make sure SPF and DKIM show
-   valid. Add a DMARC record (e.g. `v=DMARC1; p=quarantine; rua=mailto:hello@marketixo.com`).
+   valid. Add a DMARC record (e.g. `v=DMARC1; p=quarantine; rua=mailto:info@marketixo.eu`).
 5. **Form configuration (secrets stay off the web)** — upload
    `deploy/mx-config.example.php` to your **home directory, one level above `public_html`**,
    rename it to `mx-config.php`, and set `mail_to` / `mail_from`:
@@ -28,7 +28,7 @@ Node.js runtime, database or extra services needed.
 ## 2a. Deploy automatically (recommended)
 
 1. Push this project to a GitHub repository.
-2. *cPanel → FTP Accounts* → create an account (e.g. `deploy@marketixo.com`) whose directory
+2. *cPanel → FTP Accounts* → create an account (e.g. `deploy@marketixo.eu`) whose directory
    is your home folder. Under *Configure FTP Client* note the server name.
 3. GitHub → *Settings → Secrets and variables → Actions*:
    - **Secrets:** `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`
@@ -38,7 +38,7 @@ Node.js runtime, database or extra services needed.
 4. Every push runs type checks, the build, static QA and Playwright tests. Pushes to `main`
    deploy over **FTPS**. Only changed files are uploaded.
 
-**Staging first?** Create a subdomain (e.g. `staging.marketixo.com`), point a second workflow
+**Staging first?** Create a subdomain (e.g. `staging.marketixo.eu`), point a second workflow
 or branch at its folder via `FTP_SERVER_DIR`, and set the variable `NOINDEX=true` so search
 engines ignore it.
 
@@ -52,6 +52,31 @@ npm run build
 Upload the **contents** of `dist/` — including the hidden `.htaccess` — into `public_html/`
 with *cPanel → File Manager* (upload a zip, then *Extract*) or an FTP client such as FileZilla
 (enable "show hidden files").
+
+## Google Search Console & Google Analytics
+
+The sitemap is generated on every build at **https://marketixo.eu/sitemap.xml**. It lists every
+page in all four languages, with `xhtml:link` alternates between translations, and `robots.txt`
+points to it. Submit it only after the site is deployed to marketixo.eu (the GitHub Pages preview
+is deliberately `noindex` and blocked in robots.txt).
+
+**Search Console**
+
+1. https://search.google.com/search-console → *Add property* → **Domain** → `marketixo.eu`.
+2. Verify with the DNS TXT record Google shows (Namecheap → Domain List → Manage →
+   Advanced DNS → Add new record → TXT, host `@`). A Domain property covers http/https and www.
+   *Alternative:* a **URL-prefix** property (`https://marketixo.eu/`) with the HTML-tag method — put
+   the token in the repository variable `PUBLIC_GSC_VERIFICATION` and redeploy.
+3. *Sitemaps* → enter `sitemap.xml` → *Submit*.
+
+**Google Analytics 4**
+
+1. https://analytics.google.com → *Admin* → *Create property* → web stream for `https://marketixo.eu`.
+2. Copy the **Measurement ID** (`G-…`) into the repository variable `PUBLIC_GA4_ID` and redeploy.
+   GA4 loads only after a visitor accepts analytics cookies; the banner appears automatically
+   once an ID is set. Form submissions are sent as the `generate_lead` event.
+3. Optional: *Admin → Product links → Search Console links* to see search queries in GA4.
+   (GA4 itself doesn't use the sitemap.)
 
 ## Preview on GitHub Pages
 
@@ -67,8 +92,8 @@ Every push to `marketixo-v2` publishes a preview to
 
 ## 3. After the first deploy
 
-- [ ] `https://marketixo.com/` redirects to `/en/` (or `/de/`, `/it/`, `/sq/` by browser language)
-- [ ] `http://` and `www.` redirect to `https://marketixo.com`
+- [ ] `https://marketixo.eu/` redirects to `/en/` (or `/de/`, `/it/`, `/sq/` by browser language)
+- [ ] `http://` and `www.` redirect to `https://marketixo.eu`
 - [ ] Send a test request from `/en/contact/` — it arrives in `mail_to`; *Reply* goes to the visitor
 - [ ] https://securityheaders.com shows A/A+; check https://pagespeed.web.dev for mobile + desktop
 - [ ] `/sitemap.xml` and `/robots.txt` load; submit the sitemap in Google Search Console

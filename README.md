@@ -104,7 +104,7 @@ the mail configuration lives in `mx-config.php` on the server.
 
 | Variable | Example | Purpose |
 | --- | --- | --- |
-| `PUBLIC_SITE_URL` | `https://marketixo.com` | Canonicals, hreflang, sitemap, OG URLs |
+| `PUBLIC_SITE_URL` | `https://marketixo.eu` | Canonicals, hreflang, sitemap, OG URLs |
 | `NOINDEX` | `true` | Staging: `noindex` on every page + `Disallow: /` in robots.txt |
 | `PUBLIC_GA4_ID` | `G-XXXXXXX` | Google Analytics 4 (loads only after consent) |
 | `PUBLIC_GTM_ID` | `GTM-XXXXXX` | Google Tag Manager (if set, load GA4 through GTM) |

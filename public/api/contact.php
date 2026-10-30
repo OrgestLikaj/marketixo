@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 $config = [
     'mail_to'     => '',                 // where requests are delivered
-    'mail_from'   => '',                 // a real mailbox on your domain (e.g. no-reply@marketixo.com)
+    'mail_from'   => '',                 // a real mailbox on your domain (e.g. no-reply@marketixo.eu)
     'site_name'   => 'Marketixo',
     'min_seconds' => 3,                  // faster submissions are treated as bots
     'rate_limit'  => 5,                  // max submissions per IP …

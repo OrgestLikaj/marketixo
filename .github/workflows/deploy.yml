@@ -3,8 +3,8 @@ name: Build, test & deploy
 # Every push / PR: type-check, build, static QA (scripts/check-site.mjs) and the
 # Playwright smoke suite. Pushes to `main` then deploy dist/ to Namecheap over FTPS —
 # once these repository secrets exist (Settings → Secrets and variables → Actions):
-#   FTP_SERVER     e.g. ftp.marketixo.com   (cPanel → FTP Accounts → Configure FTP Client)
-#   FTP_USERNAME   e.g. deploy@marketixo.com
+#   FTP_SERVER     e.g. ftp.marketixo.eu   (cPanel → FTP Accounts → Configure FTP Client)
+#   FTP_USERNAME   e.g. deploy@marketixo.eu
 #   FTP_PASSWORD
 # Optional repository variables (Settings → Variables): PUBLIC_SITE_URL, PUBLIC_GA4_ID,
 # PUBLIC_GTM_ID, PUBLIC_META_PIXEL_ID, PUBLIC_GSC_VERIFICATION, NOINDEX ("true" for staging),
@@ -26,7 +26,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL || 'https://marketixo.com' }}
+      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL || 'https://marketixo.eu' }}
       PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
       PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
       PUBLIC_META_PIXEL_ID: ${{ vars.PUBLIC_META_PIXEL_ID }}

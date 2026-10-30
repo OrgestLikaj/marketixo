@@ -7,7 +7,7 @@
  */
 return [
     'mail_to'     => 'info@marketixo.eu',       // inbox that receives project requests
-    'mail_from'   => 'no-reply@marketixo.com',  // must be a mailbox that exists in cPanel → Email Accounts
+    'mail_from'   => 'no-reply@marketixo.eu',  // must be a mailbox that exists in cPanel → Email Accounts
     'site_name'   => 'Marketixo',
     'min_seconds' => 3,
     'rate_limit'  => 5,
