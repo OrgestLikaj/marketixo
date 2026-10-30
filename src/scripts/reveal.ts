@@ -25,7 +25,9 @@ export function initReveal() {
         }
       }
     },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    // Any visible pixel counts: content at the very bottom edge of the first screen must
+    // never stay hidden until the visitor happens to scroll.
+    { rootMargin: '0px', threshold: 0 },
   );
   targets.forEach((el) => io.observe(el));
 }

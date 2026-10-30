@@ -206,7 +206,7 @@ const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ pro
   .hero {
     position: relative;
     min-height: 100svh;
-    padding-top: calc(var(--header-h) + clamp(32px, 6vw, 88px));
+    padding-top: calc(var(--header-h) + clamp(24px, min(6vw, 7svh), 88px));
     padding-bottom: clamp(40px, 5vw, 64px);
     display: grid;
     align-content: space-between;
@@ -262,7 +262,7 @@ const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ pro
   .hero__title {
     margin-left: -0.05em;
     /* Keep headline + lead + CTAs inside the first screen on laptops */
-    font-size: min(var(--fs-display), 15.5svh);
+    font-size: min(var(--fs-display), 14.5svh);
   }
   @media (max-width: 1099px) {
     .hero__title {

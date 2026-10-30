@@ -465,9 +465,14 @@ textarea {
       transform var(--dur-slow) var(--ease-out);
     transition-delay: calc(var(--reveal-delay, 0) * 80ms);
   }
+  /* Mask reveal: the wrapper stays unclipped (IntersectionObserver ignores fully clipped
+     targets, so clipping the observed element itself would hide it forever); its
+     children are wiped in instead. */
   .js [data-reveal='mask'] {
     opacity: 1;
     transform: none;
+  }
+  .js [data-reveal='mask'] > * {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 1.1s var(--ease-out);
     transition-delay: calc(var(--reveal-delay, 0) * 80ms);
@@ -475,6 +480,8 @@ textarea {
   .js [data-reveal].is-in {
     opacity: 1;
     transform: none;
+  }
+  .js [data-reveal='mask'].is-in > * {
     clip-path: inset(0 0 0 0);
   }
   /* Headline lines rise out of a mask */
