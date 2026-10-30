@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('mobile menu opens, traps focus, closes with Escape', async ({ page }) => {
-  await page.goto('/en/');
+  await page.goto('/');
   const burger = page.locator('[data-menu-open]');
   await expect(burger).toBeVisible();
   await burger.click();
@@ -15,7 +15,7 @@ test('mobile menu opens, traps focus, closes with Escape', async ({ page }) => {
 });
 
 test('no horizontal overflow on key pages', async ({ page }) => {
-  for (const path of ['/en/', '/de/', '/en/services/seo/', '/en/work/', '/en/work/medicus-center/', '/sq/kontakt/']) {
+  for (const path of ['/', '/de/', '/services/seo/', '/work/', '/work/medicus-center/', '/sq/kontakt/']) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, path).toBeLessThanOrEqual(0);

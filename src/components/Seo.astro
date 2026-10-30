@@ -13,7 +13,6 @@ interface Props {
   path: string;
   alternates: Partial<Record<Lang, string>>;
   /** x-default target; defaults to the English alternate. */
-  xDefault?: string;
   noindex?: boolean;
   image?: string;
   imageAlt?: string;
@@ -23,13 +22,13 @@ interface Props {
   jsonLd?: object;
 }
 
-const { lang, title, description, path, alternates, xDefault, noindex, image, imageAlt, type = 'website', article, canonical, jsonLd } = Astro.props;
+const { lang, title, description, path, alternates, noindex, image, imageAlt, type = 'website', article, canonical, jsonLd } = Astro.props;
 const abs = (p: string) => new URL(p, site.url).href;
 const canonicalUrl = canonical ?? abs(path);
 const ogImage = abs(image ?? site.ogImage);
 const robots = noindex || site.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1';
 const hreflangs = locales.filter((l) => alternates[l]).map((l) => ({ hreflang: languageMeta[l].hreflang, href: abs(alternates[l]!) }));
-const xDefaultHref = xDefault ? abs(xDefault) : alternates.en ? abs(alternates.en) : undefined;
+const xDefaultHref = alternates.en ? abs(alternates.en) : undefined;
 const otherLocales = locales.filter((l) => l !== lang && alternates[l]).map((l) => languageMeta[l].ogLocale);
 ---
 

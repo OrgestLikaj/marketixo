@@ -5,6 +5,7 @@
 import { site, socialLinks } from '~/config/site';
 import { languageMeta, locales, type Lang } from '~/i18n/config';
 import { withBase } from '~/lib/base';
+import { url } from '~/i18n/routes';
 
 const abs = (path: string) => new URL(path, site.url).href;
 export const orgId = `${site.url}/#organization`;
@@ -22,7 +23,7 @@ export function organization(lang: Lang) {
     '@id': orgId,
     name: site.name,
     legalName: site.company.legalName,
-    url: `${site.url}/${lang}/`,
+    url: abs(url.section(lang, 'home')),
     logo: abs(withBase('/brand/marketixo-mark-512.png')),
     image: abs(site.ogImage),
     email: site.contact.email,

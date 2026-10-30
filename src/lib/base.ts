@@ -5,7 +5,7 @@
  */
 export const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 
-/** '/en/about/' → '/marketixo/v2/en/about/' when built under a sub-path. */
+/** '/de/ueber-uns/' → '/marketixo/v2/de/ueber-uns/' when built under a sub-path. */
 export const withBase = (path: string) => (path.startsWith('/') && !path.startsWith('//') ? base + path : path);
 
 /** Inverse of withBase — used by the router to derive route params. */

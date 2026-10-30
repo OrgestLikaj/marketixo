@@ -10,7 +10,7 @@ const base = process.argv[2] ?? 'http://localhost:4330';
 const out = process.argv[3] ?? 'test-results/screens';
 const widths = (process.argv[4] ?? '1440,390').split(',').map(Number);
 const paths = (process.env.PAGES ??
-  '/en/,/en/services/,/en/services/cybersecurity/,/en/work/,/en/work/medicus-center/,/en/work/implant-swiss-albania/,/en/about/,/en/contact/,/en/insights/,/en/insights/multilingual-website-seo/,/en/privacy-policy/,/en/faq/'
+  '/,/services/,/services/cybersecurity/,/work/,/work/medicus-center/,/work/implant-swiss-albania/,/about/,/contact/,/insights/,/insights/multilingual-website-seo/,/privacy-policy/,/faq/'
 ).split(',');
 
 mkdirSync(out, { recursive: true });

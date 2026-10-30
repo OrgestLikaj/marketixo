@@ -1,7 +1,7 @@
 /**
  * Localized URL structure — one place for every path segment and slug.
  *
- *   /en/services/web-design-development/
+ *   /services/web-design-development/          (English lives at the root)
  *   /de/leistungen/webdesign-entwicklung/
  *   /it/servizi/web-design-sviluppo/
  *   /sq/sherbime/dizajn-zhvillim-web/
@@ -9,7 +9,7 @@
  * Changing a slug here changes it everywhere (menus, sitemap, hreflang, switcher).
  * If a page is already live, add a 301 for the old URL in public/.htaccess.
  */
-import type { Lang } from './config';
+import { defaultLang, type Lang } from './config';
 import { withBase } from '~/lib/base';
 import type { ServiceKey } from '~/data/services';
 
@@ -64,10 +64,16 @@ export const categorySlugs: Record<InsightCategory, Record<Lang, string>> = {
   'qa-testing': { en: 'qa-testing', de: 'qa-testing', it: 'qa-testing', sq: 'testim-qa' },
 };
 
-/** Sub-path for category archives inside insights: /en/insights/topic/seo/ */
+/** Sub-path for category archives inside insights: /insights/topic/seo/ */
 export const topicSegment: Record<Lang, string> = { en: 'topic', de: 'thema', it: 'tema', sq: 'teme' };
 
-const join = (...parts: string[]) => withBase('/' + parts.filter(Boolean).join('/') + '/');
+/** URL prefix of a language: English (the default) has none, the others their code. */
+export const langPrefix = (lang: Lang) => (lang === defaultLang ? '' : lang);
+
+const join = (lang: Lang, ...parts: string[]) => {
+  const path = [langPrefix(lang), ...parts].filter(Boolean).join('/');
+  return withBase(path ? `/${path}/` : '/');
+};
 
 export const url = {
   section: (lang: Lang, section: Section) => join(lang, segments[section][lang]),
@@ -75,4 +81,5 @@ export const url = {
   project: (lang: Lang, key: string) => join(lang, segments.work[lang], key),
   insight: (lang: Lang, slug: string) => join(lang, segments.insights[lang], slug),
   topic: (lang: Lang, cat: InsightCategory) => join(lang, segments.insights[lang], topicSegment[lang], categorySlugs[cat][lang]),
+  rss: (lang: Lang) => withBase('/' + [langPrefix(lang), 'rss.xml'].filter(Boolean).join('/')),
 };

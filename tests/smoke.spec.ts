@@ -1,11 +1,13 @@
 import { expect, test } from '@playwright/test';
 
 const langs = ['en', 'de', 'it', 'sq'] as const;
+/** English lives at the root, the other languages under /de/, /it/, /sq/. */
+const home = (lang: (typeof langs)[number]) => (lang === 'en' ? '/' : `/${lang}/`);
 
 test.describe('home pages', () => {
   for (const lang of langs) {
-    test(`/${lang}/ renders in ${lang}`, async ({ page }) => {
-      await page.goto(`/${lang}/`);
+    test(`${home(lang)} renders in ${lang}`, async ({ page }) => {
+      await page.goto(home(lang));
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.getByRole('navigation', { name: /.+/ }).first()).toBeVisible();
@@ -16,7 +18,7 @@ test.describe('home pages', () => {
 });
 
 test('language switcher keeps you on the equivalent page', async ({ page }) => {
-  await page.goto('/en/services/web-design-development/');
+  await page.goto('/services/web-design-development/');
   await page.locator('header .lang a[data-lang="de"]').click();
   await expect(page).toHaveURL(/\/de\/leistungen\/webdesign-entwicklung\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
@@ -26,21 +28,34 @@ test('language switcher keeps you on the equivalent page', async ({ page }) => {
 
   await page.goto('/it/progetti/medicus-center/');
   await page.locator('header .lang a[data-lang="en"]').click();
-  await expect(page).toHaveURL(/\/en\/work\/medicus-center\/$/);
+  await expect(page).toHaveURL(/:\d+\/work\/medicus-center\/$/);
 });
 
 test('language choice is remembered in a cookie', async ({ page, context }) => {
-  await page.goto('/en/');
+  await page.goto('/');
   await page.locator('header .lang a[data-lang="it"]').click();
   await expect(page).toHaveURL(/\/it\/$/);
   const cookies = await context.cookies();
   expect(cookies.find((c) => c.name === 'mx_lang')?.value).toBe('it');
+
+  await page.locator('header .lang a[data-lang="en"]').click();
+  await expect(page).toHaveURL(/:\d+\/$/);
+  expect((await context.cookies()).find((c) => c.name === 'mx_lang')?.value).toBe('en');
+});
+
+test('English pages link to root URLs, never to /en/', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /^https?:\/\/[^/]+\/$/);
+  await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute('href', /^https?:\/\/[^/]+\/$/);
+  const hrefs = await page.locator('a[href]').evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
+  expect(hrefs.filter((h) => /^\/en(\/|$)/.test(h))).toEqual([]);
 });
 
 test('SEO tags: canonical, hreflang with return links, valid JSON-LD', async ({ page, request }) => {
-  await page.goto('/en/services/seo/');
+  await page.goto('/services/seo/');
   const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
-  expect(canonical).toMatch(/\/en\/services\/seo\/$/);
+  expect(canonical).toMatch(/^https?:\/\/[^/]+\/services\/seo\/$/);
   const alternates = page.locator('link[rel="alternate"][hreflang]');
   await expect(alternates).toHaveCount(5); // 4 languages + x-default
   const de = await page.locator('link[hreflang="de"]').getAttribute('href');
@@ -55,7 +70,7 @@ test('SEO tags: canonical, hreflang with return links, valid JSON-LD', async ({ 
 });
 
 test('work filter narrows the list', async ({ page }) => {
-  await page.goto('/en/work/');
+  await page.goto('/work/');
   const cells = page.locator('[data-cell]');
   const total = await cells.count();
   await page.getByRole('button', { name: /Healthcare/ }).click();
@@ -66,7 +81,7 @@ test('work filter narrows the list', async ({ page }) => {
 });
 
 test('contact form validates required fields before sending', async ({ page }) => {
-  await page.goto('/en/contact/');
+  await page.goto('/contact/');
   await page.getByRole('button', { name: 'Send project request' }).click();
   await expect(page.locator('[data-summary]')).toBeVisible();
   await expect(page.locator('#project-form-name')).toHaveAttribute('aria-invalid', 'true');
@@ -79,7 +94,7 @@ test('contact form validates required fields before sending', async ({ page }) =
 });
 
 test('contact page lists both offices, localized', async ({ page }) => {
-  await page.goto('/en/contact/');
+  await page.goto('/contact/');
   await expect(page.locator('[data-office="tirana"]')).toContainText('Tirana');
   await expect(page.locator('[data-office="vienna"]')).toContainText('Vienna');
   await page.goto('/de/kontakt/');
@@ -88,7 +103,7 @@ test('contact page lists both offices, localized', async ({ page }) => {
 });
 
 test('contact details: email and WhatsApp', async ({ page }) => {
-  await page.goto('/en/contact/');
+  await page.goto('/contact/');
   await expect(page.locator('a[href="mailto:info@marketixo.eu"]').first()).toBeVisible();
   await expect(page.locator('a[href^="https://wa.me/436705554057"]')).toHaveText(/\+43 670 5554057/);
   await expect(page.locator('input[name="contact_method"][value="whatsapp"]')).toHaveCount(1);
@@ -96,19 +111,19 @@ test('contact details: email and WhatsApp', async ({ page }) => {
 });
 
 test('service pre-selection from a service page link', async ({ page }) => {
-  await page.goto('/en/contact/?service=seo');
+  await page.goto('/contact/?service=seo');
   await expect(page.locator('input[name="services[]"][value="seo"]')).toBeChecked();
 });
 
 test('FAQ opens and closes', async ({ page }) => {
-  await page.goto('/en/faq/');
+  await page.goto('/faq/');
   const first = page.locator('details').first();
   await first.locator('summary').click();
   await expect(first).toHaveAttribute('open', '');
 });
 
 test('cookie settings dialog opens from the footer', async ({ page }) => {
-  await page.goto('/en/');
+  await page.goto('/');
   await page.locator('footer [data-cookie-settings]').click();
   await expect(page.locator('[data-consent-dialog]')).toBeVisible();
   await page.keyboard.press('Escape');
@@ -121,13 +136,13 @@ test('no third-party requests before consent', async ({ page }) => {
     const host = new URL(r.url()).host;
     if (!host.startsWith('localhost')) external.push(r.url());
   });
-  await page.goto('/en/', { waitUntil: 'load' });
+  await page.goto('/', { waitUntil: 'load' });
   await page.waitForTimeout(1500);
   expect(external).toEqual([]);
 });
 
 test('skip link and images with alt text', async ({ page, browserName }) => {
-  await page.goto('/en/work/');
+  await page.goto('/work/');
   // WebKit doesn't tab to links by default (Safari's "Press Tab to highlight" setting).
   if (browserName === 'webkit') await page.locator('.skip-link').focus();
   else await page.keyboard.press('Tab');
@@ -143,7 +158,7 @@ test('404 page in the visitor’s language', async ({ page }) => {
 });
 
 test('scroll reveals: every animated element becomes visible once it is in view', async ({ page }) => {
-  for (const path of ['/en/', '/en/work/albstar/', '/en/work/implant-swiss-albania/', '/en/services/seo/', '/en/about/']) {
+  for (const path of ['/', '/work/albstar/', '/work/implant-swiss-albania/', '/services/seo/', '/about/']) {
     await page.goto(path);
     await page.waitForFunction(() => (window as unknown as { __mxReveal?: boolean }).__mxReveal === true);
     // Bring each animated element into view (inside the page — fast) and wait for it to reveal.
@@ -164,7 +179,7 @@ test('scroll reveals: every animated element becomes visible once it is in view'
     expect(hidden, `${path} has elements that never revealed`).toEqual([]);
   }
   // The case-study screenshot ends fully visible (not left clipped by the mask reveal).
-  await page.goto('/en/work/albstar/');
+  await page.goto('/work/albstar/');
   await page.locator('.cs-shot').scrollIntoViewIfNeeded();
   await expect
     .poll(() => page.locator('.cs-shot > *').evaluate((el) => getComputedStyle(el).clipPath), { timeout: 3000 })

@@ -50,9 +50,8 @@ marketixo-site/
 │  ├─ lib/pages.ts           Page registry → router, hreflang, switcher, sitemap
 │  ├─ lib/schema.ts          Schema.org JSON-LD builders
 │  ├─ pages/
-│  │  ├─ [lang]/[...slug].astro   One router for every localized page
-│  │  ├─ [lang]/rss.xml.ts        RSS per language
-│  │  ├─ index.astro              "/" (x-default language gateway)
+│  │  ├─ [...slug].astro          One router for every page (EN at /, others under /de/ /it/ /sq/)
+│  │  ├─ rss.xml.ts, [lang]/rss.xml.ts   RSS per language (/rss.xml, /de/rss.xml …)
 │  │  ├─ 404.astro, sitemap.xml.ts, robots.txt.ts
 │  ├─ scripts/               Client JS: reveal, consent/analytics, contact form
 │  ├─ styles/global.css      Design tokens + base styles
@@ -175,7 +174,7 @@ Markdown content…
 ```
 
 Article pages get BlogPosting schema, Open Graph article tags, reading time, breadcrumbs,
-category archives (`/en/insights/topic/seo/`), RSS (`/en/rss.xml`) and sitemap entries.
+category archives (`/insights/topic/seo/`), RSS (`/rss.xml`, `/de/rss.xml` …) and sitemap entries.
 Translations are optional: untranslated articles simply have no hreflang alternate, and the
 language switcher falls back to that language's Insights page.
 
@@ -185,8 +184,9 @@ Built in and verified by `scripts/check-site.mjs` on every build:
 
 - Unique `<title>` and meta description per page and language (schema-enforced lengths)
 - Self-referencing canonical; `hreflang` for every translation **plus `x-default`**, with
-  return links checked; `/` is the x-default language gateway
-- Localized URLs (`/de/leistungen/webdesign-entwicklung/`), trailing slashes, 301s for old URLs
+  return links checked; English is the x-default
+- English at the root (`/services/seo/`), other languages under their code
+  (`/de/leistungen/webdesign-entwicklung/`); trailing slashes; 301s for old URLs (incl. `/en/…`)
 - `sitemap.xml` with `xhtml:link` alternates; `robots.txt`; RSS per language
 - JSON-LD: Organization / ProfessionalService, WebSite, BreadcrumbList, Service + OfferCatalog,
   FAQPage, BlogPosting, CreativeWork (case studies), ItemList, AboutPage, ContactPage

@@ -1,7 +1,8 @@
 ---
 /**
- * The one router for every localized page. Paths come from the page registry
- * (src/lib/pages.ts); each page kind renders its view from src/views/.
+ * The one router for every localized page — English at the root, the other languages
+ * under /de/, /it/, /sq/. Paths come from the page registry (src/lib/pages.ts); each
+ * page kind renders its view from src/views/.
  */
 import { getAllPages, type PageEntry } from '~/lib/pages';
 import { stripBase } from '~/lib/base';
@@ -21,8 +22,8 @@ import ThanksView from '~/views/ThanksView.astro';
 export async function getStaticPaths() {
   const pages = await getAllPages();
   return pages.map((page) => {
-    const rest = stripBase(page.path).split('/').filter(Boolean).slice(1).join('/');
-    return { params: { lang: page.lang, slug: rest || undefined }, props: { page } };
+    const slug = stripBase(page.path).split('/').filter(Boolean).join('/');
+    return { params: { slug: slug || undefined }, props: { page } };
   });
 }
 

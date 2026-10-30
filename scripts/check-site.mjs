@@ -17,6 +17,7 @@ import { join, relative, sep } from 'node:path';
 const dist = process.argv[2] ?? 'dist';
 // Sub-path builds (GitHub Pages preview): BASE_PATH=/marketixo/v2
 const base = (process.env.BASE_PATH ?? '').replace(/\/$/, '');
+const PREFIXED = ['de', 'it', 'sq'];
 const errors = [];
 const warnings = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);
@@ -42,7 +43,7 @@ const exists = (path) => {
   return (existsSync(p) && statSync(p).isFile()) || existsSync(join(p, 'index.html'));
 };
 
-for (const f of ['.htaccess', 'api/contact.php', 'robots.txt', 'sitemap.xml', '404.html', 'favicon.svg', 'favicon.ico', 'site.webmanifest', 'og/default.png']) {
+for (const f of ['.htaccess', 'api/contact.php', 'robots.txt', 'sitemap.xml', '404.html', 'index.html', 'rss.xml', 'favicon.svg', 'favicon.ico', 'site.webmanifest', 'og/default.png']) {
   if (!existsSync(join(dist, f))) err('dist', `missing ${f}`);
 }
 
@@ -59,12 +60,14 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/
 const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`)) ?? [])[1];
 
 for (const [url, src] of pages) {
-  const isGate = url === base + '/' || url === base + '/404.html';
+  const isGate = url === base + '/404.html';
   const noindex = /<meta name="robots" content="noindex/.test(src);
 
+  // English lives at the root; the other languages under /de/, /it/, /sq/.
   const lang = (src.match(/<html[^>]*\slang="([^"]+)"/) ?? [])[1];
+  const urlLang = PREFIXED.find((l) => url.startsWith(`${base}/${l}/`)) ?? 'en';
   if (!lang) err(url, 'missing <html lang>');
-  else if (!isGate && !url.startsWith(`${base}/${lang}/`)) err(url, `lang="${lang}" does not match URL`);
+  else if (!isGate && lang !== urlLang) err(url, `lang="${lang}" does not match URL`);
 
   const rawTitle = (src.match(/<title>([^<]*)<\/title>/) ?? [])[1];
   const title = rawTitle && decode(rawTitle);

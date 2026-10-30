@@ -10,6 +10,7 @@ import { useT, type Lang } from '~/i18n';
 import type { PageEntry } from '~/lib/pages';
 import { graph, organization, website } from '~/lib/schema';
 import { withBase } from '~/lib/base';
+import { url } from '~/i18n/routes';
 
 interface Props {
   page: Pick<PageEntry, 'lang' | 'path' | 'alternates' | 'kind' | 'noindex'>;
@@ -30,7 +31,6 @@ const { page, title, description, image, imageAlt, type, article, canonical, sch
 const lang: Lang = page.lang;
 const t = useT(lang);
 const jsonLd = graph(organization(lang), website(lang, t.meta.defaultDescription), ...schema);
-const xDefault = page.kind === 'home' ? withBase('/') : undefined;
 ---
 
 <!doctype html>
@@ -51,7 +51,6 @@ const xDefault = page.kind === 'home' ? withBase('/') : undefined;
       description={description}
       path={page.path}
       alternates={page.alternates}
-      xDefault={xDefault}
       noindex={page.noindex}
       image={image}
       imageAlt={imageAlt}
@@ -68,7 +67,7 @@ const xDefault = page.kind === 'home' ? withBase('/') : undefined;
     <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
     <link rel="manifest" href={withBase('/site.webmanifest')} />
     <link rel="sitemap" href={withBase('/sitemap.xml')} />
-    {page.kind === 'insights' && <link rel="alternate" type="application/rss+xml" title={`${site.name} — ${t.nav.insights}`} href={withBase(`/${lang}/rss.xml`)} />}
+    {page.kind === 'insights' && <link rel="alternate" type="application/rss+xml" title={`${site.name} — ${t.nav.insights}`} href={url.rss(lang)} />}
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">{t.nav.skip}</a>

@@ -100,9 +100,10 @@ Every push to `marketixo-v2` publishes a preview to
 
 ## 3. After the first deploy
 
-- [ ] `https://marketixo.eu/` redirects to `/en/` (or `/de/`, `/it/`, `/sq/` by browser language)
+- [ ] `https://marketixo.eu/` shows the English home page; `/en/…` addresses 301 to the same page
+  without `/en/`; after choosing DE/IT/SQ in the switcher, `/` sends you to that language
 - [ ] `http://` and `www.` redirect to `https://marketixo.eu`
-- [ ] Send a test request from `/en/contact/` — it arrives in `mail_to`; *Reply* goes to the visitor
+- [ ] Send a test request from `/contact/` — it arrives in `mail_to`; *Reply* goes to the visitor
 - [ ] https://securityheaders.com shows A/A+; check https://pagespeed.web.dev for mobile + desktop
 - [ ] `/sitemap.xml` and `/robots.txt` load; submit the sitemap in Google Search Console
 - [ ] Cookie banner appears only after you set an analytics ID; reject loads nothing external
