@@ -17,24 +17,32 @@ Node.js runtime, database or extra services needed.
 4. **Email authentication** — *cPanel → Email Deliverability*: make sure SPF and DKIM show
    valid. Add a DMARC record (e.g. `v=DMARC1; p=quarantine; rua=mailto:info@marketixo.eu`).
 5. **Form configuration (secrets stay off the web)** — upload
-   `deploy/mx-config.example.php` to your **home directory, one level above `public_html`**,
-   rename it to `mx-config.php`, and set `mail_to` / `mail_from`:
+   `deploy/mx-config.example.php` to the folder **one level above the site's web root**,
+   rename it to `mx-config.php`, and set `mail_to` / `mail_from`.
+
+   **marketixo.eu is an addon domain** — its web root is `~/marketixo.eu`, not `public_html`:
 
    ```
-   /home/<cpanel-user>/mx-config.php      ← here
-   /home/<cpanel-user>/public_html/        ← website
+   /home/whitxqbc/mx-config.php           ← here
+   /home/whitxqbc/marketixo.eu/           ← website (web root of marketixo.eu)
    ```
+
+   (For a primary domain the web root would be `~/public_html` — same rule, one level above.)
 
 ## 2a. Deploy automatically (recommended)
 
 1. Push this project to a GitHub repository.
-2. *cPanel → FTP Accounts* → create an account (e.g. `deploy@marketixo.eu`) whose directory
-   is your home folder. Under *Configure FTP Client* note the server name.
+2. *cPanel → FTP Accounts* → create an account (e.g. `deploy@marketixo.eu`) whose
+   **Directory is the site's web root: `marketixo.eu`** (cPanel pre-fills a subfolder such as
+   `marketixo.eu/marketixo` — clear it; an FTP account is locked to its folder and can't reach
+   the one above). Under *Configure FTP Client* note the server (`ftp.marketixo.eu`, explicit
+   FTPS, port 21).
 3. GitHub → *Settings → Secrets and variables → Actions*:
    - **Secrets:** `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`
    - **Variables (optional):** `PUBLIC_SITE_URL`, `PUBLIC_GA4_ID`, `PUBLIC_GTM_ID`,
      `PUBLIC_META_PIXEL_ID`, `PUBLIC_GSC_VERIFICATION`, `FTP_SERVER_DIR`
-     (default `./public_html/`; use `./` if the FTP account's root *is* public_html)
+     — **`FTP_SERVER_DIR` = `./`** when the FTP account opens in the web root (as above);
+     the default `./public_html/` is only right for an account rooted at the home folder.
 4. Every push runs type checks, the build, static QA and Playwright tests. Pushes to `main`
    deploy over **FTPS**. Only changed files are uploaded.
 
