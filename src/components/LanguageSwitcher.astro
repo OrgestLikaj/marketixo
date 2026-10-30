@@ -1,11 +1,18 @@
 ---
 /**
- * EN · DE · IT · SQ — links to the equivalent page in each language.
+ * Flag links (🇬🇧 🇩🇪 🇮🇹 🇦🇱) to the equivalent page in each language. Flags are SVG
+ * images (src/assets/flags/) — emoji flags don't render on Windows.
  * Clicking stores the choice in a first-party cookie (mx_lang) so the root URL
  * and future visits open in the same language.
  */
 import { languageMeta, locales, useT, type Lang } from '~/i18n';
 import { switchTarget, type PageEntry } from '~/lib/pages';
+import en from '~/assets/flags/en.svg?url';
+import de from '~/assets/flags/de.svg?url';
+import it from '~/assets/flags/it.svg?url';
+import sq from '~/assets/flags/sq.svg?url';
+
+const flags: Record<Lang, string> = { en, de, it, sq };
 
 interface Props {
   page: Pick<PageEntry, 'lang' | 'alternates' | 'kind'>;
@@ -29,7 +36,7 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
             aria-current={item.lang === page.lang ? 'true' : undefined}
             title={item.meta.native}
           >
-            <span class="lang__short" aria-hidden={variant === 'stacked' ? 'true' : undefined}>{item.meta.short}</span>
+            <img class="lang__flag" src={flags[item.lang]} alt="" width="20" height="15" />
             {variant === 'stacked' ? <span class="lang__native">{item.meta.native}</span> : <span class="sr-only">{item.meta.native}</span>}
           </a>
         </li>
@@ -62,35 +69,51 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
     color: var(--text-subtle);
     transition: color var(--dur) var(--ease);
   }
-  .lang a:hover {
-    color: var(--text);
-  }
+  .lang a:hover,
   .lang a[aria-current] {
     color: var(--text);
   }
-
-  /* Inline: EN · DE · IT · SQ */
-  .lang--inline ul {
-    gap: 0;
-    font-family: var(--font-code);
-    font-size: var(--fs-xs);
-    letter-spacing: 0.06em;
+  .lang__flag {
+    display: block;
+    flex: none;
+    width: 20px;
+    height: 15px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.18);
+    opacity: 0.55;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .lang--inline li + li::before {
-    content: '·';
-    color: var(--text-subtle);
-    opacity: 0.6;
-    padding-inline: 0.15rem;
+  .lang a:hover .lang__flag,
+  .lang a:focus-visible .lang__flag,
+  .lang a[aria-current] .lang__flag {
+    opacity: 1;
+  }
+
+  /* Inline: a row of flags; the current language is underlined */
+  .lang--inline ul {
+    gap: 0.15rem;
   }
   .lang--inline a {
-    padding: 0.55rem 0.3rem;
+    position: relative;
+    justify-content: center;
+    min-width: 34px;
     min-height: 44px;
   }
-  .lang--inline a[aria-current] .lang__short {
-    border-bottom: 1px solid var(--golden-orange);
+  .lang--inline a:hover .lang__flag {
+    transform: translateY(-1px);
+  }
+  .lang--inline a[aria-current]::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    right: 7px;
+    bottom: 8px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--golden-orange);
   }
 
-  /* Stacked: large tap targets for the mobile menu */
+  /* Stacked: large tap targets for the mobile menu — flag + language name */
   .lang--stacked ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -107,9 +130,9 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
     border-color: var(--pearl-aqua);
     background: rgb(148 210 189 / 0.06);
   }
-  .lang--stacked .lang__short {
-    font-family: var(--font-code);
-    font-size: var(--fs-xs);
-    color: var(--pearl-aqua);
+  .lang--stacked .lang__flag {
+    width: 24px;
+    height: 18px;
+    opacity: 1;
   }
 </style>
