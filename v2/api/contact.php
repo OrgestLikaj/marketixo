@@ -2,9 +2,10 @@
 /**
  * Marketixo — project request handler (PHP 8.1+, Namecheap shared hosting).
  *
- * Configuration lives OUTSIDE the web root in mx-config.php (see deploy/mx-config.example.php):
- *   /home/<cpanel-user>/mx-config.php   ← one level above public_html
- * so no address or credential is ever committed or publicly downloadable.
+ * Works out of the box with the defaults below (delivery to info@marketixo.eu). To change
+ * them, put an mx-config.php OUTSIDE the web root (see deploy/mx-config.example.php):
+ *   /home/<cpanel-user>/mx-config.php   ← one level above the site's web root
+ * Its values override the defaults; it is never committed or publicly downloadable.
  *
  * Security:
  *  - POST only, same-origin check, payload size limit
@@ -23,8 +24,8 @@ declare(strict_types=1);
 // ---------------------------------------------------------------------------
 
 $config = [
-    'mail_to'     => '',                 // where requests are delivered
-    'mail_from'   => '',                 // a real mailbox on your domain (e.g. no-reply@marketixo.eu)
+    'mail_to'     => 'info@marketixo.eu', // where requests are delivered
+    'mail_from'   => 'info@marketixo.eu', // a real mailbox on the site's domain (keeps mail out of spam)
     'site_name'   => 'Marketixo',
     'min_seconds' => 3,                  // faster submissions are treated as bots
     'rate_limit'  => 5,                  // max submissions per IP …
