@@ -24,6 +24,7 @@ const abs = (p: string) => new URL(p, site.url).href;
     {locales.map((l) => <link rel="alternate" hreflang={languageMeta[l].hreflang} href={abs(withBase(`/${l}/`))} />)}
     <link rel="alternate" hreflang="x-default" href={abs(withBase('/'))} />
     {site.noindex && <meta name="robots" content="noindex, follow" />}
+    {site.analytics.googleSiteVerification && <meta name="google-site-verification" content={site.analytics.googleSiteVerification} />}
     <meta name="theme-color" content={site.themeColor} />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <script is:inline define:vars={{ locales, defaultLang, base }}>

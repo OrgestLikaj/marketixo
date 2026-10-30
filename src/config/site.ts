@@ -86,7 +86,8 @@ export const site = {
     gtmId: import.meta.env.PUBLIC_GTM_ID ?? '', // GTM-XXXXXX (if set, load GA4 through GTM instead)
     metaPixelId: import.meta.env.PUBLIC_META_PIXEL_ID ?? '',
     /** Google Search Console HTML-tag verification token. */
-    googleSiteVerification: import.meta.env.PUBLIC_GSC_VERIFICATION ?? '',
+    // Token from Search Console (public by design). Also add it as a DNS TXT record for a Domain property.
+    googleSiteVerification: import.meta.env.PUBLIC_GSC_VERIFICATION || 'MlQZ9D_YXLOO9UJiKS2m7p304XLDPruhUJQ18hg4ljg',
   },
 
   /** Contact form endpoint (PHP on Namecheap). */
