@@ -160,7 +160,7 @@ const story = [
       )
     }
 
-    <section class="section" aria-labelledby="overview">
+    <section class="section cs-story" aria-labelledby="overview">
       <div class="container container--wide story">
         <h2 id="overview" class="story__label">{cs.overview}</h2>
         <p class="story__lead" data-reveal>{c.overview}</p>
@@ -381,8 +381,12 @@ const story = [
     gap: 0.3rem;
     color: var(--pearl-aqua);
   }
+  /* The story continues straight from the screenshot — a normal section gap is too much here */
+  .cs-story {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  }
   .cs-shot {
-    margin-bottom: clamp(1rem, 3vw, 2rem);
+    margin-bottom: 0;
   }
   .cs-cover {
     position: relative;
