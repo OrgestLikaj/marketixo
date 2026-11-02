@@ -241,7 +241,7 @@ const sq: UI = {
       'Marketixo bashkon dizajnin, inxhinierinë, marketingun, sigurinë dhe sigurimin e cilësisë në një ekip. Si punojmë dhe çfarë mund të prisni.',
     eyebrow: 'Rreth nesh',
     heading: 'Dizajn, inxhinieri dhe marketing në të njëjtën tryezë.',
-    lead: 'Marketixo është agjenci dixhitale për bizneset që duan një ekip të vetëm përgjegjës për rezultatin — jo një varg freelancerësh, ku secili mban vetëm një copë.',
+    lead: 'Marketixo është agjenci dixhitale online, me përfaqësues në Vjenë dhe Tiranë, për bizneset që duan një ekip të vetëm përgjegjës për rezultatin — jo një varg freelancerësh, ku secili mban vetëm një copë.',
     whatHeading: 'Çfarë bëjmë',
     what: 'Projektojmë marka dhe faqe interneti, ndërtojmë softuerin pas tyre dhe drejtojmë marketingun që sjell klientët. Meqë testojmë dhe sigurojmë edhe atë që ndërtojmë, puna qëndron gjatë pas publikimit: faqet mbeten të shpejta, formularët vazhdojnë të funksionojnë dhe përditësimet nuk prishin atë që dje ishte në rregull.',
     howHeading: 'Si punojmë',
@@ -292,7 +292,7 @@ const sq: UI = {
     whatsapp: 'WhatsApp',
     location: 'Vendndodhjet',
     social: 'Rrjete sociale',
-    remote: 'Punojmë me klientë në gjithë Evropën, në vend dhe në distancë.',
+    remote: 'Agjenci online me përfaqësues në Vjenë dhe Tiranë — punojmë me klientë në gjithë Evropën.',
   },
 
   form: {

@@ -241,7 +241,7 @@ const de: UI = {
       'Marketixo vereint Design, Entwicklung, Marketing, Sicherheit und Qualitätssicherung in einem Team. Wie wir arbeiten und was Sie erwarten können.',
     eyebrow: 'Über uns',
     heading: 'Design, Entwicklung und Marketing an einem Tisch.',
-    lead: 'Marketixo ist eine Digitalagentur für Unternehmen, die ein Team wollen, das für das Ergebnis geradesteht – keine Kette von Freelancern, die jeweils nur für ein Teilstück zuständig sind.',
+    lead: 'Marketixo ist eine Online-Digitalagentur mit Vertretungen in Wien und Tirana – für Unternehmen, die ein Team wollen, das für das Ergebnis geradesteht – keine Kette von Freelancern, die jeweils nur für ein Teilstück zuständig sind.',
     whatHeading: 'Was wir tun',
     what: 'Wir gestalten Marken und Websites, entwickeln die Software dahinter und betreiben das Marketing, das Besucher bringt. Weil wir auch testen und absichern, was wir bauen, hält die Arbeit lange über den Launch hinaus: Seiten bleiben schnell, Formulare funktionieren weiter, und Updates machen nicht kaputt, was gestern noch lief.',
     howHeading: 'Wie wir arbeiten',
@@ -292,7 +292,7 @@ const de: UI = {
     whatsapp: 'WhatsApp',
     location: 'Standorte',
     social: 'Social Media',
-    remote: 'Wir arbeiten mit Kunden in ganz Europa – vor Ort und remote.',
+    remote: 'Eine Online-Agentur mit Vertretungen in Wien und Tirana – wir arbeiten mit Kunden in ganz Europa.',
   },
 
   form: {

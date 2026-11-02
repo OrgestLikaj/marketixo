@@ -3,7 +3,7 @@ title: Politika e privatësisë
 description: Si i mbledh, i përdor dhe i mbron Marketixo të dhënat personale në këtë faqe interneti, dhe të drejtat që keni sipas GDPR-së.
 lang: sq
 page: privacy
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 Kjo politikë shpjegon cilat të dhëna personale përpunojmë kur vizitoni këtë faqe interneti ose na kontaktoni, pse e bëjmë këtë dhe çfarë të drejtash keni. E mbajmë të shkurtër dhe të përqendruar te ajo që kjo faqe bën realisht.
@@ -13,7 +13,7 @@ Kjo politikë shpjegon cilat të dhëna personale përpunojmë kur vizitoni kët
 Kontrollues sipas Rregullores së Përgjithshme për Mbrojtjen e të Dhënave të BE-së (GDPR) dhe legjislacionit kombëtar në fuqi (përfshirë Ligjin nr. 124/2024 „Për mbrojtjen e të dhënave personale“) është:
 
 **{{legalName}}**<br>
-{{address}}<br>
+Agjenci dixhitale online me përfaqësues në Vjenë, Austri, dhe Tiranë, Shqipëri<br>
 Email: {{email}}<br>
 Telefon: {{phone}}
 

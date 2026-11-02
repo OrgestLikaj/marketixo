@@ -3,7 +3,7 @@ title: Informativa sulla privacy
 description: Come Marketixo raccoglie, utilizza e protegge i dati personali su questo sito e quali diritti Le spettano ai sensi del GDPR.
 lang: it
 page: privacy
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 Informativa sul trattamento dei dati personali ai sensi del Regolamento (UE) 2016/679 (Regolamento generale sulla protezione dei dati – “GDPR”). Spiega quali dati personali trattiamo quando visita questo sito o ci contatta, per quali finalità e quali diritti Le spettano. È volutamente breve e si limita a ciò che questo sito fa davvero.
@@ -13,7 +13,7 @@ Informativa sul trattamento dei dati personali ai sensi del Regolamento (UE) 201
 Il titolare del trattamento ai sensi del GDPR e della normativa nazionale applicabile (compresa la Legge albanese n. 124/2024 sulla protezione dei dati personali) è:
 
 **{{legalName}}**<br>
-{{address}}<br>
+Agenzia digitale online con rappresentanti a Vienna, Austria, e Tirana, Albania<br>
 E-mail: {{email}}<br>
 Telefono: {{phone}}
 

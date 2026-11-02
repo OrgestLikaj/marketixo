@@ -3,7 +3,7 @@ title: Privacy Policy
 description: How Marketixo collects, uses and protects personal data on this website, and the rights you have under the GDPR.
 lang: en
 page: privacy
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 This policy explains what personal data we process when you visit this website or contact us, why we do it, and what rights you have. We keep it short and specific to what this site actually does.
@@ -13,7 +13,7 @@ This policy explains what personal data we process when you visit this website o
 The controller under the EU General Data Protection Regulation (GDPR) and applicable national law (including Albanian Law No. 124/2024 on personal data protection) is:
 
 **{{legalName}}**<br>
-{{address}}<br>
+Online digital agency with representatives in Vienna, Austria and Tirana, Albania<br>
 Email: {{email}}<br>
 Phone: {{phone}}
 

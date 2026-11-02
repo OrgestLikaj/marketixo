@@ -241,7 +241,7 @@ const en = {
       'Marketixo combines design, engineering, marketing, security and quality assurance in one team. How we work and what you can expect.',
     eyebrow: 'About',
     heading: 'Design, engineering and marketing at one table.',
-    lead: 'Marketixo is a digital agency for businesses that want one team to own the result — not a chain of freelancers who each own a piece of it.',
+    lead: 'Marketixo is an online digital agency, with representatives in Vienna and Tirana, for businesses that want one team to own the result — not a chain of freelancers who each own a piece of it.',
     whatHeading: 'What we do',
     what: 'We design brands and websites, build the software behind them, and run the marketing that brings people in. Because we also test and secure what we build, the work holds up long after launch: pages stay fast, forms keep working, and updates don’t break what was fine yesterday.',
     howHeading: 'How we work',
@@ -292,7 +292,7 @@ const en = {
     whatsapp: 'WhatsApp',
     location: 'Locations',
     social: 'Social',
-    remote: 'Working with clients across Europe, on site and remotely.',
+    remote: 'An online agency with representatives in Vienna and Tirana, working with clients across Europe.',
   },
 
   form: {

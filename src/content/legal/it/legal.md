@@ -3,29 +3,22 @@ title: Note legali
 description: Dati societari e note legali del sito web di Marketixo.
 lang: it
 page: legal
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 ## Dati societari
 
 **{{legalName}}**<br>
-{{address}}
-
-Legale rappresentante: {{representative}}
+Agenzia digitale online con rappresentanti a Vienna, Austria, e Tirana, Albania
 
 ## Contatti
 
 E-mail: {{email}}<br>
 Telefono: {{phone}}
 
-## Registrazione
-
-Iscrizione al registro delle imprese: {{registration}}<br>
-Partita IVA / codice fiscale: {{vatId}}
-
 ## Responsabile dei contenuti
 
-{{representative}}, {{address}}
+{{legalName}}, contattabile ai recapiti indicati sopra.
 
 ## Risoluzione delle controversie con i consumatori
 

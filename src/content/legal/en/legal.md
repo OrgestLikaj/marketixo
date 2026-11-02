@@ -3,29 +3,22 @@ title: Legal Notice
 description: Company information and legal notice (Impressum) for the Marketixo website.
 lang: en
 page: legal
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 ## Company information
 
 **{{legalName}}**<br>
-{{address}}
-
-Represented by: {{representative}}
+Online digital agency with representatives in Vienna, Austria and Tirana, Albania
 
 ## Contact
 
 Email: {{email}}<br>
 Phone: {{phone}}
 
-## Registration
-
-Business registration: {{registration}}<br>
-VAT / tax number: {{vatId}}
-
 ## Responsible for content
 
-{{representative}}, {{address}}
+{{legalName}}, reachable at the contact details above.
 
 ## Consumer dispute resolution
 

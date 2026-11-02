@@ -3,29 +3,22 @@ title: Njoftim ligjor
 description: Të dhënat e shoqërisë dhe njoftimi ligjor për faqen e internetit të Marketixo.
 lang: sq
 page: legal
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 ## Të dhënat e shoqërisë
 
 **{{legalName}}**<br>
-{{address}}
-
-Përfaqësuar nga: {{representative}}
+Agjenci dixhitale online me përfaqësues në Vjenë, Austri, dhe Tiranë, Shqipëri
 
 ## Kontakti
 
 Email: {{email}}<br>
 Telefon: {{phone}}
 
-## Regjistrimi
-
-Regjistrimi i biznesit: {{registration}}<br>
-NIPT / numri tatimor: {{vatId}}
-
 ## Përgjegjës për përmbajtjen
 
-{{representative}}, {{address}}
+{{legalName}}, i kontaktueshëm në të dhënat e mësipërme.
 
 ## Zgjidhja e mosmarrëveshjeve me konsumatorët
 

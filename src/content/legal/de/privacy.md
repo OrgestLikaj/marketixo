@@ -3,7 +3,7 @@ title: Datenschutzerklärung
 description: Wie Marketixo personenbezogene Daten auf dieser Website erhebt, verwendet und schützt – und welche Rechte Sie nach der DSGVO haben.
 lang: de
 page: privacy
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
 Diese Datenschutzerklärung erläutert, welche personenbezogenen Daten wir verarbeiten, wenn Sie diese Website besuchen oder uns kontaktieren, zu welchem Zweck wir das tun und welche Rechte Sie haben. Wir halten sie kurz und beschränken uns auf das, was diese Website tatsächlich tut.
@@ -13,7 +13,7 @@ Diese Datenschutzerklärung erläutert, welche personenbezogenen Daten wir verar
 Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) und des anwendbaren nationalen Rechts (einschließlich des albanischen Gesetzes Nr. 124/2024 über den Schutz personenbezogener Daten) ist:
 
 **{{legalName}}**<br>
-{{address}}<br>
+Online-Digitalagentur mit Vertretungen in Wien, Österreich, und Tirana, Albanien<br>
 E-Mail: {{email}}<br>
 Telefon: {{phone}}
 

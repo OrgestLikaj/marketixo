@@ -27,7 +27,7 @@ const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const tokens: Record<string, string> = {
   siteName: site.name,
   siteUrl: site.url,
-  legalName: orPlaceholder(site.company.legalName, 'legalName'),
+  legalName: site.company.legalName || site.name,
   legalForm: site.company.legalForm,
   representative: orPlaceholder(site.company.representative, 'representative'),
   address: formattedAddress(),

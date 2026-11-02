@@ -3,29 +3,22 @@ title: Impressum
 description: Anbieterkennzeichnung und rechtliche Hinweise (Impressum) für die Website von Marketixo.
 lang: de
 page: legal
-updated: 2026-10-07
+updated: 2026-11-02
 ---
 
-## Angaben gemäß § 5 DDG
+## Angaben zum Unternehmen
 
 **{{legalName}}**<br>
-{{address}}
-
-Vertreten durch: {{representative}}
+Online-Digitalagentur mit Vertretungen in Wien, Österreich, und Tirana, Albanien
 
 ## Kontakt
 
 E-Mail: {{email}}<br>
 Telefon: {{phone}}
 
-## Registereintrag und Steuern
+## Verantwortlich für den Inhalt
 
-Registereintrag: {{registration}}<br>
-Umsatzsteuer-ID / Steuernummer: {{vatId}}
-
-## Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
-
-{{representative}}, {{address}}
+{{legalName}}, erreichbar über die oben genannten Kontaktdaten.
 
 ## Verbraucherstreitbeilegung
 
