@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/marketixo/v2/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/"/>
@@ -12,7 +11,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/"/>
@@ -21,7 +20,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/"/>
@@ -30,7 +29,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/"/>
@@ -39,7 +38,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/"/>
@@ -48,7 +47,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/"/>
@@ -57,7 +56,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/"/>
@@ -66,7 +65,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/"/>
@@ -75,7 +74,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/"/>
@@ -84,7 +83,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/"/>
@@ -93,7 +92,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/"/>
@@ -102,7 +101,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/"/>
@@ -111,7 +110,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/about/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/about/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/ueber-uns/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/chi-siamo/"/>
@@ -120,7 +119,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/ueber-uns/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/about/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/ueber-uns/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/chi-siamo/"/>
@@ -129,7 +128,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/chi-siamo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/about/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/ueber-uns/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/chi-siamo/"/>
@@ -138,7 +137,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/rreth-nesh/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/about/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/ueber-uns/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/chi-siamo/"/>
@@ -147,7 +146,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/contact/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/contact/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/kontakt/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/contatti/"/>
@@ -156,7 +155,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/kontakt/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/contact/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/kontakt/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/contatti/"/>
@@ -165,7 +164,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/contatti/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/contact/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/kontakt/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/contatti/"/>
@@ -174,7 +173,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/kontakt/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/contact/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/kontakt/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/contatti/"/>
@@ -183,7 +182,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/faq/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/faq/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/faq/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/domande-frequenti/"/>
@@ -192,7 +191,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/faq/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/faq/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/faq/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/domande-frequenti/"/>
@@ -201,7 +200,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/domande-frequenti/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/faq/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/faq/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/domande-frequenti/"/>
@@ -210,7 +209,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/pyetje-te-shpeshta/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/faq/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/faq/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/domande-frequenti/"/>
@@ -219,7 +218,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/"/>
@@ -228,7 +227,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/"/>
@@ -237,7 +236,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/"/>
@@ -246,7 +245,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/"/>
@@ -255,7 +254,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/privacy-policy/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/privacy-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/datenschutz/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/privacy-policy/"/>
@@ -264,7 +263,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/datenschutz/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/privacy-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/datenschutz/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/privacy-policy/"/>
@@ -273,7 +272,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/privacy-policy/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/privacy-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/datenschutz/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/privacy-policy/"/>
@@ -282,7 +281,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/politika-e-privatesise/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/privacy-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/datenschutz/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/privacy-policy/"/>
@@ -291,7 +290,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/cookie-policy/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/cookie-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/cookie-richtlinie/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/cookie-policy/"/>
@@ -300,7 +299,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/cookie-richtlinie/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/cookie-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/cookie-richtlinie/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/cookie-policy/"/>
@@ -309,7 +308,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/cookie-policy/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/cookie-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/cookie-richtlinie/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/cookie-policy/"/>
@@ -318,7 +317,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/politika-e-cookies/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/cookie-policy/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/cookie-richtlinie/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/cookie-policy/"/>
@@ -327,7 +326,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/legal-notice/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/legal-notice/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/impressum/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/note-legali/"/>
@@ -336,7 +335,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/impressum/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/legal-notice/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/impressum/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/note-legali/"/>
@@ -345,7 +344,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/note-legali/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/legal-notice/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/impressum/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/note-legali/"/>
@@ -354,7 +353,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/njoftim-ligjor/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/legal-notice/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/impressum/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/note-legali/"/>
@@ -363,7 +362,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/web-design-development/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/web-design-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/webdesign-entwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/web-design-sviluppo/"/>
@@ -372,7 +371,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/webdesign-entwicklung/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/web-design-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/webdesign-entwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/web-design-sviluppo/"/>
@@ -381,7 +380,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/web-design-sviluppo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/web-design-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/webdesign-entwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/web-design-sviluppo/"/>
@@ -390,7 +389,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/dizajn-zhvillim-web/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/web-design-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/webdesign-entwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/web-design-sviluppo/"/>
@@ -399,7 +398,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/branding-logo-design/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/branding-logo-design/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/branding-logodesign/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/branding-logo-design/"/>
@@ -408,7 +407,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/branding-logodesign/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/branding-logo-design/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/branding-logodesign/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/branding-logo-design/"/>
@@ -417,7 +416,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/branding-logo-design/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/branding-logo-design/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/branding-logodesign/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/branding-logo-design/"/>
@@ -426,7 +425,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/branding-dizajn-logoje/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/branding-logo-design/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/branding-logodesign/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/branding-logo-design/"/>
@@ -435,7 +434,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/seo/"/>
@@ -444,7 +443,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/seo/"/>
@@ -453,7 +452,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/seo/"/>
@@ -462,7 +461,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/seo/"/>
@@ -471,7 +470,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/paid-ads/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/paid-ads/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/online-werbung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/pubblicita-online/"/>
@@ -480,7 +479,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/online-werbung/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/paid-ads/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/online-werbung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/pubblicita-online/"/>
@@ -489,7 +488,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/pubblicita-online/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/paid-ads/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/online-werbung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/pubblicita-online/"/>
@@ -498,7 +497,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/reklama-me-pagese/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/paid-ads/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/online-werbung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/pubblicita-online/"/>
@@ -507,7 +506,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/social-media-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/social-media-marketing/"/>
@@ -516,7 +515,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/social-media-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/social-media-marketing/"/>
@@ -525,7 +524,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/social-media-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/social-media-marketing/"/>
@@ -534,7 +533,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/marketing-ne-rrjete-sociale/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/social-media-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/social-media-marketing/"/>
@@ -543,7 +542,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/content-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/content-marketing/"/>
@@ -552,7 +551,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/content-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/content-marketing/"/>
@@ -561,7 +560,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/content-marketing/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/content-marketing/"/>
@@ -570,7 +569,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/marketing-permbajtjeje/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/content-marketing/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/content-marketing/"/>
@@ -579,7 +578,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/cybersecurity/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/sicurezza-informatica/"/>
@@ -588,7 +587,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/cybersicherheit/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/sicurezza-informatica/"/>
@@ -597,7 +596,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/sicurezza-informatica/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/sicurezza-informatica/"/>
@@ -606,7 +605,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/siguri-kibernetike/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/sicurezza-informatica/"/>
@@ -615,7 +614,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/services/software-testing-qa/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/software-testing-qa/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/softwaretests-qa/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/software-testing-qa/"/>
@@ -624,7 +623,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/leistungen/softwaretests-qa/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/software-testing-qa/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/softwaretests-qa/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/software-testing-qa/"/>
@@ -633,7 +632,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/servizi/software-testing-qa/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/software-testing-qa/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/softwaretests-qa/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/software-testing-qa/"/>
@@ -642,7 +641,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/sherbime/testim-softueri-qa/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/services/software-testing-qa/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/leistungen/softwaretests-qa/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/servizi/software-testing-qa/"/>
@@ -651,7 +650,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/medicus-center/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/medicus-center/"/>
@@ -660,7 +659,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/medicus-center/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/medicus-center/"/>
@@ -669,7 +668,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/medicus-center/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/medicus-center/"/>
@@ -678,7 +677,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/medicus-center/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/medicus-center/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/medicus-center/"/>
@@ -687,7 +686,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/scidev/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/scidev/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/scidev/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/scidev/"/>
@@ -696,7 +695,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/scidev/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/scidev/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/scidev/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/scidev/"/>
@@ -705,7 +704,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/scidev/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/scidev/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/scidev/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/scidev/"/>
@@ -714,7 +713,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/scidev/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/scidev/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/scidev/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/scidev/"/>
@@ -723,7 +722,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/ir-real-estate/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/ir-real-estate/"/>
@@ -732,7 +731,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/ir-real-estate/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/ir-real-estate/"/>
@@ -741,7 +740,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/ir-real-estate/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/ir-real-estate/"/>
@@ -750,7 +749,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/ir-real-estate/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/ir-real-estate/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/ir-real-estate/"/>
@@ -759,7 +758,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/albstar/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albstar/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albstar/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albstar/"/>
@@ -768,7 +767,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albstar/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albstar/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albstar/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albstar/"/>
@@ -777,7 +776,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/albstar/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albstar/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albstar/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albstar/"/>
@@ -786,7 +785,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/albstar/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albstar/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albstar/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albstar/"/>
@@ -795,7 +794,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/elbasanion/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/elbasanion/"/>
@@ -804,7 +803,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/elbasanion/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/elbasanion/"/>
@@ -813,7 +812,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/elbasanion/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/elbasanion/"/>
@@ -822,7 +821,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/elbasanion/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/elbasanion/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/elbasanion/"/>
@@ -831,7 +830,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/finman/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/finman/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/finman/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/finman/"/>
@@ -840,7 +839,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/finman/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/finman/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/finman/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/finman/"/>
@@ -849,7 +848,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/finman/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/finman/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/finman/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/finman/"/>
@@ -858,7 +857,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/finman/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/finman/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/finman/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/finman/"/>
@@ -867,7 +866,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/fintrade/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/fintrade/"/>
@@ -876,7 +875,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/fintrade/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/fintrade/"/>
@@ -885,7 +884,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/fintrade/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/fintrade/"/>
@@ -894,7 +893,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/fintrade/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/fintrade/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/fintrade/"/>
@@ -903,7 +902,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/eydr/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/eydr/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/eydr/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/eydr/"/>
@@ -912,7 +911,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/eydr/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/eydr/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/eydr/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/eydr/"/>
@@ -921,7 +920,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/eydr/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/eydr/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/eydr/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/eydr/"/>
@@ -930,7 +929,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/eydr/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/eydr/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/eydr/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/eydr/"/>
@@ -939,7 +938,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/albanian-athletes/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albanian-athletes/"/>
@@ -948,7 +947,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albanian-athletes/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albanian-athletes/"/>
@@ -957,7 +956,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/albanian-athletes/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albanian-athletes/"/>
@@ -966,7 +965,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/albanian-athletes/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/albanian-athletes/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/albanian-athletes/"/>
@@ -975,7 +974,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/work/implant-swiss-albania/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/implant-swiss-albania/"/>
@@ -984,7 +983,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/referenzen/implant-swiss-albania/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/implant-swiss-albania/"/>
@@ -993,7 +992,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/progetti/implant-swiss-albania/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/implant-swiss-albania/"/>
@@ -1002,7 +1001,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/projekte/implant-swiss-albania/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/work/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/referenzen/implant-swiss-albania/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/progetti/implant-swiss-albania/"/>
@@ -1011,7 +1010,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/multilingual-website-seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/"/>
@@ -1020,7 +1019,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/multilingual-website-seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/multilingual-website-seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/"/>
@@ -1029,7 +1028,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/multilingual-website-seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/"/>
@@ -1038,7 +1037,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/faqe-shumegjuhesh-seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/multilingual-website-seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/mehrsprachige-websites-seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/siti-multilingue-seo/"/>
@@ -1047,7 +1046,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/website-security-basics/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/"/>
@@ -1056,7 +1055,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/website-security-basics/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/website-security-basics/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/"/>
@@ -1065,7 +1064,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/website-security-basics/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/"/>
@@ -1074,7 +1073,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/siguria-e-faqes-bazat/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/website-security-basics/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/website-sicherheit-grundlagen/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/sicurezza-sito-web-basi/"/>
@@ -1083,7 +1082,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/topic/web-development/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/web-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/webentwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sviluppo-web/"/>
@@ -1092,7 +1091,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/webentwicklung/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/web-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/webentwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sviluppo-web/"/>
@@ -1101,7 +1100,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sviluppo-web/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/web-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/webentwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sviluppo-web/"/>
@@ -1110,7 +1109,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/teme/zhvillim-web/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/web-development/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/webentwicklung/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sviluppo-web/"/>
@@ -1119,7 +1118,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/topic/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/seo/"/>
@@ -1128,7 +1127,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/seo/"/>
@@ -1137,7 +1136,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/seo/"/>
@@ -1146,7 +1145,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/teme/seo/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/seo/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/seo/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/seo/"/>
@@ -1155,7 +1154,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/insights/topic/cybersecurity/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sicurezza-informatica/"/>
@@ -1164,7 +1163,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/cybersicherheit/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sicurezza-informatica/"/>
@@ -1173,7 +1172,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sicurezza-informatica/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sicurezza-informatica/"/>
@@ -1182,7 +1181,7 @@
   </url>
   <url>
     <loc>https://orgestlikaj.github.io/marketixo/v2/sq/artikuj/teme/siguri-kibernetike/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orgestlikaj.github.io/marketixo/v2/insights/topic/cybersecurity/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://orgestlikaj.github.io/marketixo/v2/de/insights/thema/cybersicherheit/"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://orgestlikaj.github.io/marketixo/v2/it/insights/tema/sicurezza-informatica/"/>
