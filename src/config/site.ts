@@ -83,7 +83,8 @@ export const site = {
    */
   analytics: {
     ga4Id: import.meta.env.PUBLIC_GA4_ID ?? '', // G-XXXXXXX
-    gtmId: import.meta.env.PUBLIC_GTM_ID ?? '', // GTM-XXXXXX (if set, load GA4 through GTM instead)
+    // Production container (public by design). Staging/preview builds (NOINDEX) load no GTM.
+    gtmId: import.meta.env.PUBLIC_GTM_ID || (NOINDEX ? '' : 'GTM-KH3L9GS5'), // GA4 is configured inside GTM
     metaPixelId: import.meta.env.PUBLIC_META_PIXEL_ID ?? '',
     /** Google Search Console HTML-tag verification token. */
     // Token from Search Console (public by design). Also add it as a DNS TXT record for a Domain property.
