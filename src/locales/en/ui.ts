@@ -130,6 +130,23 @@ const en = {
       headingAccent: 'Let’s build it.',
       text: 'Tell us what you need. You’ll get an honest assessment, a clear scope and a fixed quote — even if the answer is that you need less than you think.',
     },
+    v3: {
+      trusted: 'Trusted by',
+      pause: 'Pause logo animation',
+      play: 'Play logo animation',
+      statLanguages: 'languages, each with localized metadata and hreflang',
+      statServices: 'disciplines delivered by one team',
+      fullStory: 'Read the case study',
+      facts: {
+        disciplines: 'disciplines under one roof',
+        languages: 'languages we design, write and publish in',
+        locations: 'bases — Vienna and Tirana',
+        caseStudies: 'case studies of live client work',
+      },
+      spotlight: 'In the spotlight',
+      faqHeading: 'Get to know Marketixo',
+      allFaqs: 'All questions',
+    },
   },
 
   tech: [

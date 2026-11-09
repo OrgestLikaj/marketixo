@@ -1,10 +1,10 @@
 ---
 /**
- * Page section. `tone` switches the colour context: dark (default), surface
- * (slightly lifted) or paper (light editorial). Spacing comes from tokens.
+ * Page section. `tone` switches the colour context: light (white, default),
+ * oat (warm light band) or dark (navy band). Spacing comes from tokens.
  */
 interface Props {
-  tone?: 'dark' | 'surface' | 'paper';
+  tone?: 'light' | 'oat' | 'dark';
   size?: 'default' | 'sm';
   line?: boolean;
   flushTop?: boolean;
@@ -14,7 +14,7 @@ interface Props {
   [key: string]: unknown;
   labelledby?: string;
 }
-const { tone = 'dark', size = 'default', line, flushTop, id, class: className, labelledby , ...rest } = Astro.props;
+const { tone = 'light', size = 'default', line, flushTop, id, class: className, labelledby , ...rest } = Astro.props;
 ---
 
 <section
@@ -22,7 +22,7 @@ const { tone = 'dark', size = 'default', line, flushTop, id, class: className, l
   aria-labelledby={labelledby}
   {...rest} class:list={[
     'section',
-    { 'section--sm': size === 'sm', 'section--line': line, 'section--flush-top': flushTop, 'on-paper': tone === 'paper', 'on-surface': tone === 'surface' },
+    { 'section--sm': size === 'sm', 'section--line': line, 'section--flush-top': flushTop, 'on-surface': tone === 'oat', 'on-dark': tone === 'dark' },
     className,
   ]}
 >

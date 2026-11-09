@@ -136,12 +136,12 @@ const blog = {
   }
   .topics a:hover {
     color: var(--text);
-    border-color: var(--pearl-aqua);
+    border-color: var(--link);
   }
   .topics a[aria-current] {
     background: var(--text);
     border-color: var(--text);
-    color: var(--ink-black);
+    color: #fff;
   }
   .empty {
     padding: 3rem 0;
@@ -171,7 +171,7 @@ const blog = {
   .feat__title {
     max-width: 22ch;
     font-size: clamp(2rem, 1.3rem + 2.8vw, 4rem);
-    letter-spacing: -0.045em;
+    letter-spacing: -0.025em;
   }
   .feat__title a,
   .item__title a {
@@ -188,7 +188,7 @@ const blog = {
     align-items: center;
     gap: 0.5rem;
     font-weight: 600;
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   .cats {
     display: flex;
@@ -226,7 +226,7 @@ const blog = {
     margin-bottom: 0.4rem;
   }
   .item:hover .item__title {
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   @media (max-width: 767px) {
     .item {

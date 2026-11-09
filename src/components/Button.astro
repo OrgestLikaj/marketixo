@@ -27,41 +27,38 @@ const linkProps = href ? { href, ...(external ? { target: '_blank', rel: 'noopen
 
 <style>
   .btn {
-    --pad-x: 1.35rem;
-    --h: 52px;
+    --pad-x: 1.25rem;
+    --h: 48px;
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.55rem;
     min-height: var(--h);
     padding: 0 var(--pad-x);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     border: 1px solid transparent;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9875rem;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     line-height: 1;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    isolation: isolate;
-    overflow: hidden;
     transition:
       color var(--dur) var(--ease),
       background-color var(--dur) var(--ease),
-      border-color var(--dur) var(--ease),
-      transform var(--dur) var(--ease);
+      border-color var(--dur) var(--ease);
   }
   .btn--sm {
-    --h: 42px;
+    --h: 40px;
     --pad-x: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
   }
   .btn--lg {
-    --h: 60px;
-    --pad-x: 1.75rem;
-    font-size: 1.0625rem;
+    --h: 52px;
+    --pad-x: 1.5rem;
+    font-size: 1rem;
   }
   .btn__icon {
     transition: transform var(--dur) var(--ease);
@@ -72,52 +69,46 @@ const linkProps = href ? { href, ...(external ? { target: '_blank', rel: 'noopen
   .btn[target='_blank']:hover .btn__icon {
     transform: translate(2px, -2px);
   }
-  .btn:active {
-    transform: translateY(1px);
-  }
 
+  /* Primary: the one warm, square call to action. */
   .btn--primary {
     background: var(--action);
     color: var(--on-action);
   }
-  /* Energy gradient wipes in on hover */
-  .btn--primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--grad-energy);
-    opacity: 0;
-    transition: opacity 350ms var(--ease);
-  }
-  .btn--primary:hover::before {
-    opacity: 1;
-  }
   .btn--primary:hover {
-    color: #fff;
+    background: var(--action-hover);
   }
 
+  /* Secondary: solid navy on light, outlined white on navy. */
   .btn--secondary {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn--secondary:hover {
+    background: var(--dark-teal);
+  }
+  :global(.on-dark) .btn--secondary {
     background: transparent;
     color: var(--text);
     border-color: var(--line-strong);
   }
-  .btn--secondary:hover {
-    border-color: var(--pearl-aqua);
-    background: rgb(148 210 189 / 0.06);
+  :global(.on-dark) .btn--secondary:hover {
+    border-color: var(--text);
+    background: rgb(255 255 255 / 0.06);
   }
 
+  /* Ghost: text link with arrow. */
   .btn--ghost {
     --pad-x: 0;
-    --h: 44px;
+    --h: 40px;
     background: none;
-    color: var(--accent);
+    color: var(--link);
     border-radius: 0;
   }
   .btn--ghost .btn__label {
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
     padding-bottom: 2px;
-    transition: background-size 350ms var(--ease);
+    transition: background-size 300ms var(--ease);
   }
   .btn--ghost:hover .btn__label {
     background-size: 100% 1px;

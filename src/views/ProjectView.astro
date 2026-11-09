@@ -324,7 +324,7 @@ const story = [
     aspect-ratio: 1;
     border-radius: 50%;
     background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 45%, transparent), transparent 70%);
-    opacity: 0.6;
+    opacity: 0.12;
     z-index: -1;
   }
   .cs-hero__grid {
@@ -339,9 +339,9 @@ const story = [
     gap: 1.25rem;
   }
   .cs-hero__title {
-    font-size: clamp(3rem, 1.5rem + 6.5vw, 8.5rem);
+    font-size: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
     letter-spacing: var(--tracking-display);
-    line-height: 0.9;
+    line-height: 1.05;
   }
   .facts {
     display: grid;
@@ -379,7 +379,7 @@ const story = [
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   /* The story continues straight from the screenshot — a normal section gap is too much here */
   .cs-story {
@@ -424,10 +424,10 @@ const story = [
   .cs-cover__name {
     position: relative;
     max-width: 50%;
-    font-size: clamp(2rem, 1rem + 4vw, 4.5rem);
-    font-weight: 600;
-    letter-spacing: -0.05em;
-    line-height: 0.95;
+    font-size: clamp(2rem, 1.2rem + 2.6vw, 3.25rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
     color: #fff;
   }
   .cs-nosite {
@@ -447,7 +447,7 @@ const story = [
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--pearl-aqua);
+    color: var(--link);
     padding-top: 0.6rem;
   }
   .story__lead {
@@ -510,8 +510,8 @@ const story = [
   .metrics strong {
     display: block;
     font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
-    letter-spacing: -0.05em;
-    color: var(--golden-orange);
+    letter-spacing: -0.025em;
+    color: var(--accent);
   }
   .metrics span {
     color: var(--text-muted);
@@ -531,7 +531,7 @@ const story = [
   .highlights :global(.icon) {
     flex: none;
     margin-top: 0.15rem;
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   .gallery {
     display: grid;
@@ -602,7 +602,7 @@ const story = [
   .group__list :global(.icon) {
     grid-row: span 2;
     align-self: center;
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   .related {
     display: grid;
@@ -628,7 +628,7 @@ const story = [
     transition: color var(--dur) var(--ease);
   }
   .pager a:hover strong {
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
   .pager .mono {
     color: var(--text-subtle);

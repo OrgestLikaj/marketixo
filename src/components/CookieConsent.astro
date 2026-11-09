@@ -105,9 +105,10 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
     pointer-events: auto;
     width: min(460px, 100%);
     padding: 1.4rem;
-    background: var(--surface-2);
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-lg);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--navy);
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-lg);
   }
   @media (prefers-reduced-motion: no-preference) {
@@ -133,7 +134,7 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
     color: var(--text-muted);
   }
   .cc__text a {
-    color: var(--pearl-aqua);
+    color: var(--link);
     margin-left: 0.25em;
   }
   .cc__actions,
@@ -146,9 +147,9 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
   .cc__btn {
     min-height: 44px;
     padding: 0 1rem;
-    border-radius: var(--radius);
-    font-weight: 600;
-    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 0.9375rem;
     cursor: pointer;
     border: 1px solid var(--line-strong);
     background: transparent;
@@ -156,17 +157,17 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
   }
   /* Accept and reject share the same visual weight. */
   .cc__btn--solid {
-    background: var(--text);
-    color: var(--ink-black);
-    border-color: var(--text);
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
     flex: 1 1 auto;
   }
   .cc__btn--solid:hover {
-    background: var(--pearl-aqua);
-    border-color: var(--pearl-aqua);
+    background: var(--dark-teal);
+    border-color: var(--dark-teal);
   }
   .cc__btn--ghost:hover {
-    border-color: var(--pearl-aqua);
+    border-color: var(--navy);
   }
   .cc__btn--link {
     border-color: transparent;
@@ -224,7 +225,7 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
   .ccd__always {
     font-family: var(--font-code);
     font-size: var(--fs-xs);
-    color: var(--pearl-aqua);
+    color: var(--link);
     white-space: nowrap;
   }
   .ccd__switch {
@@ -253,8 +254,8 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
       background-color var(--dur) var(--ease);
   }
   .ccd__switch:checked {
-    background: var(--dark-cyan);
-    border-color: var(--dark-cyan);
+    background: var(--link);
+    border-color: var(--link);
   }
   .ccd__switch:checked::after {
     transform: translateX(20px);
@@ -264,6 +265,6 @@ const hasMarketing = Boolean(a.metaPixelId || a.gtmId);
     display: inline-block;
     margin-top: 1rem;
     font-size: var(--fs-sm);
-    color: var(--pearl-aqua);
+    color: var(--link);
   }
 </style>

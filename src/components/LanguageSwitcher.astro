@@ -79,7 +79,7 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
     width: 20px;
     height: 15px;
     border-radius: 2px;
-    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.18);
+    box-shadow: 0 0 0 1px rgb(0 18 25 / 0.14);
     opacity: 0.55;
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
@@ -110,7 +110,7 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
     bottom: 8px;
     height: 2px;
     border-radius: 1px;
-    background: var(--golden-orange);
+    background: var(--accent);
   }
 
   /* Stacked: large tap targets for the mobile menu — flag + language name */
@@ -127,8 +127,8 @@ const items = locales.map((l: Lang) => ({ lang: l, ...switchTarget(page, l), met
     min-height: 52px;
   }
   .lang--stacked a[aria-current] {
-    border-color: var(--pearl-aqua);
-    background: rgb(148 210 189 / 0.06);
+    border-color: var(--accent);
+    background: var(--oat);
   }
   .lang--stacked .lang__flag {
     width: 24px;

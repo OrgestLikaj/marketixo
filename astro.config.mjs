@@ -52,18 +52,18 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: 'Inter Tight',
+      name: 'DM Sans',
       cssVariable: '--font-sans',
-      weights: ['300 800'],
+      weights: ['400 700'],
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],
       fallbacks: ['Arial', 'sans-serif'],
     },
     {
       provider: fontProviders.fontsource(),
-      name: 'JetBrains Mono',
+      name: 'DM Mono',
       cssVariable: '--font-mono',
-      weights: ['400 500'],
+      weights: ['400', '500'],
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],
       fallbacks: ['ui-monospace', 'monospace'],

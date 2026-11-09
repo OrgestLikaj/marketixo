@@ -166,6 +166,8 @@ test('scroll reveals: every animated element becomes visible once it is in view'
       const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       const missing: string[] = [];
       for (const el of document.querySelectorAll<HTMLElement>('[data-reveal], [data-split]')) {
+        // Content of inactive tab panels reveals when its tab is opened (covered by the tabs test).
+        if (el.closest('[hidden]')) continue;
         el.scrollIntoView({ block: 'center', behavior: 'instant' });
         let ok = false;
         for (let t = 0; t < 20 && !ok; t++) {
@@ -184,4 +186,25 @@ test('scroll reveals: every animated element becomes visible once it is in view'
   await expect
     .poll(() => page.locator('.cs-shot > *').evaluate((el) => getComputedStyle(el).clipPath), { timeout: 3000 })
     .toMatch(/^(none|inset\(0px\))$/);
+});
+
+test('home tabs: services and case studies switch panels by click and arrow keys', async ({ page }) => {
+  await page.goto('/');
+  const tablist = page.getByRole('tablist').first();
+  const seo = tablist.getByRole('tab', { name: 'SEO', exact: true });
+  await seo.click();
+  await expect(seo).toHaveAttribute('aria-selected', 'true');
+  const panel = page.locator('#svc-panel-seo');
+  await expect(panel).toBeVisible();
+  await expect(page.locator('#svc-panel-web-design-development')).toBeHidden();
+  // Content of a newly opened panel reveals (it was hidden while inactive).
+  await expect(panel.locator('[data-reveal]').first()).toHaveClass(/is-in/);
+  await page.keyboard.press('ArrowRight');
+  await expect(tablist.getByRole('tab', { name: 'Paid Ads' })).toBeFocused();
+  await expect(page.locator('#svc-panel-paid-ads')).toBeVisible();
+
+  const cases = page.getByRole('tablist').nth(1);
+  const second = cases.getByRole('tab').nth(1);
+  await second.click();
+  await expect(page.locator(`#${await second.getAttribute('aria-controls')}`)).toBeVisible();
 });

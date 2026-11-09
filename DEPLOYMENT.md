@@ -88,10 +88,14 @@ is deliberately `noindex` and blocked in robots.txt).
 
 ## Preview on GitHub Pages
 
-Every push to `marketixo-v2` publishes a preview to
-**https://orgestlikaj.github.io/marketixo/v2/** (`.github/workflows/pages.yml`).
+Every push to a design branch publishes a preview (`.github/workflows/pages.yml`):
 
-- It is built under the `/marketixo/v2` sub-path (`BASE_PATH`) and marked `noindex`.
+- `marketixo-v2` → **https://orgestlikaj.github.io/marketixo/v2/**
+- `marketixo-v3` → **https://orgestlikaj.github.io/marketixo/v3/** (the Databricks-inspired light redesign)
+
+Production (marketixo.eu) only changes when `main` is pushed.
+
+- It is built under the `/marketixo/<vN>` sub-path (`BASE_PATH`) and marked `noindex`; no analytics load there.
 - GitHub Pages can't run PHP, so the contact form shows an error there. `.htaccess` rules
   (redirects, security headers) don't apply on Pages either; test those on Namecheap.
 - To build the same thing locally:

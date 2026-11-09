@@ -130,6 +130,23 @@ const sq: UI = {
       headingAccent: 'Le ta ndërtojmë.',
       text: 'Na tregoni çfarë ju nevojitet. Do të merrni një vlerësim të sinqertë, një fushëveprim të qartë dhe një ofertë me çmim fiks — edhe kur përgjigjja është se ju duhet më pak nga ç’mendoni.',
     },
+    v3: {
+      trusted: 'Na besojnë',
+      pause: 'Ndalo animacionin e logove',
+      play: 'Luaj animacionin e logove',
+      statLanguages: 'gjuhë, secila me metadata të lokalizuara dhe hreflang',
+      statServices: 'disiplina nga një ekip i vetëm',
+      fullStory: 'Lexo rastin e studimit',
+      facts: {
+        disciplines: 'disiplina nën një çati',
+        languages: 'gjuhë në të cilat dizajnojmë, shkruajmë dhe publikojmë',
+        locations: 'baza — Vjenë dhe Tiranë',
+        caseStudies: 'raste studimi nga projekte reale',
+      },
+      spotlight: 'Në fokus',
+      faqHeading: 'Njihuni me Marketixo',
+      allFaqs: 'Të gjitha pyetjet',
+    },
   },
 
   tech: [

@@ -63,7 +63,7 @@ const { service, class: className, title , ...rest } = Astro.props;
             <rect x="248" y="92" width="44" height="26" rx="3" fill="#ee9b00" />
           </g>
           <text x="196" y="166" class="s-big">Aa</text>
-          <text x="248" y="150" class="s-mono">Inter Tight</text>
+          <text x="248" y="150" class="s-mono">DM Sans</text>
           <text x="248" y="164" class="s-mono s-dim">300—800</text>
         </g>
       )
@@ -214,9 +214,13 @@ const { service, class: className, title , ...rest } = Astro.props;
 </div>
 
 <style>
+  /* Drawn for a dark canvas: every illustration sits on its own navy tile, like a product UI. */
   .sv {
     position: relative;
     width: 100%;
+    padding: clamp(12px, 2.5vw, 28px);
+    background: var(--navy);
+    color-scheme: dark;
   }
   .sv svg {
     width: 100%;
@@ -322,7 +326,7 @@ const { service, class: className, title , ...rest } = Astro.props;
     font-size: 40px;
     font-weight: 600;
     fill: #eaf3f0;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.025em;
   }
   .s-quote {
     font-family: var(--font-body);

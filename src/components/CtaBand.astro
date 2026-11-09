@@ -17,9 +17,8 @@ const a = heading ? accent : (accent ?? t.home.cta.headingAccent);
 const body = text ?? t.home.cta.text;
 ---
 
-<section class="cta" aria-labelledby="cta-title">
+<section class="cta on-dark" aria-labelledby="cta-title">
   <div class="blueprint" aria-hidden="true"></div>
-  <div class="cta__glow" aria-hidden="true"></div>
   <div class="container cta__inner">
     <h2 id="cta-title" class="cta__title" data-reveal>
       {h}
@@ -48,45 +47,29 @@ const body = text ?? t.home.cta.text;
 <style>
   .cta {
     position: relative;
-    padding-block: clamp(96px, 13vw, 200px);
+    padding-block: var(--section);
     overflow: hidden;
-    border-top: 1px solid var(--line);
     isolation: isolate;
   }
-  .cta__glow {
-    position: absolute;
-    inset: auto -10% -60% 30%;
-    height: 120%;
-    background: radial-gradient(closest-side, rgb(10 147 150 / 0.45), rgb(0 95 115 / 0.2) 50%, transparent);
-    z-index: -1;
-  }
-  .cta__glow::after {
-    content: '';
-    position: absolute;
-    right: 10%;
-    bottom: 40%;
-    width: 30%;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, rgb(238 155 0 / 0.25), transparent);
+  .cta .blueprint {
+    left: 55%;
   }
   .cta__inner {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: clamp(2rem, 5vw, 5rem);
     align-items: end;
+    padding: clamp(2rem, 5vw, 4.5rem);
+    background: var(--surface-1);
   }
   .cta__title {
-    font-size: clamp(2.75rem, 1.4rem + 5.5vw, 7rem);
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem);
     letter-spacing: var(--tracking-display);
-    line-height: 0.92;
+    line-height: 1.05;
   }
   .cta__accent {
     display: block;
-    padding-bottom: 0.08em;
-    background: var(--grad-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent);
   }
   .cta__actions {
     display: flex;

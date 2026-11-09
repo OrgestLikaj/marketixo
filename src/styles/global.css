@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Marketixo design system
-   Dark, editorial, engineered. Teal/cyan carry the interface; the warm accents
-   are reserved for actions and highlights. Component styles live in each
+   Marketixo design system — v3
+   Light and precise: white pages, oat and navy bands, square warm actions,
+   mono labels. Navy sections opt in with .on-dark. Component styles live in each
    .astro file — this file holds tokens, base elements and shared primitives.
    ========================================================================== */
 
@@ -19,77 +19,100 @@
   --oxidized-iron: #ae2012;
   --brown-red: #9b2226;
 
-  /* Surfaces (dark) */
-  --bg: var(--ink-black);
-  --surface-1: #03202a;
-  --surface-2: #062a36;
-  --surface-3: #0a3542;
-  --line: rgb(148 210 189 / 0.14);
-  --line-strong: rgb(148 210 189 / 0.28);
+  /* Surfaces — light by default (white page, oat bands, navy bands via .on-dark) */
+  --navy: #001219;
+  --navy-2: #0a2a33;
+  --oat: #f7f4ec;
+  --bg: #ffffff;
+  --surface-1: var(--oat);
+  --surface-2: #f0ebdd;
+  --surface-3: #e7e0cc;
+  --line: rgb(0 18 25 / 0.12);
+  --line-strong: rgb(0 18 25 / 0.26);
 
-  /* Text on dark — all ≥ 4.5:1 on --bg */
-  --text: #eaf3f0;
-  --text-muted: #9fbdb7;
-  --text-subtle: #7fa29c;
-  --accent: var(--pearl-aqua);
+  /* Text on light — all ≥ 4.5:1 on white and oat */
+  --text: #001219;
+  --text-muted: #3a545b;
+  --text-subtle: #51696f;
+  --accent: var(--rusty-spice);
+  --link: var(--dark-teal);
 
-  /* Light editorial surfaces */
-  --paper: #f5eedb;
-  --paper-2: #ece0bd;
+  /* Light editorial surfaces (oat) */
+  --paper: var(--oat);
+  --paper-2: #f0ebdd;
   --on-paper: #001219;
-  --on-paper-muted: #33525a;
-  --line-paper: rgb(0 18 25 / 0.14);
+  --on-paper-muted: #3a545b;
+  --line-paper: rgb(0 18 25 / 0.12);
 
-  /* Action */
-  --action: var(--golden-orange);
-  --action-hover: #ffb11f;
-  --on-action: var(--ink-black);
-  --focus: var(--pearl-aqua);
-  --danger: #ff8a7a;
+  /* Action — square, warm, unmistakable */
+  --action: var(--rusty-spice);
+  --action-hover: var(--oxidized-iron);
+  --on-action: #ffffff;
+  --focus: var(--dark-teal);
+  --danger: #ae2012;
 
-  /* Gradients */
+  /* Gradients (used sparingly in v3) */
   --grad-tech: linear-gradient(135deg, #001219, #005f73, #0a9396);
   --grad-premium: linear-gradient(135deg, #0a9396, #94d2bd, #e9d8a6);
   --grad-energy: linear-gradient(135deg, #ee9b00, #ca6702, #bb3e03);
   --grad-deep: linear-gradient(135deg, #001219, #005f73, #0a9396, #ee9b00);
 
   /* Type */
-  --font-body: var(--font-sans), 'Inter Tight', Arial, sans-serif;
+  --font-body: var(--font-sans), 'DM Sans', Arial, sans-serif;
   --font-code: var(--font-mono), ui-monospace, monospace;
   --fs-xs: 0.75rem;
   --fs-sm: 0.875rem;
   --fs-base: 1.0625rem;
-  --fs-lg: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
-  --fs-xl: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
-  --fs-h3: clamp(1.375rem, 1.15rem + 0.9vw, 1.75rem);
-  --fs-h2: clamp(2.125rem, 1.4rem + 3vw, 4rem);
-  --fs-h1: clamp(2.75rem, 1.6rem + 5vw, 6.25rem);
-  --fs-display: clamp(3.5rem, 1rem + 10.5vw, 11.5rem);
-  --tracking-tight: -0.035em;
-  --tracking-display: -0.055em;
+  --fs-lg: clamp(1.125rem, 1.02rem + 0.35vw, 1.3125rem);
+  --fs-xl: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+  --fs-h3: clamp(1.25rem, 1.12rem + 0.5vw, 1.5rem);
+  --fs-h2: clamp(1.875rem, 1.4rem + 1.7vw, 2.875rem);
+  --fs-h1: clamp(2.25rem, 1.5rem + 2.8vw, 3.75rem);
+  --fs-display: clamp(2.5rem, 1.5rem + 3.6vw, 4.5rem);
+  --tracking-tight: -0.02em;
+  --tracking-display: -0.03em;
 
   /* Space & layout */
-  --container: 1320px;
-  --container-wide: 1520px;
+  --container: 1280px;
+  --container-wide: 1440px;
   --container-text: 720px;
-  --gutter: clamp(16px, 4vw, 48px);
-  --section: clamp(80px, 11vw, 168px);
-  --section-sm: clamp(56px, 7vw, 104px);
-  --header-h: 76px;
+  --gutter: clamp(16px, 4vw, 64px);
+  --section: clamp(64px, 8vw, 128px);
+  --section-sm: clamp(48px, 6vw, 88px);
+  --header-h: 68px;
 
-  /* Shape & depth — restrained */
-  --radius-sm: 4px;
-  --radius: 8px;
-  --radius-lg: 14px;
-  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 18px 40px -24px rgb(0 0 0 / 0.6);
-  --shadow-lg: 0 40px 80px -40px rgb(0 0 0 / 0.75);
+  /* Shape & depth — square, flat, precise */
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-lg: 6px;
+  --shadow: 0 1px 2px rgb(0 18 25 / 0.06), 0 12px 32px -16px rgb(0 18 25 / 0.2);
+  --shadow-lg: 0 2px 6px rgb(0 18 25 / 0.06), 0 32px 64px -24px rgb(0 18 25 / 0.28);
 
   /* Motion */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 220ms;
-  --dur-slow: 900ms;
+  --dur: 200ms;
+  --dur-slow: 800ms;
 
+  color-scheme: light;
+}
+
+/* Navy bands (logo strip, platform section, stats, CTA, footer). */
+.on-dark {
+  --bg: var(--navy);
+  --surface-1: var(--navy-2);
+  --surface-2: #12343e;
+  --surface-3: #1a3f49;
+  --line: rgb(255 255 255 / 0.12);
+  --line-strong: rgb(255 255 255 / 0.28);
+  --text: #f2f6f5;
+  --text-muted: #b3c8c4;
+  --text-subtle: #93ada9;
+  --accent: var(--golden-orange);
+  --link: var(--pearl-aqua);
+  --focus: var(--pearl-aqua);
+  background: var(--bg);
+  color: var(--text);
   color-scheme: dark;
 }
 
@@ -118,7 +141,6 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-base);
   line-height: 1.6;
-  font-feature-settings: 'ss01', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -154,9 +176,9 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: var(--tracking-tight);
-  line-height: 1.02;
+  line-height: 1.1;
   text-wrap: balance;
   /* Long compounds (DE "Suchmaschinenoptimierung", SQ, IT) must never overflow narrow screens. */
   overflow-wrap: break-word;
@@ -179,16 +201,13 @@ textarea {
   color: inherit;
 }
 ::selection {
-  background: var(--golden-orange);
+  background: var(--vanilla-custard);
   color: var(--ink-black);
 }
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
   border-radius: 2px;
-}
-.on-paper :focus-visible {
-  outline-color: var(--dark-teal);
 }
 [hidden] {
   display: none !important;
@@ -249,19 +268,12 @@ textarea {
 .section--line {
   border-top: 1px solid var(--line);
 }
-.on-paper {
-  --text: var(--on-paper);
-  --text-muted: var(--on-paper-muted);
-  --text-subtle: #4b6a70;
-  --line: var(--line-paper);
-  --line-strong: rgb(0 18 25 / 0.3);
-  --accent: var(--dark-teal);
-  background: var(--paper);
-  color: var(--on-paper);
-  color-scheme: light;
-}
+/* Oat bands. */
+.on-paper,
 .on-surface {
-  background: var(--surface-1);
+  --surface-1: #ffffff;
+  --surface-2: #fbf9f4;
+  background: var(--oat);
 }
 .stack > * + * {
   margin-top: var(--stack, 1rem);
@@ -278,21 +290,14 @@ textarea {
   align-items: center;
   gap: 0.6em;
   font-family: var(--font-code);
-  font-size: var(--fs-xs);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent);
 }
-.eyebrow::before {
-  content: '';
-  width: 1.75em;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
-}
-.eyebrow--plain::before {
-  display: none;
+.eyebrow--plain {
+  color: var(--text-subtle);
 }
 .mono {
   font-family: var(--font-code);
@@ -301,23 +306,23 @@ textarea {
 }
 .display {
   font-size: var(--fs-display);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: var(--tracking-display);
-  line-height: 0.88;
+  line-height: 1.06;
 }
 .h1 {
   font-size: var(--fs-h1);
   letter-spacing: var(--tracking-display);
-  line-height: 0.95;
+  line-height: 1.08;
 }
 .h2 {
   font-size: var(--fs-h2);
-  line-height: 1;
+  line-height: 1.12;
 }
 .h3 {
   font-size: var(--fs-h3);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 .lead {
   font-size: var(--fs-lg);
@@ -332,7 +337,7 @@ textarea {
   color: var(--accent);
 }
 .warm-text {
-  color: var(--golden-orange);
+  color: var(--accent);
 }
 .gradient-text {
   background: var(--grad-premium);
@@ -366,11 +371,11 @@ textarea {
   margin-top: 0.5em;
 }
 .prose a {
-  color: var(--accent);
+  color: var(--link);
   text-decoration: underline;
 }
 .prose blockquote {
-  border-left: 2px solid var(--golden-orange);
+  border-left: 2px solid var(--accent);
   padding-left: 1.25em;
   font-size: 1.25rem;
   color: var(--text);
@@ -378,7 +383,7 @@ textarea {
 .prose code {
   font-family: var(--font-code);
   font-size: 0.9em;
-  background: rgb(10 147 150 / 0.12);
+  background: var(--surface-2);
   padding: 0.1em 0.35em;
   border-radius: 3px;
 }
@@ -415,17 +420,17 @@ textarea {
 }
 
 /* ---------- Shared decorative primitives ---------- */
-/* Blueprint grid: fine engineering lines, fades out toward the edges. */
+/* Dot grid: quiet engineering texture, fades toward the edges. */
 .blueprint {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgb(148 210 189 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(148 210 189 / 0.07) 1px, transparent 1px);
-  background-size: 88px 88px;
-  background-position: -1px -1px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
+  background-image: radial-gradient(rgb(0 18 25 / 0.22) 1px, transparent 1.2px);
+  background-size: 18px 18px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 80%);
+}
+.on-dark .blueprint {
+  background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.2px);
 }
 .glow {
   position: absolute;

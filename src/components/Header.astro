@@ -175,13 +175,11 @@ const contactHref = url.section(lang, 'contact');
       background-color 300ms var(--ease),
       border-color 300ms var(--ease),
       backdrop-filter 300ms var(--ease);
-    border-bottom: 1px solid transparent;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
   }
   .hdr.is-scrolled {
-    background: rgb(0 18 25 / 0.94);
-    backdrop-filter: saturate(140%) blur(14px);
-    -webkit-backdrop-filter: saturate(140%) blur(14px);
-    border-bottom-color: var(--line);
+    box-shadow: 0 6px 24px -18px rgb(0 18 25 / 0.35);
   }
   .hdr__bar {
     display: flex;
@@ -189,9 +187,6 @@ const contactHref = url.section(lang, 'contact');
     gap: 2rem;
     height: var(--header-h);
     transition: height 300ms var(--ease);
-  }
-  .hdr.is-scrolled .hdr__bar {
-    height: 62px;
   }
   .hdr__logo {
     text-decoration: none;
@@ -217,23 +212,23 @@ const contactHref = url.section(lang, 'contact');
     padding: 0.6rem 0.85rem;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--text-muted);
+    color: var(--text);
     text-decoration: none;
     border-radius: var(--radius-sm);
     transition: color var(--dur) var(--ease);
   }
   .hdr__link:hover,
   .hdr__link[aria-current] {
-    color: var(--text);
+    color: var(--accent);
   }
   .hdr__link[aria-current]::after {
     content: '';
     position: absolute;
     left: 0.85rem;
     right: 0.85rem;
-    bottom: 0.2rem;
-    height: 1px;
-    background: var(--golden-orange);
+    bottom: -0.55rem;
+    height: 2px;
+    background: var(--accent);
   }
   .hdr__chev {
     opacity: 0.6;
@@ -288,8 +283,7 @@ const contactHref = url.section(lang, 'contact');
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem 2rem;
     padding: 1.75rem;
-    background: rgb(3 32 42 / 0.97);
-    backdrop-filter: blur(16px);
+    background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
@@ -303,7 +297,7 @@ const contactHref = url.section(lang, 'contact');
     margin-bottom: 0.75rem;
   }
   .mega__group span {
-    color: var(--pearl-aqua);
+    color: var(--accent);
     margin-right: 0.4em;
   }
   .mega__link {
@@ -319,11 +313,11 @@ const contactHref = url.section(lang, 'contact');
     transition: background-color var(--dur) var(--ease);
   }
   .mega__link .icon {
-    color: var(--dark-cyan);
+    color: var(--accent);
     flex: none;
   }
   .mega__link:hover {
-    background: rgb(148 210 189 / 0.07);
+    background: var(--oat);
   }
   .mega__all {
     grid-column: 1 / -1;
@@ -335,7 +329,7 @@ const contactHref = url.section(lang, 'contact');
     border-top: 1px solid var(--line);
     width: 100%;
     font-size: var(--fs-sm);
-    color: var(--pearl-aqua);
+    color: var(--link);
     text-decoration: none;
   }
 
@@ -393,13 +387,13 @@ const contactHref = url.section(lang, 'contact');
     gap: 1rem;
     padding: 0.9rem 0;
     font-size: clamp(1.75rem, 7vw, 2.5rem);
-    font-weight: 600;
-    letter-spacing: -0.035em;
+    font-weight: 500;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     text-decoration: none;
   }
   .mnav__links a[aria-current] {
-    color: var(--pearl-aqua);
+    color: var(--accent);
   }
   @media (prefers-reduced-motion: no-preference) {
     .mnav[open] .mnav__links li {

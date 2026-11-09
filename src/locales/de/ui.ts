@@ -130,6 +130,23 @@ const de: UI = {
       headingAccent: 'Setzen wir es um.',
       text: 'Sagen Sie uns, was Sie brauchen. Sie erhalten eine ehrliche Einschätzung, einen klaren Leistungsumfang und ein Festpreisangebot – auch wenn die Antwort lautet, dass Sie weniger brauchen, als Sie denken.',
     },
+    v3: {
+      trusted: 'Vertrauen von',
+      pause: 'Logo-Animation pausieren',
+      play: 'Logo-Animation abspielen',
+      statLanguages: 'Sprachen, jeweils mit lokalisierten Metadaten und hreflang',
+      statServices: 'Disziplinen aus einem Team',
+      fullStory: 'Zur Fallstudie',
+      facts: {
+        disciplines: 'Disziplinen unter einem Dach',
+        languages: 'Sprachen, in denen wir gestalten, texten und veröffentlichen',
+        locations: 'Standorte — Wien und Tirana',
+        caseStudies: 'Fallstudien realer Kundenprojekte',
+      },
+      spotlight: 'Im Fokus',
+      faqHeading: 'Marketixo kennenlernen',
+      allFaqs: 'Alle Fragen',
+    },
   },
 
   tech: [

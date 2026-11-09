@@ -1,12 +1,13 @@
-name: GitHub Pages preview (v2)
+name: GitHub Pages preview
 
-# Publishes a preview of this branch to https://<owner>.github.io/<repo>/v2/
-# (for OrgestLikaj/marketixo: https://orgestlikaj.github.io/marketixo/v2/).
+# Publishes a preview of each design branch to https://<owner>.github.io/<repo>/<vN>/:
+#   marketixo-v2 → /v2/   (https://orgestlikaj.github.io/marketixo/v2/)
+#   marketixo-v3 → /v3/   (https://orgestlikaj.github.io/marketixo/v3/)
 #
-# - Built under the /<repo>/v2 sub-path and marked noindex, so it never competes
+# - Built under the /<repo>/<vN> sub-path and marked noindex, so it never competes
 #   with the real domain in search results.
-# - Published into the v2/ folder of the gh-pages branch with keep_files, so the
-#   existing preview at the root of gh-pages stays untouched.
+# - Published into its own folder of the gh-pages branch with keep_files, so the
+#   other previews (and the old one at the root of gh-pages) stay untouched.
 # - GitHub Pages has no PHP, so the contact form can't send from the preview.
 #
 # One-time setup (already done for this repo): Settings → Pages → Build and deployment →
@@ -14,19 +15,21 @@ name: GitHub Pages preview (v2)
 
 on:
   push:
-    branches: [marketixo-v2]
+    branches: [marketixo-v2, marketixo-v3]
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: pages-v2
+  group: pages-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   preview:
     runs-on: ubuntu-latest
+    env:
+      PREVIEW_DIR: ${{ github.ref_name == 'marketixo-v3' && 'v3' || 'v2' }}
     steps:
       - uses: actions/checkout@v5
 
@@ -41,14 +44,14 @@ jobs:
         run: npm run build
         env:
           PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io
-          BASE_PATH: /${{ github.event.repository.name }}/v2
+          BASE_PATH: /${{ github.event.repository.name }}/${{ env.PREVIEW_DIR }}
           NOINDEX: 'true'
 
-      - name: Publish to gh-pages/v2
+      - name: Publish to gh-pages/${{ env.PREVIEW_DIR }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          destination_dir: v2
+          destination_dir: ${{ env.PREVIEW_DIR }}
           keep_files: true
-          commit_message: 'Preview build (v2)'
+          commit_message: 'Preview build (${{ env.PREVIEW_DIR }})'

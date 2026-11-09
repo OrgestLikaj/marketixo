@@ -131,6 +131,23 @@ const it: UI = {
       headingAccent: 'Realizziamolo insieme.',
       text: 'Ci dica di cosa ha bisogno. Riceverà una valutazione onesta, un perimetro chiaro e un preventivo a prezzo fisso, anche se la risposta è che Le serve meno di quanto pensa.',
     },
+    v3: {
+      trusted: 'Scelto da',
+      pause: 'Metti in pausa l’animazione dei loghi',
+      play: 'Avvia l’animazione dei loghi',
+      statLanguages: 'lingue, ciascuna con metadati localizzati e hreflang',
+      statServices: 'discipline gestite da un unico team',
+      fullStory: 'Leggi il caso studio',
+      facts: {
+        disciplines: 'discipline sotto lo stesso tetto',
+        languages: 'lingue in cui progettiamo, scriviamo e pubblichiamo',
+        locations: 'sedi — Vienna e Tirana',
+        caseStudies: 'casi studio di progetti reali',
+      },
+      spotlight: 'In primo piano',
+      faqHeading: 'Conosci Marketixo',
+      allFaqs: 'Tutte le domande',
+    },
   },
 
   tech: [

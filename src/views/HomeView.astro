@@ -1,25 +1,26 @@
 ---
+/**
+ * Home — v3 layout: white hero with a product-style preview, a navy band with the
+ * client strip and the service "platform" tabs, an oat band of case studies, navy
+ * facts, a white spotlight row and a navy CTA + FAQ close.
+ * Every number on this page is counted from real data (services, languages, offices,
+ * projects) — nothing is invented.
+ */
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Button from '~/components/Button.astro';
-import Heading from '~/components/Heading.astro';
-import Section from '~/components/Section.astro';
-import ServiceCard from '~/components/ServiceCard.astro';
-import Pipeline from '~/components/Pipeline.astro';
-import ProjectGrid from '~/components/ProjectGrid.astro';
-import ProcessSteps from '~/components/ProcessSteps.astro';
-import TechGrid from '~/components/TechGrid.astro';
-import Testimonial from '~/components/Testimonial.astro';
-import CtaBand from '~/components/CtaBand.astro';
-import ClientLogos from '~/components/ClientLogos.astro';
 import Icon from '~/components/Icon.astro';
-import { useT } from '~/i18n';
+import Faq from '~/components/Faq.astro';
+import ServiceVisual from '~/components/ServiceVisual.astro';
+import { formatDate, locales, useT } from '~/i18n';
 import { url } from '~/i18n/routes';
-import { serviceKeys } from '~/data/services';
-import { featuredProjects, projectByKey } from '~/data/projects';
+import { serviceKeys, serviceMeta } from '~/data/services';
+import { clientLogos, featuredProjects, projectByKey, projects } from '~/data/projects';
 import { workImages } from '~/lib/work-images';
-import type { PageEntry } from '~/lib/pages';
+import { insightSlug, publishedInsights, type PageEntry } from '~/lib/pages';
+import { site } from '~/config/site';
 
 interface Props {
   page: PageEntry;
@@ -28,559 +29,1291 @@ const { page } = Astro.props;
 const lang = page.lang;
 const t = useT(lang);
 const h = t.home;
+const v = h.v3;
+
 const services = await getCollection('services', (e) => e.data.lang === lang);
 const byKey = Object.fromEntries(services.map((s) => [s.data.key, s.data]));
+const work = await getCollection('work', (e) => e.data.lang === lang);
+const workByKey = Object.fromEntries(work.map((w) => [w.data.key, w.data]));
 
-// Hero "proof stack": real screenshots of live client work.
-const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ project: projectByKey(key)!, img: workImages(key) }));
+// ── Logos (equal visual weight: same area for every mark) ──
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/clients/*.{webp,png,svg}', { eager: true });
+const logoFor = (key: string) => Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.\w+$/, '') === key)?.[1].default;
+const sized = (img: ImageMetadata, area: number, maxW: number, maxH: number) => {
+  const ratio = img.width / img.height;
+  let w = Math.sqrt(area * ratio);
+  if (w > maxW) w = maxW;
+  if (w / ratio > maxH) w = maxH * ratio;
+  return Math.round(w);
+};
+const strip = clientLogos.map((c) => ({ ...c, img: logoFor(c.key) })).filter((c) => c.img);
+
+// ── Hero preview: real screenshots of live client work ──
+const heroMain = projectByKey('medicus-center')!;
+const heroMainImg = workImages(heroMain.key);
+const heroSide = projectByKey('ir-real-estate')!;
+const heroSideImg = workImages(heroSide.key);
+
+// ── Case studies (featured projects) ──
+const cases = featuredProjects.slice(0, 4).map((p) => {
+  const logo = clientLogos.find((c) => c.project === p.key);
+  const langs = p.siteLanguages?.length ?? 0;
+  return {
+    project: p,
+    copy: workByKey[p.key],
+    img: workImages(p.key),
+    logo: logo ? logoFor(logo.key) : undefined,
+    stat: langs > 1 ? { value: String(langs), label: v.statLanguages } : { value: String(p.services.length), label: v.statServices },
+  };
+});
+
+// ── Facts: counted, not claimed ──
+const facts = [
+  { value: String(serviceKeys.length), label: v.facts.disciplines },
+  { value: String(locales.length), label: v.facts.languages },
+  { value: String(site.offices.length), label: v.facts.locations },
+  { value: String(projects.length), label: v.facts.caseStudies },
+];
+const techItems = t.tech.flatMap((a) => a.items).slice(0, 12);
+const featuredIcons = ['layers', 'web', 'spark'];
+
+// ── Spotlight: latest articles + case studies ──
+const posts = (await publishedInsights(lang)).slice(0, 2);
+const spotProjects = featuredProjects.filter((p) => p.key !== cases[0]?.project.key).slice(0, 4 - posts.length);
+const faqs = t.faqPage.items.slice(0, 6);
+
+const heroLines = h.hero.lines;
 ---
 
 <BaseLayout page={page} title={h.metaTitle} description={t.meta.defaultDescription}>
   <!-- ───────────── Hero ───────────── -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="blueprint" aria-hidden="true"></div>
-    <div class="hero__glow hero__glow--a" aria-hidden="true"></div>
-    <div class="hero__glow hero__glow--b" aria-hidden="true"></div>
-
     <div class="container container--wide hero__grid">
       <div class="hero__copy">
-        <p class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</p>
-        <h1 id="hero-title" class="display hero__title" data-split>
-          {
-            h.hero.lines.map((line, i) => (
-              <span class="split-line" style={`--line:${i}`}>
-                <span class:list={{ 'hero__accent': i === h.hero.lines.length - 1 }}>{line}</span>
-              </span>
-            ))
-          }
+        <p class="eyebrow" data-reveal>{h.hero.eyebrow}</p>
+        <h1 id="hero-title" class="display hero__title" data-reveal style="--reveal-delay:1">
+          <span class="hero__accent">{heroLines[0]}</span>
+          {' ' + heroLines.slice(1).join(' ')}
         </h1>
-        <p class="lead hero__lead" data-reveal style="--reveal-delay:4">{h.hero.lead}</p>
-        <div class="hero__actions" data-reveal style="--reveal-delay:5">
-          <Button href={url.section(lang, 'contact')} size="lg">{t.common.startProject}</Button>
-          <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewWork}</Button>
+        <p class="lead hero__lead" data-reveal style="--reveal-delay:2">{h.hero.lead}</p>
+        <div class="hero__actions" data-reveal style="--reveal-delay:3">
+          <Button href={url.section(lang, 'contact')} size="lg" arrow={false}>{t.common.startProject}</Button>
+          <Button href={url.section(lang, 'work')} variant="secondary" size="lg" arrow={false}>{t.common.viewWork}</Button>
         </div>
       </div>
 
-      <div class="hero__proof" aria-label={h.hero.previewLabel} role="group">
-        {
-          stack.map(({ project, img }, i) =>
-            img.desktop ? (
-              <a href={url.project(lang, project.key)} class={`proof proof--${i}`} style={`--brand:${project.brand}`}>
-                <span class="proof__bar" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <Image
-                  src={img.desktop}
-                  alt={project.client}
-                  widths={[400, 640, 900]}
-                  sizes="(min-width: 1100px) 34vw, 70vw"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  fetchpriority={i === 0 ? 'high' : 'auto'}
-                  layout="none"
-                  class="proof__img"
-                />
-                <span class="proof__label">{project.client}</span>
-              </a>
-            ) : null,
-          )
-        }
-        <div class="status" aria-hidden="true">
-          <p class="status__head">
-            <span class="status__dot"></span>
-            {h.hero.status}
-          </p>
-          <ul role="list">
-            {h.hero.pillars.map((p) => (
-              <li>
-                <Icon name="check" size={13} /> {p}
-              </li>
-            ))}
-          </ul>
+      <div class="hero__ui" role="group" aria-label={h.hero.previewLabel}>
+        <div class="blueprint hero__dots" aria-hidden="true"></div>
+        <div class="ui" data-reveal style="--reveal-delay:2">
+          <div class="ui__bar" aria-hidden="true">
+            <span class="ui__brand"><i></i>marketixo</span>
+            <span class="ui__sep"></span>
+            <span class="ui__crumb">{h.hero.previewLabel}</span>
+          </div>
+          <div class="ui__body">
+            <ul class="ui__nav" role="list" aria-hidden="true">
+              {
+                h.hero.pillars.map((p, i) => (
+                  <li class:list={{ 'is-on': i === 0 }}>
+                    <Icon name="check" size={14} />
+                    {p}
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="ui__main">
+              {
+                heroMainImg.desktop && (
+                  <a href={url.project(lang, heroMain.key)} class="ui__shot">
+                    <Image
+                      src={heroMainImg.desktop}
+                      alt={heroMain.client}
+                      widths={[480, 720, 960]}
+                      sizes="(min-width: 1100px) 38vw, 90vw"
+                      loading="eager"
+                      fetchpriority="high"
+                      layout="none"
+                    />
+                    <span class="ui__label mono">{heroMain.client}</span>
+                  </a>
+                )
+              }
+              <div class="ui__row">
+                {
+                  heroSideImg.desktop && (
+                    <a href={url.project(lang, heroSide.key)} class="ui__shot ui__shot--sm">
+                      <Image src={heroSideImg.desktop} alt={heroSide.client} widths={[320, 480]} sizes="18vw" layout="none" />
+                      <span class="ui__label mono">{heroSide.client}</span>
+                    </a>
+                  )
+                }
+                <div class="ui__status" aria-hidden="true">
+                  <p class="ui__status-head">
+                    <span class="ui__dot"></span>
+                    {h.hero.status}
+                  </p>
+                  <p class="ui__status-num mono">{h.hero.pillars.length}/{h.hero.pillars.length}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="container container--wide">
-      <ul class="pillars" role="list" data-reveal style="--reveal-delay:6">
+  <!-- ───────────── Navy band: clients + platform ───────────── -->
+  <div class="on-dark band">
+    <section class="strip" aria-label={h.clients.eyebrow} data-strip>
+      <p class="strip__label mono">{v.trusted}</p>
+      <div class="strip__viewport">
+        <ul class="strip__track" role="list">
+          {
+            [0, 1].map((copy) =>
+              strip.map((c) => (
+                <li aria-hidden={copy === 1 ? 'true' : undefined}>
+                  <Image
+                    src={c.img!}
+                    alt={copy === 1 ? '' : c.client}
+                    widths={[120, 240]}
+                    sizes="120px"
+                    layout="none"
+                    class="strip__logo"
+                    style={`--w:${sized(c.img!, 2400, 132, 40)}px`}
+                  />
+                </li>
+              )),
+            )
+          }
+        </ul>
+      </div>
+      <button type="button" class="strip__toggle" data-strip-toggle aria-pressed="false" data-label-pause={v.pause} data-label-play={v.play}>
+        <span class="strip__icon" aria-hidden="true"></span>
+        <span class="sr-only" data-strip-label>{v.pause}</span>
+      </button>
+    </section>
+
+    <section class="section platform" aria-labelledby="services-title">
+      <div class="container">
+        <div class="center-head">
+          <p class="eyebrow" data-reveal>{h.services.eyebrow}</p>
+          <h2 id="services-title" class="h2" data-reveal style="--reveal-delay:1">{h.services.heading}</h2>
+        </div>
+
+        <div class="tabs" data-tabs>
+          <div class="tabs__list" role="tablist" aria-label={h.services.eyebrow} data-reveal style="--reveal-delay:2">
+            {
+              serviceKeys.map((key, i) => (
+                <button
+                  type="button"
+                  role="tab"
+                  class="pill"
+                  id={`svc-tab-${key}`}
+                  aria-controls={`svc-panel-${key}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  tabindex={i === 0 ? 0 : -1}
+                >
+                  {byKey[key]?.shortTitle ?? key}
+                </button>
+              ))
+            }
+          </div>
+          {
+            serviceKeys.map((key, i) => (
+              <div class="panel" role="tabpanel" id={`svc-panel-${key}`} aria-labelledby={`svc-tab-${key}`} data-panel hidden={i !== 0}>
+                <div class="panel__copy">
+                  <span class="panel__icon">
+                    <Icon name={serviceMeta[key].icon} size={30} />
+                  </span>
+                  <h3 class="panel__title">{byKey[key]?.title}</h3>
+                  <p class="panel__text">{byKey[key]?.hero.lead}</p>
+                  <div class="panel__cta">
+                    <Button href={url.service(lang, key)} arrow={false}>
+                      {t.common.learnMore}
+                      <span class="sr-only">: {byKey[key]?.title}</span>
+                    </Button>
+                  </div>
+                </div>
+                <div class="panel__visual on-dark" aria-hidden="true">
+                  <ServiceVisual service={key} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="featured">
+          <p class="eyebrow eyebrow--plain" data-reveal>{h.why.eyebrow}</p>
+          <ul class="featured__grid" role="list">
+            {
+              h.why.points.map((p, i) => (
+                <li class="fcard" data-reveal style={`--reveal-delay:${i}`}>
+                  <span class="fcard__icon">
+                    <Icon name={featuredIcons[i] ?? 'check'} size={22} />
+                  </span>
+                  <h3 class="fcard__title">{p.title}</h3>
+                  <p class="fcard__text">{p.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ───────────── Proven impact (oat) ───────────── -->
+  <section class="section on-surface impact" aria-labelledby="work-title">
+    <div class="container">
+      <div class="center-head">
+        <p class="eyebrow" data-reveal>{h.work.eyebrow}</p>
+        <h2 id="work-title" class="h2" data-reveal style="--reveal-delay:1">{h.work.heading}</h2>
+      </div>
+
+      <div class="tabs" data-tabs>
+        <div class="logo-tabs" role="tablist" aria-label={h.work.eyebrow} data-reveal style="--reveal-delay:2">
+          {
+            cases.map((c, i) => (
+              <button
+                type="button"
+                role="tab"
+                class="logo-tab"
+                id={`case-tab-${c.project.key}`}
+                aria-controls={`case-panel-${c.project.key}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+              >
+                {c.logo ? (
+                  <Image
+                    src={c.logo}
+                    alt={c.project.client}
+                    widths={[160, 320]}
+                    sizes="160px"
+                    layout="none"
+                    class="logo-tab__img"
+                    style={`--w:${sized(c.logo, 3000, 150, 48)}px`}
+                  />
+                ) : (
+                  <span class="logo-tab__name">{c.project.client}</span>
+                )}
+              </button>
+            ))
+          }
+        </div>
         {
-          h.hero.pillars.map((p, i) => (
-            <li>
-              <span class="index-num">0{i + 1}</span>
-              {p}
+          cases.map((c, i) => (
+            <article class="case" role="tabpanel" id={`case-panel-${c.project.key}`} aria-labelledby={`case-tab-${c.project.key}`} data-panel hidden={i !== 0}>
+              <div class="case__copy">
+                <p class="case__client">{c.project.client}</p>
+                <div class="case__stat">
+                  <span class="case__num mono">{c.stat.value}</span>
+                  <span class="case__label">{c.stat.label}</span>
+                </div>
+                <h3 class="case__title">{c.copy?.summary}</h3>
+                <p class="case__meta">
+                  {c.copy?.industry}
+                  {c.copy?.location && <span> · {c.copy.location}</span>}
+                </p>
+                <a href={url.project(lang, c.project.key)} class="case__link">
+                  {v.fullStory}
+                  <span class="sr-only">: {c.project.client}</span>
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              </div>
+              <div class="case__media">
+                {c.img.desktop && (
+                  <Image src={c.img.desktop} alt="" widths={[560, 840, 1120]} sizes="(min-width: 900px) 46vw, 92vw" layout="none" class="case__img" />
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="impact__more" data-reveal>
+        <a href={url.section(lang, 'work')}>{t.common.viewAllWork} <Icon name="arrow-right" size={16} /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ───────────── Facts (navy) ───────────── -->
+  <section class="section on-dark facts" aria-labelledby="why-title">
+    <div class="container facts__grid">
+      <div class="facts__head">
+        <p class="eyebrow" data-reveal>{h.why.eyebrow}</p>
+        <h2 id="why-title" class="h2" data-reveal style="--reveal-delay:1">{h.why.heading}</h2>
+        <dl class="facts__list">
+          {
+            facts.map((f, i) => (
+              <div data-reveal style={`--reveal-delay:${i + 2}`}>
+                <dt class="facts__num">{f.value}</dt>
+                <dd>{f.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div class="facts__cards">
+        <article class="xcard xcard--teal" data-reveal style="--reveal-delay:2">
+          <p class="eyebrow eyebrow--plain">{h.process.eyebrow}</p>
+          <h3 class="xcard__title">{h.process.heading}</h3>
+          <p class="xcard__text">{h.process.lead}</p>
+          <ol class="xcard__steps" role="list">
+            {
+              h.process.steps.map((s, i) => (
+                <li>
+                  <span class="mono">0{i + 1}</span> {s.title}
+                </li>
+              ))
+            }
+          </ol>
+          <a href={url.section(lang, 'about')} class="xcard__link">{t.common.learnMore} <Icon name="arrow-right" size={16} /></a>
+        </article>
+        <article class="xcard" data-reveal style="--reveal-delay:3">
+          <p class="eyebrow eyebrow--plain">{h.tech.eyebrow}</p>
+          <h3 class="xcard__title">{h.tech.heading}</h3>
+          <ul class="xcard__chips" role="list">
+            {techItems.map((item) => <li>{item}</li>)}
+          </ul>
+          <a href={url.section(lang, 'services')} class="xcard__link">{t.common.exploreServices} <Icon name="arrow-right" size={16} /></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── Spotlight (white) ───────────── -->
+  <section class="section spot" aria-labelledby="spot-title">
+    <div class="container">
+      <h2 id="spot-title" class="h2 spot__title" data-reveal>{v.spotlight}</h2>
+      <ul class="spot__grid" role="list">
+        {
+          posts.map((post, i) => (
+            <li class="scard" data-reveal style={`--reveal-delay:${i}`}>
+              <a href={url.insight(lang, insightSlug(post))} class="scard__link">
+                <span class="scard__media scard__media--post on-dark" aria-hidden="true">
+                  <span class="blueprint" />
+                  <span class="scard__topic">{t.insights.categories[post.data.categories[0]]}</span>
+                </span>
+                <span class="scard__kicker mono">
+                  {t.nav.insights} · {formatDate(post.data.pubDate, lang)}
+                </span>
+                <span class="scard__title">{post.data.title}</span>
+                <span class="scard__more">
+                  {t.common.readMore} <Icon name="arrow-right" size={14} />
+                </span>
+              </a>
             </li>
           ))
+        }
+        {
+          spotProjects.map((p, i) => {
+            const img = workImages(p.key);
+            return (
+              <li class="scard" data-reveal style={`--reveal-delay:${posts.length + i}`}>
+                <a href={url.project(lang, p.key)} class="scard__link">
+                  <span class="scard__media">
+                    {img.desktop && (
+                      <Image src={img.desktop} alt="" widths={[360, 540, 720]} sizes="(min-width: 1100px) 22vw, (min-width: 640px) 45vw, 92vw" layout="none" />
+                    )}
+                  </span>
+                  <span class="scard__kicker mono">
+                    {h.clients.caseStudy} · {workByKey[p.key]?.industry}
+                  </span>
+                  <span class="scard__title">{p.client}</span>
+                  <span class="scard__more">
+                    {t.common.viewProject} <Icon name="arrow-right" size={14} />
+                  </span>
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </div>
   </section>
 
-  <!-- ───────────── Clients ───────────── -->
-  <ClientLogos lang={lang} />
-
-  <!-- ───────────── Services ───────────── -->
-  <Section labelledby="services-title">
-    <div class="container container--wide">
-      <div class="split-head">
-        <Heading eyebrow={h.services.eyebrow} title={h.services.heading} id="services-title" />
-        <p class="lead" data-reveal style="--reveal-delay:2">{h.services.lead}</p>
+  <!-- ───────────── Close: CTA + FAQ (navy) ───────────── -->
+  <section class="section on-dark close" aria-labelledby="cta-title">
+    <div class="container close__grid">
+      <div class="close__cta" data-reveal>
+        <h2 id="cta-title" class="close__title">
+          {h.cta.heading}
+          <span>{h.cta.headingAccent}</span>
+        </h2>
+        <p class="close__text">{h.cta.text}</p>
+        <div class="close__actions">
+          <Button href={url.section(lang, 'contact')} arrow={false}>{t.common.startProject}</Button>
+          <Button href={url.section(lang, 'work')} variant="secondary" arrow={false}>{t.common.viewWork}</Button>
+        </div>
       </div>
-      <ul class="svc-grid" role="list">
-        {
-          serviceKeys.map((key, i) => (
-            <li>
-              <ServiceCard service={key} title={byKey[key]?.title ?? key} tagline={byKey[key]?.tagline ?? ''} lang={lang} delay={i % 4} />
-            </li>
-          ))
-        }
-      </ul>
-      <div class="after" data-reveal>
-        <Button href={url.section(lang, 'services')} variant="ghost">{t.common.exploreServices}</Button>
-      </div>
-    </div>
-  </Section>
-
-  <!-- ───────────── Why us ───────────── -->
-  <Section tone="surface" labelledby="why-title">
-    <div class="container container--wide">
-      <Heading eyebrow={h.why.eyebrow} title={h.why.heading} lead={h.why.lead} id="why-title" />
-      <div class="why__pipe">
-        <Pipeline steps={h.why.chain} status={h.hero.status} />
-      </div>
-      <ul class="why__points" role="list">
-        {
-          h.why.points.map((p, i) => (
-            <li data-reveal style={`--reveal-delay:${i}`}>
-              <h3 class="h3">{p.title}</h3>
-              <p class="muted">{p.text}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </Section>
-
-  <!-- ───────────── Selected work ───────────── -->
-  <Section labelledby="work-title">
-    <div class="container">
-      <div class="split-head">
-        <Heading eyebrow={h.work.eyebrow} title={h.work.heading} id="work-title" />
-        <p class="lead" data-reveal style="--reveal-delay:2">{h.work.lead}</p>
-      </div>
-      <ProjectGrid projects={featuredProjects} lang={lang} />
-      <div class="after after--center" data-reveal>
-        <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewAllWork}</Button>
+      <div class="close__faq">
+        <div class="close__faq-head" data-reveal>
+          <h2 class="h3">{v.faqHeading}</h2>
+          <a href={url.section(lang, 'faq')} class="close__all">{v.allFaqs} <Icon name="arrow-right" size={14} /></a>
+        </div>
+        <Faq items={faqs} />
       </div>
     </div>
-  </Section>
-
-  <!-- ───────────── Process ───────────── -->
-  <Section tone="paper" labelledby="process-title">
-    <div class="container container--wide process">
-      <div class="process__head">
-        <Heading eyebrow={h.process.eyebrow} title={h.process.heading} lead={h.process.lead} id="process-title" />
-      </div>
-      <ProcessSteps steps={h.process.steps} label={h.process.heading} />
-    </div>
-  </Section>
-
-  <!-- ───────────── Technology ───────────── -->
-  <Section labelledby="tech-title">
-    <div class="container container--wide">
-      <div class="split-head">
-        <Heading eyebrow={h.tech.eyebrow} title={h.tech.heading} id="tech-title" />
-        <p class="lead" data-reveal style="--reveal-delay:2">{h.tech.lead}</p>
-      </div>
-      <TechGrid areas={t.tech} />
-    </div>
-  </Section>
-
-  <Testimonial lang={lang} />
-
-  <CtaBand lang={lang} />
+  </section>
 </BaseLayout>
+
+<script>
+  // ARIA tabs (services + case studies). Without JS every panel stays visible.
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')!)!);
+    const select = (i: number, focus = false) => {
+      tabs.forEach((tab, j) => {
+        const on = i === j;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[j].hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        const next = ({ ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: n - 1 } as Record<string, number>)[e.key];
+        if (next === undefined) return;
+        e.preventDefault();
+        select((next + n) % n, true);
+      });
+    });
+  });
+
+  // Logo strip: pause/play (WCAG 2.2.2 — moving content needs a pause control).
+  document.querySelectorAll<HTMLElement>('[data-strip]').forEach((strip) => {
+    const btn = strip.querySelector<HTMLButtonElement>('[data-strip-toggle]');
+    const label = strip.querySelector<HTMLElement>('[data-strip-label]');
+    btn?.addEventListener('click', () => {
+      const paused = strip.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', String(paused));
+      if (label) label.textContent = (paused ? btn.dataset.labelPlay : btn.dataset.labelPause) ?? '';
+    });
+  });
+</script>
 
 <style>
   /* ── Hero ── */
   .hero {
     position: relative;
-    min-height: 100svh;
-    padding-top: calc(var(--header-h) + clamp(24px, min(6vw, 7svh), 88px));
-    padding-bottom: clamp(40px, 5vw, 64px);
-    display: grid;
-    align-content: space-between;
-    gap: clamp(48px, 6vw, 80px);
+    padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px));
     overflow: hidden;
-    isolation: isolate;
-  }
-  .hero__glow {
-    position: absolute;
-    border-radius: 50%;
-    z-index: -1;
-    pointer-events: none;
-  }
-  .hero__glow--a {
-    top: -25%;
-    right: -20%;
-    width: 85vw;
-    max-width: 1300px;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, rgb(0 95 115 / 0.7), rgb(10 147 150 / 0.18) 55%, transparent 75%);
-  }
-  .hero__glow--b {
-    bottom: -35%;
-    left: 20%;
-    width: 50vw;
-    aspect-ratio: 1;
-    background: radial-gradient(closest-side, rgb(238 155 0 / 0.16), transparent 70%);
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__glow--a {
-      animation: drift 18s var(--ease) infinite alternate;
-    }
-    .hero__glow--b {
-      animation: drift 22s var(--ease) infinite alternate-reverse;
-    }
-  }
-  @keyframes drift {
-    to {
-      transform: translate(-4%, 3%) scale(1.06);
-    }
   }
   .hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(2rem, 4vw, 4rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 5vw, 5rem);
     align-items: center;
   }
   .hero__copy {
     display: grid;
-    gap: 1.75rem;
-    align-content: start;
+    gap: 1.5rem;
+    align-content: center;
+    padding-bottom: clamp(40px, 6vw, 88px);
   }
   .hero__title {
-    margin-left: -0.05em;
-    /* Keep headline + lead + CTAs inside the first screen on laptops */
-    font-size: min(var(--fs-display), 14.5svh);
-  }
-  @media (max-width: 1099px) {
-    .hero__title {
-      font-size: var(--fs-display);
-    }
+    max-width: 14ch;
   }
   .hero__accent {
-    background: var(--grad-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    padding-right: 0.06em;
+    color: var(--accent);
   }
   .hero__lead {
-    max-width: 52ch;
-    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    max-width: 50ch;
+    color: var(--text);
   }
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+    margin-top: 0.5rem;
   }
 
-  /* Proof stack */
-  .hero__proof {
+  /* Product-style preview: a window cut off by the band below and the right edge. */
+  .hero__ui {
     position: relative;
-    aspect-ratio: 5 / 6;
-    max-height: 72vh;
-    width: 100%;
+    align-self: end;
+    margin-right: calc(var(--gutter) * -1 - max(0px, (100vw - var(--container-wide) - var(--gutter) * 2) / 2));
+    padding-left: clamp(24px, 4vw, 64px);
   }
-  .proof {
-    position: absolute;
-    width: 82%;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: #0b2630;
-    border: 1px solid var(--line-strong);
+  .hero__dots {
+    inset: 10% auto 0 -2%;
+    width: 30%;
+    mask-image: none;
+  }
+  .ui {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-right: 0;
     box-shadow: var(--shadow-lg);
-    text-decoration: none;
-    transition:
-      transform 700ms var(--ease-out),
-      box-shadow 700ms var(--ease-out);
   }
-  .proof--0 {
-    top: 2%;
-    right: 0;
-    z-index: 3;
-  }
-  .proof--1 {
-    top: 30%;
-    left: 0;
-    z-index: 2;
-    width: 70%;
-  }
-  .proof--2 {
-    bottom: 2%;
-    right: 6%;
-    z-index: 1;
-    width: 64%;
-  }
-  .proof:hover,
-  .proof:focus-visible {
-    z-index: 5;
-    transform: translateY(-6px) scale(1.02);
-    box-shadow:
-      0 0 0 1px var(--brand),
-      var(--shadow-lg);
-  }
-  .proof__bar {
+  .ui__bar {
     display: flex;
-    gap: 5px;
-    height: 22px;
     align-items: center;
-    padding-inline: 10px;
+    gap: 1rem;
+    height: 52px;
+    padding-inline: 1.25rem;
     border-bottom: 1px solid var(--line);
+    font-size: 0.9375rem;
   }
-  .proof__bar i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgb(148 210 189 / 0.25);
+  .ui__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
-  .proof__img {
+  .ui__brand i {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--dark-teal), var(--dark-cyan));
+  }
+  .ui__sep {
+    width: 1px;
+    height: 20px;
+    background: var(--line-strong);
+  }
+  .ui__crumb {
+    color: var(--text-muted);
+  }
+  .ui__body {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+  }
+  .ui__nav {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+    padding: 1.25rem 1rem;
+    border-right: 1px solid var(--line);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+  .ui__nav li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem 0.6rem;
+  }
+  .ui__nav :global(.icon) {
+    color: #2f9e6e;
+  }
+  .ui__nav .is-on {
+    background: var(--oat);
+    color: var(--text);
+  }
+  .ui__main {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem 1.25rem 0;
+    background: var(--oat);
+  }
+  .ui__shot {
+    position: relative;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .ui__shot img {
     width: 100%;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9.5;
     object-fit: cover;
     object-position: top;
+    transition: transform 900ms var(--ease-out);
   }
-  .proof__label {
+  .ui__shot:hover img {
+    transform: scale(1.02);
+  }
+  .ui__shot--sm img {
+    aspect-ratio: 16 / 10;
+  }
+  .ui__label {
     position: absolute;
     left: 10px;
     bottom: 10px;
-    padding: 0.3rem 0.6rem;
-    border-radius: var(--radius-sm);
-    background: rgb(0 18 25 / 0.85);
-    font-family: var(--font-code);
+    padding: 0.25rem 0.5rem;
+    background: var(--navy);
+    color: #fff;
     font-size: 0.6875rem;
-    color: var(--text);
-    opacity: 0;
-    transform: translateY(4px);
-    transition: all 400ms var(--ease);
   }
-  .proof:hover .proof__label,
-  .proof:focus-visible .proof__label {
-    opacity: 1;
-    transform: none;
+  .ui__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 1rem;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .proof--0 {
-      animation: float 9s var(--ease) infinite alternate;
-    }
-    .proof--1 {
-      animation: float 11s var(--ease) infinite alternate-reverse;
-    }
-    .proof--2 {
-      animation: float 13s var(--ease) infinite alternate;
-    }
-    .proof:hover {
-      animation-play-state: paused;
-    }
+  .ui__status {
+    display: grid;
+    align-content: space-between;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-bottom: 0;
   }
-  @keyframes float {
-    to {
-      translate: 0 -12px;
-    }
-  }
-  .status {
-    position: absolute;
-    left: -6%;
-    bottom: 8%;
-    z-index: 4;
-    padding: 0.9rem 1rem;
-    border-radius: var(--radius);
-    background: rgb(2 24 32 / 0.92);
-    border: 1px solid var(--line-strong);
-    box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(8px);
-    font-family: var(--font-code);
-    font-size: 0.75rem;
-  }
-  .status__head {
+  .ui__status-head {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text);
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
-  .status__dot {
+  .ui__dot {
+    flex: none;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #5fd3a6;
-    box-shadow: 0 0 0 4px rgb(95 211 166 / 0.18);
+    background: #2f9e6e;
+    box-shadow: 0 0 0 4px rgb(47 158 110 / 0.18);
   }
-  .status ul {
-    display: grid;
-    gap: 0.2rem;
-    color: var(--text-muted);
+  .ui__status-num {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+    line-height: 1;
+    color: var(--dark-teal);
   }
-  .status li {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .status :global(.icon) {
-    color: #5fd3a6;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .status li {
-      opacity: 0;
-      animation: tick 400ms var(--ease) forwards;
-    }
-    .status li:nth-child(1) { animation-delay: 1.4s; }
-    .status li:nth-child(2) { animation-delay: 1.7s; }
-    .status li:nth-child(3) { animation-delay: 2s; }
-    .status li:nth-child(4) { animation-delay: 2.3s; }
-    .status li:nth-child(5) { animation-delay: 2.6s; }
-  }
-  @keyframes tick {
-    to {
-      opacity: 1;
-    }
-  }
-
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border-top: 1px solid var(--line);
-  }
-  .pillars li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    padding: 1.1rem 0;
-    font-size: clamp(0.9375rem, 0.85rem + 0.4vw, 1.125rem);
-    font-weight: 500;
-    color: var(--text-muted);
-  }
-
   @media (max-width: 1099px) {
-    .hero {
-      min-height: auto;
-    }
     .hero__grid {
       grid-template-columns: 1fr;
     }
-    .hero__proof {
-      aspect-ratio: 16 / 11;
-      max-height: none;
-      max-width: 720px;
+    .hero__copy {
+      padding-bottom: 0;
     }
-    .proof--0 { width: 74%; }
-    .proof--1 { top: 22%; width: 62%; }
-    .proof--2 { width: 56%; }
-    .status {
-      left: auto;
-      right: 0;
-      bottom: -2%;
+    .hero__ui {
+      margin-right: calc(var(--gutter) * -1);
+      padding-left: 0;
     }
   }
   @media (max-width: 639px) {
-    .pillars {
-      grid-template-columns: repeat(2, 1fr);
-      column-gap: 1rem;
+    .ui__body {
+      grid-template-columns: 1fr;
     }
-    .pillars li {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .status {
+    .ui__nav,
+    .ui__status {
       display: none;
     }
-  }
-
-  /* ── Shared section patterns ── */
-  .split-head {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: 2rem clamp(2rem, 5vw, 6rem);
-    align-items: end;
-    margin-bottom: clamp(3rem, 6vw, 5.5rem);
-  }
-  @media (max-width: 899px) {
-    .split-head {
+    .ui__row {
       grid-template-columns: 1fr;
     }
   }
-  .after {
-    margin-top: clamp(2rem, 4vw, 3rem);
+
+  /* ── Navy band ── */
+  .band {
+    position: relative;
   }
-  .after--center {
+  .strip {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: 1.75rem var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+  .strip__label {
+    max-width: 11ch;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+    border-right: 1px solid var(--line);
+  }
+  .strip__viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .strip__track {
+    --gap: clamp(2.5rem, 5vw, 4.5rem);
     display: flex;
-    justify-content: center;
-    margin-top: clamp(4rem, 8vw, 7rem);
+    align-items: center;
+    gap: var(--gap);
+    width: max-content;
+  }
+  .strip__logo {
+    width: var(--w, 120px);
+    height: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .strip__track {
+      animation: marquee 70s linear infinite;
+    }
+    .strip:hover .strip__track,
+    .strip.is-paused .strip__track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - var(--gap) / 2));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .strip__track {
+      flex-wrap: wrap;
+      width: auto;
+      row-gap: 1.5rem;
+    }
+    .strip__track li[aria-hidden='true'],
+    .strip__toggle {
+      display: none;
+    }
+  }
+  .strip__toggle {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .strip__icon {
+    width: 10px;
+    height: 12px;
+    border-inline: 3px solid currentColor;
+  }
+  .strip.is-paused .strip__icon {
+    width: 0;
+    height: 0;
+    border: 0;
+    border-left: 10px solid currentColor;
+    border-block: 6px solid transparent;
+    margin-left: 3px;
+  }
+  @media (max-width: 639px) {
+    .strip {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .strip__label {
+      grid-column: 1 / -1;
+      max-width: none;
+      border-right: 0;
+    }
   }
 
-  .svc-grid {
+  .center-head {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+  }
+
+  /* Tabs */
+  .tabs__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .pill {
+    min-height: 40px;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+  .pill:hover {
+    background: var(--surface-3);
+  }
+  .pill[aria-selected='true'] {
+    background: #fff;
+    color: var(--navy);
+  }
+  :global(html:not(.js)) .tabs__list,
+  :global(html:not(.js)) .logo-tabs {
+    display: none;
+  }
+  :global(html:not(.js)) [data-panel][hidden] {
+    display: grid !important;
+    margin-top: 1rem;
+  }
+
+  .panel {
+    --text: var(--navy);
+    --text-muted: #3a545b;
+    --link: var(--dark-teal);
+    --line: rgb(0 18 25 / 0.12);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    min-height: 420px;
+    background: var(--oat);
+    color: var(--navy);
+  }
+  .panel__copy {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    align-content: start;
+    gap: 1rem;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+  }
+  .panel__icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    color: var(--rusty-spice);
+  }
+  .panel__title {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    letter-spacing: -0.02em;
+  }
+  .panel__text {
+    font-size: var(--fs-lg);
+    line-height: 1.5;
+    color: var(--dark-teal);
+    max-width: 44ch;
+  }
+  .panel__cta {
+    align-self: end;
+    padding-top: 1.5rem;
+  }
+  .panel__visual {
+    display: grid;
+    place-items: center;
+    margin: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) 0;
+  }
+  .panel__visual :global(.sv) {
+    width: 100%;
+  }
+  @media (max-width: 899px) {
+    .panel {
+      grid-template-columns: 1fr;
+    }
+    .panel__visual {
+      margin: 0 1rem 1rem;
+    }
+  }
+
+  .featured {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .featured__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .fcard {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    align-content: start;
+    padding: 1.5rem;
+    background: var(--surface-1);
+  }
+  .fcard__icon {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--surface-3);
+    color: var(--golden-orange);
+  }
+  .fcard__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .fcard__text {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  @media (max-width: 899px) {
+    .featured__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Proven impact ── */
+  .logo-tabs {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
   }
-  .svc-grid > li {
+  .logo-tab {
+    display: grid;
+    place-items: center;
+    min-height: 88px;
+    padding: 1rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: var(--surface-2);
+    cursor: pointer;
+    transition:
+      background-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+  .logo-tab__img {
+    width: min(var(--w, 140px), 100%);
+    height: auto;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition:
+      filter var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+  .logo-tab__name {
+    font-weight: 600;
+    color: var(--text-subtle);
+  }
+  .logo-tab:hover .logo-tab__img {
+    opacity: 0.85;
+  }
+  .logo-tab[aria-selected='true'] {
+    background: #fff;
+    border-bottom-color: var(--rusty-spice);
+    box-shadow: var(--shadow);
+  }
+  .logo-tab[aria-selected='true'] .logo-tab__img {
+    filter: none;
+    opacity: 1;
+  }
+  @media (max-width: 639px) {
+    .logo-tabs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .case {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+  .case__copy {
+    display: grid;
+    align-content: start;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+  .case__client {
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .case__stat {
     display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
   }
-  .svc-grid > li > :global(*) {
-    flex: 1;
+  .case__num {
+    font-size: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--navy);
+  }
+  .case__label {
+    max-width: 22ch;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .case__title {
+    font-size: var(--fs-h3);
+    line-height: 1.3;
+  }
+  .case__meta {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+  }
+  .case__link,
+  .impact__more a,
+  .xcard__link,
+  .close__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .case__link:hover,
+  .impact__more a:hover,
+  .xcard__link:hover,
+  .close__all:hover {
+    text-decoration: underline;
+  }
+  .case__link {
+    justify-self: start;
+    margin-top: 0.5rem;
+  }
+  .case__media {
+    min-height: 320px;
+    background: var(--navy);
+    overflow: hidden;
+  }
+  .case__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .impact__more {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+  @media (max-width: 899px) {
+    .case {
+      grid-template-columns: 1fr;
+    }
+    .case__media {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  /* ── Facts ── */
+  .facts__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .facts__head {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+  .facts__list {
+    margin: 1.5rem 0 0;
+  }
+  .facts__list > div {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .facts__num {
+    font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--golden-orange);
+  }
+  .facts__list dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+  }
+  .facts__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+  .xcard {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--surface-1);
+  }
+  .xcard--teal {
+    --text-muted: #d2e6e4;
+    --text-subtle: #c3dcd9;
+    background: var(--dark-teal);
+  }
+  .xcard__title {
+    font-size: var(--fs-h3);
+  }
+  .xcard__text {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+  .xcard__steps {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9375rem;
+  }
+  .xcard__steps .mono {
+    color: var(--vanilla-custard);
+    margin-right: 0.4rem;
+  }
+  .xcard__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .xcard__chips li {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--line-strong);
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+  .xcard--teal .xcard__link {
+    color: #fff;
+  }
+  @media (max-width: 1023px) {
+    .facts__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 639px) {
+    .facts__cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Spotlight ── */
+  .spot__title {
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .spot__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .scard__link {
+    display: grid;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  .scard__media {
+    position: relative;
+    display: grid;
+    place-items: end start;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--oat);
+    margin-bottom: 0.5rem;
+  }
+  .scard__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 700ms var(--ease-out);
+  }
+  .scard__link:hover .scard__media img {
+    transform: scale(1.04);
+  }
+  .scard__media--post {
+    padding: 1.25rem;
+    background: var(--navy);
+  }
+  .scard__media--post .blueprint {
+    mask-image: none;
+  }
+  .scard__topic {
+    position: relative;
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #fff;
+    border-left: 3px solid var(--golden-orange);
+    padding-left: 0.75rem;
+  }
+  .scard__kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .scard__title {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .scard__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--link);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .scard__link:hover .scard__title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
   @media (max-width: 1099px) {
-    .svc-grid {
+    .spot__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   @media (max-width: 639px) {
-    .svc-grid {
+    .spot__grid {
       grid-template-columns: 1fr;
     }
   }
 
-  .why__pipe {
-    margin-top: clamp(3.5rem, 7vw, 6rem);
-  }
-  .why__points {
+  /* ── Close ── */
+  .close__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem clamp(2rem, 4vw, 4rem);
-    margin-top: clamp(3.5rem, 7vw, 6rem);
-    padding-top: clamp(2rem, 4vw, 3rem);
-    border-top: 1px solid var(--line);
-  }
-  .why__points li {
-    display: grid;
-    gap: 0.75rem;
-    align-content: start;
-  }
-  @media (max-width: 899px) {
-    .why__points {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .process {
-    display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: clamp(2rem, 5vw, 6rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
     align-items: start;
   }
-  .process__head {
-    position: sticky;
-    top: calc(var(--header-h) + 2rem);
+  .close__cta {
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+    background: var(--surface-1);
+    text-align: center;
+  }
+  .close__title {
+    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.05;
+  }
+  .close__title span {
+    display: block;
+    color: var(--golden-orange);
+  }
+  .close__text {
+    max-width: 44ch;
+    color: var(--text-muted);
+  }
+  .close__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .close__faq-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .close__all {
+    font-size: 0.9375rem;
   }
   @media (max-width: 1023px) {
-    .process {
+    .close__grid {
       grid-template-columns: 1fr;
-    }
-    .process__head {
-      position: static;
     }
   }
 </style>
