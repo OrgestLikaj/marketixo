@@ -1,0 +1,222 @@
+---
+/**
+ * Home page "Clients" section: every client logo in two endless rows — the first drifts left,
+ * the second right. Logos of clients with a profile page link to it. Rows pause on hover and
+ * keyboard focus; with reduced motion they become a static, wrapped grid.
+ *
+ * Each row renders its logo set several times so the loop has no gap on wide screens: the first
+ * copy is the real list, the repeats are aria-hidden and unfocusable.
+ */
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import { clientLogos } from '~/data/projects';
+import { logoImage, logoWidth } from '~/lib/client-logos';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const c = t.home.clients;
+
+const logos = clientLogos
+  .map((l) => ({ ...l, img: logoImage(l.key) }))
+  .filter((l): l is typeof l & { img: NonNullable<typeof l.img> } => Boolean(l.img));
+
+// Alternate the logos between the rows so each row mixes client types.
+const rows = [logos.filter((_, i) => i % 2 === 0), logos.filter((_, i) => i % 2 === 1)];
+/** Copies per half of the loop: one set is ~1.7k px, so two keep wide screens covered. */
+const SETS = 2;
+---
+
+<section class="section clients" aria-labelledby="clients-title">
+  <div class="container container--wide">
+    <div class="clients__head">
+      <p class="eyebrow" data-reveal>{c.eyebrow}</p>
+      <div>
+        <h2 id="clients-title" class="h2" data-reveal style="--reveal-delay:1">{c.heading}</h2>
+        <p class="lead clients__lead" data-reveal style="--reveal-delay:2">{c.lead}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mq">
+    {
+      rows.map((row, r) => (
+        <div class:list={['mq__row', { 'mq__row--right': r === 1 }]} style={`--n:${row.length};--reveal-delay:${r + 2}`} data-reveal>
+          <div class="mq__track">
+            {Array.from({ length: SETS * 2 }, (_, copy) => (
+              <ul class="mq__set" role="list" aria-hidden={copy > 0 ? 'true' : undefined} aria-label={copy === 0 ? c.eyebrow : undefined}>
+                {row.map((l) => {
+                  const body = (
+                    <Image
+                      src={l.img}
+                      alt={copy === 0 ? l.client : ''}
+                      widths={[160, 320]}
+                      sizes="160px"
+                      layout="none"
+                      class="mq__logo"
+                      style={`width:${logoWidth(l.img, 5200, 150, 64)}px`}
+                    />
+                  );
+                  return (
+                    <li class:list={['mq__cell', { 'mq__cell--dark': l.dark }]}>
+                      {l.project ? (
+                        <a href={url.project(lang, l.project)} class="mq__link" tabindex={copy > 0 ? -1 : undefined}>
+                          {body}
+                        </a>
+                      ) : (
+                        <span class="mq__link mq__link--static">{body}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="container container--wide">
+    <div class="clients__after" data-reveal>
+      <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewAllWork}</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    overflow: hidden;
+  }
+  .clients__head {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 1rem 3rem;
+    align-items: baseline;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .clients__lead {
+    margin-top: 1.25rem;
+    max-width: 58ch;
+  }
+
+  /* ---------- Marquee ---------- */
+  .mq {
+    display: grid;
+    gap: clamp(12px, 1.4vw, 18px);
+  }
+  .mq__row {
+    /* Grid items default to min-width:auto, which would stretch the row to the whole track */
+    min-width: 0;
+    overflow: hidden;
+    padding-block: 6px; /* room for the hover lift and focus ring */
+    /* Fade the logos in and out at the screen edges */
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .mq__track {
+    display: flex;
+    width: max-content;
+    /* Speed scales with the number of logos so both rows move at the same pace */
+    animation: mq-left calc(var(--n) * 4.5s) linear infinite;
+  }
+  .mq__row--right .mq__track {
+    animation-direction: reverse;
+  }
+  /* Pause to read or click a logo */
+  .mq__row:hover .mq__track,
+  .mq__row:focus-within .mq__track {
+    animation-play-state: paused;
+  }
+  /* The track holds 2 × SETS copies; moving by half of it lands on an identical frame */
+  @keyframes mq-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .mq__set {
+    display: flex;
+    gap: clamp(12px, 1.4vw, 18px);
+    margin: 0;
+    padding: 0 clamp(12px, 1.4vw, 18px) 0 0;
+    list-style: none;
+  }
+  .mq__cell {
+    flex: none;
+  }
+  .mq__link {
+    display: grid;
+    place-items: center;
+    width: clamp(160px, 15vw, 210px);
+    height: clamp(88px, 8vw, 112px);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    text-decoration: none;
+    transition:
+      transform 400ms var(--ease-out),
+      box-shadow 400ms var(--ease-out);
+  }
+  .mq__cell--dark .mq__link {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+  .mq__logo {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    a.mq__link:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 2px var(--accent), var(--shadow);
+    }
+  }
+  a.mq__link:focus-visible {
+    outline-offset: 3px;
+  }
+
+  .clients__after {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  /* Reduced motion: no movement — one static, wrapped set per row */
+  @media (prefers-reduced-motion: reduce) {
+    .mq__row {
+      mask-image: none;
+      padding-inline: var(--gutter);
+    }
+    .mq__track {
+      animation: none;
+      width: auto;
+      justify-content: center;
+    }
+    .mq__set {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0;
+    }
+    .mq__set[aria-hidden] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .clients__head {
+      grid-template-columns: 1fr;
+    }
+    .mq__link {
+      width: 140px;
+      height: 76px;
+      padding: 0.75rem 1rem;
+    }
+  }
+</style>

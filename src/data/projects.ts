@@ -116,7 +116,7 @@ export const projects: Project[] = [
   {
     key: 'elbasanion',
     client: 'ElbasaniON',
-    url: 'https://elbasanion.al/new/',
+    url: 'https://elbasanion.al/',
     services: ['web-design-development', 'seo', 'paid-ads', 'social-media-marketing'],
     categories: ['web', 'seo', 'marketing', 'media'],
     technologies: ['WordPress', 'Custom PHP theme', 'Vanilla JavaScript', 'WordPress Customizer'],

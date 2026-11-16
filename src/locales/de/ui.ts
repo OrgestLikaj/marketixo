@@ -93,6 +93,7 @@ const de: UI = {
     clients: {
       eyebrow: 'Kunden',
       heading: 'Unternehmen und Organisationen, mit denen wir arbeiten.',
+      lead: 'Gesundheit, Forschung, Medien, Sport, Immobilien und Finanzen – öffnen Sie einen Kunden, um zu sehen, was wir umgesetzt haben.',
       caseStudy: 'Fallstudie',
       groups: {
         health: 'Gesundheit & Zahnkliniken',
@@ -232,6 +233,8 @@ const de: UI = {
     prev: 'Vorheriges Projekt',
     next: 'Nächstes Projekt',
     siblings: 'Weitere Websites der {group}',
+    whatWeDid: 'Was wir gemacht haben',
+    visitSite: 'Website besuchen',
     liveSite: 'Live-Website',
   },
 

@@ -93,6 +93,7 @@ const en = {
     clients: {
       eyebrow: 'Clients',
       heading: 'Businesses and organisations we’ve worked with.',
+      lead: 'Healthcare, research, media, sport, real estate and finance — open any client to see what we built for them.',
       caseStudy: 'Case study',
       groups: {
         health: 'Healthcare & dental clinics',
@@ -232,6 +233,8 @@ const en = {
     prev: 'Previous project',
     next: 'Next project',
     siblings: 'More {group} websites',
+    whatWeDid: 'What we did',
+    visitSite: 'Visit website',
     liveSite: 'Live site',
   },
 

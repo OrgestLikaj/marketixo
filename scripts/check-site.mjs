@@ -123,8 +123,8 @@ for (const [url, src] of pages) {
     }
   }
 
-  // Images need alt (empty alt allowed for decorative)
-  for (const tag of src.match(/<img\b[^>]*>/g) ?? []) if (attr(tag, 'alt') === undefined) err(url, `img without alt: ${tag.slice(0, 80)}`);
+  // Images need alt (empty alt allowed for decorative; Astro writes alt="" as a bare `alt`)
+  for (const tag of src.match(/<img\b[^>]*>/g) ?? []) if (attr(tag, 'alt') === undefined && !/\salt(?=[\s>])/.test(tag)) err(url, `img without alt: ${tag.slice(0, 80)}`);
 
   // Duplicate ids
   const ids = [...src.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);

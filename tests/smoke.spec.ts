@@ -69,6 +69,36 @@ test('SEO tags: canonical, hreflang with return links, valid JSON-LD', async ({ 
   expect(types).toEqual(expect.arrayContaining(['Organization', 'WebSite', 'BreadcrumbList', 'Service', 'FAQPage']));
 });
 
+test('client logos: two rows moving in opposite directions, pausing on hover', async ({ page }) => {
+  await page.goto('/');
+  const rows = page.locator('.mq__row');
+  await expect(rows).toHaveCount(2);
+  await rows.first().scrollIntoViewIfNeeded();
+  const x = (i: number) => rows.nth(i).locator('.mq__track').evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);
+  const a0 = await x(0);
+  const b0 = await x(1);
+  await page.waitForTimeout(800);
+  // Top row drifts left (x decreases), bottom row drifts right (x increases)
+  expect(await x(0)).toBeLessThan(a0);
+  expect(await x(1)).toBeGreaterThan(b0);
+  // Hover pauses the row
+  // (locator.hover() waits for a stable element, which a marquee logo never is — move the mouse instead)
+  const box = (await rows.first().boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.waitForTimeout(100);
+  const paused = await x(0);
+  await page.waitForTimeout(500);
+  expect(await x(0)).toBe(paused);
+  // Only the first copy of each row is exposed; repeats are hidden and unfocusable.
+  const visibleNames = await page.locator('.mq__set:not([aria-hidden]) img').evaluateAll((imgs) => imgs.map((i) => i.getAttribute('alt')));
+  expect(new Set(visibleNames).size).toBe(visibleNames.length);
+  expect(visibleNames.every(Boolean)).toBe(true);
+  expect(await page.locator('.mq__set[aria-hidden] a:not([tabindex="-1"])').count()).toBe(0);
+  const hrefs = await page.locator('.mq__set:not([aria-hidden]) a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(hrefs.length).toBeGreaterThan(5);
+  expect(hrefs.every((h) => h?.startsWith('/work/'))).toBe(true);
+});
+
 test('work filter narrows the list', async ({ page }) => {
   await page.goto('/work/');
   const cells = page.locator('[data-cell]');

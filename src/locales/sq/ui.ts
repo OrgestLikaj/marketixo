@@ -93,6 +93,7 @@ const sq: UI = {
     clients: {
       eyebrow: 'Klientë',
       heading: 'Biznese dhe organizata me të cilat kemi punuar.',
+      lead: 'Shëndetësi, kërkim, media, sport, pasuri të paluajtshme dhe financë — hapni një klient për të parë çfarë kemi ndërtuar.',
       caseStudy: 'Rast studimi',
       groups: {
         health: 'Shëndetësi & klinika dentare',
@@ -232,6 +233,8 @@ const sq: UI = {
     prev: 'Projekti i mëparshëm',
     next: 'Projekti tjetër',
     siblings: 'Faqe të tjera të {group}',
+    whatWeDid: 'Çfarë bëmë',
+    visitSite: 'Vizitoni faqen',
     liveSite: 'Faqja live',
   },
 

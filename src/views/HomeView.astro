@@ -7,17 +7,16 @@ import Heading from '~/components/Heading.astro';
 import Section from '~/components/Section.astro';
 import ServiceCard from '~/components/ServiceCard.astro';
 import Pipeline from '~/components/Pipeline.astro';
-import ProjectGrid from '~/components/ProjectGrid.astro';
 import ProcessSteps from '~/components/ProcessSteps.astro';
 import TechGrid from '~/components/TechGrid.astro';
 import Testimonial from '~/components/Testimonial.astro';
 import CtaBand from '~/components/CtaBand.astro';
-import ClientLogos from '~/components/ClientLogos.astro';
+import ClientList from '~/components/ClientList.astro';
 import Icon from '~/components/Icon.astro';
 import { useT } from '~/i18n';
 import { url } from '~/i18n/routes';
 import { serviceKeys } from '~/data/services';
-import { featuredProjects, projectByKey } from '~/data/projects';
+import { projectByKey } from '~/data/projects';
 import { workImages } from '~/lib/work-images';
 import type { PageEntry } from '~/lib/pages';
 
@@ -116,9 +115,6 @@ const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ pro
     </div>
   </section>
 
-  <!-- ───────────── Clients ───────────── -->
-  <ClientLogos lang={lang} />
-
   <!-- ───────────── Services ───────────── -->
   <Section labelledby="services-title">
     <div class="container container--wide">
@@ -161,19 +157,8 @@ const stack = ['medicus-center', 'ir-real-estate', 'scidev'].map((key) => ({ pro
     </div>
   </Section>
 
-  <!-- ───────────── Selected work ───────────── -->
-  <Section labelledby="work-title">
-    <div class="container">
-      <div class="split-head">
-        <Heading eyebrow={h.work.eyebrow} title={h.work.heading} id="work-title" />
-        <p class="lead" data-reveal style="--reveal-delay:2">{h.work.lead}</p>
-      </div>
-      <ProjectGrid projects={featuredProjects} lang={lang} />
-      <div class="after after--center" data-reveal>
-        <Button href={url.section(lang, 'work')} variant="secondary" size="lg">{t.common.viewAllWork}</Button>
-      </div>
-    </div>
-  </Section>
+  <!-- ───────────── Clients ───────────── -->
+  <ClientList lang={lang} />
 
   <!-- ───────────── Process ───────────── -->
   <Section tone="paper" labelledby="process-title">

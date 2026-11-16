@@ -1,11 +1,17 @@
 ---
+/**
+ * Client profile — a short, visual page per client: who they are, what we did (services),
+ * the live website on desktop and mobile, and a link to it. The long-form case-study fields in
+ * src/content/work/<lang>/<key>.yaml (challenge, approach, design, development, result) are kept
+ * in the content files but not shown here.
+ */
 import { Image, getImage } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import BrowserFrame from '~/components/BrowserFrame.astro';
 import PhoneFrame from '~/components/PhoneFrame.astro';
-import ProjectCard from '~/components/ProjectCard.astro';
+import Button from '~/components/Button.astro';
 import Badge from '~/components/Badge.astro';
 import Icon from '~/components/Icon.astro';
 import Testimonial from '~/components/Testimonial.astro';
@@ -13,7 +19,9 @@ import CtaBand from '~/components/CtaBand.astro';
 import { fmt, languageMeta, useT, isLang } from '~/i18n';
 import { url } from '~/i18n/routes';
 import { projectByKey, sortedProjects } from '~/data/projects';
+import { serviceMeta } from '~/data/services';
 import { workImages } from '~/lib/work-images';
+import { logoWidth, projectLogo } from '~/lib/client-logos';
 import { breadcrumbs, caseStudy } from '~/lib/schema';
 import { site } from '~/config/site';
 import type { PageEntry } from '~/lib/pages';
@@ -30,18 +38,15 @@ const entry = await getEntry('work', `${lang}/${project.key}`);
 if (!entry) throw new Error(`Missing case study: src/content/work/${lang}/${project.key}.yaml`);
 const c = entry.data;
 const img = workImages(project.key);
+const logo = projectLogo(project.key);
 
 const services = await getCollection('services', (e) => e.data.lang === lang);
+const serviceData = Object.fromEntries(services.map((s) => [s.data.key, s.data]));
 const serviceNames = Object.fromEntries(services.map((s) => [s.data.key, s.data.shortTitle]));
 const work = await getCollection('work', (e) => e.data.lang === lang);
 const copyFor = (key: string) => work.find((w) => w.data.key === key)?.data;
 
-// Related: same group first, then projects sharing the most services.
-const others = sortedProjects.filter((p) => p.key !== project.key);
-const siblings = project.group ? others.filter((p) => p.group === project.group) : [];
-const score = (p: typeof project) => (p.group && p.group === project.group ? 10 : 0) + p.services.filter((s) => project.services.includes(s)).length;
-const related = [...others].sort((a, b) => score(b) - score(a)).slice(0, 2);
-
+const siblings = project.group ? sortedProjects.filter((p) => p.key !== project.key && p.group === project.group) : [];
 const idx = sortedProjects.findIndex((p) => p.key === project.key);
 const prev = sortedProjects[(idx - 1 + sortedProjects.length) % sortedProjects.length];
 const next = sortedProjects[(idx + 1) % sortedProjects.length];
@@ -54,10 +59,8 @@ const crumbs = [
 const og = img.desktop ? await getImage({ src: img.desktop, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpg' }) : undefined;
 const title = `${project.client} — ${c.industry} | Marketixo`;
 const langNames = (project.siteLanguages ?? []).map((l) => (isLang(l) ? languageMeta[l].native : l.toUpperCase()));
-const story = [
-  { id: 'challenge', label: cs.challenge, text: c.challenge },
-  { id: 'approach', label: cs.approach, text: c.approach },
-];
+const external = project.url ?? project.profile;
+const host = external ? new URL(external).host.replace(/^www\./, '') : '';
 ---
 
 <BaseLayout
@@ -72,16 +75,37 @@ const story = [
   ]}
 >
   <article style={`--brand:${project.brand}`}>
-    <header class="cs-hero">
-      <div class="cs-hero__glow" aria-hidden="true"></div>
+    <header class="pf-hero">
+      <div class="pf-hero__glow" aria-hidden="true"></div>
       <div class="container container--wide">
         <Breadcrumbs lang={lang} items={crumbs} />
-        <div class="cs-hero__grid">
-          <div class="cs-hero__main">
-            <p class="eyebrow" data-reveal>{c.industry}</p>
-            <h1 class="cs-hero__title" data-reveal style="--reveal-delay:1">{project.client}</h1>
-            <p class="lead" data-reveal style="--reveal-delay:2">{c.summary}</p>
+        <div class="pf-hero__grid">
+          <div class="pf-hero__main">
+            <div class="pf-hero__id" data-reveal>
+              {
+                logo && (
+                  <span class:list={['pf-logo', { 'pf-logo--dark': logo.dark }]}>
+                    <Image src={logo.img} alt="" widths={[120, 240]} sizes="120px" layout="none" style={`width:${logoWidth(logo.img, 2400, 104, 46)}px`} />
+                  </span>
+                )
+              }
+              <p class="eyebrow">{c.industry}</p>
+            </div>
+            <h1 class="pf-hero__title" data-reveal style="--reveal-delay:1">{project.client}</h1>
+            <p class="lead pf-hero__lead" data-reveal style="--reveal-delay:2">{c.summary}</p>
+            <div class="pf-hero__actions" data-reveal style="--reveal-delay:3">
+              {
+                external && (
+                  <Button href={external} external size="lg">
+                    {project.url ? cs.visitSite : cs.profile}
+                    <span class="sr-only"> ({t.common.opensNewTab})</span>
+                  </Button>
+                )
+              }
+              <Button href={url.section(lang, 'contact')} variant="secondary" size="lg">{t.common.startProject}</Button>
+            </div>
           </div>
+
           <dl class="facts" data-reveal style="--reveal-delay:3">
             <div>
               <dt>{cs.industry}</dt>
@@ -95,16 +119,6 @@ const story = [
                 </div>
               )
             }
-            <div>
-              <dt>{cs.services}</dt>
-              <dd class="facts__tags">
-                {project.services.map((s) => (
-                  <a href={url.service(lang, s)}>
-                    <Badge tone="accent">{serviceNames[s]}</Badge>
-                  </a>
-                ))}
-              </dd>
-            </div>
             {
               langNames.length > 0 && (
                 <div>
@@ -114,16 +128,10 @@ const story = [
               )
             }
             {
-              (project.url || project.profile) && (
+              host && (
                 <div>
                   <dt>{project.url ? cs.liveSite : cs.profile}</dt>
-                  <dd>
-                    <a href={project.url ?? project.profile} target="_blank" rel="noopener" class="facts__link">
-                      {new URL((project.url ?? project.profile)!).host.replace(/^www\./, '')}
-                      <Icon name="arrow-up-right" size={14} />
-                      <span class="sr-only">{t.common.opensNewTab}</span>
-                    </a>
-                  </dd>
+                  <dd>{host}</dd>
                 </div>
               )
             }
@@ -132,74 +140,57 @@ const story = [
       </div>
     </header>
 
-    {
-      img.desktop ? (
-        <div class="container container--wide cs-shot" data-reveal="mask">
-          <BrowserFrame
-            src={img.desktop}
-            alt={`${project.client} — ${cs.galleryDesktop}`}
-            url={project.url}
-            loading="eager"
-            fetchpriority="high"
-            sizes="(min-width: 1560px) 1520px, 96vw"
-            aspect="16 / 9"
-          />
-        </div>
-      ) : (
-        <div class="container container--wide">
-          <div class="cs-cover" aria-hidden="true">
-            <div class="cs-cover__grid">
-              {Array.from({ length: 12 }, (_, i) => (
-                <span style={`--d:${i}`} />
-              ))}
+    <div class="container container--wide">
+      {
+        img.desktop ? (
+          <div class="cs-shot" data-reveal="mask">
+            <div class="showcase">
+              <BrowserFrame
+                src={img.desktop}
+                alt={`${project.client} — ${cs.galleryDesktop}`}
+                url={project.url}
+                loading="eager"
+                fetchpriority="high"
+                sizes="(min-width: 1560px) 1520px, 96vw"
+                aspect="16 / 9"
+                class="showcase__desk"
+              />
+              {img.mobile && <PhoneFrame src={img.mobile} alt={`${project.client} — ${cs.galleryMobile}`} sizes="(min-width: 1024px) 260px, 30vw" class="showcase__phone" />}
             </div>
-            <span class="cs-cover__name">{project.client}</span>
           </div>
-          <p class="cs-nosite">{cs.noSite}</p>
-        </div>
-      )
-    }
+        ) : (
+          <div>
+            <div class="pf-cover" aria-hidden="true">
+              <div class="pf-cover__grid">
+                {Array.from({ length: 12 }, (_, i) => (
+                  <span style={`--d:${i}`} />
+                ))}
+              </div>
+              <span class="pf-cover__name">{project.client}</span>
+            </div>
+            <p class="pf-nosite">{cs.noSite}</p>
+          </div>
+        )
+      }
+    </div>
 
-    <section class="section cs-story" aria-labelledby="overview">
-      <div class="container container--wide story">
-        <h2 id="overview" class="story__label">{cs.overview}</h2>
-        <p class="story__lead" data-reveal>{c.overview}</p>
-        {
-          story.map((s) => (
-            <>
-              <h2 id={s.id} class="story__label">
-                {s.label}
-              </h2>
-              <p class="story__text" data-reveal>
-                {s.text}
-              </p>
-            </>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="section section--line on-surface" aria-labelledby="design">
-      <div class="container container--wide split">
-        <div class="split__text">
-          <h2 id="design" class="eyebrow">{cs.design}</h2>
-          <p class="split__p" data-reveal>{c.design}</p>
-          <h2 id="development" class="eyebrow split__gap">{cs.development}</h2>
-          <p class="split__p" data-reveal>{c.development}</p>
-          <h3 class="eyebrow eyebrow--plain split__gap">{cs.technologies}</h3>
-          <ul role="list" class="tech">
-            {project.technologies.map((tech) => <li><Badge>{tech}</Badge></li>)}
-          </ul>
-        </div>
-        {img.mobile && <PhoneFrame src={img.mobile} alt={`${project.client} — ${cs.galleryMobile}`} class="split__phone" />}
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="result">
-      <div class="container container--wide result">
-        <div>
-          <h2 id="result" class="eyebrow">{cs.result}</h2>
-          <p class="result__text" data-reveal>{c.result}</p>
+    <section class="section did" aria-labelledby="what-we-did">
+      <div class="container container--wide did__grid">
+        <div class="did__text">
+          <h2 id="what-we-did" class="h2" data-reveal>{cs.whatWeDid}</h2>
+          <p class="did__lead" data-reveal style="--reveal-delay:1">{c.overview}</p>
+          {
+            c.highlights.length > 0 && (
+              <ul role="list" class="highlights" aria-label={cs.highlights}>
+                {c.highlights.map((h, i) => (
+                  <li data-reveal style={`--reveal-delay:${i}`}>
+                    <Icon name="check" size={18} />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            )
+          }
           {
             c.results.length > 0 && (
               <ul role="list" class="metrics">
@@ -213,17 +204,30 @@ const story = [
             )
           }
         </div>
-        <div>
-          <h2 class="eyebrow">{cs.highlights}</h2>
-          <ul role="list" class="highlights">
+
+        <div class="did__side">
+          <h3 class="eyebrow eyebrow--plain">{cs.services}</h3>
+          <ul role="list" class="svc">
             {
-              c.highlights.map((h, i) => (
+              project.services.map((s, i) => (
                 <li data-reveal style={`--reveal-delay:${i}`}>
-                  <Icon name="check" size={18} />
-                  {h}
+                  <a href={url.service(lang, s)} class="svc__link">
+                    <span class="svc__icon">
+                      <Icon name={serviceMeta[s].icon} size={20} />
+                    </span>
+                    <span class="svc__text">
+                      <strong>{serviceNames[s] ?? s}</strong>
+                      {serviceData[s]?.tagline && <span>{serviceData[s].tagline}</span>}
+                    </span>
+                    <Icon name="arrow-right" size={16} class="svc__arrow" />
+                  </a>
                 </li>
               ))
             }
+          </ul>
+          <h3 class="eyebrow eyebrow--plain did__gap">{cs.technologies}</h3>
+          <ul role="list" class="tech">
+            {project.technologies.map((tech) => <li><Badge>{tech}</Badge></li>)}
           </ul>
         </div>
       </div>
@@ -234,22 +238,13 @@ const story = [
         <section class="section section--flush-top" aria-labelledby="gallery">
           <div class="container container--wide">
             <h2 id="gallery" class="eyebrow">
-              {cs.gallery}
+              {cs.galleryPage}
             </h2>
-            <div class="gallery">
-              <figure class="scroller" data-reveal tabindex="0" aria-label={cs.galleryPage}>
-                <div class="scroller__win">
-                  <Image src={img.page} alt={`${project.client} — ${cs.galleryPage}`} widths={[640, 960, 1440]} sizes="(min-width: 1024px) 62vw, 96vw" loading="lazy" layout="none" class="scroller__img" />
-                </div>
-                <figcaption class="mono">{cs.galleryPage}</figcaption>
-              </figure>
-              {img.mobile && (
-                <figure class="gallery__phone" data-reveal style="--reveal-delay:2">
-                  <PhoneFrame src={img.mobile} alt={`${project.client} — ${cs.galleryMobile}`} />
-                  <figcaption class="mono">{cs.galleryMobile}</figcaption>
-                </figure>
-              )}
-            </div>
+            <figure class="scroller" data-reveal tabindex="0" aria-label={cs.galleryPage}>
+              <div class="scroller__win">
+                <Image src={img.page} alt={`${project.client} — ${cs.galleryPage}`} widths={[640, 960, 1440, 1920]} sizes="(min-width: 1560px) 1520px, 96vw" loading="lazy" layout="none" class="scroller__img" />
+              </div>
+            </figure>
           </div>
         </section>
       )
@@ -257,40 +252,26 @@ const story = [
 
     <Testimonial lang={lang} project={project.key} />
 
-    {
-      siblings.length > 0 && (
-        <section class="section section--sm section--line" aria-labelledby="group">
-          <div class="container container--wide group">
-            <h2 id="group" class="eyebrow">
-              {fmt(cs.siblings, { group: project.group! })}
-            </h2>
-            <ul role="list" class="group__list">
-              {siblings.map((sib) => (
-                <li>
-                  <a href={url.project(lang, sib.key)}>
-                    <span>{sib.client}</span>
-                    <span class="group__ind">{copyFor(sib.key)?.industry}</span>
-                    <Icon name="arrow-right" size={18} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )
-    }
-
-    <section class="section section--line" aria-labelledby="related">
+    <section class="section section--sm section--line" aria-label={t.nav.work}>
       <div class="container container--wide">
-        <h2 id="related" class="h2">{cs.related}</h2>
-        <div class="related">
-          {
-            related.map((r) => {
-              const copy = copyFor(r.key);
-              return copy ? <ProjectCard project={r} copy={copy} serviceNames={serviceNames} lang={lang} index={sortedProjects.indexOf(r)} layout="half" /> : null;
-            })
-          }
-        </div>
+        {
+          siblings.length > 0 && (
+            <div class="group">
+              <h2 class="eyebrow">{fmt(cs.siblings, { group: project.group! })}</h2>
+              <ul role="list" class="group__list">
+                {siblings.map((sib) => (
+                  <li>
+                    <a href={url.project(lang, sib.key)}>
+                      <span>{sib.client}</span>
+                      <span class="group__ind">{copyFor(sib.key)?.industry}</span>
+                      <Icon name="arrow-right" size={18} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
         <nav class="pager" aria-label={t.nav.work}>
           <a href={url.project(lang, prev.key)} rel="prev">
             <span class="mono">← {cs.prev}</span>
@@ -309,14 +290,15 @@ const story = [
 </BaseLayout>
 
 <style>
-  .cs-hero {
+  /* ---------- Hero ---------- */
+  .pf-hero {
     position: relative;
-    padding-top: calc(var(--header-h) + clamp(40px, 6vw, 88px));
-    padding-bottom: clamp(40px, 5vw, 72px);
+    padding-top: calc(var(--header-h) + clamp(32px, 5vw, 72px));
+    padding-bottom: clamp(32px, 4vw, 56px);
     overflow: hidden;
     isolation: isolate;
   }
-  .cs-hero__glow {
+  .pf-hero__glow {
     position: absolute;
     top: -40%;
     right: -10%;
@@ -327,21 +309,55 @@ const story = [
     opacity: 0.6;
     z-index: -1;
   }
-  .cs-hero__grid {
+  .pf-hero__grid {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
     gap: clamp(2rem, 5vw, 6rem);
     align-items: end;
-    margin-top: clamp(2rem, 4vw, 3.5rem);
+    margin-top: clamp(1.75rem, 3.5vw, 3rem);
   }
-  .cs-hero__main {
+  .pf-hero__main {
     display: grid;
     gap: 1.25rem;
+    justify-items: start;
   }
-  .cs-hero__title {
-    font-size: clamp(3rem, 1.5rem + 6.5vw, 8.5rem);
+  .pf-hero__id {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .pf-logo {
+    display: grid;
+    place-items: center;
+    height: 4.25rem;
+    min-width: 7.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .pf-logo--dark {
+    background: var(--ink-black);
+    border: 1px solid var(--line-strong);
+  }
+  .pf-logo img {
+    height: auto;
+    max-width: 100%;
+  }
+  .pf-hero__title {
+    font-size: clamp(2.5rem, 1.4rem + 4.2vw, 5.75rem);
     letter-spacing: var(--tracking-display);
-    line-height: 0.9;
+    line-height: 0.95;
+  }
+  .pf-hero__lead {
+    max-width: 52ch;
+  }
+  .pf-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
   }
   .facts {
     display: grid;
@@ -367,28 +383,35 @@ const story = [
     margin: 0;
     font-size: 0.9375rem;
   }
-  .facts__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
+
+  /* ---------- Showcase: desktop + phone ---------- */
+  .showcase {
+    position: relative;
+    padding-bottom: clamp(2rem, 6vw, 5rem);
   }
-  .facts__tags a {
-    text-decoration: none;
+  .showcase :global(.showcase__desk) {
+    width: 100%;
   }
-  .facts__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    color: var(--pearl-aqua);
+  @media (min-width: 640px) {
+    .showcase :global(.showcase__desk) {
+      width: 86%;
+    }
   }
-  /* The story continues straight from the screenshot — a normal section gap is too much here */
-  .cs-story {
-    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  .showcase :global(.showcase__phone) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: clamp(120px, 19%, 270px);
   }
-  .cs-shot {
-    margin-bottom: 0;
+  @media (max-width: 639px) {
+    .showcase {
+      padding-bottom: 0;
+    }
+    .showcase :global(.showcase__phone) {
+      display: none;
+    }
   }
-  .cs-cover {
+  .pf-cover {
     position: relative;
     display: grid;
     place-items: end start;
@@ -401,7 +424,7 @@ const story = [
       linear-gradient(135deg, #021a22, color-mix(in srgb, var(--brand) 35%, #001219));
     overflow: hidden;
   }
-  .cs-cover__grid {
+  .pf-cover__grid {
     position: absolute;
     top: 50%;
     right: 6%;
@@ -412,16 +435,16 @@ const story = [
     width: min(44%, 460px);
     transform: rotate(-6deg);
   }
-  .cs-cover__grid span {
+  .pf-cover__grid span {
     aspect-ratio: 1;
     border-radius: 8px;
     background: rgb(255 255 255 / calc(0.05 + var(--d) * 0.01));
     border: 1px solid rgb(255 255 255 / 0.12);
   }
-  .cs-cover__grid span:nth-child(3n + 1) {
+  .pf-cover__grid span:nth-child(3n + 1) {
     background: color-mix(in srgb, var(--brand) 70%, transparent);
   }
-  .cs-cover__name {
+  .pf-cover__name {
     position: relative;
     max-width: 50%;
     font-size: clamp(2rem, 1rem + 4vw, 4.5rem);
@@ -430,82 +453,55 @@ const story = [
     line-height: 0.95;
     color: #fff;
   }
-  .cs-nosite {
+  .pf-nosite {
     margin-top: 1rem;
     font-family: var(--font-code);
     font-size: var(--fs-xs);
     color: var(--text-subtle);
   }
-  .story {
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-    gap: 1.25rem clamp(2rem, 5vw, 5rem);
+
+  /* ---------- What we did ---------- */
+  .did {
+    padding-top: clamp(3rem, 6vw, 5.5rem);
   }
-  .story__label {
-    font-family: var(--font-code);
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--pearl-aqua);
-    padding-top: 0.6rem;
-  }
-  .story__lead {
-    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    margin-bottom: clamp(2rem, 4vw, 3.5rem);
-  }
-  .story__text {
-    font-size: var(--fs-lg);
-    color: var(--text-muted);
-    max-width: 64ch;
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  }
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    gap: clamp(2rem, 6vw, 7rem);
-    align-items: center;
-  }
-  .split__text {
-    display: grid;
-    gap: 1rem;
-  }
-  .split__p {
-    font-size: var(--fs-lg);
-    color: var(--text-muted);
-    max-width: 60ch;
-  }
-  .split__gap {
-    margin-top: 1.75rem;
-  }
-  .split__phone {
-    max-width: 300px;
-    justify-self: center;
-    rotate: 3deg;
-  }
-  .tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .result {
+  .did__grid {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: clamp(2rem, 6vw, 7rem);
+    align-items: start;
   }
-  .result__text {
-    margin-top: 1.25rem;
-    font-size: clamp(1.375rem, 1.05rem + 1.3vw, 2.125rem);
-    letter-spacing: -0.03em;
-    line-height: 1.25;
+  .did__text {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .did__lead {
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    max-width: 52ch;
+  }
+  .highlights {
+    display: grid;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .highlights li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .highlights :global(.icon) {
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--pearl-aqua);
   }
   .metrics {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   .metrics strong {
     display: block;
@@ -516,41 +512,74 @@ const story = [
   .metrics span {
     color: var(--text-muted);
   }
-  .highlights {
+  .did__side {
     display: grid;
-    margin-top: 1.25rem;
-    border-top: 1px solid var(--line);
+    gap: 1rem;
   }
-  .highlights li {
+  .did__gap {
+    margin-top: 1rem;
+  }
+  .svc {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .svc__link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+    text-decoration: none;
+    transition:
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+  .svc__link:hover {
+    border-color: var(--line-strong);
+    background: var(--surface-2);
+  }
+  .svc__icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--brand) 30%, var(--surface-3));
+    color: #fff;
+  }
+  .svc__text {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .svc__text strong {
+    font-weight: 600;
+  }
+  .svc__text span {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .svc__link :global(.svc__arrow) {
+    color: var(--accent);
+    transition: transform var(--dur) var(--ease);
+  }
+  .svc__link:hover :global(.svc__arrow) {
+    transform: translateX(4px);
+  }
+  .tech {
     display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    padding-block: 0.9rem;
-    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
-  .highlights :global(.icon) {
-    flex: none;
-    margin-top: 0.15rem;
-    color: var(--pearl-aqua);
-  }
-  .gallery {
-    display: grid;
-    grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
-    gap: clamp(1.5rem, 4vw, 4rem);
-    align-items: end;
-    margin-top: 1.5rem;
-  }
-  .gallery figcaption {
-    margin-top: 0.75rem;
-    color: var(--text-subtle);
-    font-size: var(--fs-xs);
-  }
-  /* Tall screenshot that scrolls inside its window on hover/focus */
+
+  /* ---------- Full-page screenshot ---------- */
   .scroller {
-    margin: 0;
+    margin: 1.25rem 0 0;
   }
   .scroller__win {
-    height: clamp(320px, 42vw, 640px);
+    height: clamp(300px, 36vw, 560px);
     overflow: hidden;
     border-radius: var(--radius-lg);
     border: 1px solid var(--line-strong);
@@ -565,17 +594,19 @@ const story = [
   @media (prefers-reduced-motion: no-preference) {
     .scroller:hover .scroller__img,
     .scroller:focus-visible .scroller__img {
-      transform: translateY(calc(-100% + clamp(320px, 42vw, 640px)));
+      transform: translateY(calc(-100% + clamp(300px, 36vw, 560px)));
     }
   }
-  .gallery__phone {
-    margin: 0;
+
+  /* ---------- Group + pager ---------- */
+  .group {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
   .group__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1px;
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     background: var(--line);
     border: 1px solid var(--line);
   }
@@ -604,16 +635,9 @@ const story = [
     align-self: center;
     color: var(--pearl-aqua);
   }
-  .related {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
-    margin-top: clamp(2.5rem, 5vw, 4rem);
-  }
   .pager {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-top: clamp(4rem, 8vw, 6rem);
     border-top: 1px solid var(--line);
   }
   .pager a {
@@ -636,29 +660,17 @@ const story = [
   .pager__next {
     text-align: right;
   }
+
   @media (max-width: 1023px) {
-    .cs-hero__grid,
-    .split,
-    .result {
+    .pf-hero__grid,
+    .did__grid {
       grid-template-columns: 1fr;
     }
   }
-  @media (max-width: 767px) {
-    .story {
-      grid-template-columns: 1fr;
-    }
-    .story__label {
-      padding-top: 0;
-    }
-    .gallery,
-    .related {
-      grid-template-columns: 1fr;
-    }
-    .gallery__phone {
-      max-width: 260px;
-    }
-    .split__phone {
-      max-width: 240px;
+  @media (max-width: 479px) {
+    .pf-hero__actions {
+      display: grid;
+      width: 100%;
     }
   }
 </style>
