@@ -1,12 +1,19 @@
 ---
+/**
+ * Work page: every client, grouped by sector (clientGroups in src/data/projects.ts). Clients with a
+ * profile page get a full card; the others in that sector follow as logo tiles. A row of sector
+ * links jumps to each group.
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import PageHero from '~/components/PageHero.astro';
-import ProjectGrid from '~/components/ProjectGrid.astro';
+import WorkCard from '~/components/WorkCard.astro';
 import CtaBand from '~/components/CtaBand.astro';
-import ClientLogos from '~/components/ClientLogos.astro';
-import { useT } from '~/i18n';
+import { fmt, useT } from '~/i18n';
 import { url } from '~/i18n/routes';
-import { sortedProjects } from '~/data/projects';
+import { clientGroups, clientLogos, projectByKey, sortedProjects } from '~/data/projects';
+import { logoImage, logoWidth } from '~/lib/client-logos';
 import { breadcrumbs } from '~/lib/schema';
 import type { PageEntry } from '~/lib/pages';
 
@@ -25,15 +32,243 @@ const list = {
   '@type': 'ItemList',
   itemListElement: sortedProjects.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.client, url: new URL(url.project(lang, p.key), Astro.site).href })),
 };
+
+const work = await getCollection('work', (e) => e.data.lang === lang);
+const services = await getCollection('services', (e) => e.data.lang === lang);
+const serviceNames = Object.fromEntries(services.map((s) => [s.data.key, s.data.shortTitle]));
+const order = (key?: string) => (key ? (projectByKey(key)?.order ?? 99) : 99);
+
+const sectors = clientGroups
+  .map((g) => {
+    const members = clientLogos.filter((l) => l.group === g);
+    const cards = members
+      .filter((l) => l.project)
+      .sort((a, b) => order(a.project) - order(b.project))
+      .map((l) => ({ project: projectByKey(l.project!)!, copy: work.find((w) => w.data.key === l.project)?.data }))
+      .filter((c): c is typeof c & { copy: NonNullable<typeof c.copy> } => Boolean(c.project && c.copy));
+    const logos = members
+      .filter((l) => !l.project)
+      .map((l) => ({ ...l, img: logoImage(l.key) }))
+      .filter((l): l is typeof l & { img: NonNullable<typeof l.img> } => Boolean(l.img));
+    return { key: g, label: t.home.clients.groups[g], cards, logos, total: members.length };
+  })
+  .filter((s) => s.total > 0);
 ---
 
 <BaseLayout page={page} title={wp.metaTitle} description={wp.metaDescription} schema={[breadcrumbs(crumbs), list]}>
   <PageHero lang={lang} crumbs={crumbs} eyebrow={wp.eyebrow} title={wp.heading} lead={wp.lead} />
-  <section class="section section--flush-top" aria-label={wp.heading}>
-    <div class="container">
-      <ProjectGrid projects={sortedProjects} lang={lang} filter headingLevel={2} />
-    </div>
-  </section>
-  <ClientLogos lang={lang} />
+
+  <nav class="container container--wide jump" aria-label={wp.sectors} data-reveal>
+    <span class="jump__label">{wp.sectors}</span>
+    <ul role="list">
+      {
+        sectors.map((s) => (
+          <li>
+            <a href={`#sector-${s.key}`}>
+              {s.label}
+              <span class="jump__n">{s.total}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    sectors.map((s, si) => (
+      <section class="section sector" id={`sector-${s.key}`} aria-labelledby={`sector-${s.key}-title`}>
+        <div class="container container--wide">
+          <header class="sector__head" data-reveal>
+            <span class="sector__num">{String(si + 1).padStart(2, '0')}</span>
+            <h2 id={`sector-${s.key}-title`} class="sector__title">
+              {s.label}
+            </h2>
+            <span class="sector__count">{fmt(wp.count, { n: String(s.total) })}</span>
+          </header>
+
+          {s.cards.length > 0 && (
+            <ul class="sector__cards" role="list">
+              {s.cards.map((c, i) => (
+                <li>
+                  <WorkCard project={c.project} copy={c.copy} serviceNames={serviceNames} lang={lang} eager={si === 0 && i < 2} />
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {s.logos.length > 0 && (
+            <div class:list={['sector__more', { 'sector__more--solo': s.cards.length === 0 }]}>
+              {s.cards.length > 0 && <h3 class="sector__also">{wp.alsoIn}</h3>}
+              <ul class="sector__logos" role="list">
+                {s.logos.map((l, i) => (
+                  <li class:list={['sector__logo', { 'sector__logo--dark': l.dark }]} data-reveal style={`--reveal-delay:${i % 4}`}>
+                    <Image src={l.img} alt={l.client} widths={[120, 240]} sizes="120px" layout="none" style={`width:${logoWidth(l.img, 2600, 112, 44)}px`} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    ))
+  }
+
   <CtaBand lang={lang} />
 </BaseLayout>
+
+<style>
+  /* ---------- Sector jump links ---------- */
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    padding-bottom: clamp(1rem, 2vw, 1.5rem);
+  }
+  .jump__label {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .jump ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition:
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+  .jump a:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--surface-1);
+  }
+  .jump__n {
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  /* ---------- Sector ---------- */
+  .sector {
+    padding-block: clamp(48px, 6vw, 88px);
+    scroll-margin-top: var(--header-h);
+  }
+  .sector + .sector {
+    border-top: 1px solid var(--line);
+  }
+  .sector__head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  .sector__num,
+  .sector__count {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    color: var(--text-subtle);
+  }
+  .sector__count {
+    color: var(--accent);
+  }
+  .sector__title {
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.05;
+  }
+  .sector__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: clamp(16px, 2vw, 28px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sector__more {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: 1rem 3rem;
+    align-items: start;
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  /* A sector with no profile pages: its logos sit straight under the heading */
+  .sector__more--solo {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+  .sector__cards + .sector__more {
+    padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+    border-top: 1px dashed var(--line);
+  }
+  .sector__also {
+    padding-top: 1.35rem;
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .sector__logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sector__logo {
+    display: grid;
+    place-items: center;
+    height: 4rem;
+    min-width: 9rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    background: #fff;
+  }
+  .sector__logo--dark {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+  .sector__logo img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    .sector__more {
+      grid-template-columns: 1fr;
+    }
+    .sector__also {
+      padding-top: 0;
+    }
+  }
+  @media (max-width: 559px) {
+    .sector__logo {
+      min-width: 0;
+      flex: 1 1 calc(50% - 0.6rem);
+      height: 3.5rem;
+    }
+  }
+</style>

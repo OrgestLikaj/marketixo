@@ -99,15 +99,25 @@ test('client logos: two rows moving in opposite directions, pausing on hover', a
   expect(hrefs.every((h) => h?.startsWith('/work/'))).toBe(true);
 });
 
-test('work filter narrows the list', async ({ page }) => {
+test('work page groups every client by sector, with jump links', async ({ page }) => {
   await page.goto('/work/');
-  const cells = page.locator('[data-cell]');
-  const total = await cells.count();
-  await page.getByRole('button', { name: /Healthcare/ }).click();
-  await expect(page.getByRole('button', { name: /Healthcare/ })).toHaveAttribute('aria-pressed', 'true');
-  const visible = await cells.evaluateAll((els) => els.filter((e) => !(e as HTMLElement).hidden).length);
-  expect(visible).toBeGreaterThan(0);
-  expect(visible).toBeLessThan(total);
+  const sectors = page.locator('section.sector');
+  const n = await sectors.count();
+  expect(n).toBeGreaterThanOrEqual(3);
+  // Every jump link points at an existing sector section
+  const targets = await page.locator('nav.jump a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(targets).toHaveLength(n);
+  for (const href of targets) await expect(page.locator(href!)).toHaveCount(1);
+  // All profile pages are reachable from a card, and every card links to one
+  const cards = await page.locator('.wc__link').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(cards.length).toBe(10);
+  expect(new Set(cards).size).toBe(cards.length);
+  expect(cards.every((h) => h?.startsWith('/work/'))).toBe(true);
+  // Clients without a profile appear as named logo tiles
+  expect(await page.locator('.sector__logo img[alt]:not([alt=""])').count()).toBeGreaterThan(0);
+  // Jump link scrolls to its sector
+  await page.locator('nav.jump a').last().click();
+  await expect(page.locator(targets.at(-1)!)).toBeInViewport();
 });
 
 test('contact form validates required fields before sending', async ({ page }) => {

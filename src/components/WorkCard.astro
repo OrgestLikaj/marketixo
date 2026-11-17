@@ -1,0 +1,252 @@
+---
+/**
+ * Client card on the Work page: website screenshot (or a brand-colour cover for clients without a
+ * site), logo, name, industry, short summary and services. The whole card links to the profile.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import type { Project } from '~/data/projects';
+import { projectLogo, logoWidth } from '~/lib/client-logos';
+import { workImages } from '~/lib/work-images';
+import { useT, type Lang } from '~/i18n';
+import { url } from '~/i18n/routes';
+
+interface Props {
+  project: Project;
+  copy: CollectionEntry<'work'>['data'];
+  serviceNames: Record<string, string>;
+  lang: Lang;
+  eager?: boolean;
+}
+const { project, copy, serviceNames, lang, eager = false } = Astro.props;
+const t = useT(lang);
+const shot = workImages(project.key).desktop;
+const logo = projectLogo(project.key);
+---
+
+<article class="wc" style={`--brand:${project.brand}`} data-reveal>
+  <div class="wc__media">
+    {
+      shot ? (
+        <Image
+          src={shot}
+          alt=""
+          widths={[400, 640, 880]}
+          sizes="(min-width: 1320px) 420px, (min-width: 700px) 46vw, 92vw"
+          loading={eager ? 'eager' : 'lazy'}
+          layout="none"
+          class="wc__shot"
+        />
+      ) : (
+        <div class="wc__cover" aria-hidden="true">
+          <span class="wc__tiles">
+            {Array.from({ length: 9 }, (_, d) => (
+              <span style={`--d:${d}`} />
+            ))}
+          </span>
+        </div>
+      )
+    }
+    {
+      logo && (
+        <span class:list={['wc__logo', { 'wc__logo--dark': logo.dark }]}>
+          <Image src={logo.img} alt="" widths={[120, 240]} sizes="100px" layout="none" style={`width:${logoWidth(logo.img, 1700, 84, 36)}px`} />
+        </span>
+      )
+    }
+  </div>
+  <div class="wc__body">
+    <p class="wc__ind">{copy.industry}</p>
+    <h3 class="wc__name">
+      <a href={url.project(lang, project.key)} class="wc__link">{project.client}</a>
+    </h3>
+    <p class="wc__summary">{copy.summary}</p>
+    <ul class="wc__svc" role="list" aria-label={t.caseStudy.services}>
+      {project.services.map((s) => <li>{serviceNames[s] ?? s}</li>)}
+    </ul>
+    <span class="wc__cta" aria-hidden="true">
+      {t.common.viewProject}
+      <Icon name="arrow-right" size={16} />
+    </span>
+  </div>
+</article>
+
+<style>
+  .wc {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    overflow: hidden;
+    transition:
+      border-color 400ms var(--ease),
+      transform 500ms var(--ease-out),
+      box-shadow 500ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .wc:hover {
+      border-color: color-mix(in srgb, var(--brand) 60%, var(--line-strong));
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .wc:hover .wc__shot {
+      transform: scale(1.04);
+    }
+    .wc:hover .wc__cta :global(.icon) {
+      transform: translateX(4px);
+    }
+  }
+  .wc:has(.wc__link:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .wc__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #0b2630;
+  }
+  .wc__shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 1.2s var(--ease-out);
+  }
+  .wc__media::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 45%;
+    background: linear-gradient(to top, color-mix(in srgb, var(--brand) 55%, rgb(0 0 0 / 0.5)), transparent);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .wc__cover {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--brand) 55%, transparent), transparent 60%),
+      linear-gradient(135deg, #021a22, color-mix(in srgb, var(--brand) 35%, #001219));
+    overflow: hidden;
+  }
+  .wc__tiles {
+    position: absolute;
+    top: 45%;
+    right: 10%;
+    translate: 0 -50%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+    width: 42%;
+    transform: rotate(-6deg);
+  }
+  .wc__tiles span {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: rgb(255 255 255 / calc(0.06 + var(--d) * 0.015));
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .wc__tiles span:nth-child(3n + 2) {
+    background: color-mix(in srgb, var(--brand) 70%, transparent);
+  }
+  .wc__logo {
+    position: absolute;
+    left: 1.25rem;
+    bottom: -1.5rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    height: 3.25rem;
+    min-width: 5.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .wc__logo--dark {
+    background: var(--ink-black);
+    border: 1px solid var(--line-strong);
+  }
+  .wc__logo img {
+    height: auto;
+    max-width: 100%;
+  }
+  .wc__body {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 2.5rem 1.25rem 1.4rem;
+  }
+  .wc__ind {
+    font-family: var(--font-code);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .wc__name {
+    font-size: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .wc__link {
+    text-decoration: none;
+    color: var(--text);
+  }
+  /* Whole card is clickable via the name link */
+  .wc__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+  .wc__link:focus-visible {
+    outline: none;
+  }
+  .wc__summary {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .wc__svc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .wc__svc li {
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .wc__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .wc__cta :global(.icon) {
+    transition: transform var(--dur) var(--ease);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wc,
+    .wc__shot {
+      transition: none;
+    }
+  }
+</style>
