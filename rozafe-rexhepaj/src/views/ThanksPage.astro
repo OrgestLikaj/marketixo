@@ -1,0 +1,42 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { path, t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+const copy = {
+  de: {
+    title: 'Danke für Ihre Nachricht',
+    text: 'Ihre Nachricht ist angekommen. Ich melde mich so bald wie möglich bei Ihnen.',
+    back: 'Zurück zur Startseite',
+  },
+  en: {
+    title: 'Thank you for your message',
+    text: 'Your message has arrived. I will get back to you as soon as I can.',
+    back: 'Back to the home page',
+  },
+}[lang];
+---
+
+<BaseLayout lang={lang} page="thanks" title={copy.title} description={copy.text} noindex>
+  <section class="container page-title thanks">
+    <span class="kicker kicker--accent">{s.nav.contact}</span>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.text}</p>
+    <p><a class="btn" href={path('home', lang)}>{copy.back}</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    border-bottom: 0;
+    min-height: 50vh;
+  }
+  .thanks .btn {
+    margin-top: 2rem;
+  }
+</style>

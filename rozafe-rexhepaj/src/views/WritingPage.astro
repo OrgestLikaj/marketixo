@@ -1,0 +1,220 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ArticleCard from '~/components/ArticleCard.astro';
+import ContactBand from '~/components/ContactBand.astro';
+import { outlets, sortedArticles, topics, type Topic } from '~/data/articles';
+import { articleListSchema } from '~/lib/schema';
+import { type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  de: {
+    title: 'Artikel',
+    kicker: 'Veröffentlichte Arbeiten',
+    heading: 'Geschichten aus der albanischsprachigen Community – und für sie.',
+    lead: 'Eine Auswahl meiner Beiträge seit 2020. Die meisten sind auf Albanisch erschienen; zu jedem gibt es eine kurze Zusammenfassung auf Deutsch. Insgesamt habe ich seit 2019 über 200 Beiträge veröffentlicht, viele davon im Printmagazin.',
+    description:
+      'Artikel von Rozafë Rexhepaj bei Albinfo und HAJDE: Porträts, Ratgeber und Reportagen über Integration, Wirtschaft und Kultur der albanischsprachigen Community.',
+    filterLabel: 'Nach Thema filtern',
+    all: 'Alle',
+    count: (n: number) => `${n} ${n === 1 ? 'Artikel' : 'Artikel'}`,
+    outletsTitle: 'Medien',
+    archive: 'Frühere Arbeiten aus dem Kosovo (IndeksOnline, Klan Kosova, 2013–2018) sind hier noch nicht aufgeführt.',
+  },
+  en: {
+    title: 'Writing',
+    kicker: 'Published work',
+    heading: 'Stories from, and for, the Albanian-speaking community.',
+    lead: 'A selection of my articles since 2020. Most were published in Albanian; each has a short English summary. In total I have published more than 200 articles since 2019, many of them in print.',
+    description:
+      'Articles by Rozafë Rexhepaj for Albinfo and HAJDE: profiles, guides and features on integration, business and culture in the Albanian-speaking community.',
+    filterLabel: 'Filter by topic',
+    all: 'All',
+    count: (n: number) => `${n} ${n === 1 ? 'article' : 'articles'}`,
+    outletsTitle: 'Outlets',
+    archive: 'Earlier work from Kosovo (IndeksOnline, Klan Kosova, 2013–2018) is not listed here yet.',
+  },
+}[lang];
+
+const usedTopics = (Object.keys(topics) as Topic[]).filter((tp) => sortedArticles.some((a) => a.topic === tp));
+---
+
+<BaseLayout
+  lang={lang}
+  page="writing"
+  title={copy.title}
+  description={copy.description}
+  schema={[articleListSchema(lang, Astro.site)]}
+>
+  <header class="container page-title">
+    <span class="kicker kicker--accent">{copy.kicker}</span>
+    <h1>{copy.heading}</h1>
+    <p class="lead">{copy.lead}</p>
+  </header>
+
+  <section class="container writing" aria-label={copy.title}>
+    <div class="filters" role="group" aria-label={copy.filterLabel} data-filters hidden>
+      <button type="button" class="chip" aria-pressed="true" data-filter="all">{copy.all}</button>
+      {
+        usedTopics.map((tp) => (
+          <button type="button" class="chip" aria-pressed="false" data-filter={tp}>
+            {topics[tp][lang]}
+          </button>
+        ))
+      }
+      <p class="filters__count muted" aria-live="polite" data-count data-template-one={copy.count(1)} data-template-many={copy.count(2)}>
+        {copy.count(sortedArticles.length)}
+      </p>
+    </div>
+
+    <div class="writing__list" data-list>
+      {sortedArticles.map((a) => <ArticleCard article={a} lang={lang} variant="row" headingLevel="h2" />)}
+    </div>
+
+    <div class="outlets">
+      <h2 id="outlets-heading" class="kicker">{copy.outletsTitle}</h2>
+      <dl>
+        {
+          Object.values(outlets).map((o) => (
+            <div>
+              <dt>
+                <a class="ul" href={o.url} target="_blank" rel="noopener">
+                  {o.name}
+                </a>
+              </dt>
+              <dd class="muted">{o.about[lang]}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="muted outlets__note">{copy.archive}</p>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</BaseLayout>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-filters]');
+  const list = document.querySelector<HTMLElement>('[data-list]');
+  const count = document.querySelector<HTMLElement>('[data-count]');
+  if (bar && list && count) {
+    bar.hidden = false;
+    const items = Array.from(list.querySelectorAll<HTMLElement>('[data-topic]'));
+    const chips = Array.from(bar.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const one = count.dataset.templateOne ?? '';
+    const many = count.dataset.templateMany ?? '';
+    const apply = (filter: string) => {
+      let shown = 0;
+      for (const item of items) {
+        const match = filter === 'all' || item.dataset.topic === filter;
+        item.hidden = !match;
+        if (match) shown++;
+      }
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === filter)));
+      count.textContent = shown === 1 ? one : many.replace(/^\d+/, String(shown));
+    };
+    chips.forEach((chip) => chip.addEventListener('click', () => apply(chip.dataset.filter ?? 'all')));
+  }
+</script>
+
+<style>
+  .writing {
+    display: grid;
+    gap: 3rem;
+    padding-top: 2rem;
+  }
+  @media (min-width: 1040px) {
+    .writing {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      column-gap: 4rem;
+    }
+    .filters {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .filters[hidden] {
+    display: none;
+  }
+  .chip {
+    min-height: 40px;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--fs-small);
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease),
+      color 0.2s var(--ease);
+  }
+  .chip:hover {
+    border-color: var(--ink);
+  }
+  .chip[aria-pressed='true'] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .filters__count {
+    margin-left: auto;
+    font-size: var(--fs-small);
+  }
+
+  .writing__list {
+    border-top: 1px solid var(--ink);
+  }
+  .writing__list :global(.article[hidden]) {
+    display: none;
+  }
+
+  .outlets {
+    align-self: start;
+    display: grid;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ink);
+  }
+  @media (min-width: 1040px) {
+    .outlets {
+      position: sticky;
+      top: 104px;
+    }
+  }
+  .outlets h2 {
+    font-family: var(--sans);
+  }
+  .outlets dl {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+  }
+  .outlets dt {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+  }
+  .outlets dd {
+    margin: 0.25rem 0 0;
+    font-size: var(--fs-small);
+  }
+  .outlets__note {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: var(--fs-small);
+  }
+</style>

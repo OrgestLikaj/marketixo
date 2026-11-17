@@ -1,0 +1,311 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ContactBand from '~/components/ContactBand.astro';
+import portrait from '~/assets/portrait.webp';
+import { profile } from '~/data/profile';
+import { languageSkills, skillGroups } from '~/data/experience';
+import { profilePageSchema } from '~/lib/schema';
+import { path, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  de: {
+    title: 'Über mich',
+    kicker: 'Über mich',
+    heading: 'Von den Redaktionen in Prishtina zu den Geschichten der Diaspora in Wien.',
+    description:
+      'Rozafë Rexhepaj: Journalistin seit 2013, Master in Publizistik- und Kommunikationswissenschaft (Universität Wien), Redakteurin bei Albinfo und Teamleiterin in Wien.',
+    portraitAlt: 'Porträt von Rozafë Rexhepaj',
+    story: 'Mein Weg',
+    approach: 'Wie ich arbeite',
+    topics: 'Themen',
+    languages: 'Sprachen',
+    skills: 'Kenntnisse',
+    cv: 'Zum vollständigen Werdegang',
+    path: [
+      { year: '2013', text: 'Erste Station: Klan Kosova, Prishtina' },
+      { year: '2014', text: 'Viereinhalb Jahre Online-Redaktion bei IndeksOnline' },
+      { year: '2016', text: 'Bachelor Journalismus, Universität Prishtina' },
+      { year: '2019', text: 'Wien – Beginn bei Albinfo und Masterstudium' },
+      { year: '2023', text: 'Objektverwaltung und Gästekommunikation für 25 Apartments' },
+      { year: '2024', text: 'Master, Universität Wien · Schichtleitung bei Vapiano' },
+      { year: '2025', text: 'Ratgeber für HAJDE' },
+    ],
+  },
+  en: {
+    title: 'About',
+    kicker: 'About me',
+    heading: 'From the newsrooms of Prishtina to the stories of the diaspora in Vienna.',
+    description:
+      'Rozafë Rexhepaj: journalist since 2013, MA in Communication Science (University of Vienna), writer for Albinfo and team leader in Vienna.',
+    portraitAlt: 'Portrait of Rozafë Rexhepaj',
+    story: 'My story',
+    approach: 'How I work',
+    topics: 'Topics',
+    languages: 'Languages',
+    skills: 'Skills',
+    cv: 'See my full experience',
+    path: [
+      { year: '2013', text: 'First newsroom: Klan Kosova, Prishtina' },
+      { year: '2014', text: 'Four and a half years at the online newsroom of IndeksOnline' },
+      { year: '2016', text: 'BA in Journalism, University of Prishtina' },
+      { year: '2019', text: 'Vienna: starts writing for Albinfo and begins an MA' },
+      { year: '2023', text: 'Property management and guest communication for 25 apartments' },
+      { year: '2024', text: 'MA, University of Vienna · shift lead at Vapiano' },
+      { year: '2025', text: 'Guides for HAJDE' },
+    ],
+  },
+}[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  page="about"
+  title={copy.title}
+  description={copy.description}
+  schema={[profilePageSchema(lang, Astro.site)]}
+>
+  <header class="container page-title">
+    <span class="kicker kicker--accent">{copy.kicker}</span>
+    <h1>{copy.heading}</h1>
+  </header>
+
+  <section class="container about section--tight" aria-labelledby="story-title">
+    <div class="about__text">
+      <h2 id="story-title" class="visually-hidden">{copy.story}</h2>
+      <div class="prose">
+        {profile.story[lang].map((para, i) => <p class:list={{ lead: i === 0 }}>{para}</p>)}
+      </div>
+    </div>
+    <div class="about__aside">
+      <figure class="about__portrait">
+        <Picture
+          src={portrait}
+          alt={copy.portraitAlt}
+          widths={[320, 480, 640]}
+          sizes="(min-width: 1040px) 340px, 80vw"
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+        />
+      </figure>
+      <ol class="path" aria-label={copy.story}>
+        {
+          copy.path.map((p) => (
+            <li>
+              <span class="path__year">{p.year}</span>
+              <span>{p.text}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--band" aria-labelledby="approach-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="approach-title">{copy.approach}</h2>
+      </div>
+      <div class="approach">
+        {
+          profile.approach.map((a) => (
+            <div class="approach__item reveal">
+              <h3>{a.title[lang]}</h3>
+              <p>{a.text[lang]}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="skills-title">{copy.skills}</h2>
+        <a class="arrow-link" href={path('experience', lang)}>{copy.cv} <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="skills">
+        <div class="skills__block reveal">
+          <h3 class="kicker kicker--accent">{copy.languages}</h3>
+          <dl class="langs">
+            {
+              languageSkills.map((ls) => (
+                <div>
+                  <dt>{ls.name[lang]}</dt>
+                  <dd>{ls.level[lang]}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+        <div class="skills__block reveal">
+          <h3 class="kicker kicker--accent">{copy.topics}</h3>
+          <ul class="tags">
+            {profile.focusTopics[lang].map((tp) => <li class="tag">{tp}</li>)}
+          </ul>
+        </div>
+        {
+          skillGroups.map((g) => (
+            <div class="skills__block reveal">
+              <h3 class="kicker kicker--accent">{g.title[lang]}</h3>
+              <ul class="skills__list">
+                {g.items[lang].map((it) => (
+                  <li>{it}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    gap: 3rem;
+    padding-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+  }
+  @media (min-width: 1040px) {
+    .about {
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 5rem;
+    }
+  }
+  .about__text .lead {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    line-height: 1.5;
+  }
+  .about__text .lead::first-letter {
+    float: left;
+    margin: 0.08em 0.12em 0 0;
+    font-size: 3.4em;
+    line-height: 0.8;
+    color: var(--accent);
+  }
+
+  .about__aside {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .about__portrait {
+    margin: 0;
+    max-width: 340px;
+  }
+  .about__portrait :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: var(--radius);
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  .path {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+  .path li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 0.75rem;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: var(--fs-small);
+  }
+  .path__year {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .approach {
+    display: grid;
+    gap: 2.5rem 3rem;
+  }
+  @media (min-width: 880px) {
+    .approach {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .approach__item {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .approach__item p {
+    color: var(--muted);
+  }
+
+  .skills {
+    display: grid;
+    gap: 2.5rem 3rem;
+  }
+  @media (min-width: 720px) {
+    .skills {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1040px) {
+    .skills {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .skills__block {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+  .skills__block h3 {
+    font-family: var(--sans);
+  }
+  .langs {
+    display: grid;
+    margin: 0;
+  }
+  .langs div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.55rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .langs dt {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+  }
+  .langs dd {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--fs-small);
+  }
+  .skills__list {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-small);
+  }
+  .skills__list li {
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+</style>

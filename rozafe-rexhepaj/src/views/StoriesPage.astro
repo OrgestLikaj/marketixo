@@ -1,0 +1,242 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ContactBand from '~/components/ContactBand.astro';
+import { stories } from '~/data/stories';
+import { articles, formatArticleDate } from '~/data/articles';
+import { t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+
+const copy = {
+  de: {
+    title: 'Projekte',
+    kicker: 'Projekte & Themen',
+    heading: 'Themen, die ich über längere Zeit verfolge.',
+    lead: 'Vier Schwerpunkte aus meiner journalistischen und wissenschaftlichen Arbeit – jeweils mit Ausgangslage, Vorgehen und Ergebnis.',
+    description:
+      'Projekte von Rozafë Rexhepaj: Porträts der albanischen Diaspora, Ratgeber für Neuankömmlinge in Österreich, Berichte über albanische Studierende und eine Masterarbeit über Zeitungen im Kosovo.',
+    brief: 'Ausgangslage',
+    approach: 'Vorgehen',
+    outcome: 'Ergebnis',
+    read: 'Die Beiträge',
+    contents: 'Inhalt',
+  },
+  en: {
+    title: 'Stories',
+    kicker: 'Stories & subjects',
+    heading: 'Subjects I have followed over time.',
+    lead: 'Four areas of my journalistic and academic work, each with the context, how I approached it and what came of it.',
+    description:
+      'Stories by Rozafë Rexhepaj: profiles of the Albanian diaspora, guides for newcomers to Austria, reporting on Albanian students and an MA thesis on newspapers in Kosovo.',
+    brief: 'The brief',
+    approach: 'Approach',
+    outcome: 'Outcome',
+    read: 'The articles',
+    contents: 'Contents',
+  },
+}[lang];
+
+const bySlug = new Map(articles.map((a) => [a.slug, a]));
+---
+
+<BaseLayout lang={lang} page="stories" title={copy.title} description={copy.description}>
+  <header class="container page-title">
+    <span class="kicker kicker--accent">{copy.kicker}</span>
+    <h1>{copy.heading}</h1>
+    <p class="lead">{copy.lead}</p>
+  </header>
+
+  <nav class="container toc" aria-label={copy.contents}>
+    <ol>
+      {
+        stories.map((st, i) => (
+          <li>
+            <a href={`#${st.id}`} class="ul">
+              <span class="toc__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {st.title[lang]}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  {
+    stories.map((st, i) => (
+      <article class="container story reveal" id={st.id} aria-labelledby={`${st.id}-title`}>
+        <header class="story__head">
+          <span class="story__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="kicker">
+              {st.kicker[lang]} · {st.years}
+            </p>
+            <h2 id={`${st.id}-title`}>{st.title[lang]}</h2>
+            <ul class="tags story__tags">
+              {st.skills[lang].map((sk) => (
+                <li class="tag">{sk}</li>
+              ))}
+            </ul>
+          </div>
+        </header>
+
+        <div class="story__body">
+          <section>
+            <h3 class="kicker kicker--accent">{copy.brief}</h3>
+            <p class="story__brief">{st.brief[lang]}</p>
+          </section>
+          <section>
+            <h3 class="kicker kicker--accent">{copy.approach}</h3>
+            <ul class="story__steps">
+              {st.approach[lang].map((step) => (
+                <li>{step}</li>
+              ))}
+            </ul>
+          </section>
+          <section>
+            <h3 class="kicker kicker--accent">{copy.outcome}</h3>
+            <p>{st.outcome[lang]}</p>
+          </section>
+          {st.articles && st.articles.length > 0 && (
+            <section>
+              <h3 class="kicker kicker--accent">{copy.read}</h3>
+              <ul class="story__links">
+                {st.articles
+                  .map((slug) => bySlug.get(slug))
+                  .filter((a) => a !== undefined)
+                  .map((a) => (
+                    <li>
+                      <a href={a.url} target="_blank" rel="noopener" lang={a.lang}>
+                        {a.title}
+                        <span class="visually-hidden"> {s.opensNewTab}</span>
+                      </a>
+                      <span class="muted">
+                        {a.outlet} · {formatArticleDate(a.date, lang)}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </section>
+          )}
+        </div>
+      </article>
+    ))
+  }
+
+  <ContactBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .toc {
+    padding-block: 1.5rem;
+  }
+  .toc ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .toc a {
+    font-size: var(--fs-small);
+    font-weight: 500;
+  }
+  .toc__num {
+    margin-right: 0.4rem;
+    font-family: var(--serif);
+    color: var(--accent);
+  }
+
+  .story {
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+    border-top: 1px solid var(--ink);
+    scroll-margin-top: 80px;
+  }
+  .story:first-of-type {
+    margin-top: 1rem;
+  }
+  @media (min-width: 1040px) {
+    .story {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 4rem;
+    }
+    .story__head {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+    }
+  }
+
+  .story__head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+  }
+  .story__num {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    line-height: 0.9;
+    color: var(--accent);
+  }
+  .story__head h2 {
+    margin-top: 0.6rem;
+  }
+  .story__tags {
+    margin-top: 1.25rem;
+  }
+
+  .story__body {
+    display: grid;
+    gap: 2rem;
+  }
+  .story__body section {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .story__body h3 {
+    font-family: var(--sans);
+    font-size: var(--fs-xs);
+  }
+  .story__brief {
+    font-family: var(--serif);
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+  }
+  .story__steps {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .story__steps li::marker {
+    color: var(--accent);
+  }
+  .story__links {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .story__links li {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .story__links a {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.35;
+  }
+  .story__links .muted {
+    font-size: var(--fs-xs);
+  }
+</style>

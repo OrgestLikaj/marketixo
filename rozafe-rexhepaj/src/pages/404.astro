@@ -1,0 +1,29 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { path } from '~/i18n/ui';
+---
+
+<BaseLayout lang="de" page="home" title="Seite nicht gefunden / Page not found" description="Diese Seite gibt es nicht. This page does not exist." noindex>
+  <section class="container page-title notfound">
+    <span class="kicker kicker--accent">404</span>
+    <h1>Diese Seite gibt es nicht.</h1>
+    <p class="lead" lang="en">This page does not exist.</p>
+    <p class="notfound__links">
+      <a class="btn btn--primary" href={path('home', 'de')}>Zur Startseite</a>
+      <a class="btn" href={path('home', 'en')} lang="en">Go to the English home page</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    border-bottom: 0;
+    min-height: 50vh;
+  }
+  .notfound__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

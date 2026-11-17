@@ -1,0 +1,131 @@
+---
+import '~/styles/global.css';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import { site } from '~/config/site';
+import { defaultLang, localeMeta, t, routes, type Lang, type RouteKey } from '~/i18n/ui';
+import { personSchema, websiteSchema } from '~/lib/schema';
+import { getImage } from 'astro:assets';
+import portrait from '~/assets/portrait.webp';
+
+interface Props {
+  lang: Lang;
+  /** Which page this is: drives the nav highlight, hreflang links and the language switcher. */
+  page: RouteKey;
+  title: string;
+  description: string;
+  /** Extra JSON-LD objects for this page. */
+  schema?: Record<string, unknown>[];
+  noindex?: boolean;
+  /** Set to false to use the title exactly as given (the home page). */
+  appendSiteName?: boolean;
+}
+
+const { lang, page, title, description, schema = [], noindex = false, appendSiteName = true } = Astro.props;
+
+const s = t(lang);
+const alternates = routes[page];
+const fullTitle = appendSiteName ? `${title} — ${site.name}` : title;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const abs = (p: string) => new URL(p, Astro.site).href;
+const ogImage = abs(`/og-${lang}.png`);
+const portraitImg = await getImage({ src: portrait, width: 800, format: 'jpg' });
+const jsonLd = [personSchema(lang, Astro.site, abs(portraitImg.src)), websiteSchema(lang, Astro.site), ...schema];
+const graph = { '@context': 'https://schema.org', '@graph': jsonLd.map(({ '@context': _, ...rest }) => rest) };
+const { plausibleDomain, umamiSrc, umamiWebsiteId } = site.analytics;
+---
+
+<!doctype html>
+<html lang={localeMeta[lang].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={abs(href)} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(alternates[defaultLang])} />
+
+    <meta property="og:type" content={page === 'about' ? 'profile' : 'website'} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${title}`} />
+    <meta property="og:locale" content={localeMeta[lang].ogLocale} />
+    <meta property="og:locale:alternate" content={localeMeta[lang === 'de' ? 'en' : 'de'].ogLocale} />
+    {page === 'about' && <meta property="profile:first_name" content="Rozafë" />}
+    {page === 'about' && <meta property="profile:last_name" content="Rexhepaj" />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#f6f2ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)" />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+
+    {plausibleDomain && <script is:inline defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" />}
+    {umamiSrc && umamiWebsiteId && <script is:inline defer src={umamiSrc} data-website-id={umamiWebsiteId} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{s.skip}</a>
+    <Header lang={lang} page={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} />
+
+    <script>
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

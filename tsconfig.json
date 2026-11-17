@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "rozafe-rexhepaj"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "~/*": ["src/*"] }

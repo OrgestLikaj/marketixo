@@ -1,0 +1,179 @@
+---
+import { formatArticleDate, topics, type Article } from '~/data/articles';
+import { t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  article: Article;
+  lang: Lang;
+  /** "card" for grids (home), "row" for the full list (writing page). */
+  variant?: 'card' | 'row';
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { article: a, lang, variant = 'card', headingLevel = 'h3' } = Astro.props;
+const s = t(lang);
+const Heading = headingLevel;
+const outlet = `${a.outlet}${a.edition ? ` ${a.edition}` : ''}`;
+const translated = a.titleTranslated?.[lang];
+const showTranslation = translated && a.lang !== lang && translated !== a.title;
+---
+
+<article class:list={['article', `article--${variant}`]} data-topic={a.topic} data-lang={a.lang}>
+  <p class="article__meta">
+    <span class="article__outlet">{outlet}</span>
+    <span aria-hidden="true">·</span>
+    <time datetime={a.date}>{formatArticleDate(a.date, lang)}</time>
+    <span aria-hidden="true">·</span>
+    <abbr title={s.langNames[a.lang]}>{a.lang.toUpperCase()}</abbr>
+  </p>
+  <Heading class="article__title">
+    <a href={a.url} target="_blank" rel="noopener" lang={a.lang} class="article__link">
+      {a.title}<span class="visually-hidden"> {s.opensNewTab}</span>
+    </a>
+  </Heading>
+  {showTranslation && <p class="article__translation">{translated}</p>}
+  <p class="article__summary">{a.summary[lang]}</p>
+  <p class="article__foot">
+    <span class="tag">{topics[a.topic][lang]}</span>
+    {a.coAuthor && <span class="muted article__co">{s.coAuthor} {a.coAuthor}</span>}
+    <span class="article__arrow" aria-hidden="true">↗</span>
+  </p>
+</article>
+
+<style>
+  .article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .article--card {
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition:
+      border-color 0.25s var(--ease),
+      transform 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
+  }
+  .article--card:hover,
+  .article--card:focus-within {
+    border-color: var(--rule-strong);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.35);
+  }
+
+  .article--row {
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 880px) {
+    .article--row {
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      column-gap: 2.5rem;
+      row-gap: 0.5rem;
+    }
+    .article--row .article__meta {
+      grid-row: 1 / span 4;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.1rem;
+      padding-top: 0.35rem;
+    }
+    .article--row .article__meta > span[aria-hidden] {
+      display: none;
+    }
+    .article--row > :not(.article__meta) {
+      grid-column: 2;
+    }
+  }
+
+  .article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .article__outlet {
+    color: var(--accent);
+  }
+  .article__meta abbr {
+    text-decoration: none;
+  }
+
+  .article__title {
+    font-size: 1.3125rem;
+    line-height: 1.25;
+  }
+  .article--row .article__title {
+    font-size: clamp(1.3125rem, 1.15rem + 0.5vw, 1.625rem);
+    max-width: 40ch;
+  }
+
+  .article__link {
+    text-decoration: none;
+  }
+  /* The whole card is clickable through the title link. */
+  .article__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .article__link:focus-visible {
+    outline: none;
+  }
+  .article:has(.article__link:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 4px;
+    border-radius: var(--radius);
+  }
+  .article:hover .article__link {
+    color: var(--accent);
+  }
+
+  .article__translation {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+
+  .article__summary {
+    font-size: var(--fs-small);
+    max-width: 62ch;
+  }
+
+  .article__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: var(--fs-xs);
+  }
+
+  .article__arrow {
+    margin-left: auto;
+    font-size: 1.125rem;
+    line-height: 1;
+    color: var(--muted);
+    transition:
+      transform 0.25s var(--ease),
+      color 0.25s var(--ease);
+  }
+  .article:hover .article__arrow {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+</style>

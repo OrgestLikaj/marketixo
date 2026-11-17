@@ -1,0 +1,230 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ContactBand from '~/components/ContactBand.astro';
+import { education, formatRange, journalism, languageSkills, leadership, type Role } from '~/data/experience';
+import { t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+
+const copy = {
+  de: {
+    title: 'Werdegang',
+    kicker: 'Werdegang',
+    heading: 'Zwei Linien, ein Profil: Journalismus und Führung.',
+    lead: 'Seit 2013 im Journalismus – zuerst in Prishtina, seit 2019 in Wien. Seit 2023 zusätzlich Verantwortung für Teams, Gäste und Zahlen.',
+    description:
+      'Werdegang von Rozafë Rexhepaj: Albinfo, HAJDE, IndeksOnline, Klan Kosova, Vapiano, Hani Holding; MA Publizistik- und Kommunikationswissenschaft (Universität Wien) und BA Journalismus (Universität Prishtina).',
+    journalism: 'Journalismus & Medien',
+    leadership: 'Führung & Organisation',
+    education: 'Ausbildung',
+    languages: 'Sprachen',
+    citizenship: 'Staatsbürgerschaft: Österreich',
+  },
+  en: {
+    title: 'Experience',
+    kicker: 'Experience',
+    heading: 'Two tracks, one profile: journalism and leadership.',
+    lead: 'In journalism since 2013, first in Prishtina and since 2019 in Vienna. Since 2023 also responsible for teams, guests and numbers.',
+    description:
+      'Experience of Rozafë Rexhepaj: Albinfo, HAJDE, IndeksOnline, Klan Kosova, Vapiano, Hani Holding; MA in Communication Science (University of Vienna) and BA in Journalism (University of Prishtina).',
+    journalism: 'Journalism & media',
+    leadership: 'Leadership & operations',
+    education: 'Education',
+    languages: 'Languages',
+    citizenship: 'Citizenship: Austrian',
+  },
+}[lang];
+
+const groups: { id: string; title: string; roles: Role[] }[] = [
+  { id: 'journalism', title: copy.journalism, roles: journalism },
+  { id: 'leadership', title: copy.leadership, roles: leadership },
+];
+---
+
+<BaseLayout lang={lang} page="experience" title={copy.title} description={copy.description}>
+  <header class="container page-title">
+    <span class="kicker kicker--accent">{copy.kicker}</span>
+    <h1>{copy.heading}</h1>
+    <p class="lead">{copy.lead}</p>
+  </header>
+
+  {
+    groups.map((g) => (
+      <section class="container track" aria-labelledby={`${g.id}-title`}>
+        <h2 id={`${g.id}-title`} class="track__title">
+          {g.title}
+        </h2>
+        <ol class="timeline">
+          {g.roles.map((r) => (
+            <li class="role reveal">
+              <div class="role__when">
+                <p class="role__dates">{formatRange(r, lang, s.present)}</p>
+                {r.kind && <p class="muted role__kind">{r.kind[lang]}</p>}
+                <p class="muted role__place">{r.place[lang]}</p>
+              </div>
+              <div class="role__what">
+                <h3>{r.title[lang]}</h3>
+                <p class="role__org">
+                  {r.org}
+                  {r.orgNote && <span class="muted"> · {r.orgNote[lang]}</span>}
+                </p>
+                <ul class="role__points">
+                  {r.points[lang].map((pt) => (
+                    <li>{pt}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+
+  <section class="container track" aria-labelledby="education-title">
+    <h2 id="education-title" class="track__title">{copy.education}</h2>
+    <ol class="timeline">
+      {
+        education.map((d) => (
+          <li class="role reveal">
+            <div class="role__when">
+              <p class="role__dates">{d.years}</p>
+              <p class="muted role__place">{d.place[lang]}</p>
+            </div>
+            <div class="role__what">
+              <h3>{d.degree[lang]}</h3>
+              <p class="role__org">{d.school[lang]}</p>
+              {d.note && <p class="role__note">{d.note[lang]}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container track" aria-labelledby="languages-title">
+    <h2 id="languages-title" class="track__title">{copy.languages}</h2>
+    <div class="langs reveal">
+      {
+        languageSkills.map((ls) => (
+          <p>
+            <span class="langs__name">{ls.name[lang]}</span>
+            <span class="muted">{ls.level[lang]}</span>
+          </p>
+        ))
+      }
+      <p class="muted langs__note">{copy.citizenship}</p>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .track {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+  }
+  @media (min-width: 1040px) {
+    .track {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      gap: 4rem;
+    }
+    .track__title {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+    }
+  }
+  .track__title {
+    font-size: var(--fs-h3);
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+  }
+
+  .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+
+  .role {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (min-width: 720px) {
+    .role {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .role__dates {
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .role__kind,
+  .role__place {
+    font-size: var(--fs-xs);
+  }
+
+  .role__what h3 {
+    font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  }
+  .role__org {
+    margin-top: 0.3rem;
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+  .role__org .muted {
+    font-weight: 400;
+  }
+  .role__points {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+    font-size: var(--fs-small);
+    max-width: 70ch;
+  }
+  .role__points li::marker {
+    color: var(--accent);
+  }
+  .role__note {
+    margin-top: 0.75rem;
+    max-width: 70ch;
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+
+  .langs {
+    display: grid;
+    border-top: 1px solid var(--ink);
+  }
+  .langs p {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .langs__name {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+  }
+  .langs .langs__note {
+    border-bottom: 0;
+    font-size: var(--fs-small);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { site } from '~/config/site';
+import { imprint, privacy } from '~/data/legal';
+import { type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  kind: 'imprint' | 'privacy';
+}
+
+const { lang, kind } = Astro.props;
+const analyticsOn = Boolean(site.analytics.plausibleDomain || (site.analytics.umamiSrc && site.analytics.umamiWebsiteId));
+const sections = (kind === 'imprint' ? imprint : privacy).filter((sec) => !sec.onlyWithAnalytics || analyticsOn);
+
+const copy = {
+  imprint: {
+    de: { title: 'Impressum', description: 'Impressum und Offenlegung gemäß § 25 Mediengesetz für die Website von Rozafë Rexhepaj.' },
+    en: { title: 'Imprint', description: 'Imprint and legal disclosure for the website of Rozafë Rexhepaj.' },
+  },
+  privacy: {
+    de: { title: 'Datenschutzerklärung', description: 'Datenschutzerklärung der Website von Rozafë Rexhepaj.' },
+    en: { title: 'Privacy policy', description: 'Privacy policy of the website of Rozafë Rexhepaj.' },
+  },
+}[kind][lang];
+---
+
+<BaseLayout lang={lang} page={kind} title={copy.title} description={copy.description}>
+  <header class="container page-title">
+    <h1>{copy.title}</h1>
+  </header>
+  <div class="container">
+    <div class="legal">
+      {
+        sections.map((sec) => (
+          <section>
+            <h2>{sec.heading[lang]}</h2>
+            {sec.paragraphs[lang].map((p) => (
+              <p>{p}</p>
+            ))}
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal {
+    display: grid;
+    gap: 2.25rem;
+    max-width: 46rem;
+    padding-top: 2.5rem;
+  }
+  .legal section {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .legal h2 {
+    font-size: var(--fs-h3);
+  }
+</style>

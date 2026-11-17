@@ -1,0 +1,450 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ArticleCard from '~/components/ArticleCard.astro';
+import ContactBand from '~/components/ContactBand.astro';
+import portrait from '~/assets/portrait.webp';
+import { site } from '~/config/site';
+import { profile } from '~/data/profile';
+import { featuredArticles, outlets } from '~/data/articles';
+import { stories } from '~/data/stories';
+import { path, t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+
+const copy = {
+  de: {
+    title: `${site.name} — Journalistin & Kommunikationsexpertin in Wien`,
+    description:
+      'Rozafë Rexhepaj ist Journalistin in Wien. Sie schreibt auf Albanisch, Deutsch und Englisch über Integration, Wirtschaft und Kultur der albanischsprachigen Community in Österreich.',
+    portraitAlt: 'Porträt von Rozafë Rexhepaj',
+    selected: 'Ausgewählte Artikel',
+    selectedText: 'Porträts, Ratgeber und Reportagen – veröffentlicht bei Albinfo und HAJDE.',
+    expertise: 'Was ich mache',
+    stories: 'Projekte',
+    storiesText: 'Themen, die ich über längere Zeit verfolge – mit Hintergrund und Vorgehen.',
+    publishedIn: 'Veröffentlicht bei',
+    factsLabel: 'Kurz in Zahlen',
+  },
+  en: {
+    title: `${site.name} — Journalist & communications specialist in Vienna`,
+    description:
+      'Rozafë Rexhepaj is a journalist in Vienna. She writes in Albanian, German and English about integration, business and culture in Austria’s Albanian-speaking community.',
+    portraitAlt: 'Portrait of Rozafë Rexhepaj',
+    selected: 'Selected writing',
+    selectedText: 'Profiles, guides and features published by Albinfo and HAJDE.',
+    expertise: 'What I do',
+    stories: 'Stories',
+    storiesText: 'Subjects I have followed over time, with the context and how I approached them.',
+    publishedIn: 'Published in',
+    factsLabel: 'At a glance',
+  },
+}[lang];
+
+const pastOutlets = ['IndeksOnline', 'Klan Kosova'];
+---
+
+<BaseLayout lang={lang} page="home" title={copy.title} description={copy.description} appendSiteName={false}>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="kicker hero__dateline">{profile.dateline[lang]}</p>
+        <h1 class="hero__name">{site.name}</h1>
+        <p class="hero__role">{profile.role[lang]}</p>
+        <p class="hero__headline">{profile.headline[lang]}</p>
+        <p class="hero__intro">{profile.intro[lang]}</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href={path('writing', lang)}>{s.readMyWork}</a>
+          <a class="btn" href={path('contact', lang)}>{s.getInTouch}</a>
+        </div>
+      </div>
+      <figure class="hero__portrait">
+        <Picture
+          src={portrait}
+          alt={copy.portraitAlt}
+          widths={[320, 480, 640, 800]}
+          sizes="(min-width: 880px) 400px, 90vw"
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="facts" aria-label={copy.factsLabel}>
+    <div class="container">
+      <dl class="facts__list">
+        {
+          profile.facts.map((f) => (
+            <div class="facts__item">
+              <dt>{f.label[lang]}</dt>
+              <dd>{f.value[lang]}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="selected-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="selected-title">{copy.selected}</h2>
+        <a class="arrow-link" href={path('writing', lang)}>{s.allWriting} <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="cards">
+        {
+          featuredArticles.map((a) => (
+            <div class="reveal">
+              <ArticleCard article={a} lang={lang} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--band" aria-labelledby="expertise-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="expertise-title">{copy.expertise}</h2>
+        <p>{profile.shortBio[lang]}</p>
+      </div>
+      <ol class="expertise">
+        {
+          profile.expertise.map((e, i) => (
+            <li class="expertise__item reveal">
+              <span class="expertise__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3>{e.title[lang]}</h3>
+              <p>{e.text[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="stories-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="stories-title">{copy.stories}</h2>
+        <a class="arrow-link" href={path('stories', lang)}>{s.allStories} <span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="story-list">
+        {
+          stories.map((st) => (
+            <li class="reveal">
+              <a class="story-link" href={`${path('stories', lang)}#${st.id}`}>
+                <span class="kicker">{st.kicker[lang]}</span>
+                <span class="story-link__title">{st.title[lang]}</span>
+                <span class="story-link__years">{st.years}</span>
+                <span class="story-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="outlets" aria-labelledby="outlets-title">
+    <div class="container outlets__inner">
+      <h2 id="outlets-title" class="kicker">{copy.publishedIn}</h2>
+      <ul>
+        {
+          Object.values(outlets).map((o) => (
+            <li>
+              <a href={o.url} target="_blank" rel="noopener" class="ul">
+                {o.name}
+                <span class="visually-hidden"> {s.opensNewTab}</span>
+              </a>
+            </li>
+          ))
+        }
+        {pastOutlets.map((o) => <li>{o}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <ContactBand lang={lang} />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+    padding-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 880px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+      gap: clamp(3rem, 5vw, 6rem);
+    }
+  }
+
+  .hero__dateline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero__dateline::before {
+    content: '';
+    width: 2.5rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero__name {
+    margin-top: 1.25rem;
+    font-size: var(--fs-display);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+
+  .hero__role {
+    margin-top: 0.85rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: var(--fs-h3);
+    color: var(--accent);
+  }
+
+  .hero__headline {
+    margin-top: 1.75rem;
+    max-width: 30ch;
+    font-family: var(--serif);
+    font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
+    line-height: 1.3;
+  }
+
+  .hero__intro {
+    margin-top: 1.25rem;
+    max-width: 56ch;
+    color: var(--muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .hero__portrait {
+    position: relative;
+    margin: 0;
+    max-width: 420px;
+    width: calc(100% - 14px);
+    justify-self: start;
+  }
+  @media (min-width: 880px) {
+    .hero__portrait {
+      justify-self: end;
+    }
+  }
+  .hero__portrait::before {
+    content: '';
+    position: absolute;
+    inset: 14px -14px -14px 14px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+  }
+  .hero__portrait :global(img) {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: var(--radius);
+    background: var(--paper-2);
+  }
+
+  /* Facts strip */
+  .facts {
+    border-block: 1px solid var(--rule);
+  }
+  .facts__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+  }
+  @media (min-width: 720px) {
+    .facts__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .facts__item {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.15rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  .facts__item + .facts__item {
+    border-left: 1px solid var(--rule);
+  }
+  @media (max-width: 719px) {
+    .facts__item:nth-child(3) {
+      border-left: 0;
+    }
+    .facts__item:nth-child(n + 3) {
+      border-top: 1px solid var(--rule);
+    }
+  }
+  .facts__item dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.875rem, 1.5rem + 1.4vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .facts__item dt {
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+
+  /* Featured cards */
+  .cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 720px) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1040px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Expertise */
+  .expertise {
+    display: grid;
+    gap: 2.5rem 3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 720px) {
+    .expertise {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1040px) {
+    .expertise {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .expertise__item {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .expertise__num {
+    font-family: var(--serif);
+    font-size: var(--fs-small);
+    color: var(--accent);
+  }
+  .expertise__item p {
+    font-size: var(--fs-small);
+    color: var(--muted);
+  }
+
+  /* Stories list */
+  .story-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .story-link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 1.5rem;
+    align-items: baseline;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+  }
+  .story-link .kicker {
+    grid-column: 1 / -1;
+  }
+  .story-link__title {
+    font-family: var(--serif);
+    font-size: var(--fs-h3);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease);
+  }
+  .story-link__years {
+    display: none;
+    color: var(--muted);
+    font-size: var(--fs-small);
+  }
+  .story-link__arrow {
+    font-size: 1.25rem;
+    transition: transform 0.25s var(--ease);
+  }
+  .story-link:hover .story-link__title {
+    color: var(--accent);
+  }
+  .story-link:hover .story-link__arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+  @media (min-width: 720px) {
+    .story-link {
+      grid-template-columns: 16rem 1fr auto auto;
+    }
+    .story-link .kicker {
+      grid-column: auto;
+    }
+    .story-link__years {
+      display: block;
+    }
+    .story-link__title {
+      font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+    }
+  }
+
+  /* Outlets */
+  .outlets__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 1rem 2.5rem;
+    padding-block: 2rem;
+    border-block: 1px solid var(--rule);
+  }
+  .outlets h2 {
+    font-family: var(--sans);
+  }
+  .outlets ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--serif);
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  }
+</style>

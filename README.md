@@ -4,6 +4,8 @@ Agency website for Marketixo. It's bilingual (English + German), built for SEO a
 
 **Stack:** [Astro](https://astro.build) static site · plain CSS · self-hosted fonts · one PHP file for the contact form. There's no database and no CMS server, which keeps it fast, secure and cheap to host.
 
+> **Also in this repository:** [`rozafe-rexhepaj/`](rozafe-rexhepaj/) is a separate client site (the portfolio of Rozafë Rexhepaj) with its own `package.json`, build and README. It is excluded from this site's `tsconfig.json` and does not affect the Marketixo build or deployment.
+
 ## Quick start
 
 ```bash

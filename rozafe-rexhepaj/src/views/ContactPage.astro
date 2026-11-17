@@ -1,0 +1,346 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { site } from '~/config/site';
+import { profile } from '~/data/profile';
+import { path, t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+
+const copy = {
+  de: {
+    title: 'Kontakt',
+    kicker: 'Kontakt',
+    heading: 'Lassen Sie uns sprechen.',
+    lead: 'Für Stellenangebote, freie Aufträge, Interviewanfragen oder Fragen zur albanischsprachigen Community in Österreich.',
+    description: 'Kontakt zu Rozafë Rexhepaj, Journalistin und Kommunikationsexpertin in Wien: E-Mail, LinkedIn und Kontaktformular.',
+    direct: 'Direkt',
+    openTo: 'Offen für',
+    worksIn: 'Arbeitssprachen: Deutsch, Englisch, Albanisch',
+    formTitle: 'Nachricht senden',
+    name: 'Name',
+    email: 'E-Mail',
+    org: 'Organisation',
+    optional: '(optional)',
+    topic: 'Worum geht es?',
+    topics: ['Stelle / Anstellung', 'Freier Auftrag', 'Interview / Medienanfrage', 'Etwas anderes'],
+    message: 'Nachricht',
+    consent: 'Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden.',
+    privacy: 'Datenschutz',
+    send: 'Nachricht senden',
+    sending: 'Wird gesendet …',
+    invalid: 'Bitte füllen Sie alle Pflichtfelder aus und bestätigen Sie den Datenschutzhinweis.',
+    error: `Die Nachricht konnte nicht gesendet werden. Bitte schreiben Sie direkt an ${site.email}.`,
+    required: 'Pflichtfeld',
+  },
+  en: {
+    title: 'Contact',
+    kicker: 'Contact',
+    heading: 'Let’s talk.',
+    lead: 'For roles, freelance commissions, interview requests or questions about the Albanian-speaking community in Austria.',
+    description: 'Contact Rozafë Rexhepaj, journalist and communications specialist in Vienna: email, LinkedIn and contact form.',
+    direct: 'Directly',
+    openTo: 'Open to',
+    worksIn: 'Working languages: German, English, Albanian',
+    formTitle: 'Send a message',
+    name: 'Name',
+    email: 'Email',
+    org: 'Organisation',
+    optional: '(optional)',
+    topic: 'What is it about?',
+    topics: ['A role / employment', 'A freelance commission', 'Interview / media request', 'Something else'],
+    message: 'Message',
+    consent: 'I agree that my details will be processed to answer my enquiry.',
+    privacy: 'Privacy policy',
+    send: 'Send message',
+    sending: 'Sending …',
+    invalid: 'Please fill in all required fields and accept the privacy note.',
+    error: `The message could not be sent. Please write directly to ${site.email}.`,
+    required: 'required',
+  },
+}[lang];
+---
+
+<BaseLayout lang={lang} page="contact" title={copy.title} description={copy.description}>
+  <header class="container page-title">
+    <span class="kicker kicker--accent">{copy.kicker}</span>
+    <h1>{copy.heading}</h1>
+    <p class="lead">{copy.lead}</p>
+  </header>
+
+  <section class="container contact">
+    <div class="contact__aside">
+      <div class="contact__block">
+        <h2 class="kicker kicker--accent">{copy.direct}</h2>
+        <p><a class="contact__big ul" href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>
+          <a class="contact__big ul" href={site.linkedin} target="_blank" rel="me noopener">
+            LinkedIn ↗<span class="visually-hidden"> {s.opensNewTab}</span>
+          </a>
+        </p>
+        <p class="muted">{s.basedIn}</p>
+      </div>
+      <div class="contact__block">
+        <h2 class="kicker kicker--accent">{copy.openTo}</h2>
+        <ul class="contact__list">
+          {profile.openTo[lang].map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="muted">{copy.worksIn}</p>
+      </div>
+    </div>
+
+    <form
+      class="form"
+      action="/api/contact.php"
+      method="post"
+      novalidate
+      data-contact-form
+      aria-labelledby="form-title"
+    >
+      <h2 id="form-title">{copy.formTitle}</h2>
+
+      <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="redirect" value={path('thanks', lang)} />
+      <input type="hidden" name="error_redirect" value={`${path('contact', lang)}?error=1#form-title`} />
+      <input type="hidden" name="ts" value="" data-ts />
+      <div class="form__hp" aria-hidden="true">
+        <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+
+      <div class="form__row">
+        <label class="field">
+          <span>{copy.name} <abbr title={copy.required}>*</abbr></span>
+          <input type="text" name="name" required autocomplete="name" maxlength="120" />
+        </label>
+        <label class="field">
+          <span>{copy.email} <abbr title={copy.required}>*</abbr></span>
+          <input type="email" name="email" required autocomplete="email" maxlength="200" />
+        </label>
+      </div>
+
+      <div class="form__row">
+        <label class="field">
+          <span>{copy.org} <em>{copy.optional}</em></span>
+          <input type="text" name="organisation" autocomplete="organization" maxlength="200" />
+        </label>
+        <label class="field">
+          <span>{copy.topic}</span>
+          <select name="topic">
+            {copy.topics.map((tp) => <option value={tp}>{tp}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>{copy.message} <abbr title={copy.required}>*</abbr></span>
+        <textarea name="message" required rows="7" maxlength="5000"></textarea>
+      </label>
+
+      <label class="consent">
+        <input type="checkbox" name="consent" value="yes" required />
+        <span>
+          {copy.consent} <a href={path('privacy', lang)}>{copy.privacy}</a>
+        </span>
+      </label>
+
+      <p class="form__error" role="alert" data-error hidden></p>
+
+      <div>
+        <button class="btn btn--primary" type="submit" data-submit>
+          <span data-label>{copy.send}</span>
+        </button>
+      </div>
+    </form>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ invalidMsg: copy.invalid, errorMsg: copy.error, sendingMsg: copy.sending }}>
+  (() => {
+    const form = document.querySelector('[data-contact-form]');
+    if (!form) return;
+    form.querySelector('[data-ts]').value = String(Math.floor(Date.now() / 1000));
+    const errorBox = form.querySelector('[data-error]');
+    const button = form.querySelector('[data-submit]');
+    const label = form.querySelector('[data-label]');
+    const idle = label.textContent;
+    const showError = (msg) => {
+      errorBox.textContent = msg;
+      errorBox.hidden = false;
+    };
+
+    if (new URLSearchParams(location.search).has('error')) showError(errorMsg);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      if (!form.checkValidity()) {
+        showError(invalidMsg);
+        const firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+      button.disabled = true;
+      label.textContent = sendingMsg;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'failed');
+        window.location.href = form.querySelector('[name="redirect"]').value;
+      } catch (err) {
+        showError(err && err.message === 'invalid' ? invalidMsg : errorMsg);
+        button.disabled = false;
+        label.textContent = idle;
+      }
+    });
+  })();
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 3.5rem;
+    padding-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+  }
+  @media (min-width: 1040px) {
+    .contact {
+      grid-template-columns: 22rem minmax(0, 1fr);
+      gap: 5rem;
+    }
+  }
+
+  .contact__aside {
+    display: grid;
+    gap: 2.5rem;
+    align-content: start;
+  }
+  .contact__block {
+    display: grid;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+  }
+  .contact__block h2 {
+    font-family: var(--sans);
+  }
+  .contact__big {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    word-break: break-all;
+  }
+  .contact__list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .contact__list li::marker {
+    color: var(--accent);
+  }
+
+  .form {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .form h2 {
+    font-size: var(--fs-h3);
+  }
+  .form__row {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .form__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .form__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+  .field > span {
+    font-size: var(--fs-small);
+    font-weight: 600;
+  }
+  .field abbr {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .field em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s var(--ease);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 160px;
+  }
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover {
+    border-color: var(--muted);
+  }
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+  }
+
+  .consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    font-size: var(--fs-small);
+  }
+  .consent input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.15rem;
+    accent-color: var(--accent);
+  }
+
+  .form__error {
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    font-size: var(--fs-small);
+  }
+</style>

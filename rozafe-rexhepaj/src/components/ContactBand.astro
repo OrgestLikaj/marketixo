@@ -1,0 +1,85 @@
+---
+import { site } from '~/config/site';
+import { path, t, type Lang } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+const copy = {
+  de: {
+    kicker: 'Zusammenarbeit',
+    title: 'Sie möchten albanischsprachige Zielgruppen in Österreich erreichen?',
+    text: 'Ob Festanstellung, freier Auftrag oder Interviewanfrage – ich freue mich auf Ihre Nachricht.',
+  },
+  en: {
+    kicker: 'Work together',
+    title: 'Want to reach Albanian-speaking audiences in Austria?',
+    text: 'Whether it is a role, a freelance commission or an interview request, I look forward to hearing from you.',
+  },
+}[lang];
+---
+
+<section class="band reveal" aria-labelledby="band-title">
+  <div class="container band__inner">
+    <div>
+      <p class="kicker kicker--accent">{copy.kicker}</p>
+      <h2 id="band-title">{copy.title}</h2>
+      <p class="band__text">{copy.text}</p>
+    </div>
+    <div class="band__actions">
+      <a class="btn btn--primary" href={path('contact', lang)}>{s.getInTouch}</a>
+      <a class="band__mail ul" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    margin-top: calc(var(--section) * 0.75);
+  }
+  /* A full section above already provides the spacing. */
+  :global(.section) + .band {
+    margin-top: 0;
+  }
+  .band__inner {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (min-width: 880px) {
+    .band__inner {
+      grid-template-columns: 1.6fr 1fr;
+      gap: 4rem;
+    }
+  }
+  .band h2 {
+    margin-top: 0.75rem;
+    max-width: 28ch;
+  }
+  .band__text {
+    margin-top: 1rem;
+    max-width: 52ch;
+    color: var(--muted);
+  }
+  .band__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  @media (min-width: 880px) {
+    .band__actions {
+      align-items: flex-end;
+    }
+  }
+  .band__mail {
+    font-size: var(--fs-small);
+    word-break: break-all;
+  }
+</style>
