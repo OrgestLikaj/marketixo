@@ -3,7 +3,8 @@ import '~/styles/global.css';
 import Header from '~/components/Header.astro';
 import Footer from '~/components/Footer.astro';
 import { site } from '~/config/site';
-import { defaultLang, localeMeta, t, routes, type Lang, type RouteKey } from '~/i18n/ui';
+import { defaultLang, langs, localeMeta, path, t, type Lang, type RouteKey } from '~/i18n/ui';
+import { isPreview, withBase } from '~/lib/paths';
 import { personSchema, websiteSchema } from '~/lib/schema';
 import { getImage } from 'astro:assets';
 import portrait from '~/assets/portrait.webp';
@@ -24,11 +25,11 @@ interface Props {
 const { lang, page, title, description, schema = [], noindex = false, appendSiteName = true } = Astro.props;
 
 const s = t(lang);
-const alternates = routes[page];
+const alternates = Object.fromEntries(langs.map((l) => [l, path(page, l)])) as Record<Lang, string>;
 const fullTitle = appendSiteName ? `${title} — ${site.name}` : title;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const abs = (p: string) => new URL(p, Astro.site).href;
-const ogImage = abs(`/og-${lang}.png`);
+const ogImage = abs(withBase(`/og-${lang}.png`));
 const portraitImg = await getImage({ src: portrait, width: 800, format: 'jpg' });
 const jsonLd = [personSchema(lang, Astro.site, abs(portraitImg.src)), websiteSchema(lang, Astro.site), ...schema];
 const graph = { '@context': 'https://schema.org', '@graph': jsonLd.map(({ '@context': _, ...rest }) => rest) };
@@ -46,7 +47,7 @@ const { plausibleDomain, umamiSrc, umamiWebsiteId } = site.analytics;
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {(noindex || isPreview) && <meta name="robots" content={isPreview ? 'noindex, nofollow' : 'noindex, follow'} />}
 
     {Object.entries(alternates).map(([l, href]) => <link rel="alternate" hreflang={l} href={abs(href)} />)}
     <link rel="alternate" hreflang="x-default" href={abs(alternates[defaultLang])} />
@@ -66,13 +67,13 @@ const { plausibleDomain, umamiSrc, umamiWebsiteId } = site.analytics;
     {page === 'about' && <meta property="profile:last_name" content="Rexhepaj" />}
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon-32.png')} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
     <meta name="theme-color" content="#f6f2ea" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)" />
-    <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="sitemap" href={withBase('/sitemap.xml')} />
 
     <script type="application/ld+json" set:html={JSON.stringify(graph)} />
 

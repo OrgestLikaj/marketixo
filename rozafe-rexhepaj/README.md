@@ -36,6 +36,14 @@ The contact form posts to `/api/contact.php`, so it only sends once deployed to 
    Make sure the hidden `.htaccess` file is included.
 3. Open the site, send yourself a test message through the contact form, and submit `https://yourdomain/sitemap.xml` in Google Search Console.
 
+## Preview on GitHub Pages
+
+Every push to `main` publishes a preview to `https://<owner>.github.io/<repository>/` (`.github/workflows/pages.yml`).
+The preview is built under that sub-path, is hidden from search engines (`noindex` + `robots.txt`), and shows a note on the contact form, because GitHub Pages cannot run PHP.
+If the preview does not appear after the first run, go to Settings → Pages → Source: "Deploy from a branch" → `gh-pages` / (root) → Save.
+
+`.github/workflows/deploy.yml` builds every push. Once the `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD` secrets are added, it also uploads `main` to Namecheap automatically.
+
 ## Editing content
 
 All text lives in `src/data/`, in German and English side by side:

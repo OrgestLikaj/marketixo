@@ -1,6 +1,6 @@
 ---
 import { site } from '~/config/site';
-import { localeMeta, navKeys, path, routes, t, type Lang, type RouteKey } from '~/i18n/ui';
+import { localeMeta, navKeys, path, t, type Lang, type RouteKey } from '~/i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -37,7 +37,7 @@ const other: Lang = lang === 'de' ? 'en' : 'de';
       </ul>
       <a
         class="lang-switch"
-        href={routes[page][other]}
+        href={path(page, other)}
         hreflang={other}
         lang={localeMeta[other].htmlLang}
         title={s.switchTo}

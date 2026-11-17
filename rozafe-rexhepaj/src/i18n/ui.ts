@@ -1,3 +1,5 @@
+import { withBase } from '~/lib/paths';
+
 /**
  * Languages, localized URLs and interface strings.
  * German is the default language (served at /), English lives under /en/.
@@ -27,7 +29,8 @@ export const routes = {
 export type RouteKey = keyof typeof routes;
 export type Alternates = Partial<Record<Lang, string>>;
 
-export const path = (key: RouteKey, lang: Lang) => routes[key][lang];
+/** URL of a page in one language, including the base path. */
+export const path = (key: RouteKey, lang: Lang) => withBase(routes[key][lang]);
 
 /** Main navigation, in display order. */
 export const navKeys = ['writing', 'stories', 'about', 'experience', 'contact'] as const satisfies readonly RouteKey[];

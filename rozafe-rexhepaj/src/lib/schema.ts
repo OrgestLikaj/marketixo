@@ -2,12 +2,13 @@ import { site } from '~/config/site';
 import { profile } from '~/data/profile';
 import { outlets, sortedArticles } from '~/data/articles';
 import { path, type Lang } from '~/i18n/ui';
+import { withBase } from '~/lib/paths';
 
 /** Structured data (schema.org JSON-LD) so search engines understand who this site is about. */
 
 const abs = (p: string, base: URL | undefined) => new URL(p, base).href;
 
-export const personId = (base: URL | undefined) => `${abs('/', base)}#person`;
+export const personId = (base: URL | undefined) => `${abs(withBase('/'), base)}#person`;
 
 export const personSchema = (lang: Lang, base: URL | undefined, imageUrl?: string) => ({
   '@context': 'https://schema.org',

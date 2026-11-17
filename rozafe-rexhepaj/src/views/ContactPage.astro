@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import { site } from '~/config/site';
 import { profile } from '~/data/profile';
 import { path, t, type Lang } from '~/i18n/ui';
+import { isPreview, withBase } from '~/lib/paths';
 
 interface Props {
   lang: Lang;
@@ -36,6 +37,7 @@ const copy = {
     invalid: 'Bitte füllen Sie alle Pflichtfelder aus und bestätigen Sie den Datenschutzhinweis.',
     error: `Die Nachricht konnte nicht gesendet werden. Bitte schreiben Sie direkt an ${site.email}.`,
     required: 'Pflichtfeld',
+    preview: `Vorschau: Das Formular sendet erst auf der fertigen Website. Bis dahin bitte direkt an ${site.email} schreiben.`,
   },
   en: {
     title: 'Contact',
@@ -61,6 +63,7 @@ const copy = {
     invalid: 'Please fill in all required fields and accept the privacy note.',
     error: `The message could not be sent. Please write directly to ${site.email}.`,
     required: 'required',
+    preview: `Preview: the form only sends on the live website. Until then, please write directly to ${site.email}.`,
   },
 }[lang];
 ---
@@ -95,7 +98,7 @@ const copy = {
 
     <form
       class="form"
-      action="/api/contact.php"
+      action={withBase('/api/contact.php')}
       method="post"
       novalidate
       data-contact-form
@@ -147,6 +150,7 @@ const copy = {
         </span>
       </label>
 
+      {isPreview && <p class="form__note">{copy.preview}</p>}
       <p class="form__error" role="alert" data-error hidden></p>
 
       <div>
@@ -337,6 +341,12 @@ const copy = {
     accent-color: var(--accent);
   }
 
+  .form__note {
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--rule-strong);
+    background: var(--paper-2);
+    font-size: var(--fs-small);
+  }
   .form__error {
     padding: 0.85rem 1rem;
     border-left: 3px solid var(--accent);
